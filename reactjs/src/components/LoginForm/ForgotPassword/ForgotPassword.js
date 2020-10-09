@@ -1,9 +1,10 @@
 import React, {useState} from 'react';
 import axios from 'axios';
+import './LoginForm.css';
 import {API_BASE_URL, ACCESS_TOKEN_NAME} from '../../constants/apiConstants';
 import { withRouter } from "react-router-dom";
 
-function OTPForm(props) {
+function ForgotPassword(props) {
     const [state , setState] = useState({
         email : "",
         password : "",
@@ -19,10 +20,19 @@ function OTPForm(props) {
 
     const handleSubmitClick = (e) => {
         e.preventDefault();
-        const payload={
-            "email":state.email,
-            "password":state.password,
+        let re = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+        if ( !re.test(state.email) ) { 
+            props.showError("Please enter a valid email id");
         }
+        else if(state.password.length == 0){
+            props.showError("Please enter a password"); 
+        } 
+        else{
+            
+            const payload={
+                "email":state.email,
+                "password":state.password,
+            }
         axios.post('http://localhost:8080/api/auth/login/', payload)
             .then(function (response) {
                 if(response.status === 200){
@@ -31,36 +41,45 @@ function OTPForm(props) {
                         'successMessage' : 'Login successful. Redirecting to home page..'   
                     }))
                     localStorage.setItem(ACCESS_TOKEN_NAME,response.data.token);
-                    redirectToHome();
+                    redirectToOTP();
                     props.showError(null)
-                }
-                else if(response.code === 204){
-                    props.showError("Username and password do not match");
-                }
-                else{
-                    props.showError("Username does not exists");
                 }
             })
             .catch(function (error) {
+                if(error.response.status === 401){
+                    props.showError("Please check your password or email id");
+                } 
                 console.log(error);
             });
+        }
+        
     }
 
     const redirectToHome = () => {
         props.updateTitle('Home')
         props.history.push('/home');
     }
+    const redirectToOTP = () => {
+        props.updateTitle('OneTimePassword')
+        props.history.push('/otp');
+    }
 
     const redirectToRegister = () => {
         props.history.push('/register'); 
         props.updateTitle('Register');
     }
+
+    const redirectToForgotPassword = () => {
+        props.history.push('/forgotpassword'); 
+        props.updateTitle('Forgot Password');
+    }
+
     return(
         <div className="card col-12 col-lg-4 login-card mt-5 pt-3 hv-center">
             <form>
                 <div className="form-group text-left">
                 <label htmlFor="exampleInputEmail1">Email address</label>
-                <input type="email" 
+                <input type="email"
                        className="form-control" 
                        id="email" 
                        aria-describedby="emailHelp" 
@@ -68,7 +87,6 @@ function OTPForm(props) {
                        value={state.email}
                        onChange={handleChange}
                 />
-                {/* <small id="emailHelp" className="form-text text-muted">We'll never share your email with anyone else.</small> */}
                 </div>
                 <div className="form-group text-left">
                 <label htmlFor="exampleInputPassword1">Password</label>
@@ -86,17 +104,23 @@ function OTPForm(props) {
                     type="submit" 
                     className="btn btn-dark mt-4"
                     onClick={handleSubmitClick}
-                >Let's Go!</button>
+                >Login</button>
             </form>
             <div className="alert alert-success mt-2" style={{display: state.successMessage ? 'block' : 'none' }} role="alert">
                 {state.successMessage}
             </div>
             <div className="registerMessage">
-                <span>Don't have an account? </span>
+                {/* <span>Don't have an account? </span> */}
                 <span className="loginText" onClick={() => redirectToRegister()}>Register</span> 
+                <span className="loginText" onClick={() => redirectToForgotPassword()}>Forgot Password</span> 
+
+            </div>
+            <div className="forgotPasswordMessage">
+                {/* <span>Forgot Password? </span> */}
+                {/* <span className="loginText" onClick={() => redirectToForgotPassword()}>Forgot Password</span>  */}
             </div>
         </div>
     )
 }
 
-export default withRouter(OTPForm);
+export default withRouter(ForgotPassword);

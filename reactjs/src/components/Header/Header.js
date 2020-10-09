@@ -3,11 +3,15 @@ import logo from '../../assets/logo_size.jpg';
 import {API_BASE_URL, ACCESS_TOKEN_NAME} from '../../constants/apiConstants';
 import { withRouter } from "react-router-dom";
 import axios from 'axios';
+import { useAuth0 } from '@auth0/auth0-react';
 
 function Header(props) {
     const [state , setState] = useState({
 
     })
+    const { loginWithRedirect} = useAuth0();
+    const { logout } = useAuth0();
+    
     const handleLogoutClick = (e) => {
         e.preventDefault();
         var token = localStorage.getItem(ACCESS_TOKEN_NAME)
@@ -45,13 +49,18 @@ function Header(props) {
         <nav class="navbar navbar-dark bg-transparent mb-5 pt-5">
             <div className="row col-12 d-flex justify-content-center text-dark">
             <img src={logo} alt="" />
-
+            <button 
+                    type="submit" 
+                    className="btn btn-dark mt-4"
+                    onClick={() => loginWithRedirect()}
+            >Login T</button>
             <button 
                     type="logout" 
                     className="btn btn-light mt-4 justify-content-between"
-                    onClick={handleLogoutClick}
-                    style={{display: localStorage.getItem(ACCESS_TOKEN_NAME) ? 'block' : 'none' }}
-                >Logout</button>
+                    onClick={() => logout()}
+                    // style={{display: localStorage.getItem(ACCESS_TOKEN_NAME) ? 'block' : 'none' }}
+
+            >Logout</button>
             </div>
         </nav>
     )

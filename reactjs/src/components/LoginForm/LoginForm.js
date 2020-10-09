@@ -3,6 +3,7 @@ import axios from 'axios';
 import './LoginForm.css';
 import {API_BASE_URL, ACCESS_TOKEN_NAME} from '../../constants/apiConstants';
 import { withRouter } from "react-router-dom";
+import { useAuth0 } from '@auth0/auth0-react';
 
 function LoginForm(props) {
     const [state , setState] = useState({
@@ -17,7 +18,7 @@ function LoginForm(props) {
             [id] : value
         }))
     }
-
+    const { loginWithRedirect} = useAuth0();
     const handleSubmitClick = (e) => {
         e.preventDefault();
         let re = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
@@ -28,7 +29,6 @@ function LoginForm(props) {
             props.showError("Please enter a password"); 
         } 
         else{
-            
             const payload={
                 "email":state.email,
                 "password":state.password,
@@ -41,19 +41,11 @@ function LoginForm(props) {
                         'successMessage' : 'Login successful. Redirecting to home page..'   
                     }))
                     localStorage.setItem(ACCESS_TOKEN_NAME,response.data.token);
-                    redirectToHome();
+                    redirectToOTP();
                     props.showError(null)
                 }
             })
             .catch(function (error) {
-                // if(error.response.data.message === "Email already registered")
-                // {
-                //     props.showError("Email already registered");
-                // }
-                // if(error.response.data.message === "Incorrect Password")
-                // {
-                //     props.showError("Incorrect password entered. Please re check.");
-                // }
                 if(error.response.status === 401){
                     props.showError("Please check your password or email id");
                 } 
@@ -67,11 +59,21 @@ function LoginForm(props) {
         props.updateTitle('Home')
         props.history.push('/home');
     }
+    const redirectToOTP = () => {
+        props.updateTitle('OneTimePassword')
+        props.history.push('/otp');
+    }
 
     const redirectToRegister = () => {
         props.history.push('/register'); 
         props.updateTitle('Register');
     }
+
+    const redirectToForgotPassword = () => {
+        props.history.push('/forgotpassword'); 
+        props.updateTitle('Forgot Password');
+    }
+
     return(
         <div className="card col-12 col-lg-4 login-card mt-5 pt-3 hv-center">
             <form>
@@ -102,14 +104,22 @@ function LoginForm(props) {
                     type="submit" 
                     className="btn btn-dark mt-4"
                     onClick={handleSubmitClick}
-                >Let's Go!</button>
+                >Login</button>
+                <button 
+                    type="submit" 
+                    className="btn btn-dark mt-4"
+                    onClick={() => loginWithRedirect()}
+                >Login T</button>
             </form>
             <div className="alert alert-success mt-2" style={{display: state.successMessage ? 'block' : 'none' }} role="alert">
                 {state.successMessage}
             </div>
             <div className="registerMessage">
-                <span>Don't have an account? </span>
                 <span className="loginText" onClick={() => redirectToRegister()}>Register</span> 
+
+            </div>
+            <div className="registerMessage">
+                <span className="loginText" onClick={() => redirectToForgotPassword()}>Forgot Password</span> 
             </div>
         </div>
     )
