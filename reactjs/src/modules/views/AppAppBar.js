@@ -53,7 +53,7 @@ const styles = (theme) => ({
     '&:hover': {
       backgroundColor: fade(theme.palette.common.white, 0.25),
     },
-    marginRight: theme.spacing(-26),
+    marginRight: theme.spacing(-30),
     marginLeft: 0,
     width: '100%',
     [theme.breakpoints.up('sm')]: {
@@ -155,7 +155,6 @@ function AppAppBar(props) {
               underline="none"
               className={clsx(classes.rightLink, classes.linkSecondary)}
               style={{display: isAuthenticated ? 'block' : 'none' }}
-              // href="/premium-themes/onepirate/sign-up/"
               onClick={() => logout()}
             ></Link>
             <Link>{ isAuthenticated ? <Profile/> : null }</Link> 
@@ -220,7 +219,7 @@ function AppAppBar(props) {
             variant="h6"
             underline="none"
             className={clsx(classes.rightLink, classes.linkSecondary)}
-            href="/premium-themes/onepirate/sign-up/"
+            onClick={()=> loginWithRedirect()}
           >
             {'Sign Up'}
           </Link>
