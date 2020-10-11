@@ -1,54 +1,45 @@
-import React, {useState} from 'react';
-import './App.css';
-import Header from './components/Header/Header';
-import LoginForm from './components/LoginForm/LoginForm';
-import OTPForm from './components/LoginForm/OTPForm/OTPForm';
-import RegistrationForm from './components/RegistrationForm/RegistrationForm';
-import CustomerView from './components/CustomerView/CustomerView';
-import Home from './components/Home/Home';
-import PrivateRoute from './utils/PrivateRoute';
-import LogoutButton from './components/LogoutButton/LogoutButton';
-import {
-  BrowserRouter as Router,
-  Switch,
-  Route
-} from "react-router-dom";
-import AlertComponent from './components/AlertComponent/AlertComponent'; 
+// import React, {useState} from 'react';
+// import './App.css';
+// import Header from './components/Header/Header';
+// import LoginForm from './components/LoginForm/LoginForm';
+// import OTPForm from './components/LoginForm/OTPForm/OTPForm';
+// import RegistrationForm from './components/RegistrationForm/RegistrationForm';
+// import CustomerView from './components/CustomerView/CustomerView';
+// import PublicView from './components/PublicView/PublicView';
+// // import PrivateRoute from './utils/PrivateRoute';
+// import LogoutButton from './components/LogoutButton/LogoutButton';
+// import {
+//   BrowserRouter as Router,
+//   Switch,
+//   Route
+// } from "react-router-dom";
+// import AlertComponent from './components/AlertComponent/AlertComponent'; 
+import withRoot from './modules/withRoot';
+// --- Post bootstrap -----
+import React from 'react';
+import ProductCategories from './modules/views/ProductCategories';
+import ProductSmokingHero from './modules/views/ProductSmokingHero';
+import AppFooter from './modules/views/AppFooter';
+import ProductHero from './modules/views/ProductHero';
+import ProductValues from './modules/views/ProductValues';
+import ProductHowItWorks from './modules/views/ProductHowItWorks';
+import ProductCTA from './modules/views/ProductCTA';
+import AppAppBar from './modules/views/AppAppBar';
 
 function App() {
-  const [title, updateTitle] = useState(null);
-  const [errorMessage, updateErrorMessage] = useState(null);
   return (
-    
-    <Router >
-    <div className="App">
-      <Header title={title} showError={updateErrorMessage} updateTitle={updateTitle}/>
-      <CustomerView/>
-        <div className="container d-flex align-items-center flex-column">
-          <Switch>
-            <Route path="/" exact={true}>
-              {/* <LoginForm showError={updateErrorMessage} updateTitle={updateTitle}/> */}
-              <Home/>
-            </Route>  
-            {/* <Route path="/register">
-              <RegistrationForm showError={updateErrorMessage} updateTitle={updateTitle}/>
-            </Route>
-            <Route path="/login">
-              <LoginForm showError={updateErrorMessage} updateTitle={updateTitle}/>
-            </Route> */}
-            <PrivateRoute path="/home">
-              <Home/>
-            </PrivateRoute>
-            {/* <PrivateRoute path="/otp">
-              <OTPForm/>
-            </PrivateRoute> */}
-          </Switch>
-          <AlertComponent errorMessage={errorMessage} hideError={updateErrorMessage}/>
-        </div>
-    </div>
-    </Router>
-    
+    <React.Fragment>
+      <AppAppBar />
+      <ProductHero />
+      <ProductValues />
+      <ProductCategories />
+      {/* <ProductHowItWorks /> */}
+      {/* <ProductCTA /> */}
+      <ProductSmokingHero />
+      <AppFooter />
+    </React.Fragment>
   );
 }
 
-export default App;
+// export default withRoot(Index);
+export default withRoot(App);
