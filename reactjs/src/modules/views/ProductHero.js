@@ -4,8 +4,6 @@ import { withStyles } from '@material-ui/core/styles';
 import Button from '../components/Button';
 import Typography from '../components/Typography';
 import ProductHeroLayout from './ProductHeroLayout';
-import { useAuth0 } from '@auth0/auth0-react';
-
 
 const backgroundImage =
   'https://images.unsplash.com/photo-1534854638093-bada1813ca19?auto=format&fit=crop&w=1400&q=80';
@@ -33,36 +31,29 @@ const styles = (theme) => ({
 
 function ProductHero(props) {
   const { classes } = props;
-  const { loginWithRedirect} = useAuth0();
 
   return (
     <ProductHeroLayout backgroundClassName={classes.background}>
       {/* Increase the network loading priority of the background image. */}
       <img style={{ display: 'none' }} src={backgroundImage} alt="increase priority" />
-      
-      {/* Big center text */}
       <Typography color="inherit" align="center" variant="h2" marked="center">
-        Find your theater now!
+        Upgrade your Sundays
       </Typography>
-
-      {/* Smaller center text above button */}
       <Typography color="inherit" align="center" variant="h5" className={classes.h5}>
-        Sign up and start saving on your movie watching experience today!
+        Enjoy secret offers up to -70% off the best luxury hotels every Sunday.
       </Typography>
-
-      {/* Sign up button */}
       <Button
         color="secondary"
         variant="contained"
         size="large"
         className={classes.button}
         component="a"
-        onClick={()=> loginWithRedirect()}
+        href="/premium-themes/onepirate/sign-up/"
       >
-        SIGN UP
+        Register
       </Button>
       <Typography variant="body2" color="inherit" className={classes.more}>
-        Welcome to the future of movie viewing
+        Discover the experience
       </Typography>
     </ProductHeroLayout>
   );
