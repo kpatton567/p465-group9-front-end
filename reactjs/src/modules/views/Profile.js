@@ -48,7 +48,7 @@ const styles = (theme) => ({
 
 function Profile(props) {
   const { classes } = props;
-//   const { loginWithRedirect} = useAuth0();
+  //   const { loginWithRedirect} = useAuth0();
   const [openProfile, setOpenProfile] = React.useState(null);
 
   const { user, logout } = useAuth0();
@@ -66,7 +66,7 @@ function Profile(props) {
 
   return (
     <div>
-        <div className={classes.manager}>
+      <div className={classes.manager}>
         <Button
           color={window.innerWidth > 959 ? "transparent" : "white"}
           justIcon={window.innerWidth > 959}
@@ -131,9 +131,10 @@ function Profile(props) {
           )}
         </Poppers>
       </div>
-      </div>
+    </div>
   );
 }
+
 
 Profile.propTypes = {
   classes: PropTypes.object.isRequired,
