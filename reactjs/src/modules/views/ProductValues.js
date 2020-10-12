@@ -49,8 +49,6 @@ function ProductValues(props) {
           alt="curvy lines"
         />
         <Grid container spacing={5}>
-
-          {/* Photo, header, textbox 1 */}
           <Grid item xs={12} md={4}>
             <div className={classes.item}>
               <img
@@ -59,7 +57,7 @@ function ProductValues(props) {
                 alt="suitcase"
               />
               <Typography variant="h6" className={classes.title}>
-                The best movie options
+                The best luxury hotels
               </Typography>
               <Typography variant="h5">
                 {'From the latest trendy boutique hotel to the iconic palace with XXL pool'}
@@ -67,8 +65,6 @@ function ProductValues(props) {
               </Typography>
             </div>
           </Grid>
-
-          {/* Photo, header, textbox 2 */}
           <Grid item xs={12} md={4}>
             <div className={classes.item}>
               <img
@@ -77,7 +73,7 @@ function ProductValues(props) {
                 alt="graph"
               />
               <Typography variant="h6" className={classes.title}>
-                The easiest process
+                New experiences
               </Typography>
               <Typography variant="h5">
                 {'Privatize a pool, take a Japanese bath or wake up in 900m2 of garden… '}
@@ -85,8 +81,6 @@ function ProductValues(props) {
               </Typography>
             </div>
           </Grid>
-
-          {/* Photo, header, textbox 3 */}
           <Grid item xs={12} md={4}>
             <div className={classes.item}>
               <img
@@ -95,7 +89,7 @@ function ProductValues(props) {
                 alt="clock"
               />
               <Typography variant="h6" className={classes.title}>
-                The best deals
+                Exclusive rates
               </Typography>
               <Typography variant="h5">
                 {'By registering, you will access specially negotiated rates '}
