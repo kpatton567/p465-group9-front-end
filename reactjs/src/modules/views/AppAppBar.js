@@ -130,25 +130,7 @@ function AppAppBar(props) {
             {'Prevue'}
           </Link>
           <div className={classes.right}>
-            {/* <Link
-              color="inherit"
-              variant="h6"
-              underline="none"
-              className={classes.rightLink}
-              // href="/premium-themes/onepirate/sign-in/"
-              onClick={() => loginWithRedirect()}
-            >
-              {'Sign In'}
-            </Link> */}
-            {/* <Link
-              variant="h6"
-              underline="none"
-              className={clsx(classes.rightLink, classes.linkSecondary)}
-              href="/premium-themes/onepirate/sign-up/"
-            >
-              {'Sign Up'}
-            </Link> */}
-
+          
             {/* Logout button */}
             <Link
               variant="h6"
