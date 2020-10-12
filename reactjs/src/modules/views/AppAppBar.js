@@ -125,19 +125,18 @@ function AppAppBar(props) {
             underline="none"
             color="inherit"
             className={classes.title}
-            href="/premium-themes/onepirate/"
+            href="/prevue"
           >
             {'Prevue'}
           </Link>
+
+          {/* Logout button */}
           <div className={classes.right}>
-          
-            {/* Logout button */}
             <Link
               variant="h6"
               underline="none"
               className={clsx(classes.rightLink, classes.linkSecondary)}
               style={{display: isAuthenticated ? 'block' : 'none' }}
-              onClick={() => logout()}
             ></Link>
             <Link>{ isAuthenticated ? <Profile/> : null }</Link> 
           </div>
@@ -175,7 +174,7 @@ function AppAppBar(props) {
           underline="none"
           color="inherit"
           className={classes.title}
-          href="/premium-themes/onepirate/"
+          href="/prevue"
         >
           {'Prevue'}
         </Link>
@@ -189,23 +188,20 @@ function AppAppBar(props) {
             variant="h6"
             underline="none"
             className={classes.rightLink}
-            // href="/premium-themes/onepirate/sign-in/"
             onClick={() => loginWithRedirect()}
           >
             {'Sign In'}
           </Link>
+        </div>
 
-
-          {/* Sign up */}
-          <Link
+        <Link
             variant="h6"
             underline="none"
             className={clsx(classes.rightLink, classes.linkSecondary)}
-            onClick={()=> loginWithRedirect()}
+            href="/premium-themes/onepirate/sign-up/"
           >
             {'Sign Up'}
-          </Link>
-        </div>
+        </Link>
 
 
       </Toolbar>
