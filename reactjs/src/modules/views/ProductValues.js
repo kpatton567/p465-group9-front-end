@@ -47,6 +47,8 @@ function ProductValues(props) {
     <section className={classes.root}>
       <Container className={classes.container}>
         <Grid container spacing={5}>
+
+          {/* Photo, header, textbox 1 */}
           <Grid item xs={12} md={4}>
             <div className={classes.item}>
               <img
@@ -55,7 +57,7 @@ function ProductValues(props) {
                 alt="ticket"
               />
               <Typography variant="h6" className={classes.title}>
-                The best luxury hotels
+                The best movie options
               </Typography>
               <Typography variant="h5">
                 {'From the latest action thrillers to the classic love stories that keep you coming back for more, '}
@@ -63,6 +65,8 @@ function ProductValues(props) {
               </Typography>
             </div>
           </Grid>
+
+          {/* Photo, header, textbox 2 */}
           <Grid item xs={12} md={4}>
             <div className={classes.item}>
               <img
@@ -71,13 +75,15 @@ function ProductValues(props) {
                 alt="easy123"
               />
               <Typography variant="h6" className={classes.title}>
-                New experiences
+                The easiest process
               </Typography>
               <Typography variant="h5">
                 {'Sign up, find theaters and viewings near you, select your snacks, and go!'}
               </Typography>
             </div>
           </Grid>
+
+          {/* Photo, header, textbox 3 */}
           <Grid item xs={12} md={4}>
             <div className={classes.item}>
               <img
@@ -86,7 +92,7 @@ function ProductValues(props) {
                 alt="savemoney"
               />
               <Typography variant="h6" className={classes.title}>
-                Exclusive rates
+                The best deals
               </Typography>
               <Typography variant="h5">
                 {'By signing up, you will gain access to deals '}

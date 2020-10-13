@@ -4,12 +4,9 @@ import { withStyles } from '@material-ui/core/styles';
 import Button from '../components/Button';
 import Typography from '../components/Typography';
 import ProductHeroLayout from './ProductHeroLayout';
-<<<<<<< .merge_file_Gtjziz
-=======
 import { useAuth0 } from '@auth0/auth0-react';
 import rawTheme from '../theme'
 
->>>>>>> .merge_file_496xgC
 
 const backgroundImage =
     //'https://cdn.hipwallpaper.com/i/30/27/p5PtNh.jpg'; // option 1 (color: #C40808)
@@ -37,16 +34,12 @@ const styles = (theme) => ({
 
 function ProductHero(props) {
   const { classes } = props;
+  const { loginWithRedirect} = useAuth0();
 
   return (
     <ProductHeroLayout backgroundClassName={classes.background}>
       
       {/* Increase the network loading priority of the background image. */}
-<<<<<<< .merge_file_Gtjziz
-      <img style={{ display: 'none' }} src={backgroundImage} alt="increase priority" />
-      <Typography color="inherit" align="center" variant="h2" marked="center">
-        Upgrade your Sundays
-=======
       <img 
         style={{ display: 'none' }} 
         src={backgroundImage} 
@@ -56,37 +49,26 @@ function ProductHero(props) {
       {/* Big center text */}
       <Typography color="inherit" align="center" variant="h2" marked="center">
         {'Find your theater now!'}
->>>>>>> .merge_file_496xgC
       </Typography>
+
+      {/* Smaller center text above button */}
       <Typography color="inherit" align="center" variant="h5" className={classes.h5}>
-<<<<<<< .merge_file_Gtjziz
-        Enjoy secret offers up to -70% off the best luxury hotels every Sunday.
-      </Typography>
-=======
         {'Sign up and start saving on your movie watching experience today!'}
       </Typography>
 
       {/* Big sign up button */}
->>>>>>> .merge_file_496xgC
       <Button
         color="secondary"
         variant="contained"
         size="large"
         className={classes.button}
         component="a"
-        href="/premium-themes/onepirate/sign-up/"
+        onClick={()=> loginWithRedirect()}
       >
-<<<<<<< .merge_file_Gtjziz
-        Register
-      </Button>
-      <Typography variant="body2" color="inherit" className={classes.more}>
-        Discover the experience
-=======
         {'SIGN UP'}
       </Button>
       <Typography variant="body2" color="inherit" className={classes.more}>
         {'Welcome to the future of movie viewing'}
->>>>>>> .merge_file_496xgC
       </Typography>
     </ProductHeroLayout>
   );
