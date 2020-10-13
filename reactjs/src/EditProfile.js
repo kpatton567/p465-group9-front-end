@@ -1,6 +1,6 @@
 import withRoot from './modules/withRoot';
 // --- Post bootstrap -----
-import React from 'react';
+import React, {useState} from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import Grid from '@material-ui/core/Grid';
 import Link from '@material-ui/core/Link';
@@ -13,6 +13,8 @@ import { email, required } from './modules/form/validation';
 import RFTextField from './modules/form/RFTextField';
 import FormButton from './modules/form/FormButton';
 import FormFeedback from './modules/form/FormFeedback';
+import { useAuth0 } from '@auth0/auth0-react';
+import axios from 'axios';
 
 const useStyles = makeStyles((theme) => ({
   form: {
@@ -27,12 +29,12 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-function SignUp() {
+function EditProfile(props) {
   const classes = useStyles();
-  const [sent, setSent] = React.useState(false);
-
+  const [sent, setSaved] = React.useState(false);
+  const {user} = useAuth0();
   const validate = (values) => {
-    const errors = required(['firstName', 'lastName', 'email', 'password'], values);
+    const errors = required(['firstName', 'lastName', 'email', 'mobile'], values);
 
     if (!errors.email) {
       const emailError = email(values.email, values);
@@ -43,10 +45,23 @@ function SignUp() {
 
     return errors;
   };
-
+  const [state , setState] = useState({
+    email : "",
+    password : "",
+    successMessage: null
+  })
   const handleSubmit = () => {
-    setSent(true);
+    setSaved(true);
   };
+
+  const handleSubmitClick = (e) => {
+    e.preventDefault();
+        const payload={
+            "email":state.email,
+            "password":state.password,
+        }
+      console.log("Test");
+    }
 
   return (
     <React.Fragment>
@@ -54,11 +69,11 @@ function SignUp() {
       <AppForm>
         <React.Fragment>
           <Typography variant="h3" gutterBottom marked="center" align="center">
-            Sign Up
+            Edit Profile
           </Typography>
           <Typography variant="body2" align="center">
-            <Link href="/premium-themes/onepirate/sign-in/" underline="always">
-              Already have an account?
+            <Link href="/home" underline="always">
+              Go back to Home
             </Link>
           </Typography>
         </React.Fragment>
@@ -69,6 +84,7 @@ function SignUp() {
                 <Grid item xs={12} sm={6}>
                   <Field
                     autoFocus
+                    // initialValue = {user.name}
                     component={RFTextField}
                     autoComplete="fname"
                     fullWidth
@@ -79,6 +95,7 @@ function SignUp() {
                 </Grid>
                 <Grid item xs={12} sm={6}>
                   <Field
+                    // initialValue = {user.name}
                     component={RFTextField}
                     autoComplete="lname"
                     fullWidth
@@ -89,7 +106,8 @@ function SignUp() {
                 </Grid>
               </Grid>
               <Field
-                autoComplete="email"
+                // initialValue = {user ? 'null': user.email}
+                // autoComplete="email"
                 component={RFTextField}
                 disabled={submitting || sent}
                 fullWidth
@@ -103,10 +121,10 @@ function SignUp() {
                 component={RFTextField}
                 disabled={submitting || sent}
                 required
-                name="password"
-                autoComplete="current-password"
-                label="Password"
-                type="password"
+                name="mobile"
+                
+                label="Mobile Number"
+                type="mobile"
                 margin="normal"
               />
               <FormSpy subscription={{ submitError: true }}>
@@ -122,9 +140,10 @@ function SignUp() {
                 className={classes.button}
                 disabled={submitting || sent}
                 color="secondary"
+                onClick={handleSubmitClick}
                 fullWidth
               >
-                {submitting || sent ? 'In progress…' : 'Sign Up'}
+                {submitting || sent ? 'In progress…' : 'Save Changes'}
               </FormButton>
             </form>
           )}
@@ -135,4 +154,4 @@ function SignUp() {
   );
 }
 
-export default withRoot(SignUp);
+export default withRoot(EditProfile);

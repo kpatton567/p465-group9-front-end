@@ -91,8 +91,7 @@ const styles = (theme) => ({
 
 function AppAppBar(props) {
   const { classes } = props;
-  const { loginWithRedirect} = useAuth0();
-  const { logout, isAuthenticated } = useAuth0();
+  const { loginWithRedirect, isAuthenticated} = useAuth0();
 
   // Change header according to whether user is logged in
   return isAuthenticated ? 
@@ -125,7 +124,7 @@ function AppAppBar(props) {
             underline="none"
             color="inherit"
             className={classes.title}
-            href="/prevue"
+            href="/"
           >
             {'Prevue'}
           </Link>
@@ -190,18 +189,18 @@ function AppAppBar(props) {
             className={classes.rightLink}
             onClick={() => loginWithRedirect()}
           >
-            {'Sign In'}
+            {'Sign In/Sign up'}
           </Link>
         </div>
 
-        <Link
+        {/* <Link
             variant="h6"
             underline="none"
             className={clsx(classes.rightLink, classes.linkSecondary)}
             href="/premium-themes/onepirate/sign-up/"
           >
             {'Sign Up'}
-        </Link>
+        </Link> */}
 
 
       </Toolbar>

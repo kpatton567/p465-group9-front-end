@@ -1,9 +1,9 @@
 import React from 'react';
 import classNames from "classnames";
 import PropTypes from 'prop-types';
-import clsx from 'clsx';
 import { withStyles } from '@material-ui/core/styles';
 import Link from '@material-ui/core/Link';
+import { BrowserRouter as Router }  from 'react-router-dom';
 import { styles as toolbarStyles } from '../components/Toolbar';
 import { useAuth0 } from '@auth0/auth0-react';
 import Person from "@material-ui/icons/Person";
@@ -16,6 +16,25 @@ import MenuList from "@material-ui/core/MenuList";
 import Hidden from "@material-ui/core/Hidden";
 import Poppers from "@material-ui/core/Popper";
 import Divider from "@material-ui/core/Divider";
+import HistoryIcon from '@material-ui/icons/History';
+import AttachMoneyIcon from '@material-ui/icons/AttachMoney';
+import SettingsIcon from '@material-ui/icons/Settings';
+import ContactSupportIcon from '@material-ui/icons/ContactSupport';
+import ExitToAppIcon from '@material-ui/icons/ExitToApp';
+import PersonIcon from '@material-ui/icons/Person';
+import ListItemText from '@material-ui/core/ListItemText';
+import ListItemIcon from '@material-ui/core/ListItemIcon';
+
+const StyledMenuItem = withStyles((theme) => ({
+  root: {
+    '&:focus': {
+      backgroundColor: theme.palette.primary.main,
+      '& .MuiListItemIcon-root, & .MuiListItemText-primary': {
+        color: theme.palette.common.white,
+      },
+    },
+  },
+}))(MenuItem);
 
 const styles = (theme) => ({
   title: {
@@ -48,7 +67,6 @@ const styles = (theme) => ({
 
 function Profile(props) {
   const { classes } = props;
-  //   const { loginWithRedirect} = useAuth0();
   const [openProfile, setOpenProfile] = React.useState(null);
 
   const { user, logout } = useAuth0();
@@ -65,6 +83,7 @@ function Profile(props) {
   };
 
   return (
+    <Router>
     <div>
       <div className={classes.manager}>
         <Button
@@ -105,25 +124,58 @@ function Profile(props) {
               <Paper>
                 <ClickAwayListener onClickAway={handleCloseProfile}>
                   <MenuList role="menu">
-                    <MenuItem
-                      onClick={handleCloseProfile}
-                      className={classes.dropdownItem}
-                    >
-                      Profile
-                    </MenuItem>
-                    <MenuItem
-                      onClick={handleCloseProfile}
-                      className={classes.dropdownItem}
-                    >
-                      Settings
-                    </MenuItem>
+                   
+                    <Link href = "/editProfile">
+                      <StyledMenuItem href="/editProfile" >
+                    
+                      <ListItemIcon>
+                        <PersonIcon fontSize="small" />
+                      </ListItemIcon>
+                      <ListItemText  primary="Edit Profile" />
+                   
+                      </StyledMenuItem>
+                    </Link>
+                    <Link href = "/editProfile">
+                    <StyledMenuItem>
+                      <ListItemIcon>
+                        <HistoryIcon fontSize="small" />
+                      </ListItemIcon>
+                      <ListItemText primary="Booking History" />
+                    </StyledMenuItem>
+                    </Link>
+                    <Link href = "/editProfile">
+                      <StyledMenuItem>
+                        <ListItemIcon>
+                          <AttachMoneyIcon fontSize="small" />
+                        </ListItemIcon>
+                        <ListItemText primary="Rewards" />
+                      </StyledMenuItem>
+                    </Link>
+                    <Link href = "/editProfile">
+                    <StyledMenuItem>
+                      <ListItemIcon>
+                        <ContactSupportIcon fontSize="small" />
+                      </ListItemIcon>
+                      <ListItemText primary="Help and Support" />
+                    </StyledMenuItem>
+                    </Link>
+                    <Link href = "/editProfile">
+                    <StyledMenuItem>
+                      <ListItemIcon>
+                        <SettingsIcon fontSize="small" />
+                      </ListItemIcon>
+                      <ListItemText primary="Settings" />
+                    </StyledMenuItem>
+                    </Link>
                     <Divider light />
-                    <MenuItem
-                      onClick={() => logout()}
-                      className={classes.dropdownItem}
-                    >
-                      Logout
-                    </MenuItem>
+                    
+                    <StyledMenuItem onClick = {logout}>
+                    <ListItemIcon>
+                      <ExitToAppIcon fontSize="small" />
+                    </ListItemIcon>
+                    <ListItemText primary="Sign out" />
+                  </StyledMenuItem>
+
                   </MenuList>
                 </ClickAwayListener>
               </Paper>
@@ -132,6 +184,7 @@ function Profile(props) {
         </Poppers>
       </div>
     </div>
+    </Router>
   );
 }
 
