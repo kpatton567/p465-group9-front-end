@@ -4,6 +4,7 @@ import { withStyles } from '@material-ui/core/styles';
 import ButtonBase from '@material-ui/core/ButtonBase';
 import Container from '@material-ui/core/Container';
 import Typography from '../components/Typography';
+import Link from '@material-ui/core/Link';
 
 const styles = (theme) => ({
   root: {
@@ -86,6 +87,8 @@ const styles = (theme) => ({
 function ProductCategories(props) {
   const { classes } = props;
 
+
+  // 9 movie panels
   const images = [
     {
       url:
@@ -148,6 +151,7 @@ function ProductCategories(props) {
       <Typography variant="h4" marked="center" align="center" component="h2">
         For all tastes and all desires
       </Typography>
+
       <div className={classes.images}>
         {images.map((image) => (
           <ButtonBase
@@ -178,6 +182,20 @@ function ProductCategories(props) {
           </ButtonBase>
         ))}
       </div>
+
+      {/* Link to more movies below panels */}
+      <Typography variant="h4" marked="center" align="center" component="h2">
+      <Link
+          variant="h5"
+          underline="none"
+          color="inherit"
+          marked="center"
+          href="/movies"
+        >          
+          {'Click here to view more'}
+        </Link>
+      </Typography>
+          
     </Container>
   );
 }

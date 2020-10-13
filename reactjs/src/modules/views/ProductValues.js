@@ -4,6 +4,9 @@ import { withStyles } from '@material-ui/core/styles';
 import Grid from '@material-ui/core/Grid';
 import Container from '@material-ui/core/Container';
 import Typography from '../components/Typography';
+import ticket from '../assets/ticket.png';
+import easy from '../assets/easy123.png';
+import save from '../assets/savemoney.png';
 
 const styles = (theme) => ({
   root: {
@@ -24,7 +27,7 @@ const styles = (theme) => ({
     padding: theme.spacing(0, 5),
   },
   image: {
-    height: 55,
+    height: 100,
   },
   title: {
     marginTop: theme.spacing(5),
@@ -43,25 +46,20 @@ function ProductValues(props) {
   return (
     <section className={classes.root}>
       <Container className={classes.container}>
-        <img
-          src="/static/themes/onepirate/productCurvyLines.png"
-          className={classes.curvyLines}
-          alt="curvy lines"
-        />
         <Grid container spacing={5}>
           <Grid item xs={12} md={4}>
             <div className={classes.item}>
               <img
                 className={classes.image}
-                src="/static/themes/onepirate/productValues1.svg"
-                alt="suitcase"
+                src={ticket}  
+                alt="ticket"
               />
               <Typography variant="h6" className={classes.title}>
                 The best luxury hotels
               </Typography>
               <Typography variant="h5">
-                {'From the latest trendy boutique hotel to the iconic palace with XXL pool'}
-                {', go for a mini-vacation just a few subway stops away from your home.'}
+                {'From the latest action thrillers to the classic love stories that keep you coming back for more, '}
+                {'we think we have just the movie for you.'}
               </Typography>
             </div>
           </Grid>
@@ -69,15 +67,14 @@ function ProductValues(props) {
             <div className={classes.item}>
               <img
                 className={classes.image}
-                src="/static/themes/onepirate/productValues2.svg"
-                alt="graph"
+                src={easy}
+                alt="easy123"
               />
               <Typography variant="h6" className={classes.title}>
                 New experiences
               </Typography>
               <Typography variant="h5">
-                {'Privatize a pool, take a Japanese bath or wake up in 900m2 of garden… '}
-                {'your Sundays will not be alike.'}
+                {'Sign up, find theaters and viewings near you, select your snacks, and go!'}
               </Typography>
             </div>
           </Grid>
@@ -85,15 +82,15 @@ function ProductValues(props) {
             <div className={classes.item}>
               <img
                 className={classes.image}
-                src="/static/themes/onepirate/productValues3.svg"
-                alt="clock"
+                src={save}
+                alt="savemoney"
               />
               <Typography variant="h6" className={classes.title}>
                 Exclusive rates
               </Typography>
               <Typography variant="h5">
-                {'By registering, you will access specially negotiated rates '}
-                {'that you will not find anywhere else.'}
+                {'By signing up, you will gain access to deals '}
+                {'that you will find nowhere else.'}
               </Typography>
             </div>
           </Grid>
