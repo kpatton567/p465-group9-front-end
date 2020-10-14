@@ -9,7 +9,7 @@ import Link from '@material-ui/core/Link';
 const styles = (theme) => ({
   root: {
     marginTop: theme.spacing(8),
-    marginBottom: theme.spacing(4),
+    marginBottom: theme.spacing(25),
   },
   images: {
     marginTop: theme.spacing(8),
@@ -21,7 +21,7 @@ const styles = (theme) => ({
     display: 'block',
     padding: 0,
     borderRadius: 0,
-    height: '40vh',
+    height: '60vh', // changes height of movie poster, 60 seems to show poster near-perfectly
     [theme.breakpoints.down('sm')]: {
       width: '100% !important',
       height: 100,
@@ -39,6 +39,8 @@ const styles = (theme) => ({
       border: '4px solid currentColor',
     },
   },
+
+  // Button on image
   imageButton: {
     position: 'absolute',
     left: 0,
@@ -50,6 +52,8 @@ const styles = (theme) => ({
     justifyContent: 'center',
     color: theme.palette.common.white,
   },
+
+  // Image
   imageSrc: {
     position: 'absolute',
     left: 0,
@@ -57,8 +61,9 @@ const styles = (theme) => ({
     top: 0,
     bottom: 0,
     backgroundSize: 'cover',
-    backgroundPosition: 'center 40%',
+    backgroundPosition: 'center 60%',
   },
+
   imageBackdrop: {
     position: 'absolute',
     left: 0,
@@ -69,10 +74,14 @@ const styles = (theme) => ({
     opacity: 0.5,
     transition: theme.transitions.create('opacity'),
   },
+
+  // Text on each panel
   imageTitle: {
     position: 'relative',
     padding: `${theme.spacing(2)}px ${theme.spacing(4)}px 14px`,
   },
+
+  // Line below text on each panel
   imageMarked: {
     height: 3,
     width: 18,
@@ -84,6 +93,15 @@ const styles = (theme) => ({
   },
 });
 
+// Concatenate the name of the movie to redirect the user to the proper url
+function CreateUrl(image)
+{
+  var mov = "/movies/"
+  var res = mov.concat(image);
+
+  return res;
+}
+
 // Movie panels
 function ProductCategories(props) {
   const { classes } = props;
@@ -93,57 +111,57 @@ function ProductCategories(props) {
   const images = [
     {
       url:
-        'https://images.unsplash.com/photo-1534081333815-ae5019106622?auto=format&fit=crop&w=400&q=80',
-      title: 'Movie_1',
-      width: '40%',
+        'https://images-na.ssl-images-amazon.com/images/I/81ai6zx6eXL._AC_SL1304_.jpg',
+      title: 'Avengers: End Game',
+      width: '33%',
     },
     {
       url:
-        'https://images.unsplash.com/photo-1531299204812-e6d44d9a185c?auto=format&fit=crop&w=400&q=80',
-      title: 'Movie_2',
-      width: '20%',
+        'https://media-cache.cinematerial.com/p/500x/jllmn2cv/behind-you-movie-poster.jpg?v=1600320617',
+      title: 'Behind You',
+      width: '33%',
     },
     {
       url:
-        'https://images.unsplash.com/photo-1476480862126-209bfaa8edc8?auto=format&fit=crop&w=400&q=80',
-      title: 'Movie_3',
-      width: '40%',
+        'https://www.metaflix.com/wp-content/uploads/2020/09/The-Wolf-of-Snow-Hollow-Movie-Poster.jpg',
+      title: 'The Wolf of Snow Hollow',
+      width: '33%',
     },
     {
       url:
-        'https://images.unsplash.com/photo-1453747063559-36695c8771bd?auto=format&fit=crop&w=400&q=80',
-      title: 'Movie_4',
-      width: '38%',
+        'https://m.media-amazon.com/images/M/MV5BMDdlNDNkMzQtMjYwMi00OGFjLWE4ZGQtYjA1YWMxOWM2ZGYyXkEyXkFqcGdeQXVyMTkxNjUyNQ@@._V1_UY1200_CR90,0,630,1200_AL_.jpg',
+      title: 'The Owners',
+      width: '33%',
     },
     {
       url:
-        'https://images.unsplash.com/photo-1523309996740-d5315f9cc28b?auto=format&fit=crop&w=400&q=80',
-      title: 'Movie_5',
-      width: '38%',
+        'https://lh3.googleusercontent.com/proxy/UD73IQuK6WUC_LF3kP7c_aoqnz4l4E0eoUOilWdELl_bjvTf_gbuh1Wx5nzLUTb_Sbe_gCU62-n1ryGL6flUIx_FzlYZS8p3kWL0Fz37ufCL',
+      title: 'Guest House',
+      width: '33%',
     },
     {
       url:
-        'https://images.unsplash.com/photo-1534452203293-494d7ddbf7e0?auto=format&fit=crop&w=400&q=80',
-      title: 'Movie_6',
-      width: '24%',
+        'https://lh3.googleusercontent.com/proxy/NuJp9TnrWGIL5quAu0Il2NMpMvTsqxGLtF0xO5ZIpMYq-qqsrI4CEbCfY04H9ZrQUnIg-VzbX9faLvnQwDS5p7T0nmZyuJNSAIgMBPWw1IQMm0HPUQYQ',
+      title: 'Irresistable',
+      width: '33%',
     },
     {
       url:
-        'https://images.unsplash.com/photo-1506941433945-99a2aa4bd50a?auto=format&fit=crop&w=400&q=80',
-      title: 'Movie_7',
-      width: '40%',
+        'https://m.media-amazon.com/images/M/MV5BOTdmZTk2YmItMzgzMy00MWRhLTg4MzctNTJmYzM5MzE0NmM2XkEyXkFqcGdeQXVyODk4OTc3MTY@._V1_.jpg',
+      title: 'The Secrets We Keep',
+      width: '33%',
     },
     {
       url:
-        'https://images.unsplash.com/photo-1533727937480-da3a97967e95?auto=format&fit=crop&w=400&q=80',
-      title: 'Movie_8',
-      width: '20%',
+        'https://i.redd.it/4nlz0va50cf41.png',
+      title: 'Target Number One',
+      width: '33%',
     },
     {
       url:
-        'https://images.unsplash.com/photo-1518136247453-74e7b5265980?auto=format&fit=crop&w=400&q=80',
-      title: 'Movie_9',
-      width: '40%',
+        'https://m.media-amazon.com/images/M/MV5BYjE2MjIwMmYtM2ZiMy00MzdmLTkyNTYtNmFiNjM5MDJhMGVmXkEyXkFqcGdeQXVyODk4OTc3MTY@._V1_.jpg',
+      title: 'The Silencing',
+      width: '33%',
     },
   ];
 
@@ -155,6 +173,8 @@ function ProductCategories(props) {
         {'Check out these highly rated options'}
       </Typography>
 
+
+      {/* Do the following for each image panel (map) */}
       <div className={classes.images}>
         {images.map((image) => (
           <ButtonBase
@@ -163,7 +183,9 @@ function ProductCategories(props) {
             style={{
               width: image.width,
             }}
+            href={CreateUrl(image.title)} // send the user to the url according to the panel they clicked
           >
+            {/* Import image from url */}
             <div
               className={classes.imageSrc}
               style={{
