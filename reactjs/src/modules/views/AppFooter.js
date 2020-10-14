@@ -52,7 +52,6 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-
 export default function AppFooter() {
   const classes = useStyles();
 
