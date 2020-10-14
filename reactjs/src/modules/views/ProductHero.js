@@ -8,7 +8,6 @@ import { useAuth0 } from '@auth0/auth0-react';
 
 
 const backgroundImage =
-    //'https://cdn.hipwallpaper.com/i/30/27/p5PtNh.jpg'; // option 1 (color: #C40808)
     'https://images.all-free-download.com/images/graphiclarge/film_film_vector_289584.jpg'; // option 2
 const styles = (theme) => ({
   background: {
