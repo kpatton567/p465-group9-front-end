@@ -167,6 +167,7 @@ function Profile(props) {
                       <ListItemText primary="Settings" />
                     </StyledMenuItem>
                     </Link>
+                    
                     <Divider light />
                     
                     <StyledMenuItem onClick = {logout}>

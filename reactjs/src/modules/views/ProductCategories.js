@@ -8,8 +8,7 @@ import Link from '@material-ui/core/Link';
 
 const styles = (theme) => ({
   root: {
-    marginTop: theme.spacing(8),
-    marginBottom: theme.spacing(25),
+    backgroundColor: '#222325',
   },
   images: {
     marginTop: theme.spacing(8),
@@ -166,61 +165,71 @@ function ProductCategories(props) {
   ];
 
   return (
-    <Container className={classes.root} component="section">
-  
-      {/* Big text above movie panels */}
-      <Typography variant="h4" marked="center" align="center" component="h2">
-        {'Check out these highly rated options'}
-      </Typography>
+    // Makes the background entirely black
+    <Container
+      className={classes.root} 
+      component="section"
+      maxWidth="xl"
+    >
+      <Container 
+        className={classes.root} 
+        component="section"
+      >
+    
+        {/* Big text above movie panels */}
+        <Typography variant="h4" marked="center" align="center" component="h2">
+          {'Check out these highly rated options'}
+        </Typography>
 
 
-      {/* Do the following for each image panel (map) */}
-      <div className={classes.images}>
-        {images.map((image) => (
-          <ButtonBase
-            key={image.title}
-            className={classes.imageWrapper}
-            style={{
-              width: image.width,
-            }}
-            href={CreateUrl(image.title)} // send the user to the url according to the panel they clicked
-          >
-            {/* Import image from url */}
-            <div
-              className={classes.imageSrc}
+        {/* Do the following for each image panel (map) */}
+        <div className={classes.images}>
+          {images.map((image) => (
+            <ButtonBase
+              key={image.title}
+              className={classes.imageWrapper}
               style={{
-                backgroundImage: `url(${image.url})`,
+                width: image.width,
               }}
-            />
-            <div className={classes.imageBackdrop} />
-            <div className={classes.imageButton}>
-              <Typography
-                component="h3"
-                variant="h6"
-                color="inherit"
-                className={classes.imageTitle}
-              >
-                {image.title}
-                <div className={classes.imageMarked} />
-              </Typography>
-            </div>
-          </ButtonBase>
-        ))}
-      </div>
+              href={CreateUrl(image.title)} // send the user to the url according to the panel they clicked
+            >
+              {/* Import image from url */}
+              <div
+                className={classes.imageSrc}
+                style={{
+                  backgroundImage: `url(${image.url})`,
+                }}
+              />
+              <div className={classes.imageBackdrop} />
+              <div className={classes.imageButton}>
+                <Typography
+                  component="h3"
+                  variant="h6"
+                  color="inherit"
+                  className={classes.imageTitle}
+                >
+                  {image.title}
+                  <div className={classes.imageMarked} />
+                </Typography>
+              </div>
+            </ButtonBase>
+          ))}
+        </div>
 
-      {/* Link to more movies below panels */}
-      <Typography variant="h4" marked="center" align="center" component="h2">
-      <Link
-          variant="h5"
-          underline="none"
-          color="inherit"
-          marked="center"
-          href="/movies"
-        >          
-          {'Click here to view more'}
-        </Link>
-      </Typography>
-          
+        {/* Link to more movies below panels */}
+        <Typography variant="h4" marked="center" align="center" component="h2">
+        <Link
+            variant="h5"
+            underline="none"
+            color="inherit"
+            marked="center"
+            href="/movies"
+          >          
+            {'Click here to view more'}
+          </Link>
+        </Typography>
+            
+      </Container>
     </Container>
   );
 }

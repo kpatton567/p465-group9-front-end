@@ -5,7 +5,8 @@ import { useAuth0 } from '@auth0/auth0-react';
 import { BrowserRouter as Router,Route } from "react-router-dom";
 import EditProfile from "./EditProfile";
 import Home from "./Home";
-import Error from "./modules/components/Error";
+import MovieBooking from "../src/modules/views/MovieBooking";
+
 
 function App() {
   const { isLoading } = useAuth0();
@@ -21,6 +22,9 @@ function App() {
         <Route path="/home" exact={true}>
           <Home/>
         </Route> 
+        <Route path="/movieBooking" exact={true}>
+          <MovieBooking/>
+        </Route>
         <Route path='/support'>
           {'Implementing support page/chat in later sprint'}
         </Route>
@@ -29,7 +33,7 @@ function App() {
         </Route>
  
         {/* Prevent navigation to non-existing portion of site, needs work, currently prints on all pages */}
-        {/* <Route component={Error}/>  */} 
+        {/* <Route component={Error}/>  */}  
       </Router>
   );
 }

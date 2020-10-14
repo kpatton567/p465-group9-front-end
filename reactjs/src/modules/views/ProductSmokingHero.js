@@ -10,8 +10,8 @@ const styles = (theme) => ({
     display: 'flex',
     flexDirection: 'column',
     alignItems: 'center',
-    marginTop: theme.spacing(9),
-    marginBottom: theme.spacing(9),
+    backgroundColor: '#222325',
+    maxWidth: '100%',
   },
   button: {
     border: '4px solid currentColor',

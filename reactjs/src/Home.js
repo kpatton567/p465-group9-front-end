@@ -10,14 +10,22 @@ import ProductHowItWorks from './modules/views/ProductHowItWorks';
 import ProductCTA from './modules/views/ProductCTA';
 import AppAppBar from './modules/views/AppAppBar';
 import { useAuth0 } from '@auth0/auth0-react';
+import { withStyles } from '@material-ui/core/styles';
+import { makeStyles } from '@material-ui/core/styles';
 
 function Home() {
+
   const { isLoading } = useAuth0();
+  // const useStyles = makeStyles((theme) => ({
+  //   rootTest: {
+  //     backgroundColor: '#222325'
+  // }}))
+  // const classes = useStyles();
 
   if (isLoading) return <div>Loading...</div>
 
   return (
-    <React.Fragment>
+    <React.Fragment >
       <AppAppBar />
       <ProductHero />
       <ProductValues />
