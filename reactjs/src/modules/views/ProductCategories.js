@@ -8,8 +8,10 @@ import Link from '@material-ui/core/Link';
 
 const styles = (theme) => ({
   root: {
-    marginTop: theme.spacing(8),
-    marginBottom: theme.spacing(4),
+    maxWidth: '100%',
+    // marginTop: theme.spacing(8),
+    // marginBottom: theme.spacing(4),
+    backgroundColor: '#222325'
   },
   images: {
     marginTop: theme.spacing(8),

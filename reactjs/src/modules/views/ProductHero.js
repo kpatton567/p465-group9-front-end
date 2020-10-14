@@ -5,7 +5,6 @@ import Button from '../components/Button';
 import Typography from '../components/Typography';
 import ProductHeroLayout from './ProductHeroLayout';
 import { useAuth0 } from '@auth0/auth0-react';
-import rawTheme from '../theme'
 
 
 const backgroundImage =

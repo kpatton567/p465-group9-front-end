@@ -5,6 +5,7 @@ import { useAuth0 } from '@auth0/auth0-react';
 import { BrowserRouter as Router,Route } from "react-router-dom";
 import EditProfile from "./EditProfile";
 import Home from "./Home";
+import MovieBooking from "../src/modules/views/MovieBooking";
 
 
 function App() {
@@ -20,6 +21,9 @@ function App() {
         </Route> 
         <Route path="/home" exact={true}>
           <Home/>
+        </Route> 
+        <Route path="/movieBooking" exact={true}>
+          <MovieBooking/>
         </Route> 
       </Router>
   );

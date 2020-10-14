@@ -12,7 +12,9 @@ const styles = (theme) => ({
   root: {
     display: 'flex',
     overflow: 'hidden',
-    backgroundColor: theme.palette.secondary.light,
+    // backgroundColor: theme.palette.secondary.light,
+    backgroundColor: '#222325'
+    
   },
   container: {
     marginTop: theme.spacing(15),
@@ -25,6 +27,7 @@ const styles = (theme) => ({
     flexDirection: 'column',
     alignItems: 'center',
     padding: theme.spacing(0, 5),
+    
   },
   image: {
     height: 100,
@@ -45,7 +48,7 @@ function ProductValues(props) {
 
   return (
     <section className={classes.root}>
-      <Container className={classes.container}>
+      <Container className={classes.container} >
         <Grid container spacing={5}>
 
           {/* Photo, header, textbox 1 */}
