@@ -24,7 +24,16 @@ function App() {
         </Route> 
         <Route path="/movieBooking" exact={true}>
           <MovieBooking/>
-        </Route> 
+        </Route>
+        <Route path='/support'>
+          {'Implementing support page/chat in later sprint'}
+        </Route>
+        <Route path='/movies'>
+          {'In progress... dummy page'}
+        </Route>
+ 
+        {/* Prevent navigation to non-existing portion of site, needs work, currently prints on all pages */}
+        {/* <Route component={Error}/>  */}  
       </Router>
   );
 }

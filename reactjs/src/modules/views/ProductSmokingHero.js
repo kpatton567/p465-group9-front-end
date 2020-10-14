@@ -10,8 +10,6 @@ const styles = (theme) => ({
     display: 'flex',
     flexDirection: 'column',
     alignItems: 'center',
-    // marginTop: theme.spacing(9),
-    // marginBottom: theme.spacing(9),
     backgroundColor: '#222325',
     maxWidth: '100%',
   },
@@ -35,13 +33,16 @@ function ProductSmokingHero(props) {
 
   return (
     <Container className={classes.root} component="section">
-      <Button className={classes.button}>
+      <Button 
+        className={classes.button}
+        href="/support"
+      >
         <Typography variant="h4" component="span">
-          Questions? Need help?
+          {'Questions? Need help?'}
         </Typography>
       </Button>
       <Typography variant="subtitle1" className={classes.link}>
-        We are here to help. Contact us!
+        {'We are here to help. Contact us!'}
       </Typography>
     </Container>
   );

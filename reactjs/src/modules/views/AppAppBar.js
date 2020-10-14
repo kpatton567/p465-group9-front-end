@@ -53,7 +53,7 @@ const styles = (theme) => ({
     '&:hover': {
       backgroundColor: fade(theme.palette.common.white, 0.25),
     },
-    marginRight: theme.spacing(-30),
+    marginRight: theme.spacing(-32),
     marginLeft: 0,
     width: '100%',
     [theme.breakpoints.up('sm')]: {
@@ -173,7 +173,7 @@ function AppAppBar(props) {
           underline="none"
           color="inherit"
           className={classes.title}
-          href="/prevue"
+          href="/"
         >
           {'Prevue'}
         </Link>
@@ -192,16 +192,6 @@ function AppAppBar(props) {
             {'Sign In/Sign up'}
           </Link>
         </div>
-
-        {/* <Link
-            variant="h6"
-            underline="none"
-            className={clsx(classes.rightLink, classes.linkSecondary)}
-            href="/premium-themes/onepirate/sign-up/"
-          >
-            {'Sign Up'}
-        </Link> */}
-
 
       </Toolbar>
     </AppBar>
