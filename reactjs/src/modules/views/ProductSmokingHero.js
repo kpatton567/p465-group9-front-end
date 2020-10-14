@@ -10,8 +10,10 @@ const styles = (theme) => ({
     display: 'flex',
     flexDirection: 'column',
     alignItems: 'center',
-    marginTop: theme.spacing(9),
-    marginBottom: theme.spacing(9),
+    // marginTop: theme.spacing(9),
+    // marginBottom: theme.spacing(9),
+    backgroundColor: '#222325',
+    maxWidth: '100%',
   },
   button: {
     border: '4px solid currentColor',
@@ -35,13 +37,12 @@ function ProductSmokingHero(props) {
     <Container className={classes.root} component="section">
       <Button className={classes.button}>
         <Typography variant="h4" component="span">
-          Got any questions? Need help?
+          Questions? Need help?
         </Typography>
       </Button>
       <Typography variant="subtitle1" className={classes.link}>
-        We are here to help. Get in touch!
+        We are here to help. Contact us!
       </Typography>
-      <img src="/static/themes/onepirate/producBuoy.svg" className={classes.buoy} alt="buoy" />
     </Container>
   );
 }

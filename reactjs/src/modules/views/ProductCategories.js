@@ -4,11 +4,14 @@ import { withStyles } from '@material-ui/core/styles';
 import ButtonBase from '@material-ui/core/ButtonBase';
 import Container from '@material-ui/core/Container';
 import Typography from '../components/Typography';
+import Link from '@material-ui/core/Link';
 
 const styles = (theme) => ({
   root: {
-    marginTop: theme.spacing(8),
-    marginBottom: theme.spacing(4),
+    maxWidth: '100%',
+    // marginTop: theme.spacing(8),
+    // marginBottom: theme.spacing(4),
+    backgroundColor: '#222325'
   },
   images: {
     marginTop: theme.spacing(8),
@@ -83,71 +86,77 @@ const styles = (theme) => ({
   },
 });
 
+// Movie panels
 function ProductCategories(props) {
   const { classes } = props;
 
+
+  // 9 movie panels
   const images = [
     {
       url:
         'https://images.unsplash.com/photo-1534081333815-ae5019106622?auto=format&fit=crop&w=400&q=80',
-      title: 'Snorkeling',
+      title: 'Movie_1',
       width: '40%',
     },
     {
       url:
         'https://images.unsplash.com/photo-1531299204812-e6d44d9a185c?auto=format&fit=crop&w=400&q=80',
-      title: 'Massage',
+      title: 'Movie_2',
       width: '20%',
     },
     {
       url:
         'https://images.unsplash.com/photo-1476480862126-209bfaa8edc8?auto=format&fit=crop&w=400&q=80',
-      title: 'Hiking',
+      title: 'Movie_3',
       width: '40%',
     },
     {
       url:
         'https://images.unsplash.com/photo-1453747063559-36695c8771bd?auto=format&fit=crop&w=400&q=80',
-      title: 'Tour',
+      title: 'Movie_4',
       width: '38%',
     },
     {
       url:
         'https://images.unsplash.com/photo-1523309996740-d5315f9cc28b?auto=format&fit=crop&w=400&q=80',
-      title: 'Gastronomy',
+      title: 'Movie_5',
       width: '38%',
     },
     {
       url:
         'https://images.unsplash.com/photo-1534452203293-494d7ddbf7e0?auto=format&fit=crop&w=400&q=80',
-      title: 'Shopping',
+      title: 'Movie_6',
       width: '24%',
     },
     {
       url:
         'https://images.unsplash.com/photo-1506941433945-99a2aa4bd50a?auto=format&fit=crop&w=400&q=80',
-      title: 'Walking',
+      title: 'Movie_7',
       width: '40%',
     },
     {
       url:
         'https://images.unsplash.com/photo-1533727937480-da3a97967e95?auto=format&fit=crop&w=400&q=80',
-      title: 'Fitness',
+      title: 'Movie_8',
       width: '20%',
     },
     {
       url:
         'https://images.unsplash.com/photo-1518136247453-74e7b5265980?auto=format&fit=crop&w=400&q=80',
-      title: 'Reading',
+      title: 'Movie_9',
       width: '40%',
     },
   ];
 
   return (
     <Container className={classes.root} component="section">
+  
+      {/* Big text above movie panels */}
       <Typography variant="h4" marked="center" align="center" component="h2">
-        For all tastes and all desires
+        {'Check out these highly rated options'}
       </Typography>
+
       <div className={classes.images}>
         {images.map((image) => (
           <ButtonBase
@@ -178,6 +187,20 @@ function ProductCategories(props) {
           </ButtonBase>
         ))}
       </div>
+
+      {/* Link to more movies below panels */}
+      <Typography variant="h4" marked="center" align="center" component="h2">
+      <Link
+          variant="h5"
+          underline="none"
+          color="inherit"
+          marked="center"
+          href="/movies"
+        >          
+          {'Click here to view more'}
+        </Link>
+      </Typography>
+          
     </Container>
   );
 }
