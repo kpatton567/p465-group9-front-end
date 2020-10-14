@@ -5,21 +5,21 @@ import Button from '../components/Button';
 import Typography from '../components/Typography';
 import ProductHeroLayout from './ProductHeroLayout';
 import { useAuth0 } from '@auth0/auth0-react';
-import rawTheme from '../theme'
 
 
 const backgroundImage =
-    //'https://cdn.hipwallpaper.com/i/30/27/p5PtNh.jpg'; // option 1 (color: #C40808)
-    'https://images.all-free-download.com/images/graphiclarge/film_film_vector_289584.jpg'; // option 2
+    'https://images.all-free-download.com/images/graphiclarge/film_film_vector_289584.jpg';
 const styles = (theme) => ({
   background: {
     backgroundImage: `url(${backgroundImage})`,
     backgroundColor: '#7fc7d9', // Average color of the background image. 
     backgroundPosition: 'center',
   },
+
   button: {
     minWidth: 200,
   },
+
   h5: {
     marginBottom: theme.spacing(4),
     marginTop: theme.spacing(4),
@@ -27,14 +27,16 @@ const styles = (theme) => ({
       marginTop: theme.spacing(10),
     },
   },
+
   more: {
     marginTop: theme.spacing(2),
   },
 });
 
-function ProductHero(props) {
+function ProductHero(props) 
+{
   const { classes } = props;
-  const { loginWithRedirect} = useAuth0();
+  const { loginWithRedirect } = useAuth0();
 
   return (
     <ProductHeroLayout backgroundClassName={classes.background}>
