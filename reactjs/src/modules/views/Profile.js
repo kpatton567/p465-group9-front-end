@@ -143,6 +143,14 @@ function Profile(props) {
                       <ListItemText primary="Booking History" />
                     </StyledMenuItem>
                     </Link>
+                    <Link href = "/managerView">
+                    <StyledMenuItem>
+                      <ListItemIcon>
+                        {/* <SettingsIcon fontSize="small" /> */}
+                      </ListItemIcon>
+                      <ListItemText primary="Manager View" />
+                    </StyledMenuItem>
+                    </Link>
                     <Link href = "/editProfile">
                       <StyledMenuItem>
                         <ListItemIcon>
