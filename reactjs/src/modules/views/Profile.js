@@ -123,7 +123,7 @@ function Profile(props) {
             >
               <Paper>
                 <ClickAwayListener onClickAway={handleCloseProfile}>
-                  <MenuList role="menu">
+                  <MenuList  role="menu">
                    
                     <Link href = "/editProfile">
                       <StyledMenuItem href="/editProfile" >

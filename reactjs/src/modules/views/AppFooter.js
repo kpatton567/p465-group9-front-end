@@ -10,8 +10,7 @@ import Divider from "@material-ui/core/Divider";
 const useStyles = makeStyles((theme) => ({
   root: {
     display: 'flex',
-    // backgroundColor: theme.palette.secondary.light,
-    backgroundColor: '#222325',
+    backgroundColor: '#363636',
     color: "#FFFFFF"
   },
   container: {

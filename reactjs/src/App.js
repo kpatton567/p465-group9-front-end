@@ -6,6 +6,7 @@ import { BrowserRouter as Router,Route } from "react-router-dom";
 import EditProfile from "./EditProfile";
 import Home from "./Home";
 import MovieBooking from "../src/modules/views/MovieBooking";
+import MoviesPage from "../src/modules/views/MoviesPage";
 
 
 function App() {
@@ -29,7 +30,7 @@ function App() {
           {'Implementing support page/chat in later sprint'}
         </Route>
         <Route path='/movies'>
-          {'In progress... dummy page'}
+          <MoviesPage/>
         </Route>
  
         {/* Prevent navigation to non-existing portion of site, needs work, currently prints on all pages */}

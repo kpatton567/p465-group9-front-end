@@ -8,7 +8,8 @@ import Link from '@material-ui/core/Link';
 
 const styles = (theme) => ({
   root: {
-    backgroundColor: '#222325',
+    backgroundColor: '#363636',
+    color: '#FFFFFF',
   },
   images: {
     marginTop: theme.spacing(8),
@@ -90,6 +91,11 @@ const styles = (theme) => ({
     left: 'calc(50% - 9px)',
     transition: theme.transitions.create('opacity'),
   },
+
+  h5: {
+    marginTop: theme.spacing(2),
+   
+  },
 });
 
 // Concatenate the name of the movie to redirect the user to the proper url
@@ -134,13 +140,13 @@ function ProductCategories(props) {
     },
     {
       url:
-        'https://lh3.googleusercontent.com/proxy/UD73IQuK6WUC_LF3kP7c_aoqnz4l4E0eoUOilWdELl_bjvTf_gbuh1Wx5nzLUTb_Sbe_gCU62-n1ryGL6flUIx_FzlYZS8p3kWL0Fz37ufCL',
+        'https://lh3.googleusercontent.com/proxy/uUvZSXExwTBl5ZI6M0bphxHzZKyHh3ItE9jeDq7SHSHJ-RiLlG7hRe7GzK1EhM6CUm1AoUJF3t7e73H8JaXWC93VrGWe5hnApFp4E4hHOU0b',
       title: 'Guest House',
       width: '33%',
     },
     {
       url:
-        'https://lh3.googleusercontent.com/proxy/NuJp9TnrWGIL5quAu0Il2NMpMvTsqxGLtF0xO5ZIpMYq-qqsrI4CEbCfY04H9ZrQUnIg-VzbX9faLvnQwDS5p7T0nmZyuJNSAIgMBPWw1IQMm0HPUQYQ',
+        'https://lh3.googleusercontent.com/proxy/3O1fOJyvqSV95jXFV9Rm_CApGSRb6UAc03A57FrE2apBDjGWGGe6T4uKJtmFyAVZqtdD32WbRh_IF2tIqTrzrsEbzB3SJlA5E9UowzX8RoZbPA',
       title: 'Irresistable',
       width: '33%',
     },
@@ -177,7 +183,7 @@ function ProductCategories(props) {
       >
     
         {/* Big text above movie panels */}
-        <Typography variant="h4" marked="center" align="center" component="h2">
+        <Typography variant="h4" marked="center" align="center" component="h2" className={classes.root}>
           {'Check out these highly rated options'}
         </Typography>
 
@@ -217,17 +223,19 @@ function ProductCategories(props) {
         </div>
 
         {/* Link to more movies below panels */}
-        <Typography variant="h4" marked="center" align="center" component="h2">
+        <Typography variant="h4" align="center" component="h2" className={classes.h5}>
         <Link
             variant="h5"
             underline="none"
             color="inherit"
             marked="center"
             href="/movies"
+            className={classes.root}
           >          
             {'Click here to view more'}
           </Link>
         </Typography>
+
             
       </Container>
     </Container>

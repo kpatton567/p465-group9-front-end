@@ -12,9 +12,8 @@ const styles = (theme) => ({
   root: {
     display: 'flex',
     overflow: 'hidden',
-    // backgroundColor: theme.palette.secondary.light,
-    backgroundColor: '#222325'
-    
+    backgroundColor: '#363636',
+    color: '#FFFFFF',
   },
   container: {
     marginTop: theme.spacing(15),
@@ -35,6 +34,7 @@ const styles = (theme) => ({
   title: {
     marginTop: theme.spacing(5),
     marginBottom: theme.spacing(5),
+    color: '#FFFFFF',
   },
   curvyLines: {
     pointerEvents: 'none',
