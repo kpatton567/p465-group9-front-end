@@ -19,9 +19,21 @@ import Select from '@material-ui/core/Select';
 
 const useStyles = makeStyles((theme) => ({
   sidebarAboutBox: {
-    padding: theme.spacing(2),
+    padding: theme.spacing(1),
     backgroundColor: theme.palette.grey[200],
-    margin: theme.spacing(6),
+    marginBottom : theme.spacing(4),
+    marginRight: theme.spacing(6),
+    marginLeft: theme.spacing(6),
+    minWidth: 150,
+  },
+  sidebarButton: {
+    padding: theme.spacing(1),
+    backgroundColor: theme.palette.grey[200],
+    marginTop: theme.spacing(23),
+    marginBottom : theme.spacing(4),
+    marginRight: theme.spacing(6),
+    marginLeft: theme.spacing(6),
+    maxWidth: 'fit-content'
   },
   sidebarSection: {
     marginTop: theme.spacing(3),
@@ -41,6 +53,12 @@ const useStyles = makeStyles((theme) => ({
     // padding: theme.spacing(2),
     // margin: theme.spacing(6),
     // backgroundColor: 'grey'
+    // padding: theme.spacing(1),
+    backgroundColor: theme.palette.grey[200],
+    // marginBottom : theme.spacing(4),
+    // marginRight: theme.spacing(6),
+    // marginLeft: theme.spacing(6),
+    maxWidth: 'fit-content'
   }
 }));
 
@@ -86,8 +104,8 @@ export default function Sidebar(props) {
       ))} */}
       <Paper elevation={0} className={classes.sidebarAboutBox}
       >
-      <div className={classes.sidebarAvailabilityBox}>
-        <Button onClick={handleClickOpen}>See availability</Button>
+      <div >
+        <Button onClick={handleClickOpen}>Check Availability</Button>
         <Dialog disableBackdropClick disableEscapeKeyDown open={open} onClose={handleClose}>
           <DialogTitle>Choose your theatre</DialogTitle>
           <DialogContent>
@@ -135,6 +153,14 @@ export default function Sidebar(props) {
           </DialogActions>
         </Dialog>
       </div>
+
+      
+      </Paper>
+
+      <Paper className={classes.sidebarButton}>
+        <Button onClick={handleClose} color="primary">
+          Reserve Seats
+        </Button>
       </Paper>
     </Grid>
   );

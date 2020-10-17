@@ -9,6 +9,7 @@ import TwitterIcon from '@material-ui/icons/Twitter';
 // import Header from './Header';
 import MainFeaturedPost from './MainFeaturedPost';
 import Sidebar from '../components/SideBar';
+import AppAppBar from './AppAppBar';
 
 import post1 from '../assets/blog-post.1.md'
 import post2 from '../assets/blog-post.2.md';
@@ -19,10 +20,7 @@ import Card from '@material-ui/core/Card';
 import CardHeader from '@material-ui/core/CardHeader';
 import CardMedia from '@material-ui/core/CardMedia';
 import CardContent from '@material-ui/core/CardContent';
-import CardActions from '@material-ui/core/CardActions';
-import Collapse from '@material-ui/core/Collapse';
 import Avatar from '@material-ui/core/Avatar';
-import IconButton from '@material-ui/core/IconButton';
 import Typography from '@material-ui/core/Typography';
 import { red } from '@material-ui/core/colors';
 
@@ -32,14 +30,22 @@ import ListItemText from '@material-ui/core/ListItemText';
 import ListItemAvatar from '@material-ui/core/ListItemAvatar';
 import ImageIcon from '@material-ui/icons/Image';
 import WorkIcon from '@material-ui/icons/Work';
-import BeachAccessIcon from '@material-ui/icons/BeachAccess';
+
+import './MovieBooking.css';
+
+const mainFeaturedPost = {
+    title: 'Title of the movie',
+    description:
+        "Movie caption",
+    image: 'https://source.unsplash.com/random',
+    imgText: 'main image description',
+    //   linkText: 'Continue reading…',
+};
 
 const useStyles = makeStyles((theme) => ({
     mainGrid: {
-        marginTop: theme.spacing(3),
-    },
-    mainBGcolor: {
-        // backgroundColor : '#FFE5E5'
+        paddingTop: theme.spacing(6),
+        textAlign: 'center'
     },
     toolbar: {
         borderBottom: `1px solid ${theme.palette.divider}`,
@@ -66,14 +72,14 @@ const useStyles = makeStyles((theme) => ({
         },
         margin: 0,
         float: "right",
-        marginLeft: theme.spacing(2.5),
+        marginLeft: theme.spacing(10),
         height: 'fit-content'
     },
     listRoot: {
         width: '100%',
         maxWidth: 360,
         backgroundColor: theme.palette.background.paper,
-      },
+    },
     media: {
         height: 0,
         paddingTop: '56.25%', // 16:9
@@ -100,14 +106,7 @@ const sections = [
     { title: 'User Reviews', url: '#', text: "Here is where we'll have user reviews", },
 ];
 
-const mainFeaturedPost = {
-    title: 'Title of the movie',
-    description:
-        "Movie caption",
-    image: 'https://source.unsplash.com/random',
-    imgText: 'main image description',
-    //   linkText: 'Continue reading…',
-};
+
 
 const featuredPosts = [
     {
@@ -156,19 +155,22 @@ export default function MovieBooking() {
     return (
         <React.Fragment >
             <CssBaseline />
-            <Container maxWidth="lg" className={classes.mainBGcolor}>
-                {/* <Container  className={classes.mainBGcolor}> */}
-                {/* <Header title="Blog" sections={sections} /> */}
-                <main>
-                    <MainFeaturedPost post={mainFeaturedPost} />
+
+            <Container
+                class="mainBGcolor"
+            >
+                <AppAppBar />
+                <div class="bg-image" style={{ backgroundImage: `url(${mainFeaturedPost.image})` }}></div>
+                <div class="bg-text">
+                    {/* <Header title="Blog" sections={sections} /> */}
+                    {/* <main> */}
+                    {/* <MainFeaturedPost post={mainFeaturedPost} /> */}
                     {/* <Grid container spacing={4}>
             {featuredPosts.map((post) => (
               <FeaturedPost key={post.title} post={post} />
             ))}
           </Grid> */}
-
-
-                    <Grid container spacing={5} className={classes.mainGrid}>
+                    <Grid container className={classes.mainGrid}>
                         <Card className={classes.root}>
                             <CardHeader
                                 title="Movie Name"
@@ -227,8 +229,11 @@ export default function MovieBooking() {
                             </Link>
                         ))}
                     </Toolbar> */}
-                </main>
+
+                    {/* </main> */}
+                </div>
             </Container>
+
             {/* <Footer title="Footer" description="Something here to give the footer a purpose!" /> */}
         </React.Fragment>
     );

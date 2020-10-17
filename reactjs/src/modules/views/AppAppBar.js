@@ -9,6 +9,25 @@ import { useAuth0 } from '@auth0/auth0-react';
 import Profile from '../views/Profile';
 import InputBase from '@material-ui/core/InputBase';
 import SearchIcon from '@material-ui/icons/Search';
+import {
+  Card,
+  CardBody,
+  CardTitle,
+} from 'reactstrap';
+import Button from '@material-ui/core/Button';
+import FaceIcon from '@material-ui/icons/Face';
+import SupervisorAccountIcon from '@material-ui/icons/SupervisorAccount';
+
+import Dialog from '@material-ui/core/Dialog';
+import DialogActions from '@material-ui/core/DialogActions';
+import DialogContent from '@material-ui/core/DialogContent';
+import DialogTitle from '@material-ui/core/DialogTitle';
+import InputLabel from '@material-ui/core/InputLabel';
+import Input from '@material-ui/core/Input';
+import MenuItem from '@material-ui/core/MenuItem';
+import FormControl from '@material-ui/core/FormControl';
+import Select from '@material-ui/core/Select';
+import theme from "../theme";
 
 
 const styles = (theme) => ({
@@ -45,6 +64,12 @@ const styles = (theme) => ({
   linkSecondary: {
     color: theme.palette.secondary.main,
   },
+  largeIcon: {
+    fontSize: "7em"
+  },
+  successIcon: {
+    color: 'green',
+  },
 
   search: {
     position: 'relative',
@@ -71,7 +96,17 @@ const styles = (theme) => ({
     alignItems: 'center',
     justifyContent: 'center',
   },
-  
+  buttonIcon: {
+    // padding: theme.spacing(0, 2),
+    // height: '100%',
+    // position: 'absolute',
+    // pointerEvents: 'none',
+    // display: 'flex',
+    // alignItems: 'center',
+    // justifyContent: 'center',
+
+  },
+
   inputRoot: {
     color: 'inherit',
   },
@@ -86,20 +121,78 @@ const styles = (theme) => ({
       width: '20ch',
     },
   },
+
 });
 
 
 function AppAppBar(props) {
   const { classes } = props;
-  const { loginWithRedirect, isAuthenticated} = useAuth0();
+  const { loginWithRedirect, isAuthenticated, user } = useAuth0();
+  const [open, setOpen] = React.useState(false);
+  const handleClickOpen = () => {
+    setOpen(true);
+  };
+  const handleClose = () => {
+    setOpen(false);
+  };
 
   // Change header according to whether user is logged in
-  return isAuthenticated ? 
-  // User is logged in
-  (
-    <div>
+  return isAuthenticated ?
+    // User is logged in
+    (
+      <div>
+        <AppBar position="fixed">
+          <Toolbar className={classes.toolbar}>
+
+            {/* Search bar */}
+            <div className={classes.search}>
+              <div className={classes.searchIcon}>
+                <SearchIcon />
+              </div>
+              <InputBase
+                placeholder="Search for viewings..."
+                classes={{
+                  root: classes.inputRoot,
+                  input: classes.inputInput,
+                }}
+                inputProps={{ 'aria-label': 'search' }}
+              />
+            </div>
+
+
+            {/* PreVue title/link */}
+            <div className={classes.left} />
+            <Link
+              variant="h6"
+              underline="none"
+              color="inherit"
+              className={classes.title}
+              href="/"
+            >
+              {'Prevue'}
+            </Link>
+
+            {/* Logout button */}
+            <div className={classes.right}>
+              <Link
+                variant="h6"
+                underline="none"
+                className={clsx(classes.rightLink, classes.linkSecondary)}
+                style={{ display: isAuthenticated ? 'block' : 'none' }}
+              ></Link>
+              <Link>{isAuthenticated ? <Profile /> : null}</Link>
+            </div>
+          </Toolbar>
+        </AppBar>
+        <div className={classes.placeholder} />
+      </div>
+    ) :
+
+    // Not logged in
+    (<div>
       <AppBar position="fixed">
         <Toolbar className={classes.toolbar}>
+
 
           {/* Search bar */}
           <div className={classes.search}>
@@ -116,7 +209,6 @@ function AppAppBar(props) {
             />
           </div>
 
-
           {/* PreVue title/link */}
           <div className={classes.left} />
           <Link
@@ -124,65 +216,16 @@ function AppAppBar(props) {
             underline="none"
             color="inherit"
             className={classes.title}
-            href="/"
+            href="/prevue"
           >
             {'Prevue'}
           </Link>
 
-          {/* Logout button */}
+
+          {/* Sign-up/Sign-in buttons */}
           <div className={classes.right}>
-            <Link
-              variant="h6"
-              underline="none"
-              className={clsx(classes.rightLink, classes.linkSecondary)}
-              style={{display: isAuthenticated ? 'block' : 'none' }}
-            ></Link>
-            <Link>{ isAuthenticated ? <Profile/> : null }</Link> 
-          </div>
-        </Toolbar>
-      </AppBar>
-      <div className={classes.placeholder} />
-    </div>
-  ) :
-
-  // Not logged in
-  (<div>
-    <AppBar position="fixed">
-      <Toolbar className={classes.toolbar}>
-
-
-        {/* Search bar */}
-        <div className={classes.search}>
-          <div className={classes.searchIcon}>
-             <SearchIcon />
-          </div>
-          <InputBase
-            placeholder="Search for viewings..."
-            classes={{
-              root: classes.inputRoot,
-              input: classes.inputInput,
-            }}
-            inputProps={{ 'aria-label': 'search' }}
-          />
-        </div>
-
-        {/* PreVue title/link */}
-        <div className={classes.left} />
-        <Link
-          variant="h6"
-          underline="none"
-          color="inherit"
-          className={classes.title}
-          href="/prevue"
-        >
-          {'Prevue'}
-        </Link>
-
-
-        {/* Sign-up/Sign-in buttons */}
-        <div className={classes.right}>
-          {/* Sign in */}
-          <Link
+            {/* Sign in */}
+            {/* <Link
             color="inherit"
             variant="h6"
             underline="none"
@@ -190,23 +233,40 @@ function AppAppBar(props) {
             onClick={() => loginWithRedirect()}
           >
             {'Sign In/Sign up'}
-          </Link>
-        </div>
+          </Link> */}
 
-        {/* <Link
-            variant="h6"
-            underline="none"
-            className={clsx(classes.rightLink, classes.linkSecondary)}
-            href="/premium-themes/onepirate/sign-up/"
-          >
-            {'Sign Up'}
-        </Link> */}
-
-
-      </Toolbar>
-    </AppBar>
-    <div className={classes.placeholder} />
-  </div>);
+            <div >
+              <Button onClick={handleClickOpen} color="inherit"
+                variant="h6"
+                underline="none"
+                className={classes.rightLink} root>Sign in / Sing up</Button>
+              <Dialog disableBackdropClick disableEscapeKeyDown open={open} onClose={handleClose}>
+                <DialogTitle>Choose your profile</DialogTitle>
+                <DialogContent>
+                  <Button style={{ marginRight: theme.spacing(6) }} onClick = {() => loginWithRedirect()}>
+                    <FaceIcon fontSize="large" className={classes.largeIcon}></FaceIcon>
+                    Customer
+                  </Button>
+                  <Button style={{ marginRight: theme.spacing(6) }} onClick = {() => loginWithRedirect()}>
+                    <SupervisorAccountIcon fontSize="large" className={classes.largeIcon}></SupervisorAccountIcon>
+                    Manager
+                  </Button>
+                </DialogContent>
+                <DialogActions>
+                  <Button onClick={handleClose} color="primary">
+                    Cancel
+          </Button>
+                  <Button onClick={handleClose} color="primary">
+                    Ok
+          </Button>
+                </DialogActions>
+              </Dialog>
+            </div>
+          </div>
+        </Toolbar>
+      </AppBar>
+      <div className={classes.placeholder} />
+    </div>);
 }
 
 AppAppBar.propTypes = {

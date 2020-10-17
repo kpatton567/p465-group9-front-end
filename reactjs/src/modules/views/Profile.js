@@ -63,6 +63,9 @@ const styles = (theme) => ({
   linkSecondary: {
     color: theme.palette.secondary.main,
   },
+  buttonLink:{
+    marginRight: theme.spacing(4)
+  }
 });
 
 function Profile(props) {
@@ -135,7 +138,8 @@ function Profile(props) {
                    
                       </StyledMenuItem>
                     </Link>
-                    <Link href = "/editProfile">
+
+                    <Link href = "/bookingHistory">
                     <StyledMenuItem>
                       <ListItemIcon>
                         <HistoryIcon fontSize="small" />

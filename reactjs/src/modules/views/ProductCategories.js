@@ -6,6 +6,14 @@ import Container from '@material-ui/core/Container';
 import Typography from '../components/Typography';
 import Link from '@material-ui/core/Link';
 
+import { Redirect } from "react-router-dom";
+
+import { AuthConsumer } from "../../../src/authContext";
+import Can from "../../Can";
+import Logout from "../../Logout";
+import Profile from "./Profile";
+// import PostsList from "../../PostsList";
+
 const styles = (theme) => ({
   root: {
     maxWidth: '100%',
@@ -150,58 +158,75 @@ function ProductCategories(props) {
   ];
 
   return (
-    <Container className={classes.root} component="section">
+    // <Container className={classes.root} component="section">
   
-      {/* Big text above movie panels */}
-      <Typography variant="h4" marked="center" align="center" component="h2">
-        {'Check out these highly rated options'}
-      </Typography>
+    //   {/* Big text above movie panels */}
+    //   <Typography variant="h4" marked="center" align="center" component="h2">
+    //     {'Check out these highly rated options'}
+    //   </Typography>
 
-      <div className={classes.images}>
-        {images.map((image) => (
-          <ButtonBase
-            key={image.title}
-            className={classes.imageWrapper}
-            style={{
-              width: image.width,
-            }}
-          >
-            <div
-              className={classes.imageSrc}
-              style={{
-                backgroundImage: `url(${image.url})`,
-              }}
-            />
-            <div className={classes.imageBackdrop} />
-            <div className={classes.imageButton}>
-              <Typography
-                component="h3"
-                variant="h6"
-                color="inherit"
-                className={classes.imageTitle}
-              >
-                {image.title}
-                <div className={classes.imageMarked} />
-              </Typography>
-            </div>
-          </ButtonBase>
-        ))}
-      </div>
+    //   <div className={classes.images}>
+    //     {images.map((image) => (
+    //       <ButtonBase
+    //         key={image.title}
+    //         className={classes.imageWrapper}
+    //         style={{
+    //           width: image.width,
+    //         }}
+    //       >
+    //         <div
+    //           className={classes.imageSrc}
+    //           style={{
+    //             backgroundImage: `url(${image.url})`,
+    //           }}
+    //         />
+    //         <div className={classes.imageBackdrop} />
+    //         <div className={classes.imageButton}>
+    //           <Typography
+    //             component="h3"
+    //             variant="h6"
+    //             color="inherit"
+    //             className={classes.imageTitle}
+    //           >
+    //             {image.title}
+    //             <div className={classes.imageMarked} />
+    //           </Typography>
+    //         </div>
+    //       </ButtonBase>
+    //     ))}
+    //   </div>
 
-      {/* Link to more movies below panels */}
-      <Typography variant="h4" marked="center" align="center" component="h2">
-      <Link
-          variant="h5"
-          underline="none"
-          color="inherit"
-          marked="center"
-          href="/movies"
-        >          
-          {'Click here to view more'}
-        </Link>
-      </Typography>
+    //   {/* Link to more movies below panels */}
+    //   <Typography variant="h4" marked="center" align="center" component="h2">
+    //   <Link
+    //       variant="h5"
+    //       underline="none"
+    //       color="inherit"
+    //       marked="center"
+    //       href="/movies"
+    //     >          
+    //       {'Click here to view more'}
+    //     </Link>
+    //   </Typography>
           
-    </Container>
+    // </Container>
+    <AuthConsumer>
+    {({ user }) => (
+      <Can
+        role={user.role}
+        perform="dashboard-page:visit"
+        yes={() => (
+          <div>
+            <h1>Dashboard</h1>
+            <Logout />
+            <Profile />
+            {/* <PostsList /> */}
+          </div>
+        )}
+        no={() => <Redirect to="/" />}
+      />
+    )}
+  </AuthConsumer>
   );
 }
 
