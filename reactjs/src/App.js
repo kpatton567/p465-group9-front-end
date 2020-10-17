@@ -7,7 +7,7 @@ import EditProfile from "./EditProfile";
 import Home from "./Home";
 import MovieBooking from "../src/modules/views/MovieBooking";
 import ManagerView from "../src/modules/views/ManagerView";
-
+import ManageMovies from "../src/modules/views/ManageMovies";
 function App() {
   const { isLoading } = useAuth0();
 
@@ -16,6 +16,7 @@ function App() {
   return (
       <Router>
         <Route path='/editProfile' component={EditProfile} />
+        <Route path='/manageMovies' component={ManageMovies} />
         <Route path="/" exact={true}>
           <Home/>
         </Route> 
