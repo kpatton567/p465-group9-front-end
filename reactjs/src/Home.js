@@ -16,11 +16,7 @@ import { makeStyles } from '@material-ui/core/styles';
 function Home() {
 
   const { isLoading } = useAuth0();
-  // const useStyles = makeStyles((theme) => ({
-  //   rootTest: {
-  //     backgroundColor: '#222325'
-  // }}))
-  // const classes = useStyles();
+
 
   if (isLoading) return <div>Loading...</div>
 
@@ -30,8 +26,6 @@ function Home() {
       <ProductHero />
       <ProductValues />
       <ProductCategories />
-      {/* <ProductHowItWorks /> */}
-      {/* <ProductCTA /> */}
       <ProductSmokingHero />
       <AppFooter />
     </React.Fragment>

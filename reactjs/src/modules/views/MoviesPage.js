@@ -14,6 +14,7 @@ import Link from '@material-ui/core/Link';
 import AppAppBar from './AppAppBar';
 import { withTheme } from '@material-ui/styles';
 import Typography from '../components/Typography';
+import axios from 'axios';
 
 const useStyles = makeStyles((theme) => ({
   icon: {
@@ -21,7 +22,7 @@ const useStyles = makeStyles((theme) => ({
   },
   heroContent: {
     backgroundColor: theme.palette.primary.light,
-    padding: theme.spacing(8, 0, 6),
+    padding: theme.spacing(8, 0, 1),
     color: '#FFFFFF'
   },
   heroButtons: {
@@ -93,11 +94,26 @@ function CreateUrl(image)
   return res;
 }
 
-// Array for storing various movies, need to get from backend...
-const cards = ["avengers", "someother", "anotha", 1, 2, 3];
+var cards = [];
 
+// Array for storing various movies, need to get from backend...
+axios.get('http://localhost:8080/api/home/movies')
+.then(response => 
+  {
+    cards = response.data;
+  }
+);
+
+
+
+// insert into movies values(2, 
+//                           'Action, action, and more action. Thats what its all about.', 
+//                           'https://media-cache.cinematerial.com/p/500x/jllmn2cv/behind-you-movie-poster.jpg?v=1600320617', 
+//                           'Behind You');
 export default function Album() {
   const classes = useStyles();
+
+  console.log(cards[0]);
 
   return (
     <React.Fragment>
@@ -125,23 +141,28 @@ export default function Album() {
         <Container className={classes.cardGrid} maxWidth="lg">
           {/* End hero unit */}
 
+
           {/* Generate cards based on number of elements in 'cards' array */}
           <Grid container spacing={4}>
             {cards.map((card) => (
               <Grid item key={card} xs={12} sm={6} md={2} lg={3}>
+               
+                {/* Create each card using array from backend */}
                 <Card className={classes.card}>
                   <CardMedia
                     className={classes.cardMedia}
-                    image="https://source.unsplash.com/random"
+                    image={card.posterLink}
                   />
                   <CardContent className={classes.cardContent}>
                     <Typography gutterBottom variant="h5" component="h2">
-                      {'Movie_1'}
+                      {card.title}
                     </Typography>
                     <Typography>
-                      {'This movie is bad.'}
+                      {card.description}
                     </Typography>
                   </CardContent>
+
+                  {/* More Info Button */}
                   <CardActions>
                     <Button size="small" color="primary">
                       {'More Info'}
@@ -155,6 +176,7 @@ export default function Album() {
       </main>
 
       
+      {/* Button at bottom of page to bring user back to top of page */}
       <section className={classes.root}>
         <Container className={classes.container}>
           <Button
@@ -169,8 +191,6 @@ export default function Album() {
           
         </Container>
       </section>
-
-
     </React.Fragment>
   );
 }

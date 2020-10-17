@@ -111,7 +111,6 @@ function CreateUrl(image)
 function ProductCategories(props) {
   const { classes } = props;
 
-
   // 9 movie panels
   const images = [
     {

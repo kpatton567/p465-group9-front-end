@@ -29,7 +29,7 @@ function App() {
         <Route path='/support'>
           {'Implementing support page/chat in later sprint'}
         </Route>
-        <Route path='/movies'>
+        <Route path='/movies' exact={true}>
           <MoviesPage/>
         </Route>
  
