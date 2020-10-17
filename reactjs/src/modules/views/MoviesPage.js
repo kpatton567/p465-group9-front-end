@@ -94,9 +94,10 @@ function CreateUrl(image)
   return res;
 }
 
+
+// Populate 'cards' array with all movies in database (retrieve from backend)
 var cards = [];
 
-// Array for storing various movies, need to get from backend...
 axios.get('http://localhost:8080/api/home/movies')
 .then(response => 
   {
@@ -105,15 +106,8 @@ axios.get('http://localhost:8080/api/home/movies')
 );
 
 
-
-// insert into movies values(2, 
-//                           'Action, action, and more action. Thats what its all about.', 
-//                           'https://media-cache.cinematerial.com/p/500x/jllmn2cv/behind-you-movie-poster.jpg?v=1600320617', 
-//                           'Behind You');
 export default function Album() {
   const classes = useStyles();
-
-  console.log(cards[0]);
 
   return (
     <React.Fragment>
