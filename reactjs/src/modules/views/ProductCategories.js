@@ -1,10 +1,17 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { withStyles } from '@material-ui/core/styles';
-import ButtonBase from '@material-ui/core/ButtonBase';
+import { Redirect } from "react-router-dom";
+import { AuthConsumer } from "../../../src/authContext";
+import Can from "../../Can";
+import Logout from "../../Logout";
+import Profile from "./Profile";
 import Container from '@material-ui/core/Container';
 import Typography from '../components/Typography';
 import Link from '@material-ui/core/Link';
+import ButtonBase from '@material-ui/core/ButtonBase';
+
+// import PostsList from "../../PostsList";
 
 const styles = (theme) => ({
   root: {
@@ -97,6 +104,8 @@ const styles = (theme) => ({
    
   },
 });
+
+
 
 // Concatenate the name of the movie to redirect the user to the proper url
 function CreateUrl(image)
@@ -235,7 +244,24 @@ function ProductCategories(props) {
           </Link>
         </Typography>
 
-            
+
+        <AuthConsumer>
+          {({ user }) => (
+            <Can
+              role={user.role}
+              perform="dashboard-page:visit"
+              yes={() => (
+                <div>
+                  <h1>Dashboard</h1>
+                  <Logout />
+                  <Profile />
+                  {/* <PostsList /> */}
+                </div>
+              )}
+              no={() => <Redirect to="/" />}
+            />
+          )}
+        </AuthConsumer>
       </Container>
     </Container>
   );

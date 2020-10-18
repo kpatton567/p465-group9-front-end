@@ -63,6 +63,9 @@ const styles = (theme) => ({
   linkSecondary: {
     color: theme.palette.secondary.main,
   },
+  buttonLink:{
+    marginRight: theme.spacing(4)
+  }
 });
 
 function Profile(props) {
@@ -87,9 +90,9 @@ function Profile(props) {
     <div>
       <div className={classes.manager}>
         <Button
-          color={window.innerWidth > 959 ? "transparent" : "white"}
+          // color={window.innerWidth > 959 ? "transparent" : "white"}
           justIcon={window.innerWidth > 959}
-          simple={!(window.innerWidth > 959)}
+          simple={(!(window.innerWidth > 959)).toString()}
           aria-owns={openProfile ? "profile-menu-list-grow" : null}
           aria-haspopup="true"
           onClick={handleClickProfile}
@@ -135,7 +138,8 @@ function Profile(props) {
                    
                       </StyledMenuItem>
                     </Link>
-                    <Link href = "/editProfile">
+
+                    <Link href = "/bookingHistory">
                     <StyledMenuItem>
                       <ListItemIcon>
                         <HistoryIcon fontSize="small" />

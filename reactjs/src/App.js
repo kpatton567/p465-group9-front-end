@@ -1,41 +1,38 @@
 import withRoot from './modules/withRoot';
 // --- Post bootstrap -----
 import React from 'react';
-import { useAuth0 } from '@auth0/auth0-react';
 import { BrowserRouter as Router,Route } from "react-router-dom";
-import EditProfile from "./EditProfile";
 import Home from "./Home";
-import MovieBooking from "../src/modules/views/MovieBooking";
+import  MovieBooking from "../src/modules/views/MovieBooking";
+import BookingHistory from "../src/modules/views/BookingHistory";
+import UserRewards from "../src/modules/views/UserRewards";
+import EditProfile from "../src/EditProfile";
+import CallbackPage from "../src/callback";
+import DashboardPage  from './Dashboard';
 import MoviesPage from "../src/modules/views/MoviesPage";
 
-
 function App() {
-  const { isLoading } = useAuth0();
-
-  if (isLoading) return <div>Loading...</div>
+  // const { isLoading } = useAuth0();
+  // if (isLoading) return <div>Loading...</div>
 
   return (
+    // <Auth>
       <Router>
-        <Route path='/editProfile' component={EditProfile} />
-        <Route path="/" exact={true}>
-          <Home/>
-        </Route> 
-        <Route path="/home" exact={true}>
-          <Home/>
-        </Route> 
-        <Route path="/movieBooking" exact={true}>
-          <MovieBooking/>
-        </Route>
-        <Route path='/support'>
-          {'Implementing support page/chat in later sprint'}
-        </Route>
-        <Route path='/movies' exact={true}>
-          <MoviesPage/>
-        </Route>
+        
+        <Route path="/" exact={true}><Home/></Route> 
+        <Route path="/home" exact={true}><Home/></Route> 
+        <Route path="/movieBooking" exact={true}><MovieBooking/></Route>
+        <Route path="/editProfile" exact={true}><EditProfile/></Route>
+        <Route path="/userRewards" exact={true}><UserRewards/></Route> 
+        <Route path="/bookingHistory" exact={true}><BookingHistory/></Route>
+        {/* <Route path="/callback"><CallbackPage/></Route> */}
+        <Route path="/callback" component={CallbackPage}/>
+        <Route path="/dashboard" component={DashboardPage}/>
+        <Route path='/movies' exact={true}><MoviesPage/></Route>
  
-        {/* Prevent navigation to non-existing portion of site, needs work, currently prints on all pages */}
-        {/* <Route component={Error}/>  */}  
+      
       </Router>
+      //  </Auth>
   );
 }
 
