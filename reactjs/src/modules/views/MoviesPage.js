@@ -85,6 +85,15 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 
+// Build URL with movie name
+function CreateUrl(image)
+{
+  var mov = "/movies/"
+  var res = mov.concat(image);
+
+  return res;
+}
+
 
 // Populate 'cards' array with all movies in database (retrieve from backend)
 var cards = [];
@@ -99,8 +108,6 @@ axios.get('http://localhost:8080/api/home/movies')
 
 export default function Album() {
   const classes = useStyles();
-
-  console.log(cards[0]);
 
   return (
     <React.Fragment>
