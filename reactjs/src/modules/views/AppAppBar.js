@@ -96,6 +96,7 @@ const styles = (theme) => ({
     // justifyContent: 'center',
 
   },
+  
 
   inputRoot: {
     color: 'inherit',
@@ -159,7 +160,7 @@ function AppAppBar(props) {
               className={classes.title}
               href="/"
             >
-              {'Prevue'}
+              {'PREVUE'}
             </Link>
 
             {/* Logout button */}

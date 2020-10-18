@@ -90,7 +90,6 @@ function Profile(props) {
     <div>
       <div className={classes.manager}>
         <Button
-          // color={window.innerWidth > 959 ? "transparent" : "white"}
           justIcon={window.innerWidth > 959}
           simple={(!(window.innerWidth > 959)).toString()}
           aria-owns={openProfile ? "profile-menu-list-grow" : null}
@@ -98,7 +97,8 @@ function Profile(props) {
           onClick={handleClickProfile}
           className={classes.buttonLink}
         >
-          <Person className={classes.icons} />
+          {/* person icon */}
+          <Person color='secondary' className={classes.icons} />
           <Hidden mdUp implementation="css">
             <p className={classes.linkText}>Profile</p>
           </Hidden>

@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {Component} from 'react';
 import Button from '@material-ui/core/Button';
 import CameraIcon from '@material-ui/icons/PhotoCamera';
 import Card from '@material-ui/core/Card';
@@ -15,51 +15,50 @@ import AppAppBar from './AppAppBar';
 import { withTheme } from '@material-ui/styles';
 import Typography from '../components/Typography';
 import axios from 'axios';
+import theme from '../theme';
 
-const useStyles = makeStyles((theme) => ({
-  icon: {
+
+  const icon = {
     marginRight: theme.spacing(2),
-  },
-  heroContent: {
+  };
+  const heroContent= {
     backgroundColor: theme.palette.primary.light,
     padding: theme.spacing(8, 0, 1),
     color: '#FFFFFF'
-  },
-  heroButtons: {
+  };
+  const heroButtons = {
     marginTop: theme.spacing(4),
-  },
-  cardGrid: {
+  };
+  const cardGrid = {
     paddingTop: theme.spacing(8),
     paddingBottom: theme.spacing(6),
     backgroundColor: theme.palette.primary.light,
     maxWidth: '100%',
-  },
-  card: {
+  };
+  const card = {
     height: '100%', // height of white box
     display: 'flex',
     flexDirection: 'column',
-  },
-  cardMedia: {
+  };
+  const cardMedia = {
     paddingTop: '140%', // height of photo
-  },
-  cardContent: {
+  };
+  const cardContent= {
     flexGrow: 1,
-  },
-  footer: {
+  };
+  const footer = {
     backgroundColor: theme.palette.primary.light,
     padding: theme.spacing(6),
-  },
-  h5: {
+  };
+  const h5= {
     marginBottom: theme.spacing(4),
     marginTop: theme.spacing(4),
     [theme.breakpoints.up('sm')]: {
       marginTop: theme.spacing(5),
     },
-  },
-
-
+  };
   // For footer button
-  root: {
+  const root = {
     color: theme.palette.common.black,
     position: 'relative',
     display: 'flex',
@@ -69,122 +68,108 @@ const useStyles = makeStyles((theme) => ({
       minHeight: 10,
       maxHeight: 40,
     },
-  },
-  container: {
+  };
+  const container = {
     display: 'flex',
     flexDirection: 'column',
     alignItems: 'center',
     backgroundColor: '#363636',
     maxWidth: '100%',
-  },
-  button: {
+  };
+  const button =  {
     minWidth: 250,
     marginBottom: theme.spacing(4),
-  },
+  };
 
-}));
-
-
-// Build URL with movie name
-function CreateUrl(image)
-{
-  var mov = "/movies/"
-  var res = mov.concat(image);
-
-  return res;
-}
-
-
-// Populate 'cards' array with all movies in database (retrieve from backend)
-var cards = [];
-
-axios.get('http://localhost:8080/api/home/movies')
-.then(response => 
-  {
-    cards = response.data;
+  
+class MoviesPage extends Component {
+  constructor(props) {
+    super(props);
   }
-);
-
-
-export default function Album() {
-  const classes = useStyles();
-
-  return (
-    <React.Fragment>
-      <CssBaseline />
-      <AppAppBar position="relative">
-        <Toolbar>
-          <CameraIcon className={classes.icon} />
-          <Typography variant="h6" color="inherit" noWrap>
-            Album layout
-          </Typography>
-        </Toolbar>
-      </AppAppBar>
-      <main>
-        {/* Hero unit */}
-        <div className={classes.heroContent}>
-          <Container maxWidth="sm">
-            <Typography color="inherit" align="center" variant="h2" marked="center" gutterBottom>
-              {'All Movies'}
+  state = {
+    cards: []
+  }
+  componentDidMount() {
+    const fetchMovies = async () => {
+        const res = await axios.get('http://localhost:8080/api/home/movies');
+        this.setState({cards: res.data})
+      };
+      fetchMovies();
+    }
+  render(){
+    // const classes = useStyles();
+    const { cards } = this.state;
+    return (
+      <React.Fragment>
+        <CssBaseline />
+        <AppAppBar position="relative">
+          <Toolbar>
+            <CameraIcon style={icon} />
+            <Typography variant="h6" color="inherit" noWrap>
+              Album layout
             </Typography>
-            <Typography variant="h5" align="center" paragraph className={classes.h5}>
-              {'Browse our numerous movie options below and find one that is best for you!'}
-            </Typography>
+          </Toolbar>
+        </AppAppBar>
+        <main>
+          {/* Hero unit */}
+          <div style={heroContent}>
+            <Container maxWidth="sm">
+              <Typography color="inherit" align="center" variant="h2" marked="center" gutterBottom>
+                {'All Movies'}
+              </Typography>
+              <Typography variant="h5" align="center" paragraph style={h5}>
+                {'Browse our numerous movie options below and find one that is best for you!'}
+              </Typography>
+            </Container>
+          </div>
+          <Container style={cardGrid} maxWidth="lg">
+            {/* End hero unit */}
+            {/* Generate cards based on number of elements in 'cards' array */}
+            <Grid container spacing={4}>
+              {cards.map((card) => (
+                <Grid item key={card} xs={12} sm={6} md={2} lg={3}>
+                  {/* Create each card using array from backend */}
+                  <Card style={card}>
+                    <CardMedia
+                      style={cardMedia}
+                      image={card.posterLink}
+                    />
+                    <CardContent style={cardContent}>
+                      <Typography gutterBottom variant="h5" component="h2">
+                        {card.title}
+                      </Typography>
+                      <Typography>
+                        {card.description}
+                      </Typography>
+                    </CardContent>
+                    {/* More Info Button */}
+                    <CardActions>
+                      <Button size="small" color="primary">
+                        {'More Info'}
+                      </Button>
+                    </CardActions>
+                  </Card>
+                </Grid>
+              ))}
+            </Grid>
           </Container>
-        </div>
-        <Container className={classes.cardGrid} maxWidth="lg">
-          {/* End hero unit */}
-
-
-          {/* Generate cards based on number of elements in 'cards' array */}
-          <Grid container spacing={4}>
-            {cards.map((card) => (
-              <Grid item key={card} xs={12} sm={6} md={2} lg={3}>
-               
-                {/* Create each card using array from backend */}
-                <Card className={classes.card}>
-                  <CardMedia
-                    className={classes.cardMedia}
-                    image={card.posterLink}
-                  />
-                  <CardContent className={classes.cardContent}>
-                    <Typography gutterBottom variant="h5" component="h2">
-                      {card.title}
-                    </Typography>
-                    <Typography>
-                      {card.description}
-                    </Typography>
-                  </CardContent>
-
-                  {/* More Info Button */}
-                  <CardActions>
-                    <Button size="small" color="primary">
-                      {'More Info'}
-                    </Button>
-                  </CardActions>
-                </Card>
-              </Grid>
-            ))}
-          </Grid>
-        </Container>
-      </main>
-
-      
-      {/* Button at bottom of page to bring user back to top of page */}
-      <section className={classes.root}>
-        <Container className={classes.container}>
-          <Button
-          color="secondary"
-          variant="contained"
-          size="large"
-          className={classes.button}
-          href="/movies"
-          >
-            {'Back to Top'}
-          </Button>
-          
-        </Container>
-      </section>
-    </React.Fragment>
-  );
+        </main>
+        {/* Button at bottom of page to bring user back to top of page */}
+        <section style={root}>
+          <Container style={container}>
+            <Button
+            color="secondary"
+            variant="contained"
+            size="large"
+            style={button}
+            href="/movies"
+            >
+              {'Back to Top'}
+            </Button>
+          </Container>
+        </section>
+      </React.Fragment>
+    );
+  }
 }
+export default MoviesPage;

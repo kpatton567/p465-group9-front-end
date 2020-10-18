@@ -9,8 +9,8 @@ import { useAuth0 } from '@auth0/auth0-react';
 
 const backgroundImage =
     //'https://cdn.hipwallpaper.com/i/30/27/p5PtNh.jpg'; // option 1 (color: #C40808)
-    //'https://images.all-free-download.com/images/graphiclarge/film_film_vector_289584.jpg'; // option 2
-    'https://upload.wikimedia.org/wikipedia/en/b/bc/Prisoner_of_azkaban_UK_poster.jpg'
+    'https://images.all-free-download.com/images/graphiclarge/film_film_vector_289584.jpg'; // option 2
+    //'https://upload.wikimedia.org/wikipedia/en/b/bc/Prisoner_of_azkaban_UK_poster.jpg'
     const styles = (theme) => ({
   background: {
     backgroundImage: `url(${backgroundImage})`,
