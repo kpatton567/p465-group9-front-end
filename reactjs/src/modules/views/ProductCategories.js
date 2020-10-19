@@ -140,46 +140,55 @@ function ProductCategories(props) {
       url: cards[0].posterLink,
       title: cards[0].title,
       width: '33%',
+      id: '1',
     },
     {
       url: cards[1].posterLink,
       title: cards[1].title,
       width: '33%',
+      id: '2',
     },
     {
       url: cards[2].posterLink,
       title: cards[2].title,
       width: '33%',
+      id: '3',
     },
     {
       url: cards[3].posterLink,
       title: cards[3].title,
       width: '33%',
+      id: '4',
     },
     {
       url: cards[4].posterLink,
       title: cards[4].title,
       width: '33%',
+      id: '5',
     },
     {
       url: cards[5].posterLink,
       title: cards[5].title,
       width: '33%',
+      id: '6',
     },
     {
       url: cards[6].posterLink,
       title: cards[6].title,
       width: '33%',
+      id: '7',
     },
     {
       url: cards[7].posterLink,
       title: cards[7].title,
       width: '33%',
+      id: '8',
     },
     {
       url: cards[8].posterLink,
       title: cards[8].title,
       width: '33%',
+      id: '9',
     },
   ];
 
@@ -210,7 +219,7 @@ function ProductCategories(props) {
               style={{
                 width: image.width,
               }}
-              href={CreateUrl(image.title)} // send the user to the url according to the panel they clicked
+              href={`/moviebooking/${image.id}`} // send the user to the url according to the panel they clicked
             >
               {/* Import image from url */}
               <div
