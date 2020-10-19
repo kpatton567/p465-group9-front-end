@@ -14,7 +14,8 @@ import RFTextField from './modules/form/RFTextField';
 import FormButton from './modules/form/FormButton';
 import FormFeedback from './modules/form/FormFeedback';
 import { useAuth0 } from '@auth0/auth0-react';
-import axios from 'axios';
+
+
 
 const useStyles = makeStyles((theme) => ({
   form: {
@@ -23,6 +24,8 @@ const useStyles = makeStyles((theme) => ({
   button: {
     marginTop: theme.spacing(3),
     marginBottom: theme.spacing(2),
+    color: 'primary',
+    backgroundColor: '#FFFFFF'
   },
   feedback: {
     marginTop: theme.spacing(2),
@@ -72,7 +75,7 @@ function EditProfile(props) {
             Edit Profile
           </Typography>
           <Typography variant="body2" align="center">
-            <Link href="/home" underline="always">
+            <Link href="/" underline="always">
               Go back to Home
             </Link>
           </Typography>
@@ -84,7 +87,6 @@ function EditProfile(props) {
                 <Grid item xs={12} sm={6}>
                   <Field
                     autoFocus
-                    // initialValue = {user.name}
                     component={RFTextField}
                     autoComplete="fname"
                     fullWidth
@@ -95,7 +97,6 @@ function EditProfile(props) {
                 </Grid>
                 <Grid item xs={12} sm={6}>
                   <Field
-                    // initialValue = {user.name}
                     component={RFTextField}
                     autoComplete="lname"
                     fullWidth
@@ -106,8 +107,6 @@ function EditProfile(props) {
                 </Grid>
               </Grid>
               <Field
-                // initialValue = {user ? 'null': user.email}
-                // autoComplete="email"
                 component={RFTextField}
                 disabled={submitting || sent}
                 fullWidth
@@ -139,7 +138,6 @@ function EditProfile(props) {
               <FormButton
                 className={classes.button}
                 disabled={submitting || sent}
-                color="secondary"
                 onClick={handleSubmitClick}
                 fullWidth
               >
