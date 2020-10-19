@@ -25,7 +25,7 @@ export const mainListItems = (
     
     <ListItem button component={Link} to="/manageMovies">
       <ListItemIcon>
-        <ShoppingCartIcon />
+        <ShoppingCartIcon color="#FFFFFF"/>
       </ListItemIcon>
       <ListItemText primary="Add/Delete Movies" />
     </ListItem>
