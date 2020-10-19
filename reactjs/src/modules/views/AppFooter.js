@@ -63,7 +63,7 @@ export default function AppFooter() {
         <Grid container spacing={5}>
           <Grid item>
             <Typography variant="caption">
-              {'Text of the footer goes here'}
+              {'© Prevue Booking Management 2020'}
             </Typography>
           </Grid>
 

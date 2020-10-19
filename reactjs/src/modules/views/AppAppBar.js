@@ -154,7 +154,7 @@ function AppAppBar(props) {
               className={classes.title}
               href="/"
             >
-              {'Prevue'}
+              {'PREVUE'}
             </Link>
 
             {/* Logout button */}

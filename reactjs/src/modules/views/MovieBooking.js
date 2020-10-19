@@ -19,8 +19,19 @@ import ListItemAvatar from '@material-ui/core/ListItemAvatar';
 import ImageIcon from '@material-ui/icons/Image';
 import WorkIcon from '@material-ui/icons/Work';
 import './MovieBooking.css';
+import AppFooter from './AppFooter';
 import axios from 'axios';
 
+
+
+const mainFeaturedPost = {
+    title: 'Title of the movie',
+    description:
+        "Movie caption",
+    image: 'https://source.unsplash.com/random',
+    imgText: 'main image description',
+    //   linkText: 'Continue reading…',
+};
 const useStyles = makeStyles((theme) => ({
     mainGrid: {
         paddingTop: theme.spacing(6),
@@ -188,7 +199,8 @@ export default function MovieBooking(props) {
                     {/* </main> */}
                 </div>
             </Container>
-            {/* <Footer title="Footer" description="Something here to give the footer a purpose!" /> */}
+            
+            <AppFooter/>
         </React.Fragment>
     );
 }

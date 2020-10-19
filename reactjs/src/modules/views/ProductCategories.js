@@ -10,6 +10,8 @@ import Container from '@material-ui/core/Container';
 import Typography from '../components/Typography';
 import Link from '@material-ui/core/Link';
 import ButtonBase from '@material-ui/core/ButtonBase';
+import axios from 'axios';
+
 
 // import PostsList from "../../PostsList";
 
@@ -116,64 +118,67 @@ function CreateUrl(image)
   return res;
 }
 
+
+var cards = [];
+
+axios.get('http://localhost:8080/api/home/movies')
+.then(response => 
+  {
+    cards = response.data;
+  }
+);
+
 // Movie panels
 function ProductCategories(props) {
   const { classes } = props;
 
+
+
   // 9 movie panels
   const images = [
     {
-      url:
-        'https://images-na.ssl-images-amazon.com/images/I/81ai6zx6eXL._AC_SL1304_.jpg',
-      title: 'Avengers: End Game',
+      url: cards[0].posterLink,
+      title: cards[0].title,
       width: '33%',
     },
     {
-      url:
-        'https://media-cache.cinematerial.com/p/500x/jllmn2cv/behind-you-movie-poster.jpg?v=1600320617',
-      title: 'Behind You',
+      url: cards[1].posterLink,
+      title: cards[1].title,
       width: '33%',
     },
     {
-      url:
-        'https://www.metaflix.com/wp-content/uploads/2020/09/The-Wolf-of-Snow-Hollow-Movie-Poster.jpg',
-      title: 'The Wolf of Snow Hollow',
+      url: cards[2].posterLink,
+      title: cards[2].title,
       width: '33%',
     },
     {
-      url:
-        'https://m.media-amazon.com/images/M/MV5BMDdlNDNkMzQtMjYwMi00OGFjLWE4ZGQtYjA1YWMxOWM2ZGYyXkEyXkFqcGdeQXVyMTkxNjUyNQ@@._V1_UY1200_CR90,0,630,1200_AL_.jpg',
-      title: 'The Owners',
+      url: cards[3].posterLink,
+      title: cards[3].title,
       width: '33%',
     },
     {
-      url:
-        'https://lh3.googleusercontent.com/proxy/uUvZSXExwTBl5ZI6M0bphxHzZKyHh3ItE9jeDq7SHSHJ-RiLlG7hRe7GzK1EhM6CUm1AoUJF3t7e73H8JaXWC93VrGWe5hnApFp4E4hHOU0b',
-      title: 'Guest House',
+      url: cards[4].posterLink,
+      title: cards[4].title,
       width: '33%',
     },
     {
-      url:
-        'https://lh3.googleusercontent.com/proxy/3O1fOJyvqSV95jXFV9Rm_CApGSRb6UAc03A57FrE2apBDjGWGGe6T4uKJtmFyAVZqtdD32WbRh_IF2tIqTrzrsEbzB3SJlA5E9UowzX8RoZbPA',
-      title: 'Irresistable',
+      url: cards[5].posterLink,
+      title: cards[5].title,
       width: '33%',
     },
     {
-      url:
-        'https://m.media-amazon.com/images/M/MV5BOTdmZTk2YmItMzgzMy00MWRhLTg4MzctNTJmYzM5MzE0NmM2XkEyXkFqcGdeQXVyODk4OTc3MTY@._V1_.jpg',
-      title: 'The Secrets We Keep',
+      url: cards[6].posterLink,
+      title: cards[6].title,
       width: '33%',
     },
     {
-      url:
-        'https://i.redd.it/4nlz0va50cf41.png',
-      title: 'Target Number One',
+      url: cards[7].posterLink,
+      title: cards[7].title,
       width: '33%',
     },
     {
-      url:
-        'https://m.media-amazon.com/images/M/MV5BYjE2MjIwMmYtM2ZiMy00MzdmLTkyNTYtNmFiNjM5MDJhMGVmXkEyXkFqcGdeQXVyODk4OTc3MTY@._V1_.jpg',
-      title: 'The Silencing',
+      url: cards[8].posterLink,
+      title: cards[8].title,
       width: '33%',
     },
   ];
