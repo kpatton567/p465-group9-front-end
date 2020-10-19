@@ -248,25 +248,6 @@ function ProductCategories(props) {
             {'Click here to view more'}
           </Link>
         </Typography>
-
-
-        <AuthConsumer>
-          {({ user }) => (
-            <Can
-              role={user.role}
-              perform="dashboard-page:visit"
-              yes={() => (
-                <div>
-                  <h1>Dashboard</h1>
-                  <Logout />
-                  <Profile />
-                  {/* <PostsList /> */}
-                </div>
-              )}
-              no={() => <Redirect to="/" />}
-            />
-          )}
-        </AuthConsumer>
       </Container>
     </Container>
   );

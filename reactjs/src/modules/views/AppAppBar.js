@@ -19,6 +19,10 @@ import DialogContent from '@material-ui/core/DialogContent';
 import DialogTitle from '@material-ui/core/DialogTitle';
 import theme from "../theme";
 
+import { AuthConsumer } from "../../authContext";
+
+import Login from "../../Login"
+
 
 const styles = (theme) => ({
   title: {
@@ -86,17 +90,6 @@ const styles = (theme) => ({
     alignItems: 'center',
     justifyContent: 'center',
   },
-  buttonIcon: {
-    // padding: theme.spacing(0, 2),
-    // height: '100%',
-    // position: 'absolute',
-    // pointerEvents: 'none',
-    // display: 'flex',
-    // alignItems: 'center',
-    // justifyContent: 'center',
-
-  },
-  
 
   inputRoot: {
     color: 'inherit',
@@ -131,6 +124,7 @@ function AppAppBar(props) {
   return isAuthenticated ?
     // User is logged in
     (
+      
       <div>
         <AppBar position="fixed">
           <Toolbar className={classes.toolbar}>
@@ -175,12 +169,15 @@ function AppAppBar(props) {
             </div>
           </Toolbar>
         </AppBar>
+       
         <div className={classes.placeholder} />
       </div>
     ) :
 
     // Not logged in
-    (<div>
+    (
+    <div>
+    
       <AppBar position="fixed">
         <Toolbar className={classes.toolbar}>
 
@@ -225,11 +222,23 @@ function AppAppBar(props) {
                 <DialogTitle>Choose your profile</DialogTitle>
                 <DialogContent>
                   <Button style={{ marginRight: theme.spacing(6) }} onClick = {() => loginWithRedirect()}>
+                  
+                  {/* <AuthConsumer>
+                  {({ initiateLogin }) => (
+                    <button className="btn btn-sm btn-primary" >
+                     
+                     <Button style={{ marginRight: theme.spacing(6) }}  onClick={initiateLogin}>
+                      <FaceIcon fontSize="large" className={classes.largeIcon}></FaceIcon>
+                      </Button>
+                      Login
+                    </button>
+                  )}
+                </AuthConsumer> */}
                     <FaceIcon fontSize="large" className={classes.largeIcon}></FaceIcon>
                     Customer
                   </Button>
-                  <Button style={{ marginRight: theme.spacing(6) }} onClick = {() => loginWithRedirect()}>
-                    <SupervisorAccountIcon fontSize="large" className={classes.largeIcon}></SupervisorAccountIcon>
+                  <Button style={{ marginRight: theme.spacing(6) }}>
+                    <SupervisorAccountIcon fontSize="large" className={classes.largeIcon} onClick = {() => loginWithRedirect()}></SupervisorAccountIcon>
                     Manager
                   </Button>
                 </DialogContent>
@@ -247,7 +256,8 @@ function AppAppBar(props) {
         </Toolbar>
       </AppBar>
       <div className={classes.placeholder} />
-    </div>);
+    </div>
+    );
 }
 
 AppAppBar.propTypes = {
@@ -255,3 +265,26 @@ AppAppBar.propTypes = {
 };
 
 export default withStyles(styles)(AppAppBar);
+
+// import React from "react";
+// import { Redirect } from "react-router-dom";
+
+// import { AuthConsumer } from "../../authContext";
+// import Login from "../../Login";
+
+// const AppAppBar = () => (
+//   <AuthConsumer>
+//     {({ authenticated }) =>
+//       authenticated ? (
+//         <Redirect to="/dashboard" />
+//       ) : (
+//         <div>
+//           {/* <h2>Welcome to React RBAC Tutorial.</h2> */}
+//           <Login />
+//         </div>
+//       )
+//     }
+//   </AuthConsumer>
+// );
+
+// export default AppAppBar;
