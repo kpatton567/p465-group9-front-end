@@ -16,6 +16,8 @@ import { withTheme } from '@material-ui/styles';
 import Typography from '../components/Typography';
 import axios from 'axios';
 import theme from '../theme';
+import AppFooter from './AppFooter';
+
 
 
   const icon = {
@@ -82,6 +84,7 @@ import theme from '../theme';
   };
 
   
+
 class MoviesPage extends Component {
   constructor(props) {
     super(props);
@@ -124,6 +127,7 @@ class MoviesPage extends Component {
           </div>
           <Container style={cardGrid} maxWidth="lg">
             {/* End hero unit */}
+
             {/* Generate cards based on number of elements in 'cards' array */}
             <Grid container spacing={4}>
               {cards.map((card) => (
@@ -168,6 +172,8 @@ class MoviesPage extends Component {
             </Button>
           </Container>
         </section>
+
+        <AppFooter/>
       </React.Fragment>
     );
   }

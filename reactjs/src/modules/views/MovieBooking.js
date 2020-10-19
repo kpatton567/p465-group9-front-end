@@ -28,6 +28,10 @@ import ListItemAvatar from '@material-ui/core/ListItemAvatar';
 import ImageIcon from '@material-ui/icons/Image';
 import WorkIcon from '@material-ui/icons/Work';
 import './MovieBooking.css';
+import AppFooter from './AppFooter';
+
+
+
 const mainFeaturedPost = {
     title: 'Title of the movie',
     description:
@@ -213,7 +217,8 @@ export default function MovieBooking() {
                     {/* </main> */}
                 </div>
             </Container>
-            {/* <Footer title="Footer" description="Something here to give the footer a purpose!" /> */}
+            
+            <AppFooter/>
         </React.Fragment>
     );
 }
