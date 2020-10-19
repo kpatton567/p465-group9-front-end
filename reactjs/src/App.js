@@ -10,29 +10,30 @@ import EditProfile from "../src/EditProfile";
 import CallbackPage from "../src/callback";
 import DashboardPage  from './Dashboard';
 import MoviesPage from "../src/modules/views/MoviesPage";
+import Auth from "./Auth";
+import ManagerView from './modules/views/ManagerView';
 
 function App() {
   // const { isLoading } = useAuth0();
   // if (isLoading) return <div>Loading...</div>
 
   return (
-    // <Auth>
+    <Auth>
       <Router>
-        
         <Route path="/" exact={true}><Home/></Route> 
-        <Route path="/home" exact={true}><Home/></Route> 
-        <Route path="/movieBooking" exact={true}><MovieBooking/></Route>
-        <Route path="/editProfile" exact={true}><EditProfile/></Route>
+        <Route path="/home" exact={true}><Home/></Route>
+        <Route path="/movieBooking/:movie" component={MovieBooking}/>
+        <Route path="/editProfile"><EditProfile/></Route>
         <Route path="/userRewards" exact={true}><UserRewards/></Route> 
         <Route path="/bookingHistory" exact={true}><BookingHistory/></Route>
-        {/* <Route path="/callback"><CallbackPage/></Route> */}
         <Route path="/callback" component={CallbackPage}/>
         <Route path="/dashboard" component={DashboardPage}/>
-        <Route path='/movies' exact={true}><MoviesPage/></Route>
- 
-      
+        <Route path='/movies' exact={true}>
+          <MoviesPage/>
+        </Route>
+        <Route path= 'managerView' exact={true}><ManagerView/></Route>
       </Router>
-      //  </Auth>
+       </Auth>
   );
 }
 

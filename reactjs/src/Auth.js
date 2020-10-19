@@ -1,7 +1,8 @@
-import React, { Component } from "react";
+import React, { Component , useState} from "react";
 import auth0 from "auth0-js";
 import { AUTH_CONFIG } from "./auth0-variables";
 import { AuthProvider } from "./authContext";
+import { useAuth0 } from '@auth0/auth0-react';
 
 const auth = new auth0.WebAuth({
   domain: AUTH_CONFIG.domain,
@@ -11,23 +12,21 @@ const auth = new auth0.WebAuth({
   responseType: "token id_token"
 });
 
+function Auth(props) {
+  const { user, isAuthenticated } = useAuth0();
 
-
-class Auth extends Component {
-    
-  state = {
+  const [state , setState] = useState({
     authenticated: false,
     user: {
-      role: "visitor"
+      role: 'visitor'
     },
     accessToken: ""
-  };
-   
-  initiateLogin = () => {
+})
+  const initiateLogin = () => {
     auth.authorize({prompt:'login'});
   };
 
-  logout = () => {
+  const logout = () => {
     this.setState({
       authenticated: false,
       user: {
@@ -36,8 +35,7 @@ class Auth extends Component {
       accessToken: ""
     });
   };
-
-  handleAuthentication = () => {
+  const handleAuthentication = () => {
     auth.parseHash((error, authResult) => {
       if (error) {
         console.log(error);
@@ -47,9 +45,8 @@ class Auth extends Component {
 
       this.setSession(authResult.idTokenPayload);
     });
-  };
-
-  setSession(data) {
+  }
+  const setSession = (data) => {
     const user = {
       id: data.sub,
       email: data.email,
@@ -60,21 +57,20 @@ class Auth extends Component {
       accessToken: data.accessToken,
       user
     });
-  }
+  };
 
-  render() {
     const authProviderValue = {
-      ...this.state,
-      initiateLogin: this.initiateLogin,
-      handleAuthentication: this.handleAuthentication,
-      logout: this.logout
+      ...state,
+      initiateLogin: initiateLogin,
+      handleAuthentication:handleAuthentication,
+      logout: logout
     };
     return (
       <AuthProvider value={authProviderValue}>
-        {this.props.children}
+        {props.children}
       </AuthProvider>
     );
-  }
+  
 }
 
 export default Auth;

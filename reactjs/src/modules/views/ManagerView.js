@@ -1,19 +1,16 @@
 import React from "react";
 import { Redirect } from "react-router-dom";
 
-import { AuthConsumer } from "./authContext";
-import Can from "./Can";
-import Logout from "./Logout";
-// import Profile from "../components/Profile";
-// import PostsList from "../components/PostsList";
+import { AuthConsumer } from "../../authContext";
+import Can from "../../Can";
+import Logout from "../../Logout";
 
-
-const DashboardPage = () => (
+const ManagerView = () => (
   <AuthConsumer>
     {({ user }) => (
       <Can
         role={user.role}
-        perform="manager-view:access"
+        perform="manager-page:visit"
         yes={() => (
           <div>
             <h1>Dashboard</h1>
@@ -33,4 +30,4 @@ const DashboardPage = () => (
   </AuthConsumer>
 );
 
-export default DashboardPage;
+export default ManagerView;

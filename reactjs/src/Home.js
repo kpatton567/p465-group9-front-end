@@ -26,23 +26,7 @@ function Home() {
       <ProductSmokingHero />
       <AppFooter />
     </React.Fragment>
-  );
-  // return (
-  //   <AuthConsumer>
-  //   {({ authenticated }) =>
-  //     authenticated ? (
-  //       <Redirect to="/dashboard" />
-  //     ) : (
-  //       <div>
-  //         <h2>Welcome to React RBAC Tutorial.</h2>
-  //         <Login />
-  //         {/* <PostsList /> */}
-  //       </div>
-  //     )
-  //   }
-  // </AuthConsumer>
-  // );
-  
+  );  
 }
 
 // export default withRoot(Index);

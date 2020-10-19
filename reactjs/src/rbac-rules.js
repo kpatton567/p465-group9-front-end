@@ -1,11 +1,9 @@
 const rules = {
     ROLE_MANAGER: {
-      static: ["posts:list", "home-page:visit", "manager-view:access","dashboard-page:visit"]
+      static: ["posts:list", "home-page:visit","manager-page:visit"]
     },
     ROLE_CUSTOMER: {
       static: [
-        "posts:list",
-        "posts:create",
         "users:getSelf",
         "home-page:visit",
         "dashboard-page:visit"
