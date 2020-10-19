@@ -12,7 +12,7 @@ import AppAppBar from './../views/AppAppBar';
 import { withStyles } from '@material-ui/core/styles';
 import { makeStyles } from '@material-ui/core/styles';
 
-function ManageMovies() {
+function ManageSnacks() {
 
   return (
     <React.Fragment >
@@ -23,4 +23,4 @@ function ManageMovies() {
 }
 
 // export default withRoot(Index);
-export default withRoot(ManageMovies);
+export default withRoot(ManageSnacks);

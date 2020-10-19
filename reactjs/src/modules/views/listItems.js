@@ -29,25 +29,25 @@ export const mainListItems = (
       </ListItemIcon>
       <ListItemText primary="Add/Delete Movies" />
     </ListItem>
-    <ListItem button>
+    <ListItem button component={Link} to="/manageSnacks">
       <ListItemIcon>
         <PeopleIcon />
       </ListItemIcon>
       <ListItemText primary="Add/Delete Snacks" />
     </ListItem>
-    <ListItem button>
+    <ListItem button component={Link} to="/customerChat">
       <ListItemIcon>
         <BarChartIcon />
       </ListItemIcon>
       <ListItemText primary="Customer Chat Requests" />
     </ListItem>
-    <ListItem button>
+    <ListItem button component={Link} to="/transactionPage">
       <ListItemIcon>
         <LayersIcon />
       </ListItemIcon>
       <ListItemText primary="Transaction History" />
     </ListItem>
-    <ListItem button>
+    <ListItem button component={Link} to="/reviewPage">
       <ListItemIcon>
         <LayersIcon />
       </ListItemIcon>
@@ -56,26 +56,3 @@ export const mainListItems = (
   </div>
 );
 
-export const secondaryListItems = (
-  <div>
-    <ListSubheader inset>Saved reports</ListSubheader>
-    <ListItem button>
-      <ListItemIcon>
-        <AssignmentIcon />
-      </ListItemIcon>
-      <ListItemText primary="Current month" />
-    </ListItem>
-    <ListItem button>
-      <ListItemIcon>
-        <AssignmentIcon />
-      </ListItemIcon>
-      <ListItemText primary="Last quarter" />
-    </ListItem>
-    <ListItem button>
-      <ListItemIcon>
-        <AssignmentIcon />
-      </ListItemIcon>
-      <ListItemText primary="Year-end sale" />
-    </ListItem>
-  </div>
-);
