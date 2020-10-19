@@ -22,17 +22,21 @@ import { mainListItems} from './listItems';
 import Chart from './Chart';
 import Deposits from './Deposits';
 import Orders from './Orders';
+import AppAppBar from './AppAppBar';
 
 const drawerWidth = 240;
 
 const useStyles = makeStyles((theme) => ({
   root: {
     display: 'flex',
+    backgroundColor: '#363636'
   },
   toolbar: {
+    backgroundColor: '#363636',
     paddingRight: 24, // keep right padding when drawer closed
   },
   toolbarIcon: {
+    backgroundColor: '#363636',
     display: 'flex',
     alignItems: 'center',
     justifyContent: 'flex-end',
@@ -40,6 +44,7 @@ const useStyles = makeStyles((theme) => ({
     ...theme.mixins.toolbar,
   },
   appBar: {
+    backgroundColor: '#363636',
     zIndex: theme.zIndex.drawer + 1,
     transition: theme.transitions.create(['width', 'margin'], {
       easing: theme.transitions.easing.sharp,
@@ -64,6 +69,7 @@ const useStyles = makeStyles((theme) => ({
     flexGrow: 1,
   },
   drawerPaper: {
+    
     position: 'relative',
     whiteSpace: 'nowrap',
     width: drawerWidth,
@@ -127,7 +133,7 @@ export default function Dashboard() {
             onClick={handleDrawerOpen}
             className={clsx(classes.menuButton, open && classes.menuButtonHidden)}
           >
-            <MenuIcon />
+            <MenuIcon color="#FFFFFF"/>
           </IconButton>
           <Typography component="h1" variant="h6" color="inherit" noWrap className={classes.title}>
             Dashboard
@@ -139,6 +145,7 @@ export default function Dashboard() {
           </IconButton>
         </Toolbar>
       </AppBar>
+      <AppAppBar/>
       <Drawer
         variant="permanent"
         classes={{
@@ -148,7 +155,7 @@ export default function Dashboard() {
       >
         <div className={classes.toolbarIcon}>
           <IconButton onClick={handleDrawerClose}>
-            <ChevronLeftIcon />
+            <ChevronLeftIcon backgroundColor="#500000"/>
           </IconButton>
         </div>
         <Divider />
