@@ -3,7 +3,7 @@ import classNames from "classnames";
 import PropTypes from 'prop-types';
 import { withStyles } from '@material-ui/core/styles';
 import Link from '@material-ui/core/Link';
-import { BrowserRouter as Router }  from 'react-router-dom';
+import { BrowserRouter as Router } from 'react-router-dom';
 import { styles as toolbarStyles } from '../components/Toolbar';
 import { useAuth0 } from '@auth0/auth0-react';
 import Person from "@material-ui/icons/Person";
@@ -24,6 +24,10 @@ import ExitToAppIcon from '@material-ui/icons/ExitToApp';
 import PersonIcon from '@material-ui/icons/Person';
 import ListItemText from '@material-ui/core/ListItemText';
 import ListItemIcon from '@material-ui/core/ListItemIcon';
+
+import { Redirect } from "react-router-dom";
+import Can from "../../Can";
+import { AuthConsumer } from "../../authContext";
 
 const StyledMenuItem = withStyles((theme) => ({
   root: {
@@ -63,13 +67,16 @@ const styles = (theme) => ({
   linkSecondary: {
     color: theme.palette.secondary.main,
   },
+  buttonLink: {
+    marginRight: theme.spacing(4)
+  }
 });
 
 function Profile(props) {
   const { classes } = props;
   const [openProfile, setOpenProfile] = React.useState(null);
 
-  const { user, logout } = useAuth0();
+  const { logout, user } = useAuth0();
 
   const handleClickProfile = event => {
     if (openProfile && openProfile.contains(event.target)) {
@@ -84,115 +91,124 @@ function Profile(props) {
 
   return (
     <Router>
-    <div>
-      <div className={classes.manager}>
-        <Button
-          color={window.innerWidth > 959 ? "transparent" : "white"}
-          justIcon={window.innerWidth > 959}
-          simple={!(window.innerWidth > 959)}
-          aria-owns={openProfile ? "profile-menu-list-grow" : null}
-          aria-haspopup="true"
-          onClick={handleClickProfile}
-          className={classes.buttonLink}
-        >
-          <Person className={classes.icons} />
-          <Hidden mdUp implementation="css">
-            <p className={classes.linkText}>Profile</p>
-          </Hidden>
-          {/* <p>{user.name}</p> */}
-        </Button>
-        <Poppers
-          open={Boolean(openProfile)}
-          anchorEl={openProfile}
-          transition
-          disablePortal
-          className={
-            classNames({ [classes.popperClose]: !openProfile }) +
-            " " +
-            classes.popperNav
-          }
-        >
-          {({ TransitionProps, placement }) => (
-            <Grow
-              {...TransitionProps}
-              id="profile-menu-list-grow"
-              style={{
-                transformOrigin:
-                  placement === "bottom" ? "center top" : "center bottom"
-              }}
-            >
-              <Paper>
-                <ClickAwayListener onClickAway={handleCloseProfile}>
-                  <MenuList role="menu">
-                   
-                    <Link href = "/editProfile">
-                      <StyledMenuItem href="/editProfile" >
-                    
-                      <ListItemIcon>
-                        <PersonIcon fontSize="small" />
-                      </ListItemIcon>
-                      <ListItemText  primary="Edit Profile" />
-                   
-                      </StyledMenuItem>
-                    </Link>
-                    <Link href = "/editProfile">
-                    <StyledMenuItem>
-                      <ListItemIcon>
-                        <HistoryIcon fontSize="small" />
-                      </ListItemIcon>
-                      <ListItemText primary="Booking History" />
-                    </StyledMenuItem>
-                    </Link>
-                    <Link href = "/managerView">
-                    <StyledMenuItem>
-                      <ListItemIcon>
-                        {/* <SettingsIcon fontSize="small" /> */}
-                      </ListItemIcon>
-                      <ListItemText primary="Manager View" />
-                    </StyledMenuItem>
-                    </Link>
-                    <Link href = "/editProfile">
-                      <StyledMenuItem>
-                        <ListItemIcon>
-                          <AttachMoneyIcon fontSize="small" />
-                        </ListItemIcon>
-                        <ListItemText primary="Rewards" />
-                      </StyledMenuItem>
-                    </Link>
-                    <Link href = "/editProfile">
-                    <StyledMenuItem>
-                      <ListItemIcon>
-                        <ContactSupportIcon fontSize="small" />
-                      </ListItemIcon>
-                      <ListItemText primary="Help and Support" />
-                    </StyledMenuItem>
-                    </Link>
-                    <Link href = "/editProfile">
-                    <StyledMenuItem>
-                      <ListItemIcon>
-                        <SettingsIcon fontSize="small" />
-                      </ListItemIcon>
-                      <ListItemText primary="Settings" />
-                    </StyledMenuItem>
-                    </Link>
-                    
-                    <Divider light />
-                    
-                    <StyledMenuItem onClick = {logout}>
-                    <ListItemIcon>
-                      <ExitToAppIcon fontSize="small" />
-                    </ListItemIcon>
-                    <ListItemText primary="Sign out" />
-                  </StyledMenuItem>
+      <div>
+        <div className={classes.manager}>
+          <Button
+            justIcon={window.innerWidth > 959}
+            simple={(!(window.innerWidth > 959)).toString()}
+            aria-owns={openProfile ? "profile-menu-list-grow" : null}
+            aria-haspopup="true"
+            onClick={handleClickProfile}
+            className={classes.buttonLink}
+          >
+            <Person color='secondary' className={classes.icons} />
+            <Hidden mdUp implementation="css">
+              <p className={classes.linkText}>Profile</p>
+            </Hidden>
+          </Button>
+          <Poppers
+            open={Boolean(openProfile)}
+            anchorEl={openProfile}
+            transition
+            disablePortal
+            className={
+              classNames({ [classes.popperClose]: !openProfile }) +
+              " " +
+              classes.popperNav
+            }
+          >
+            {({ TransitionProps, placement }) => (
+              <Grow
+                {...TransitionProps}
+                id="profile-menu-list-grow"
+                style={{
+                  transformOrigin:
+                    placement === "bottom" ? "center top" : "center bottom"
+                }}
+              >
+                <Paper>
+                  <ClickAwayListener onClickAway={handleCloseProfile}>
+                    <MenuList role="menu">
 
-                  </MenuList>
-                </ClickAwayListener>
-              </Paper>
-            </Grow>
-          )}
-        </Poppers>
+                      <Link href="/editProfile">
+                        <StyledMenuItem href="/editProfile" >
+
+                          <ListItemIcon>
+                            <PersonIcon fontSize="small" />
+                          </ListItemIcon>
+                          <ListItemText primary="Edit Profile" />
+
+                        </StyledMenuItem>
+                      </Link>
+
+                      <Link href="/bookingHistory">
+                        <StyledMenuItem>
+                          <ListItemIcon>
+                            <HistoryIcon fontSize="small" />
+                          </ListItemIcon>
+                          <ListItemText primary="Booking History" />
+                        </StyledMenuItem>
+                      </Link>
+                      <Link href="/editProfile">
+                        <StyledMenuItem>
+                          <ListItemIcon>
+                            <AttachMoneyIcon fontSize="small" />
+                          </ListItemIcon>
+                          <ListItemText primary="Rewards" />
+                        </StyledMenuItem>
+                      </Link>
+                      <Link href="/editProfile">
+                        <StyledMenuItem>
+                          <ListItemIcon>
+                            <ContactSupportIcon fontSize="small" />
+                          </ListItemIcon>
+                          <ListItemText primary="Help and Support" />
+                        </StyledMenuItem>
+                      </Link>
+                      <Link href="/editProfile">
+                        <StyledMenuItem>
+                          <ListItemIcon>
+                            <SettingsIcon fontSize="small" />
+                          </ListItemIcon>
+                          <ListItemText primary="Settings" />
+                        </StyledMenuItem>
+                      </Link>
+
+                      {/* <AuthConsumer>
+                      <Can
+                        role={user.role}
+                        perform="manager-page:visit"
+                        yes={() => (
+                          <Link href="/managerView">
+                          <StyledMenuItem>
+                            <ListItemIcon>
+                              <SettingsIcon fontSize="small" />
+                            </ListItemIcon>
+                            <ListItemText primary="Manager View" />
+                          </StyledMenuItem>
+                          </Link>
+
+                        )}
+                        no={() => <Redirect to="/" />}
+                      />
+                      </AuthConsumer> */}
+                      <Divider light />
+
+                      <StyledMenuItem onClick={logout}>
+                        <ListItemIcon>
+                          <ExitToAppIcon fontSize="small" />
+                        </ListItemIcon>
+                        <ListItemText primary="Sign out" />
+                      </StyledMenuItem>
+
+                    </MenuList>
+                  </ClickAwayListener>
+                </Paper>
+              </Grow>
+            )}
+          </Poppers>
+        </div>
       </div>
-    </div>
     </Router>
   );
 }

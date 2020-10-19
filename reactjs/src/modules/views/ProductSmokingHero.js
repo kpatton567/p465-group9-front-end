@@ -10,18 +10,21 @@ const styles = (theme) => ({
     display: 'flex',
     flexDirection: 'column',
     alignItems: 'center',
-    backgroundColor: '#222325',
+    backgroundColor: '#363636',
     maxWidth: '100%',
+    color: '#FFFFFF',
   },
   button: {
     border: '4px solid currentColor',
     borderRadius: 0,
     height: 'auto',
     padding: theme.spacing(2, 5),
+    color:'#FFFFFF'
   },
   link: {
     marginTop: theme.spacing(3),
     marginBottom: theme.spacing(3),
+    color: '#FFFFFF',
   },
   buoy: {
     width: 60,
@@ -37,7 +40,7 @@ function ProductSmokingHero(props) {
         className={classes.button}
         href="/support"
       >
-        <Typography variant="h4" component="span">
+        <Typography variant="h4" component="span" className={classes.root}>
           {'Questions? Need help?'}
         </Typography>
       </Button>

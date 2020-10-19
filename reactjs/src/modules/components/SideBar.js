@@ -1,11 +1,9 @@
-import React from 'react';
+import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import { makeStyles } from '@material-ui/core/styles';
 import Grid from '@material-ui/core/Grid';
 import Paper from '@material-ui/core/Paper';
 import Typography from '@material-ui/core/Typography';
-import Link from '@material-ui/core/Link';
-
 import Button from '@material-ui/core/Button';
 import Dialog from '@material-ui/core/Dialog';
 import DialogActions from '@material-ui/core/DialogActions';
@@ -16,6 +14,8 @@ import Input from '@material-ui/core/Input';
 import MenuItem from '@material-ui/core/MenuItem';
 import FormControl from '@material-ui/core/FormControl';
 import Select from '@material-ui/core/Select';
+import axios from 'axios';
+import { format } from "date-fns";
 
 const useStyles = makeStyles((theme) => ({
   sidebarAboutBox: {
@@ -46,14 +46,41 @@ const useStyles = makeStyles((theme) => ({
 
 export default function Sidebar(props) {
   const classes = useStyles();
-  const { archives, description, social, title } = props;
-  
-  const [open, setOpen] = React.useState(false);
-  const [theatre, setTheatre] = React.useState('');
-  const [timing, setTiming] = React.useState('');
+  const { description, title, movieId } = props;
 
+  const [open, setOpen] = React.useState(false);
+  const [response, setResponse] = React.useState([]);
+  const [theatres, setTheatres] = React.useState([]);
+  const [showtimes, setShowTimes] = React.useState([]);
+
+  const fetchData = React.useCallback(() => {
+    axios({
+      "method": "POST",
+      "url": 'http://localhost:8080/api/home/movie_showtimes?movieId=' + movieId,
+    })
+      .then((response) => {
+        setResponse(response.data)
+        console.log(response.data);
+      })
+      .catch((error) => {
+        console.log(error)
+      })
+  }, [])
+  React.useEffect(() => {
+    fetchData()
+    // var date = new Date("2016-01-04 10:34:23");
+    // var formattedDate = format(date, "MMMM Do, yyyy H:mma");
+
+  // console.log(formattedDate);
+  }, [fetchData])
+
+  const handleTheatreChange = (id,event) => {
+    console.log(id)
+    // setTheatres(Number(event.target.value) || '');
+    // setShowTimes(response.items);
+  };
   const handleChange = (event) => {
-    setTheatre(Number(event.target.value) || '');
+    // setTheatres(Number(event.target.value) || '');
   };
 
   const handleClickOpen = () => {
@@ -71,78 +98,61 @@ export default function Sidebar(props) {
         </Typography>
         <Typography>{description}</Typography>
       </Paper>
-      {/* <Typography variant="h6" gutterBottom className={classes.sidebarSection}>
-        Social
-      </Typography>
-      {social.map((network) => (
-        <Link display="block" variant="body1" href="#" key={network}>
-          <Grid container direction="row" spacing={1} alignItems="center">
-            <Grid item>
-              <network.icon />
-            </Grid>
-            <Grid item>{network.name}</Grid>
-          </Grid>
-        </Link>
-      ))} */}
       <Paper elevation={0} className={classes.sidebarAboutBox}
       >
-      <div className={classes.sidebarAvailabilityBox}>
-        <Button onClick={handleClickOpen}>See availability</Button>
-        <Dialog disableBackdropClick disableEscapeKeyDown open={open} onClose={handleClose}>
-          <DialogTitle>Choose your theatre</DialogTitle>
-          <DialogContent>
-            <form className={classes.container}>
-              <FormControl className={classes.formControl}>
-                <InputLabel htmlFor="demo-dialog-native">Theatre</InputLabel>
-                <Select
-                  native
-                  value={theatre}
-                  onChange={handleChange}
-                  input={<Input id="demo-dialog-native" />}
-                >
-                  <option aria-label="None" value="" />
-                  <option value={10}>Theatre1</option>
-                  <option value={20}>Theatre2</option>
-                  <option value={30}>Theatre3</option>
-                </Select>
-              </FormControl>
-              <FormControl className={classes.formControl}>
-                <InputLabel id="demo-dialog-select-label">Timing</InputLabel>
-                <Select
-                  labelId="demo-dialog-select-label"
-                  id="demo-dialog-select"
-                  value={timing}
-                  onChange={handleChange}
-                  input={<Input />}
-                >
-                  <MenuItem value="">
-                    <em>None</em>
-                  </MenuItem>
-                  <MenuItem value={10}>Timings Option1</MenuItem>
-                  <MenuItem value={20}>Timings Option1</MenuItem>
-                  <MenuItem value={30}>Timings Option1</MenuItem>
-                </Select>
-              </FormControl>
-            </form>
-          </DialogContent>
-          <DialogActions>
-            <Button onClick={handleClose} color="primary">
-              Cancel
+        <div className={classes.sidebarAvailabilityBox}>
+          <Button onClick={handleClickOpen}>See availability</Button>
+          <Dialog disableBackdropClick disableEscapeKeyDown open={open} onClose={handleClose}>
+            <DialogTitle>Choose your theatre</DialogTitle>
+            <DialogContent>
+              <form className={classes.container}>
+                <FormControl className={classes.formControl}>
+                  <InputLabel htmlFor="demo-dialog-native">Theatre</InputLabel>
+                  <Select
+                    native
+                    // onChange={(handleTheatreChange)}
+                    input={<Input id="demo-dialog-native" />}
+                  >
+                    {response.map((item) => 
+                    <option key={item.theater.id} value={item.theater.name} onChange={(e) => handleTheatreChange(item.theater.id, e)}>{item.theater.name}</option>
+                    )}
+
+                  </Select>
+                </FormControl>
+                <FormControl className={classes.formControl}>
+                  <InputLabel id="demo-dialog-select-label">Show Times</InputLabel>
+                  <Select
+                    labelId="demo-dialog-select-label"
+                    id="demo-dialog-select"
+                    value={showtimes}
+                    onChange={handleChange}
+                    input={<Input />}
+                  >
+                    <MenuItem value="">
+                      <em>None</em>
+                    </MenuItem>
+                    {/* {showtimes.map((showtime) => ( */}
+                    {/* <MenuItem value={showtime}>showtime</MenuItem> */}
+                    ))}
+                  </Select>
+                </FormControl>
+              </form>
+            </DialogContent>
+            <DialogActions>
+              <Button onClick={handleClose} color="primary">
+                Cancel
           </Button>
-            <Button onClick={handleClose} color="primary">
-              Ok
+              <Button onClick={handleClose} color="primary">
+                Ok
           </Button>
-          </DialogActions>
-        </Dialog>
-      </div>
+            </DialogActions>
+          </Dialog>
+        </div>
       </Paper>
     </Grid>
   );
 }
 
 Sidebar.propTypes = {
-  // archives: PropTypes.array,
-  description: PropTypes.string,
-  // social: PropTypes.array,
-  title: PropTypes.string,
+  movieId: PropTypes.string
 };

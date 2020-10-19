@@ -1,7 +1,6 @@
 import React from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import Grid from '@material-ui/core/Grid';
-import Link from '@material-ui/core/Link';
 import Container from '@material-ui/core/Container';
 import Typography from '../components/Typography';
 import Divider from "@material-ui/core/Divider";
@@ -10,8 +9,7 @@ import Divider from "@material-ui/core/Divider";
 const useStyles = makeStyles((theme) => ({
   root: {
     display: 'flex',
-    // backgroundColor: theme.palette.secondary.light,
-    backgroundColor: '#222325',
+    backgroundColor: '#363636',
     color: "#FFFFFF"
   },
   container: {
@@ -65,7 +63,7 @@ export default function AppFooter() {
         <Grid container spacing={5}>
           <Grid item>
             <Typography variant="caption">
-              {'Text of the footer goes here'}
+              {'© Prevue Booking Management 2020'}
             </Typography>
           </Grid>
 
