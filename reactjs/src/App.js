@@ -31,7 +31,7 @@ function App() {
         <Route path='/movies' exact={true}>
           <MoviesPage/>
         </Route>
-        <Route path= 'managerView' exact={true}><ManagerView/></Route>
+        <Route path= '/managerView' exact={true}><ManagerView/></Route>
       </Router>
        </Auth>
   );

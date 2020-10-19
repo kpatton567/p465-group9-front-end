@@ -33,6 +33,7 @@
     "react-scripts": "3.4.3",
     "react-tap-event-plugin": "^3.0.3",
     "reactstrap": "^8.6.0",
+    "recharts": "^1.8.5",
     "validator": "^13.1.17"
   },
   "scripts": {
