@@ -111,6 +111,7 @@ class MoviesPage extends Component {
 
   render() {
     const { cards } = this.state;
+    
     return (
       <React.Fragment>
         <CssBaseline />
