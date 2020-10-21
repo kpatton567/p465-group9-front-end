@@ -204,9 +204,9 @@ function AppAppBar(props) {
             underline="none"
             color="inherit"
             className={classes.title}
-            href="/prevue"
+            href="/"
           >
-            {'Prevue'}
+            {'PREVUE'}
           </Link>
 
 
