@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {Component} from 'react';
 import PropTypes from 'prop-types';
 import { withStyles } from '@material-ui/core/styles';
 import { Redirect } from "react-router-dom";
@@ -11,21 +11,25 @@ import Typography from '../components/Typography';
 import Link from '@material-ui/core/Link';
 import ButtonBase from '@material-ui/core/ButtonBase';
 import axios from 'axios';
+import theme from '../theme';
+
 
 
 // import PostsList from "../../PostsList";
 
-const styles = (theme) => ({
-  root: {
+
+  const root = {
     backgroundColor: '#363636',
     color: '#FFFFFF',
-  },
-  images: {
+  };
+
+  const images = {
     marginTop: theme.spacing(8),
     display: 'flex',
     flexWrap: 'wrap',
-  },
-  imageWrapper: {
+  };
+
+  const imageWrapper = {
     position: 'relative',
     display: 'block',
     padding: 0,
@@ -47,10 +51,10 @@ const styles = (theme) => ({
     '&:hover $imageTitle': {
       border: '4px solid currentColor',
     },
-  },
+  };
 
   // Button on image
-  imageButton: {
+  const imageButton = {
     position: 'absolute',
     left: 0,
     right: 0,
@@ -60,10 +64,10 @@ const styles = (theme) => ({
     alignItems: 'center',
     justifyContent: 'center',
     color: theme.palette.common.white,
-  },
+  };
 
   // Image
-  imageSrc: {
+  const imageSrc = {
     position: 'absolute',
     left: 0,
     right: 0,
@@ -71,9 +75,9 @@ const styles = (theme) => ({
     bottom: 0,
     backgroundSize: 'cover',
     backgroundPosition: 'center 60%',
-  },
+  };
 
-  imageBackdrop: {
+  const imageBackdrop = {
     position: 'absolute',
     left: 0,
     right: 0,
@@ -82,16 +86,16 @@ const styles = (theme) => ({
     background: theme.palette.common.black,
     opacity: 0.5,
     transition: theme.transitions.create('opacity'),
-  },
+  };
 
   // Text on each panel
-  imageTitle: {
+  const imageTitle = {
     position: 'relative',
     padding: `${theme.spacing(2)}px ${theme.spacing(4)}px 14px`,
-  },
+  };
 
   // Line below text on each panel
-  imageMarked: {
+  const imageMarked = {
     height: 3,
     width: 18,
     background: theme.palette.common.white,
@@ -99,171 +103,167 @@ const styles = (theme) => ({
     bottom: -2,
     left: 'calc(50% - 9px)',
     transition: theme.transitions.create('opacity'),
-  },
+  };
 
-  h5: {
+  const h5 = {
     marginTop: theme.spacing(2),
-   
-  },
-});
+  };
 
 
 
-// Concatenate the name of the movie to redirect the user to the proper url
-function CreateUrl(image)
-{
-  var mov = "/movies/"
-  var res = mov.concat(image);
-
-  return res;
-}
-
-
-var cards = [];
-
-axios.get('http://localhost:8080/api/home/movies')
-.then(response => 
-  {
-    cards = response.data;
-  }
-);
 
 // Movie panels
-function ProductCategories(props) {
-  const { classes } = props;
+class ProductCategories extends Component 
+{
+  constructor(props) {
+    super(props); 
+    this.state = {         
+      cards: [], 
+    }; 
+  }
+
+  componentDidMount() {
+    const fetchMovies = async () => {
+      const res = await axios.get('http://localhost:8080/api/home/movies');
+      this.setState({ cards: res.data })
+    };
+    fetchMovies();
+  }
+
+  handleSubmitClick(e) {
+    console.log("Test");
+  }
 
 
+  render() {
+    const { cards } = this.state;
 
-  // 9 movie panels
-  const images = [
-    {
-      url: cards[0].posterLink,
-      title: cards[0].title,
-      width: '33%',
-      id: '1',
-    },
-    {
-      url: cards[1].posterLink,
-      title: cards[1].title,
-      width: '33%',
-      id: '2',
-    },
-    {
-      url: cards[2].posterLink,
-      title: cards[2].title,
-      width: '33%',
-      id: '3',
-    },
-    {
-      url: cards[3].posterLink,
-      title: cards[3].title,
-      width: '33%',
-      id: '4',
-    },
-    {
-      url: cards[4].posterLink,
-      title: cards[4].title,
-      width: '33%',
-      id: '5',
-    },
-    {
-      url: cards[5].posterLink,
-      title: cards[5].title,
-      width: '33%',
-      id: '6',
-    },
-    {
-      url: cards[6].posterLink,
-      title: cards[6].title,
-      width: '33%',
-      id: '7',
-    },
-    {
-      url: cards[7].posterLink,
-      title: cards[7].title,
-      width: '33%',
-      id: '8',
-    },
-    {
-      url: cards[8].posterLink,
-      title: cards[8].title,
-      width: '33%',
-      id: '9',
-    },
-  ];
+    // 9 movie panels
+    const images = [
+      {
+        url: cards[0].posterLink,
+        title: cards[0].title,
+        width: '33%',
+        id: '1',
+      },
+      {
+        url: cards[1].posterLink,
+        title: cards[1].title,
+        width: '33%',
+        id: '2',
+      },
+      {
+        url: cards[2].posterLink,
+        title: cards[2].title,
+        width: '33%',
+        id: '3',
+      },
+      {
+        url: cards[3].posterLink,
+        title: cards[3].title,
+        width: '33%',
+        id: '4',
+      },
+      {
+        url: cards[4].posterLink,
+        title: cards[4].title,
+        width: '33%',
+        id: '5',
+      },
+      {
+        url: cards[5].posterLink,
+        title: cards[5].title,
+        width: '33%',
+        id: '6',
+      },
+      {
+        url: cards[6].posterLink,
+        title: cards[6].title,
+        width: '33%',
+        id: '7',
+      },
+      {
+        url: cards[7].posterLink,
+        title: cards[7].title,
+        width: '33%',
+        id: '8',
+      },
+      {
+        url: cards[8].posterLink,
+        title: cards[8].title,
+        width: '33%',
+        id: '9',
+      },
+    ];
 
-  return (
-    // Makes the background entirely black
-    <Container
-      className={classes.root} 
-      component="section"
-      maxWidth="xl"
-    >
-      <Container 
-        className={classes.root} 
+    return (
+      // Makes the background entirely black
+      <Container
+        style={root}
         component="section"
+        maxWidth="xl"
       >
-    
-        {/* Big text above movie panels */}
-        <Typography variant="h4" marked="center" align="center" component="h2" className={classes.root}>
-          {'Check out these highly rated options'}
-        </Typography>
+        <Container
+          style={root}
+          component="section"
+        >
+
+          {/* Big text above movie panels */}
+          <Typography variant="h4" marked="center" align="center" component="h2" style={root}>
+            {'Check out these highly rated options'}
+          </Typography>
 
 
-        {/* Do the following for each image panel (map) */}
-        <div className={classes.images}>
-          {images.map((image) => (
-            <ButtonBase
-              key={image.title}
-              className={classes.imageWrapper}
-              style={{
-                width: image.width,
-              }}
-              href={`/moviebooking/${image.id}`} // send the user to the url according to the panel they clicked
-            >
-              {/* Import image from url */}
-              <div
-                className={classes.imageSrc}
+          {/* Do the following for each image panel (map) */}
+          <div style={images}>
+            {images.map((image) => (
+              <ButtonBase
+                key={image.title}
                 style={{
-                  backgroundImage: `url(${image.url})`,
+                  imageWrapper,
+                  width: image.width,
                 }}
-              />
-              <div className={classes.imageBackdrop} />
-              <div className={classes.imageButton}>
-                <Typography
-                  component="h3"
-                  variant="h6"
-                  color="inherit"
-                  className={classes.imageTitle}
-                >
-                  {image.title}
-                  <div className={classes.imageMarked} />
-                </Typography>
-              </div>
-            </ButtonBase>
-          ))}
-        </div>
+                href={`/moviebooking/${image.id}`} // send the user to the url according to the panel they clicked
+              >
+                {/* Import image from url */}
+                <div
+                  style={imageSrc}
+                  style={{
+                    backgroundImage: `url(${image.url})`,
+                  }}
+                />
+                <div style={imageBackdrop} />
+                <div style={imageButton}>
+                  <Typography
+                    component="h3"
+                    variant="h6"
+                    color="inherit"
+                    style={imageTitle}
+                  >
+                    {image.title}
+                    <div style={imageMarked} />
+                  </Typography>
+                </div>
+              </ButtonBase>
+            ))}
+          </div>
 
-        {/* Link to more movies below panels */}
-        <Typography variant="h4" align="center" component="h2" className={classes.h5}>
-        <Link
-            variant="h5"
-            underline="none"
-            color="inherit"
-            marked="center"
-            href="/movies"
-            className={classes.root}
-          >          
-            {'Click here to view more'}
-          </Link>
-        </Typography>
+          {/* Link to more movies below panels */}
+          <Typography variant="h4" align="center" component="h2" style={h5}>
+            <Link
+              variant="h5"
+              underline="none"
+              color="inherit"
+              marked="center"
+              href="/movies"
+              style={root}
+            >
+              {'Click here to view more'}
+            </Link>
+          </Typography>
+        </Container>
       </Container>
-    </Container>
-  );
+    );
+  }
 }
-
-ProductCategories.propTypes = {
-  classes: PropTypes.object.isRequired,
-};
-
-export default withStyles(styles)(ProductCategories);
+export default ProductCategories;

@@ -74,6 +74,7 @@ const root = {
     maxHeight: 40,
   },
 };
+
 const container = {
   display: 'flex',
   flexDirection: 'column',
@@ -85,114 +86,110 @@ const button = {
   minWidth: 250,
   marginBottom: theme.spacing(4),
 };
-// Build URL with movie name
-function CreateUrl(image) {
-  var mov = "/movies/"
-  var res = mov.concat(image);
-  return res;
-}
+
 
 class MoviesPage extends Component {
 
   constructor(props) {
-    super(props); 
-    this.state = {         
+    super(props);
+    this.state = {
       cards: [],
-    // movie: null 
-     }; }
+    };
+  }
 
-      componentDidMount() {
-        const fetchMovies = async () => {
-          const res = await axios.get('http://localhost:8080/api/home/movies');
-          this.setState({ cards: res.data })
-        };
-        fetchMovies();
-      }
-    handleSubmitClick(e) {
-        console.log("Test");
-      }
+  componentDidMount() {
+    const fetchMovies = async () => {
+      const res = await axios.get('http://localhost:8080/api/home/movies');
+      this.setState({ cards: res.data })
+    };
+    fetchMovies();
+  }
+  
+  handleSubmitClick(e) {
+    console.log("Test");
+  }
+
   render() {
-        // const classes = useStyles();
-        const { cards } = this.state;
-        return (
-          <React.Fragment>
-            <CssBaseline />
-            <AppAppBar position="relative">
-              <Toolbar>
-                <CameraIcon style={icon} />
-                <Typography variant="h6" color="inherit" noWrap>
-                  Album layout
+    const { cards } = this.state;
+    return (
+      <React.Fragment>
+        <CssBaseline />
+        <AppAppBar position="relative">
+          <Toolbar>
+            <CameraIcon style={icon} />
+            <Typography variant="h6" color="inherit" noWrap>
+              Album layout
             </Typography>
-              </Toolbar>
-            </AppAppBar>
-            <main>
-              {/* Hero unit */}
-              <div style={heroContent}>
-                <Container maxWidth="sm">
-                  <Typography color="inherit" align="center" variant="h2" marked="center" gutterBottom>
-                    {'All Movies'}
-                  </Typography>
-                  <Typography variant="h5" align="center" paragraph style={h5}>
-                    {'Browse our numerous movie options below and find one that is best for you!'}
-                  </Typography>
-                </Container>
-              </div>
-              <Container style={cardGrid} maxWidth="lg">
-                {/* End hero unit */}
-                {/* Generate cards based on number of elements in 'cards' array */}
-                <Grid container spacing={4}>
-                  {cards.map((card) => (
-                    <Grid item key={card} xs={12} sm={6} md={2} lg={3}>
-                      {/* Create each card using array from backend */}
-                      <Card style={card}>
-                        <CardMedia
-                          style={cardMedia}
-                          image={card.posterLink}
-                        />
-                        <CardContent style={cardContent}>
-                          <Typography gutterBottom variant="h5" component="h2">
-                            {card.title}
-                          </Typography>
-                          <Typography>
-                            {card.description}
-                          </Typography>
-                        </CardContent>
-                        {/* More Info Button */}
-                        <CardActions>
-                          <Link>
-                            <Button size="small" color="primary" href={`/moviebooking/${card.id}`}>
-                            {/* <Button size="small" color="primary"
+          </Toolbar>
+        </AppAppBar>
+        <main>
+          {/* Hero unit */}
+          <div style={heroContent}>
+            <Container maxWidth="sm">
+              <Typography color="inherit" align="center" variant="h2" marked="center" gutterBottom>
+                {'All Movies'}
+              </Typography>
+              <Typography variant="h5" align="center" paragraph style={h5}>
+                {'Browse our numerous movie options below and find one that is best for you!'}
+              </Typography>
+            </Container>
+          </div>
+          <Container style={cardGrid} maxWidth="lg">
+            {/* End hero unit */}
+            {/* Generate cards based on number of elements in 'cards' array */}
+            <Grid container spacing={4}>
+              {cards.map((card) => (
+                <Grid item key={card} xs={12} sm={6} md={2} lg={3}>
+                  {/* Create each card using array from backend */}
+                  <Card style={card}>
+                    <CardMedia
+                      style={cardMedia}
+                      image={card.posterLink}
+                    />
+                    <CardContent style={cardContent}>
+                      <Typography gutterBottom variant="h5" component="h2">
+                        {card.title}
+                      </Typography>
+                      <Typography>
+                        {card.description}
+                      </Typography>
+                    </CardContent>
+                    {/* More Info Button */}
+                    <CardActions>
+                      <Link>
+                        <Button size="small" color="primary" href={`/moviebooking/${card.id}`}>
+                          {/* <Button size="small" color="primary"
                               onClick={() => this.setState({
                                 movie: card
                               })}> */}
-                              {'Book Tickets'}
-                            </Button>
-                          </Link>
-                        </CardActions>
-                      </Card>
-                    </Grid>
-                  ))}
+                          {'Book Tickets'}
+                        </Button>
+                      </Link>
+                    </CardActions>
+                  </Card>
                 </Grid>
-              </Container>
-            </main>
-            {/* Button at bottom of page to bring user back to top of page */}
-            <section style={root}>
-              <Container style={container}>
-                <Button
-                  color="secondary"
-                  variant="contained"
-                  size="large"
-                  style={button}
-                  href="/movies"
-                >
-                  {'Back to Top'}
-                </Button>
-              </Container>
-            </section>
+              ))}
+            </Grid>
+          </Container>
+        </main>
+        {/* Button at bottom of page to bring user back to top of page */}
+        <section style={root}>
+          <Container style={container}>
+            <Button
+              color="secondary"
+              variant="contained"
+              size="large"
+              style={button}
+              href="/movies"
+            >
+              {'Back to Top'}
+            </Button>
+          </Container>
+        </section>
 
-            {/* {!!this.state.movie && (<MovieBooking movie={this.state.movie} />)} */}
-          </React.Fragment>
-        );
-      }
-    }
-    export default MoviesPage;
+        {/* {!!this.state.movie && (<MovieBooking movie={this.state.movie} />)} */}
+      </React.Fragment>
+    );
+  }
+}
+export default MoviesPage;
