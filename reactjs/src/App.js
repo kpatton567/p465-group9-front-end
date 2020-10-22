@@ -12,6 +12,11 @@ import DashboardPage  from './Dashboard';
 import MoviesPage from "../src/modules/views/MoviesPage";
 import Auth from "./Auth";
 import ManagerView from './modules/views/ManagerView';
+import ManageMovies from './modules/views/ManageMovies';
+import ManageSnacks from './modules/views/ManageSnacks';
+import CustomerChat from './modules/views/CustomerChat';
+import TransactionPage from './modules/views/TransactionPage';
+import ReviewPage from './modules/views/ReviewPage';
 
 function App() {
   // const { isLoading } = useAuth0();
@@ -28,10 +33,13 @@ function App() {
         <Route path="/bookingHistory" exact={true}><BookingHistory/></Route>
         <Route path="/callback" component={CallbackPage}/>
         <Route path="/dashboard" component={DashboardPage}/>
-        <Route path='/movies' exact={true}>
-          <MoviesPage/>
-        </Route>
+        <Route path='/movies' exact={true}><MoviesPage/></Route>
         <Route path= '/managerView' exact={true}><ManagerView/></Route>
+        <Route path= '/manageMovies' exact={true}><ManageMovies/></Route>
+        <Route path= '/manageSnacks' exact={true}><ManageSnacks/></Route>
+        <Route path= '/customerChat' exact={true}><CustomerChat/></Route>
+        <Route path= '/transactionPage' exact={true}><TransactionPage/></Route>
+        <Route path= '/reviewPage' exact={true}><ReviewPage/></Route>
       </Router>
        </Auth>
   );
