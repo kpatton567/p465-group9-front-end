@@ -53,7 +53,7 @@ const useStyles = makeStyles((theme) => ({
   },
   appBarShift: {
     marginLeft: drawerWidth,
-    width: `calc(100% - ${drawerWidth}px)`,
+    width: 240,
     transition: theme.transitions.create(['width', 'margin'], {
       easing: theme.transitions.easing.sharp,
       duration: theme.transitions.duration.enteringScreen,
@@ -71,8 +71,8 @@ const useStyles = makeStyles((theme) => ({
   drawerPaper: {
     
     position: 'relative',
-    whiteSpace: 'nowrap',
-    width: drawerWidth,
+    // whiteSpace: 'nowrap',
+    width: 250,
     transition: theme.transitions.create('width', {
       easing: theme.transitions.easing.sharp,
       duration: theme.transitions.duration.enteringScreen,
@@ -93,7 +93,7 @@ const useStyles = makeStyles((theme) => ({
   content: {
     flexGrow: 1,
     height: '100vh',
-    overflow: 'auto',
+    // overflow: 'auto',
   },
   container: {
     paddingTop: theme.spacing(4),
@@ -106,45 +106,17 @@ const useStyles = makeStyles((theme) => ({
     flexDirection: 'column',
   },
   fixedHeight: {
-    height: 240,
+    
   },
 }));
-
 export default function ManagerView() {
   const classes = useStyles();
   const [open, setOpen] = React.useState(true);
-  const handleDrawerOpen = () => {
-    setOpen(true);
-  };
-  const handleDrawerClose = () => {
-    setOpen(false);
-  };
   const fixedHeightPaper = clsx(classes.paper, classes.fixedHeight);
 
   return (
-    <div className={classes.root}>
+    <React.Fragment >
       <CssBaseline />
-      <AppBar position="absolute" className={clsx(classes.appBar, open && classes.appBarShift)}>
-        <Toolbar className={classes.toolbar}>
-          <IconButton
-            edge="start"
-            color="inherit"
-            aria-label="open drawer"
-            onClick={handleDrawerOpen}
-            className={clsx(classes.menuButton, open && classes.menuButtonHidden)}
-          >
-            <MenuIcon color="#FFFFFF"/>
-          </IconButton>
-          <Typography component="h1" variant="h6" color="inherit" noWrap className={classes.title}>
-            Dashboard
-          </Typography>
-          <IconButton color="inherit">
-            <Badge badgeContent={4} color="secondary">
-              <NotificationsIcon />
-            </Badge>
-          </IconButton>
-        </Toolbar>
-      </AppBar>
       <AppAppBar/>
       <Drawer
         variant="permanent"
@@ -153,11 +125,6 @@ export default function ManagerView() {
         }}
         open={open}
       >
-        <div className={classes.toolbarIcon}>
-          <IconButton onClick={handleDrawerClose}>
-            <ChevronLeftIcon backgroundColor="#500000"/>
-          </IconButton>
-        </div>
         <Divider />
         <List>{mainListItems}</List>
         <Divider />
@@ -190,6 +157,6 @@ export default function ManagerView() {
           </Box>
         </Container>
       </main>
-    </div>
+      </React.Fragment>
   );
 }

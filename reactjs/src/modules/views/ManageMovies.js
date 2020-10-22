@@ -36,6 +36,7 @@ import { mainListItems} from './listItems';
 import Chart from './Chart';
 import Deposits from './Deposits';
 import Orders from './Orders';
+import Button from '@material-ui/core/Button';
 const drawerWidth = 240;
 
 const useStyles = makeStyles((theme) => ({
@@ -65,7 +66,7 @@ const useStyles = makeStyles((theme) => ({
   },
   appBarShift: {
     marginLeft: drawerWidth,
-    width: `calc(100% - ${drawerWidth}px)`,
+    width: 240,
     transition: theme.transitions.create(['width', 'margin'], {
       easing: theme.transitions.easing.sharp,
       duration: theme.transitions.duration.enteringScreen,
@@ -83,8 +84,8 @@ const useStyles = makeStyles((theme) => ({
   drawerPaper: {
     
     position: 'relative',
-    whiteSpace: 'nowrap',
-    width: drawerWidth,
+    // whiteSpace: 'nowrap',
+    width: 250,
     transition: theme.transitions.create('width', {
       easing: theme.transitions.easing.sharp,
       duration: theme.transitions.duration.enteringScreen,
@@ -105,7 +106,7 @@ const useStyles = makeStyles((theme) => ({
   content: {
     flexGrow: 1,
     height: '100vh',
-    overflow: 'auto',
+    // overflow: 'auto',
   },
   container: {
     paddingTop: theme.spacing(4),
@@ -124,38 +125,11 @@ const useStyles = makeStyles((theme) => ({
 function ManageMovies() {
   const classes = useStyles();
   const [open, setOpen] = React.useState(true);
-  const handleDrawerOpen = () => {
-    setOpen(true);
-  };
-  const handleDrawerClose = () => {
-    setOpen(false);
-  };
   const fixedHeightPaper = clsx(classes.paper, classes.fixedHeight);
 
   return (
     <React.Fragment >
-       <CssBaseline />
-      {/* <AppBar position="absolute" className={clsx(classes.appBar, open && classes.appBarShift)}>
-        <Toolbar className={classes.toolbar}>
-          <IconButton
-            edge="start"
-            color="inherit"
-            aria-label="open drawer"
-            onClick={handleDrawerOpen}
-            className={clsx(classes.menuButton, open && classes.menuButtonHidden)}
-          >
-            <MenuIcon color="#FFFFFF"/>
-          </IconButton>
-          <Typography component="h1" variant="h6" color="inherit" noWrap className={classes.title}>
-            Dashboard
-          </Typography>
-          <IconButton color="inherit">
-            <Badge badgeContent={4} color="secondary">
-              <NotificationsIcon />
-            </Badge>
-          </IconButton>
-        </Toolbar>
-      </AppBar> */}
+      <CssBaseline />
       <AppAppBar/>
       <Drawer
         variant="permanent"
@@ -164,24 +138,18 @@ function ManageMovies() {
         }}
         open={open}
       >
-        <div className={classes.toolbarIcon}>
-          <IconButton onClick={handleDrawerClose}>
-            <ChevronLeftIcon backgroundColor="#500000"/>
-          </IconButton>
-        </div>
         <Divider />
         <List>{mainListItems}</List>
         <Divider />
       </Drawer>
-      {/* <List>{mainListItems}</List> */}
       <main className={classes.content}>
         <div className={classes.appBarSpacer} />
         <Container maxWidth="lg" className={classes.container}>
-          <Grid container spacing={3}>
+          <Grid container spacing={0}>
           <Typography variant="h6" gutterBottom>
             Movie Information
           </Typography>
-            <Grid container spacing={1}>
+            <Grid container spacing={0}>
               <Grid item xs={12}>
                 <TextField
                   required
@@ -213,7 +181,7 @@ function ManageMovies() {
               <Typography variant="h6" gutterBottom>
                 Movie Pricing
               </Typography>
-              <Grid item sm={6}>
+              <Grid item sm={12}>
                 <TextField
                   required
                   id="adultPrice"
@@ -223,13 +191,20 @@ function ManageMovies() {
 
                 />
               </Grid>
-              <Grid item xs={12} sm={6}>
+              <Grid item xs={12}>
                 <TextField 
                   id="childPrice" 
                   name="childPrice" 
                   label="Child Ticket Price" 
                   fullWidth />
               </Grid>
+              <Button
+                variant="contained"
+                color="primary"
+                // onClick={}
+                // className={classes.button}
+              >
+              </Button>
             </Grid>
           </Grid>
           <Box pt={4}>
@@ -237,10 +212,14 @@ function ManageMovies() {
           </Box>
         </Container>
       </main>
-      
+      <div className={classes.buttons}>
+        
+      </div>
       <AppFooter />
     </React.Fragment>
+    
   );
+
 }
 
 // export default withRoot(Index);
