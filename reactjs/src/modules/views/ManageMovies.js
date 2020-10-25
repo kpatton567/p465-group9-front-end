@@ -37,7 +37,26 @@ import Chart from './Chart';
 import Deposits from './Deposits';
 import Orders from './Orders';
 import Button from '@material-ui/core/Button';
+import axios from 'axios';
+import { addSeconds } from 'date-fns';
 const drawerWidth = 240;
+queryObj = { movieTitle: document.getElementById("movieTitle"),
+movieDesc: document.getElementById("movieDesc"),
+movieURL: document.getElementById("moviePosterURL"),
+movieGenre: document.getElementById("movieGenre") }; 
+function makePostRequest(path, queryObj) { 
+  axios.post(path, queryObj).then( 
+      (response) => { 
+          var result = response.data; 
+          console.log(result); 
+      }, 
+      (error) => { 
+          console.log(error); 
+      } 
+  ); 
+} 
+
+
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -172,6 +191,16 @@ function ManageMovies() {
               </Grid>
               <Grid item xs={12}>
                 <TextField
+                  required
+                  id="movieGenre"
+                  name="movieGenre"
+                  label="Movie Genre"
+                  fullWidth
+                  required
+                />
+              </Grid>
+              <Grid item xs={12}>
+                <TextField
                   id="moviePosterURL"
                   name="moviePosterURL"
                   label="Movie Poster URL"
@@ -201,8 +230,8 @@ function ManageMovies() {
               <Button
                 variant="contained"
                 color="primary"
-                // onClick={}
-                // className={classes.button}
+                onClick={state.makePostRequest('http://localhost:8080/api/manage/add_movie', queryObj)}
+                className={classes.button}
               >
               </Button>
             </Grid>
@@ -212,9 +241,6 @@ function ManageMovies() {
           </Box>
         </Container>
       </main>
-      <div className={classes.buttons}>
-        
-      </div>
       <AppFooter />
     </React.Fragment>
     

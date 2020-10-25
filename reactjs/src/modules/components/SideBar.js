@@ -133,7 +133,7 @@ export default function Sidebar(props) {
                     </MenuItem>
                     {/* {showtimes.map((showtime) => ( */}
                     {/* <MenuItem value={showtime}>showtime</MenuItem> */}
-                    ))}
+                    ))
                   </Select>
                 </FormControl>
               </form>

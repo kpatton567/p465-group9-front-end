@@ -173,7 +173,14 @@ function Profile(props) {
                           <ListItemText primary="Settings" />
                         </StyledMenuItem>
                       </Link>
-
+                      <Link href="/managerView">
+                          <StyledMenuItem>
+                            <ListItemIcon>
+                              <SettingsIcon fontSize="small" />
+                            </ListItemIcon>
+                            <ListItemText primary="Manager View" />
+                          </StyledMenuItem>
+                          </Link>
                       {/* <AuthConsumer>
                       <Can
                         role={user.role}
