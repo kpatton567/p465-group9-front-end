@@ -12,6 +12,7 @@ import DashboardPage  from './Dashboard';
 import MoviesPage from "../src/modules/views/MoviesPage";
 import Auth from "./Auth";
 import ManagerView from './modules/views/ManagerView';
+import ProfilePage from './modules/views/ProfilePage';
 
 function App() {
   // const { isLoading } = useAuth0();
@@ -32,6 +33,7 @@ function App() {
           <MoviesPage/>
         </Route>
         <Route path= '/managerView' exact={true}><ManagerView/></Route>
+        <Route path= '/profilepage'><ProfilePage/></Route>
       </Router>
        </Auth>
   );

@@ -10,13 +10,13 @@ import Button from "@material-ui/core/Button";
 
 // core components
 
-import buttonStyle from "assets/jss/material-kit-react/components/buttonStyle.js";
+import buttonStyle from "../assets/jss/material-kit-react/components/buttonStyle.js"
 
 const makeComponentStyles = makeStyles(() => ({
   ...buttonStyle
 }));
 
-const CustomButton = React.forwardRef((props, ref) => {
+const RegularButton = React.forwardRef((props, ref) => {
   const {
     color,
     round,
@@ -81,4 +81,4 @@ RegularButton.propTypes = {
   className: PropTypes.string
 };
 
-export default CustomButton;
+export default RegularButton;

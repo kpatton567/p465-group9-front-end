@@ -8,20 +8,12 @@ import CardMedia from '@material-ui/core/CardMedia';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import Grid from '@material-ui/core/Grid';
 import Toolbar from '@material-ui/core/Toolbar';
-import { makeStyles } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
 import Link from '@material-ui/core/Link';
 import AppAppBar from './AppAppBar';
-import { withTheme } from '@material-ui/styles';
 import Typography from '../components/Typography';
 import axios from 'axios';
 import theme from '../theme';
-import MovieBooking from '../views/MovieBooking';
-import {
-  BrowserRouter as Router,
-  Switch,
-  Route
-} from "react-router-dom";
 
 const icon = {
   marginRight: theme.spacing(2),

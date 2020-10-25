@@ -31,6 +31,7 @@
     "react-perfect-scrollbar": "^1.5.8",
     "react-router-dom": "^5.2.0",
     "react-scripts": "3.4.3",
+    "react-swipeable-views": "^0.13.9",
     "react-tap-event-plugin": "^3.0.3",
     "reactstrap": "^8.6.0",
     "recharts": "^1.8.5",

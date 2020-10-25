@@ -5,7 +5,6 @@
 // import HomePage from './HomePage';
 // // import DashboardPage from "./dashboard";
 // import CallbackPage from "./callback";
-// import Auth from "./Auth";
 // import EditProfile from "../src/EditProfile";
 // import DashboardPage  from './Dashboard';
 
@@ -38,8 +37,10 @@ import App from './App';
 import * as serviceWorker from './serviceWorker';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import { Auth0Provider } from '@auth0/auth0-react';
+
 const domain = process.env.REACT_APP_AUTH0_DOMAIN;
 const clientId = process.env.REACT_APP_AUTH0_CLIENT_ID;
+
 ReactDOM.render(
   <Auth0Provider
     domain={domain}

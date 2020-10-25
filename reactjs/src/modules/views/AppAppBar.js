@@ -213,6 +213,11 @@ function AppAppBar(props) {
           {/* Log In/Sign up buttons */}
           <div className={classes.right}>
             <div>
+            <Button onClick={handleClickOpen} color="inherit"
+                // variant="h6"
+                underline="none"
+                // removed root in line below, might need
+                className={classes.rightLink}>Log in / Sign up</Button>
               <Button onClick={handleClickOpen} color="inherit"
                 // variant="h6"
                 underline="none"
@@ -221,6 +226,7 @@ function AppAppBar(props) {
               <Dialog disableBackdropClick disableEscapeKeyDown open={open} onClose={handleClose}>
                 <DialogTitle>Choose your profile</DialogTitle>
                 <DialogContent>
+                {/* <Button style={{ marginRight: theme.spacing(6) }}onClick={() => login({ appState: { returnTo: { pathname, query } } })}></Button> */}
                   <Button style={{ marginRight: theme.spacing(6) }} onClick = {() => loginWithRedirect()}>
                   
                   {/* <AuthConsumer>
