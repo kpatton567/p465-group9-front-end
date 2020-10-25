@@ -231,10 +231,10 @@ function ManageMovies() {
               <Button
                 variant="contained"
                 color="primary"
-                onClick={makePostRequest('http://localhost:8080/api/manage/add_movie', { movieTitle: ManageMovies.getElementById("movieTitle"),
-                movieDesc: ManageMovies.getElementById("movieDesc"),
-                movieURL: ManageMovies.getElementById("moviePosterURL"),
-                movieGenre: ManageMovies.getElementById("movieGenre") })}
+                onClick={makePostRequest('http://localhost:8080/api/manage/add_movie', { movieTitle: document.getElementById("movieTitle"),
+                movieDesc: document.getElementById("movieDesc"),
+                movieURL: document.getElementById("moviePosterURL"),
+                movieGenre: document.getElementById("movieGenre") })}
                 
                 className={classes.button}
               >
