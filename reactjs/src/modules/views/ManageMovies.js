@@ -40,11 +40,12 @@ import Button from '@material-ui/core/Button';
 import axios from 'axios';
 import { addSeconds } from 'date-fns';
 const drawerWidth = 240;
-queryObj = { movieTitle: document.getElementById("movieTitle"),
-movieDesc: document.getElementById("movieDesc"),
-movieURL: document.getElementById("moviePosterURL"),
-movieGenre: document.getElementById("movieGenre") }; 
+ 
 function makePostRequest(path, queryObj) { 
+  queryObj = { movieTitle: document.getElementById("movieTitle"),
+  movieDesc: document.getElementById("movieDesc"),
+  movieURL: document.getElementById("moviePosterURL"),
+  movieGenre: document.getElementById("movieGenre") };
   axios.post(path, queryObj).then( 
       (response) => { 
           var result = response.data; 
@@ -230,7 +231,11 @@ function ManageMovies() {
               <Button
                 variant="contained"
                 color="primary"
-                onClick={state.makePostRequest('http://localhost:8080/api/manage/add_movie', queryObj)}
+                onClick={makePostRequest('http://localhost:8080/api/manage/add_movie', { movieTitle: ManageMovies.getElementById("movieTitle"),
+                movieDesc: ManageMovies.getElementById("movieDesc"),
+                movieURL: ManageMovies.getElementById("moviePosterURL"),
+                movieGenre: ManageMovies.getElementById("movieGenre") })}
+                
                 className={classes.button}
               >
               </Button>
