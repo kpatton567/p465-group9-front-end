@@ -23,45 +23,8 @@ const useStyles = makeStyles((theme) => ({
     display: 'flex',
     backgroundColor: '#363636'
   },
-  toolbar: {
-    backgroundColor: '#363636',
-    paddingRight: 24, // keep right padding when drawer closed
-  },
-  toolbarIcon: {
-    backgroundColor: '#363636',
-    display: 'flex',
-    alignItems: 'center',
-    justifyContent: 'flex-end',
-    padding: '0 8px',
-    ...theme.mixins.toolbar,
-  },
-  appBar: {
-    backgroundColor: '#363636',
-    zIndex: theme.zIndex.drawer + 1,
-    transition: theme.transitions.create(['width', 'margin'], {
-      easing: theme.transitions.easing.sharp,
-      duration: theme.transitions.duration.leavingScreen,
-    }),
-  },
-  appBarShift: {
-    marginLeft: drawerWidth,
-    width: 240,
-    transition: theme.transitions.create(['width', 'margin'], {
-      easing: theme.transitions.easing.sharp,
-      duration: theme.transitions.duration.enteringScreen,
-    }),
-  },
-  menuButton: {
-    marginRight: 36,
-  },
-  menuButtonHidden: {
-    display: 'none',
-  },
-  title: {
-    flexGrow: 1,
-  },
   drawerPaper: {
-    backgroundcolor: '#363636',
+    background: '#363636',
     position: 'relative',
     header: null,
     // whiteSpace: 'nowrap',
@@ -71,23 +34,7 @@ const useStyles = makeStyles((theme) => ({
       duration: theme.transitions.duration.enteringScreen,
     }),
   },
-  drawerPaperClose: {
-    overflowX: 'hidden',
-    transition: theme.transitions.create('width', {
-      easing: theme.transitions.easing.sharp,
-      duration: theme.transitions.duration.leavingScreen,
-    }),
-    width: theme.spacing(7),
-    [theme.breakpoints.up('sm')]: {
-      width: theme.spacing(9),
-    },
-  },
-  appBarSpacer: theme.mixins.toolbar,
-  content: {
-    flexGrow: 1,
-    height: '100vh',
-    // overflow: 'auto',
-  },
+  
   container: {
     backgroundcolor: '#363636',
     paddingTop: theme.spacing(4),
@@ -96,7 +43,7 @@ const useStyles = makeStyles((theme) => ({
   paper: {
     backgroundcolor: '#363636',
     padding: theme.spacing(1),
-    display: 'flex',
+    // display: 'flex',
     overflow: 'auto',
     flexDirection: 'column',
   },
@@ -127,7 +74,7 @@ export default function ManagerView() {
       </Drawer>
       <main className={classes.content}>
         <div className={classes.appBarSpacer} />
-        <Container maxWidth="lg" className={classes.container}>
+        <Container maxWidth="lg" className={classes.container} style = {{backgroundColor : '363636'}}>
           <Grid container spacing={3}>
             {/* Chart */}
             <Grid item xs={12} md={8} lg={9}>

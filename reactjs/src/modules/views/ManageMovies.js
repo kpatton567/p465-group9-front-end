@@ -24,95 +24,25 @@ const drawerWidth = 240;
 
 // const makePostRequest(path, queryObj) { 
 
-
+  const WhiteTextTypography = withStyles({
+    root: {
+      color: "#FFFFFF"
+    }
+  })(Typography);  
 const testMethod = () => {
   console.log("Test");
 };
-
-
 const useStyles = makeStyles((theme) => ({
   root: {
     display: 'flex',
-    color: '#363636'
-  },
-  toolbar: {
-    backgroundColor: '#363636',
-    paddingRight: 24, // keep right padding when drawer closed
-  },
-  toolbarIcon: {
-    backgroundColor: '#363636',
-    display: 'flex',
-    alignItems: 'center',
-    justifyContent: 'flex-end',
-    padding: '0 8px',
-    ...theme.mixins.toolbar,
-  },
-  appBar: {
-    backgroundColor: '#363636',
-    zIndex: theme.zIndex.drawer + 1,
-    transition: theme.transitions.create(['width', 'margin'], {
-      easing: theme.transitions.easing.sharp,
-      duration: theme.transitions.duration.leavingScreen,
-    }),
-  },
-  appBarShift: {
-    marginLeft: drawerWidth,
-    width: 240,
-    transition: theme.transitions.create(['width', 'margin'], {
-      easing: theme.transitions.easing.sharp,
-      duration: theme.transitions.duration.enteringScreen,
-    }),
-  },
-  menuButton: {
-    marginRight: 36,
-  },
-  menuButtonHidden: {
-    display: 'none',
-  },
-  title: {
-    flexGrow: 1,
+    background: '#363636'
   },
   drawerPaper: {
-    color: theme.palette.grey[800],
+    background: '#363636',
     position: 'relative',
-    // whiteSpace: 'nowrap',
-    width: 250,
-    transition: theme.transitions.create('width', {
-      easing: theme.transitions.easing.sharp,
-      duration: theme.transitions.duration.enteringScreen,
-    }),
-  },
-  drawerPaperClose: {
-    overflowX: 'hidden',
-    transition: theme.transitions.create('width', {
-      easing: theme.transitions.easing.sharp,
-      duration: theme.transitions.duration.leavingScreen,
-    }),
-    width: theme.spacing(7),
-    [theme.breakpoints.up('sm')]: {
-      width: theme.spacing(9),
-    },
-  },
-  appBarSpacer: theme.mixins.toolbar,
-  content: {
-    flexGrow: 1,
-    height: '100vh',
-    // overflow: 'auto',
-  },
-  container: {
-    paddingTop: theme.spacing(4),
-    paddingBottom: theme.spacing(4),
-  },
-  paper: {
-    color: theme.palette.grey[800],
-    padding: theme.spacing(1),
-    display: 'flex',
-    overflow: 'auto',
-    flexDirection: 'column',
-  },
-  fixedHeight: {
+    width: 250
 
-  },
+  }
 }));
 function ManageMovies() {
   const [state, setState] = useState({
@@ -129,26 +59,7 @@ function ManageMovies() {
     }))
   }
   const classes = useStyles();
-  const [open, setOpen] = React.useState(true);
   const fixedHeightPaper = clsx(classes.paper, classes.fixedHeight);
-
-  const makePostRequest = (path, queryObj) => {
-    queryObj = {
-      movieTitle: document.getElementById("movieTitle"),
-      movieDesc: document.getElementById("movieDesc"),
-      movieURL: document.getElementById("moviePosterURL"),
-      movieGenre: document.getElementById("movieGenre")
-    };
-    axios.post(path, queryObj).then(
-      (response) => {
-        var result = response.data;
-        console.log(result);
-      },
-      (error) => {
-        console.log(error);
-      }
-    );
-  }
   const handleSubmitClick = (e) => {
     e.preventDefault();
     const payload = {
@@ -168,14 +79,6 @@ function ManageMovies() {
           }
         })
         .catch(function (error) {
-          // if(error.response.data.message === "Email already registered")
-          // {
-          //     props.showError("Email already registered");
-          // }
-          // if(error.response.data.message === "Incorrect Password")
-          // {
-          //     props.showError("Incorrect password entered. Please re check.");
-          // }
           console.log(error);
         });
     }
@@ -186,23 +89,26 @@ function ManageMovies() {
       <Drawer
         variant="permanent"
         classes={{
-          paper: clsx(classes.drawerPaper, !open && classes.drawerPaperClose),
+          paper: clsx(classes.drawerPaper),
         }}
-        open={open}
+        anchor="left"
       >
         <Divider />
-        <List>{mainListItems}</List>
+          <List>{mainListItems}</List>
         <Divider />
       </Drawer>
       <main className={classes.content}>
-        <div className={classes.appBarSpacer} />
-        <Container maxWidth="lg" className={classes.container}>
+        <div />
+        <Container maxWidth="sm" className={classes.container}
+                   style = {{backgroundColor : '363636'}}>
+          
           <Grid container spacing={0}>
-            <Typography variant="h6" gutterBottom>
+            <WhiteTextTypography variant="h6" gutterBottom>
               Movie Information
-          </Typography>
+            </WhiteTextTypography>
             <Grid container spacing={0}>
               <Grid item xs={12}>
+              <style>{'body { background-color: #363636; }'}</style>
                 <TextField
                   required
                   id="movieTitle"
@@ -248,26 +154,6 @@ function ManageMovies() {
                   fullWidth
                   required
                 />
-              </Grid>
-              <Typography variant="h6" gutterBottom>
-                Movie Pricing
-              </Typography>
-              <Grid item sm={12}>
-                <TextField
-                  required
-                  id="adultPrice"
-                  name="adultPrice"
-                  label="Adult Ticket Price"
-                  fullWidth
-
-                />
-              </Grid>
-              <Grid item xs={12}>
-                <TextField
-                  id="childPrice"
-                  name="childPrice"
-                  label="Child Ticket Price"
-                  fullWidth />
               </Grid>
               <Button
                 variant="contained"

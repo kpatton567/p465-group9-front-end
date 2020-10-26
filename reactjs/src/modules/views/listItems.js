@@ -8,8 +8,9 @@ import ShoppingCartIcon from '@material-ui/icons/ShoppingCart';
 import PeopleIcon from '@material-ui/icons/People';
 import BarChartIcon from '@material-ui/icons/BarChart';
 import LayersIcon from '@material-ui/icons/Layers';
-import AssignmentIcon from '@material-ui/icons/Assignment';
-import EditProfile from "../../EditProfile";
+import FastfoodIcon from '@material-ui/icons/Fastfood';
+import HistoryIcon from '@material-ui/icons/History';
+import RateReviewIcon from '@material-ui/icons/RateReview';
 import { Link } from "react-router-dom";
 
 export const mainListItems = (
@@ -18,40 +19,52 @@ export const mainListItems = (
 <ListItem button component={Link} to="/managerView">
    
       <ListItemIcon>
-        <DashboardIcon />
+        <DashboardIcon style = {{color : '800000'}}/>
       </ListItemIcon>
-      <ListItemText primary="ManagerView" />
+      <ListItemText 
+      primary="ManagerView" 
+      style={{ color: '#FFFFFF' }}/>
     </ListItem>
     
     <ListItem button component={Link} to="/manageMovies">
       <ListItemIcon>
-        <ShoppingCartIcon color="#FFFFFF"/>
+        <ShoppingCartIcon style = {{color : '800000'}}/>
       </ListItemIcon>
-      <ListItemText primary="Add/Delete Movies" />
+      <ListItemText 
+      primary="Add/Delete Movies" 
+      style={{ color: '#FFFFFF' }}/>
     </ListItem>
     <ListItem button component={Link} to="/manageSnacks">
       <ListItemIcon>
-        <PeopleIcon />
+        <FastfoodIcon style = {{color : '800000'}}/>
       </ListItemIcon>
-      <ListItemText primary="Add/Delete Snacks" />
+      <ListItemText 
+      primary="Add/Delete Snacks" 
+      style={{ color: '#FFFFFF' }}/>
     </ListItem>
     <ListItem button component={Link} to="/customerChat">
       <ListItemIcon>
-        <BarChartIcon />
+        <PeopleIcon style = {{color : '800000'}}/>
       </ListItemIcon>
-      <ListItemText primary="Customer Chat Requests" />
+      <ListItemText 
+      primary="Customer Chat Requests" 
+      style={{ color: '#FFFFFF' }}/>
     </ListItem>
     <ListItem button component={Link} to="/transactionPage">
       <ListItemIcon>
-        <LayersIcon />
+        <HistoryIcon style = {{color : '800000'}}/>
       </ListItemIcon>
-      <ListItemText primary="Transaction History" />
+      <ListItemText 
+      primary="Transaction History" 
+      style={{ color: '#FFFFFF' }}/>
     </ListItem>
     <ListItem button component={Link} to="/reviewPage">
       <ListItemIcon>
-        <LayersIcon />
+        <RateReviewIcon style = {{color : '800000'}}/>
       </ListItemIcon>
-      <ListItemText primary="Reviews" />
+      <ListItemText 
+      primary="Reviews" 
+      style={{ color: '#FFFFFF' }}/>
     </ListItem>
   </div>
 );
