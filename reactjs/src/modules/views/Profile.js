@@ -149,7 +149,7 @@ function Profile(props) {
                           <ListItemText primary="Booking History" />
                         </StyledMenuItem>
                       </Link>
-                      <Link href="/editProfile">
+                      <Link href="/rewards">
                         <StyledMenuItem>
                           <ListItemIcon>
                             <AttachMoneyIcon fontSize="small" />
