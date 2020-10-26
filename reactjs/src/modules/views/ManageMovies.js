@@ -1,21 +1,13 @@
-import withRoot from './../withRoot';
 // --- Post bootstrap -----
-import React from 'react';
-import ProductCategories from './../views/ProductCategories';
-import ProductSmokingHero from './../views/ProductSmokingHero';
+import withRoot from './../withRoot';
+import React,{useState} from 'react';
 import AppFooter from './../views/AppFooter';
-import ProductHero from './../views/ProductHero';
-import ProductValues from './../views/ProductValues';
-import ProductHowItWorks from './../views/ProductHowItWorks';
-import ProductCTA from './../views/ProductCTA';
 import AppAppBar from './../views/AppAppBar';
 import { withStyles } from '@material-ui/core/styles';
 import { makeStyles } from '@material-ui/core/styles';
 import Grid from '@material-ui/core/Grid';
 import Typography from '@material-ui/core/Typography';
 import TextField from '@material-ui/core/TextField';
-import FormControlLabel from '@material-ui/core/FormControlLabel';
-import Checkbox from '@material-ui/core/Checkbox';
 import clsx from 'clsx';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import Drawer from '@material-ui/core/Drawer';
@@ -24,45 +16,24 @@ import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
 import List from '@material-ui/core/List';
 import Divider from '@material-ui/core/Divider';
-import IconButton from '@material-ui/core/IconButton';
-import Badge from '@material-ui/core/Badge';
 import Container from '@material-ui/core/Container';
-import Paper from '@material-ui/core/Paper';
-import Link from '@material-ui/core/Link';
-import MenuIcon from '@material-ui/icons/Menu';
-import ChevronLeftIcon from '@material-ui/icons/ChevronLeft';
-import NotificationsIcon from '@material-ui/icons/Notifications';
-import { mainListItems} from './listItems';
-import Chart from './Chart';
-import Deposits from './Deposits';
-import Orders from './Orders';
+import { mainListItems } from './listItems';
 import Button from '@material-ui/core/Button';
 import axios from 'axios';
-import { addSeconds } from 'date-fns';
 const drawerWidth = 240;
- 
-function makePostRequest(path, queryObj) { 
-  queryObj = { movieTitle: document.getElementById("movieTitle"),
-  movieDesc: document.getElementById("movieDesc"),
-  movieURL: document.getElementById("moviePosterURL"),
-  movieGenre: document.getElementById("movieGenre") };
-  axios.post(path, queryObj).then( 
-      (response) => { 
-          var result = response.data; 
-          console.log(result); 
-      }, 
-      (error) => { 
-          console.log(error); 
-      } 
-  ); 
-} 
 
+// const makePostRequest(path, queryObj) { 
+
+
+const testMethod = () => {
+  console.log("Test");
+};
 
 
 const useStyles = makeStyles((theme) => ({
   root: {
     display: 'flex',
-    backgroundColor: '#363636'
+    color: '#363636'
   },
   toolbar: {
     backgroundColor: '#363636',
@@ -102,7 +73,7 @@ const useStyles = makeStyles((theme) => ({
     flexGrow: 1,
   },
   drawerPaper: {
-    
+    color: theme.palette.grey[800],
     position: 'relative',
     // whiteSpace: 'nowrap',
     width: 250,
@@ -133,24 +104,85 @@ const useStyles = makeStyles((theme) => ({
     paddingBottom: theme.spacing(4),
   },
   paper: {
+    color: theme.palette.grey[800],
     padding: theme.spacing(1),
     display: 'flex',
     overflow: 'auto',
     flexDirection: 'column',
   },
   fixedHeight: {
-    
+
   },
 }));
 function ManageMovies() {
+  const [state, setState] = useState({
+    movieTitle: "",
+    movieDesc: "",
+    movieURL: "",
+    movieGenre: ""
+  })
+  const handleChange = (e) => {
+    const { id, value } = e.target
+    setState(prevState => ({
+      ...prevState,
+      [id]: value
+    }))
+  }
   const classes = useStyles();
   const [open, setOpen] = React.useState(true);
   const fixedHeightPaper = clsx(classes.paper, classes.fixedHeight);
 
+  const makePostRequest = (path, queryObj) => {
+    queryObj = {
+      movieTitle: document.getElementById("movieTitle"),
+      movieDesc: document.getElementById("movieDesc"),
+      movieURL: document.getElementById("moviePosterURL"),
+      movieGenre: document.getElementById("movieGenre")
+    };
+    axios.post(path, queryObj).then(
+      (response) => {
+        var result = response.data;
+        console.log(result);
+      },
+      (error) => {
+        console.log(error);
+      }
+    );
+  }
+  const handleSubmitClick = (e) => {
+    e.preventDefault();
+    const payload = {
+      "movieTitle": state.movieTitle,
+      "movieDesc": state.movieDesc,
+      "movieURL" :state.movieURL,
+      "movieGenre" : state.movieGenre
+    }
+      axios.post('http://localhost:8080/api/manage/add_movie', payload)
+        .then(function (response) {
+          if (response.status === 200) {
+            setState(prevState => ({
+              ...prevState,
+              'successMessage': 'Login successful. Redirecting to home page..'
+            }))
+            console.log(response.data)
+          }
+        })
+        .catch(function (error) {
+          // if(error.response.data.message === "Email already registered")
+          // {
+          //     props.showError("Email already registered");
+          // }
+          // if(error.response.data.message === "Incorrect Password")
+          // {
+          //     props.showError("Incorrect password entered. Please re check.");
+          // }
+          console.log(error);
+        });
+    }
   return (
     <React.Fragment >
       <CssBaseline />
-      <AppAppBar/>
+      <AppAppBar />
       <Drawer
         variant="permanent"
         classes={{
@@ -166,8 +198,8 @@ function ManageMovies() {
         <div className={classes.appBarSpacer} />
         <Container maxWidth="lg" className={classes.container}>
           <Grid container spacing={0}>
-          <Typography variant="h6" gutterBottom>
-            Movie Information
+            <Typography variant="h6" gutterBottom>
+              Movie Information
           </Typography>
             <Grid container spacing={0}>
               <Grid item xs={12}>
@@ -176,6 +208,8 @@ function ManageMovies() {
                   id="movieTitle"
                   name="movieTitle"
                   label="Movie title"
+                  value={state.movieTitle}
+                  onChange={handleChange}
                   fullWidth
                   required
                 />
@@ -186,6 +220,8 @@ function ManageMovies() {
                   id="movieDesc"
                   name="movieDesc"
                   label="Movie Description"
+                  value={state.movieDesc}
+                  onChange={handleChange}
                   fullWidth
                   required
                 />
@@ -196,16 +232,21 @@ function ManageMovies() {
                   id="movieGenre"
                   name="movieGenre"
                   label="Movie Genre"
+                  value={state.movieGenre}
+                  onChange={handleChange}
                   fullWidth
                   required
                 />
               </Grid>
               <Grid item xs={12}>
                 <TextField
-                  id="moviePosterURL"
-                  name="moviePosterURL"
+                  id="movieURL"
+                  name="movieURL"
                   label="Movie Poster URL"
+                  value={state.movieURL}
+                  onChange={handleChange}
                   fullWidth
+                  required
                 />
               </Grid>
               <Typography variant="h6" gutterBottom>
@@ -222,22 +263,19 @@ function ManageMovies() {
                 />
               </Grid>
               <Grid item xs={12}>
-                <TextField 
-                  id="childPrice" 
-                  name="childPrice" 
-                  label="Child Ticket Price" 
+                <TextField
+                  id="childPrice"
+                  name="childPrice"
+                  label="Child Ticket Price"
                   fullWidth />
               </Grid>
               <Button
                 variant="contained"
                 color="primary"
-                onClick={makePostRequest('http://localhost:8080/api/manage/add_movie', { movieTitle: document.getElementById("movieTitle"),
-                movieDesc: document.getElementById("movieDesc"),
-                movieURL: document.getElementById("moviePosterURL"),
-                movieGenre: document.getElementById("movieGenre") })}
-                
+                onClick={handleSubmitClick}
                 className={classes.button}
               >
+                Add Movie
               </Button>
             </Grid>
           </Grid>
@@ -248,7 +286,7 @@ function ManageMovies() {
       </main>
       <AppFooter />
     </React.Fragment>
-    
+
   );
 
 }
