@@ -2,8 +2,10 @@ import { container, title } from "../assets/jss/material-kit-react";
 
 import imagesStyle from "../assets/jss/material-kit-react/imagesStyles.js";
 
-const profilePageStyle = {
+const profilePageStyle = 
+{
   container,
+ 
   profile: {
     textAlign: "center",
     "& img": {
@@ -13,28 +15,33 @@ const profilePageStyle = {
       transform: "translate3d(0, -50%, 0)"
     }
   },
+ 
   description: {
     margin: "1.071rem auto 0",
     maxWidth: "600px",
     color: "#999",
     textAlign: "center !important"
   },
+ 
   name: {
     marginTop: "-80px",
     color: "#C5C5C5",
   },
   ...imagesStyle,
+ 
   main: {
     background: "#363636",
     position: "relative",
     zIndex: "3"
   },
+
   mainRaised: {
     margin: "-60px 30px 0px",
     borderRadius: "6px",
     boxShadow:
       "0 16px 24px 2px rgba(0, 0, 0, 0.14), 0 6px 30px 5px rgba(0, 0, 0, 0.12), 0 8px 10px -5px rgba(0, 0, 0, 0.2)",
     },
+
   title: {
     ...title,
     display: "inline-block",
@@ -44,6 +51,7 @@ const profilePageStyle = {
     textDecoration: "none",
     color: "#FFFFFF",
   },
+
   title2: {
       marginTop: "100px",
       marginBottom: "30px",
@@ -51,11 +59,13 @@ const profilePageStyle = {
       textDecoration: "none",
       color: "#FFFFFF",
   },
+
   subtext: {
     minHeight: "32px",
     textDecoration: "none",
     color: "#C5C5C5",
 },
+
   socials: {
     marginTop: "0",
     width: "100%",
@@ -67,6 +77,7 @@ const profilePageStyle = {
     fontSize: "20px",
     color: "#999"
   },
+  
   navWrapper: {
     margin: "20px auto 50px auto",
     textAlign: "center"

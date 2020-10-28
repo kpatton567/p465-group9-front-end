@@ -98,6 +98,7 @@ const styles = (theme) => ({
     marginTop: theme.spacing(2),
   },
 });
+
 // Concatenate the name of the movie to redirect the user to the proper url
 function CreateUrl(image)
 {
@@ -105,8 +106,11 @@ function CreateUrl(image)
   var res = mov.concat(image);
   return res;
 }
+
+
 // Movie panels
-function ProductCategories(props) {
+function ProductCategories(props) 
+{
   const { classes } = props;
   const [images, setImages] = React.useState([]);
   const fetchData = React.useCallback(() => {

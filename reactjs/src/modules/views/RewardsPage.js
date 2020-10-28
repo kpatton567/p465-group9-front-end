@@ -13,32 +13,25 @@ import CardMedia from '@material-ui/core/CardMedia';
 import Typography from '../components/Typography';
 import CardActions from '@material-ui/core/CardActions';
 import Link from '@material-ui/core/Link';
-// @material-ui/icons
-import Camera from "@material-ui/icons/Camera";
-import Palette from "@material-ui/icons/Palette";
-import Favorite from "@material-ui/icons/Favorite";
 
 // core components
-import Header from "../components/Header.js";
 import Button from "../components/CustomButton";
 import GridContainer from "../components/GridContainer.js";
 import GridItem from "../components/GridItem.js";
-import HeaderLinks from "../components/HeaderLinks.js";
-import NavPills from "../components/NavPills.js";
 import Parallax from "../components/Parallax.js";
-import EditableTextField from "../components/EditableTextField.js"
-import profile from "../assets/usericon.jpg";
 import styles from "./rewardsPageStyles.js";
-import axios from 'axios';
 import AppFooter from '../../modules/views/AppFooter';
 import AppAppBar from "./AppAppBar";
 import theme from '../theme';
+import axios from 'axios';
+
+
 
 
 
 const useStyles = makeStyles(styles);
 
-const icon = {
+  const icon = {
     marginRight: theme.spacing(2),
   };
   const heroContent = {
@@ -106,10 +99,40 @@ const icon = {
 
 
 
-
 export default function RewardsPage(props) 
 {
-  const cards = [1,2,3,4,5];
+  // Bring in data from backend
+  const [coupons, setCoupons] = React.useState([]);
+  const fetchData = React.useCallback(() => 
+  {
+    // need to include proper endpoint here, should be working though.
+      axios({
+        "method": "GET",
+        "url": 'http://localhost:8080/api/home/movies'
+      })
+      .then((response) => {
+        
+        const i = 0;
+        for(i = 0; i < response.data.length; i++)
+        {
+          coupons[i] = 
+          {
+            url: response.data[i].url,
+            title: response.data[i].title,
+            description: response.data[i].description,
+            couponCode: response.data[i].couponCode,
+          }
+        }
+      })
+      .catch((error) => {
+        console.log(error)
+      })
+  }, [])
+  React.useEffect(() => {
+    fetchData()
+  }, [fetchData])
+
+
   const classes = useStyles();
   const { ...rest } = props;
   const { user, isAuthenticated, loginWithRedirect, isLoading, getIdTokenClaims } = useAuth0();
@@ -147,105 +170,112 @@ export default function RewardsPage(props)
     </div>)
   }
 
+
+
   // Generate page
-  if (isAuthenticated && !isLoading)
-      return (
-          <div> 
-              <AppAppBar position="relative" />
+  if (isAuthenticated && !isLoading) 
+  { 
+    return (
+        <div>
+          <AppAppBar position="relative" />
 
-              {/* background image */}
-              <Parallax small filter image={require("../assets/popcorn.jpg")} />
+          {/* background image */}
+          <Parallax small filter image={require("../assets/popcorn.jpg")} />
 
-              {/* Raised background page */}
-              <div className={classNames(classes.main, classes.mainRaised)}>
-                  <div>
-                      <div className={classes.container}>
-                          <GridContainer justify="center">
-                              <GridItem xs={12} sm={12} md={6}>
-                                  <div className={classes.profile}>
-                                      <div>
-                                          <img src={user.picture} alt="..." className={imageClasses} />
-                                      </div>
-                                      <div className={classes.name}>
-                                          <h3 className={classes.title}>{user.nickname}</h3>
-                                          <h6>CUSTOMER</h6>
-                                          {/* <Button justIcon link className={classes.margin5}>
+          {/* Raised background page */}
+          <div className={classNames(classes.main, classes.mainRaised)}>
+            <div>
+              <div className={classes.container}>
+                <GridContainer justify="center">
+                  <GridItem xs={12} sm={12} md={6}>
+                    <div className={classes.profile}>
+                      <div>
+                        <img src={user.picture} alt="..." className={imageClasses} />
+                      </div>
+                      <div className={classes.name}>
+                        <h3 className={classes.title}>{user.nickname}</h3>
+                        <h6>CUSTOMER</h6>
+                        {/* <Button justIcon link className={classes.margin5}>
                                               <i className={"fab fa-twitter"} />
                                               {'Test'}
                                           </Button> */}
-                                      </div>
-                                  </div>
-
-                              </GridItem>
-                          </GridContainer>
                       </div>
-                  </div>
+                    </div>
+
+                  </GridItem>
+                </GridContainer>
+              </div>
+            </div>
 
 
-                  <div>
-                        <Typography className={classes.title2} align="center" variant="h3" marked="center"> 
-                            {'COUPON CODES AND OFFERS'}  
-                        </Typography> 
-                  </div>
-                  <div>
-                        <Typography className={classes.subtext} align="center" variant="h5">
-                            {'Check out these sweet deals made just for you!'}  
-                        </Typography> 
-                        <Typography className={classes.subtext} align="center" variant="h5">
-                            {'Start saving now!'}  
-                        </Typography> 
-                  </div>
+            <div>
+              <Typography className={classes.title2} align="center" variant="h3" marked="center">
+                {'COUPON CODES AND OFFERS'}
+              </Typography>
+            </div>
+            <div>
+              <Typography className={classes.subtext} align="center" variant="h5">
+                {'Check out these sweet deals made just for you!'}
+              </Typography>
+              <Typography className={classes.subtext} align="center" variant="h5">
+                {'Start saving now!'}
+              </Typography>
+            </div>
 
 
-                  {/* Place cards on the raised background component */}
-                  <React.Fragment>
-                      <CssBaseline />
-                      <main>
-                          <Container style={cardGrid} maxWidth="lg">
-                              <Grid container spacing={4}>
-                                  {cards.map((card) => (
-                                      <Grid item key={card} xs={12} sm={6} md={2} lg={3}>
-                                          
-                                          {/* Create each card using array from backend */}
-                                          <Card>  
-                                              {/* Image on card */}
-                                              <CardMedia
-                                                  style={cardMedia}
-                                                  image="https://images-na.ssl-images-amazon.com/images/I/71niXI3lxlL._AC_SL1183_.jpg"
-                                              />
+            {/* Place cards on the raised background component */}
+            <React.Fragment>
+              <CssBaseline />
+              <main>
+                <Container style={cardGrid} maxWidth="lg">
+                  <Grid container spacing={4}>
+                    {coupons.map((coupon) => (
+                      <Grid item key={coupon} xs={12} sm={6} md={2} lg={3}>
 
-                                              {/* Text on the card */}
-                                              <CardContent style={cardContent}>
-                                                  <Typography gutterBottom variant="h5" component="h2">
-                                                      {"Test Title"}
-                                                  </Typography>
-                                                  <Typography>
-                                                      {"Test Description... Test test test"}
-                                                  </Typography>
-                                              </CardContent>
+                        {/* Create each card using array from backend */}
+                        <Card>
+                          {/* Image on card */}
+                          <CardMedia
+                            style={cardMedia}
+                            image="https://images-na.ssl-images-amazon.com/images/I/71niXI3lxlL._AC_SL1183_.jpg"
+                            // image={coupon.url}
+                          />
 
-                                              {/* Button on card */}
-                                              <CardActions>
-                                                  <Link>
-                                                      <Button size="small" color="primary">
-                                                          {'Redeem Coupon'}
-                                                      </Button>
-                                                  </Link>
-                                              </CardActions>
-                                          </Card>
-                                      </Grid>
-                                  ))}
-                              </Grid>
-                          </Container>
-                      </main>
-                  </React.Fragment>
-              
-              </div> 
-              {/* End main raised page */}
-            
+                          {/* Text on the card */}
+                          <CardContent style={cardContent}>
+                            <Typography gutterBottom variant="h5" component="h2">
+                              {"Test Title"}
+                              {/* {coupon.title} */}
+                            </Typography>
+                            <Typography>
+                              {"Test Description... Test test test"}
+                              {/* {coupon.description} */}
+                            </Typography>
+                          </CardContent>
 
-              {/* Footer */}
-              <AppFooter />
+                          {/* Button on card */}
+                          <CardActions>
+                            <Link>
+                              <Button size="small" color="primary">
+                                {'CODE: '}{coupon.couponCode}
+                              </Button>
+                            </Link>
+                          </CardActions>
+                        </Card>
+                      </Grid>
+                    ))}
+                  </Grid>
+                </Container>
+              </main>
+            </React.Fragment>
+
           </div>
+          {/* End main raised page */}
+
+
+          {/* Footer */}
+          <AppFooter />
+        </div>
       );
+  }
 }
