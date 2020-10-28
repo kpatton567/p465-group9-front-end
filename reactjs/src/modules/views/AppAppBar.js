@@ -12,17 +12,11 @@ import SearchIcon from '@material-ui/icons/Search';
 import Button from '@material-ui/core/Button';
 import FaceIcon from '@material-ui/icons/Face';
 import SupervisorAccountIcon from '@material-ui/icons/SupervisorAccount';
-
 import Dialog from '@material-ui/core/Dialog';
 import DialogActions from '@material-ui/core/DialogActions';
 import DialogContent from '@material-ui/core/DialogContent';
 import DialogTitle from '@material-ui/core/DialogTitle';
 import theme from "../theme";
-
-import { AuthConsumer } from "../../authContext";
-
-import Login from "../../Login"
-
 
 const styles = (theme) => ({
   title: {
@@ -113,18 +107,26 @@ function AppAppBar(props) {
   const { classes } = props;
   const { loginWithRedirect, isAuthenticated, user } = useAuth0();
   const [open, setOpen] = React.useState(false);
-  const handleClickOpen = () => {
-    setOpen(true);
-  };
-  const handleClose = () => {
-    setOpen(false);
-  };
+
+    const handleClickOpen = () => {
+      setOpen(true);
+    };
+    const handleClose = () => {
+      setOpen(false);
+    };
+
+    const handleClickLogin = () => {
+      console.log(user);
+      loginWithRedirect();
+    };
+
+
 
   // Change header according to whether user is logged in
   return isAuthenticated ?
     // User is logged in
     (
-      
+
       <div>
         <AppBar position="fixed">
           <Toolbar className={classes.toolbar}>
@@ -169,67 +171,62 @@ function AppAppBar(props) {
             </div>
           </Toolbar>
         </AppBar>
-       
+
         <div className={classes.placeholder} />
       </div>
     ) :
 
     // Not logged in
     (
-    <div>
-    
-      <AppBar position="fixed">
-        <Toolbar className={classes.toolbar}>
+      <div>
+
+        <AppBar position="fixed">
+          <Toolbar className={classes.toolbar}>
 
 
-          {/* Search bar */}
-          <div className={classes.search}>
-            <div className={classes.searchIcon}>
-              <SearchIcon />
+            {/* Search bar */}
+            <div className={classes.search}>
+              <div className={classes.searchIcon}>
+                <SearchIcon />
+              </div>
+              <InputBase
+                placeholder="Search for viewings..."
+                classes={{
+                  root: classes.inputRoot,
+                  input: classes.inputInput,
+                }}
+                inputProps={{ 'aria-label': 'search' }}
+              />
             </div>
-            <InputBase
-              placeholder="Search for viewings..."
-              classes={{
-                root: classes.inputRoot,
-                input: classes.inputInput,
-              }}
-              inputProps={{ 'aria-label': 'search' }}
-            />
-          </div>
 
-          {/* PreVue title/link */}
-          <div className={classes.left} />
-          <Link
-            // variant="h6"
-            underline="none"
-            color="inherit"
-            className={classes.title}
-            href="/"
-          >
-            {'PREVUE'}
-          </Link>
+            {/* PreVue title/link */}
+            <div className={classes.left} />
+            <Link
+              // variant="h6"
+              underline="none"
+              color="inherit"
+              className={classes.title}
+              href="/"
+            >
+              {'PREVUE'}
+            </Link>
 
 
-          {/* Log In/Sign up buttons */}
-          <div className={classes.right}>
-            <div>
-            <Button onClick={handleClickOpen} color="inherit"
-                // variant="h6"
-                underline="none"
-                // removed root in line below, might need
-                className={classes.rightLink}>Log in / Sign up</Button>
-              <Button onClick={handleClickOpen} color="inherit"
-                // variant="h6"
-                underline="none"
-                // removed root in line below, might need
-                className={classes.rightLink}>Log in / Sign up</Button>
-              <Dialog disableBackdropClick disableEscapeKeyDown open={open} onClose={handleClose}>
-                <DialogTitle>Choose your profile</DialogTitle>
-                <DialogContent>
-                {/* <Button style={{ marginRight: theme.spacing(6) }}onClick={() => login({ appState: { returnTo: { pathname, query } } })}></Button> */}
-                  <Button style={{ marginRight: theme.spacing(6) }} onClick = {() => loginWithRedirect()}>
-                  
-                  {/* <AuthConsumer>
+            {/* Log In/Sign up buttons */}
+            <div className={classes.right}>
+              <div>
+                <Button onClick={handleClickOpen} color="inherit"
+                  // variant="h6"
+                  underline="none"
+                  // removed root in line below, might need
+                  className={classes.rightLink}>Log in / Sign up</Button>
+                <Dialog disableBackdropClick disableEscapeKeyDown open={open} onClose={handleClose}>
+                  <DialogTitle>Choose your profile</DialogTitle>
+                  <DialogContent>
+                    {/* <Button style={{ marginRight: theme.spacing(6) }}onClick={() => login({ appState: { returnTo: { pathname, query } } })}> */}
+                    <Button style={{ marginRight: theme.spacing(6) }} onClick={handleClickLogin}>
+
+                      {/* <AuthConsumer>
                   {({ initiateLogin }) => (
                     <button className="btn btn-sm btn-primary" >
                      
@@ -240,29 +237,29 @@ function AppAppBar(props) {
                     </button>
                   )}
                 </AuthConsumer> */}
-                    <FaceIcon fontSize="large" className={classes.largeIcon}></FaceIcon>
-                    Customer
+                      <FaceIcon fontSize="large" className={classes.largeIcon}></FaceIcon>
+                      Customer
                   </Button>
-                  <Button style={{ marginRight: theme.spacing(6) }}>
-                    <SupervisorAccountIcon fontSize="large" className={classes.largeIcon} onClick = {() => loginWithRedirect()}></SupervisorAccountIcon>
-                    Manager
+                    <Button style={{ marginRight: theme.spacing(6) }}>
+                      <SupervisorAccountIcon fontSize="large" className={classes.largeIcon} onClick={() => loginWithRedirect()}></SupervisorAccountIcon>
+                      Manager
                   </Button>
-                </DialogContent>
-                <DialogActions>
-                  <Button onClick={handleClose} color="primary">
-                    Cancel
+                  </DialogContent>
+                  <DialogActions>
+                    <Button onClick={handleClose} color="primary">
+                      Cancel
           </Button>
-                  <Button onClick={handleClose} color="primary">
-                    Ok
+                    <Button onClick={handleClose} color="primary">
+                      Ok
           </Button>
-                </DialogActions>
-              </Dialog>
+                  </DialogActions>
+                </Dialog>
+              </div>
             </div>
-          </div>
-        </Toolbar>
-      </AppBar>
-      <div className={classes.placeholder} />
-    </div>
+          </Toolbar>
+        </AppBar>
+        <div className={classes.placeholder} />
+      </div>
     );
 }
 

@@ -1,35 +1,3 @@
-// import React from "react";
-// import ReactDOM from "react-dom";
-// import {BrowserRouter as Router, Route, Switch} from "react-router-dom";
-
-// import HomePage from './HomePage';
-// // import DashboardPage from "./dashboard";
-// import CallbackPage from "./callback";
-// import EditProfile from "../src/EditProfile";
-// import DashboardPage  from './Dashboard';
-
-// function App() {
-//   return (
-//     <div className="App container">
-//       <Auth>
-//         <div className="jumbotron">
-//           <Router>
-//             <Switch>
-//               <Route exact path="/" component={HomePage}/>
-//               <Route path="/editProfile" component={EditProfile}/>
-//               <Route path="/callback" component={CallbackPage}/>
-//               <Route path="/dashboard" component={DashboardPage}/>
-//             </Switch>
-//           </Router>
-//         </div>
-//       </Auth>
-//     </div>
-//   );
-// }
-
-// const rootElement = document.getElementById("root");
-// ReactDOM.render(<App/>, rootElement);
-
 import React from 'react';
 import ReactDOM from 'react-dom';
 import './index.css';

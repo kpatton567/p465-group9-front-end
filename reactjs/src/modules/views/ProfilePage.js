@@ -1,66 +1,67 @@
-import React from "react";
+import React, {useState} from "react";
 // nodejs library that concatenates classes
 import classNames from "classnames";
 // @material-ui/core components
 import { makeStyles } from "@material-ui/core/styles";
 import { useAuth0 } from '@auth0/auth0-react';
-// @material-ui/icons
-import Camera from "@material-ui/icons/Camera";
-import Palette from "@material-ui/icons/Palette";
-import Favorite from "@material-ui/icons/Favorite";
+
 // core components
 import Header from "../components/Header.js";
 // import Footer from "components/Footer/Footer.js";
-import Button from "../components/CustomButton";
 import GridContainer from "../components/GridContainer.js";
 import GridItem from "../components/GridItem.js";
 import HeaderLinks from "../components/HeaderLinks.js";
-import NavPills from "../components/NavPills.js";
+
 import Parallax from "../components/Parallax.js";
-import EditableTextField from "../components/EditableTextField.js"
-
-import profile from "../assets/usericon.jpg";
-
-import studio1 from "../assets/easy123.png";
-import studio2 from "../assets/easy123.png";
-import studio3 from "../assets/easy123.png";
-import studio4 from "../assets/easy123.png";
-import studio5 from "../assets/easy123.png";
-import work1 from "../assets/easy123.png";
-import work2 from "../assets/easy123.png";
-import work3 from "../assets/easy123.png";
-import work4 from "../assets/easy123.png";
-import work5 from "../assets/easy123.png";
+import RFTextField from '.././form/RFTextField';
+import { Field, Form, FormSpy } from 'react-final-form';
+import Grid from '@material-ui/core/Grid';
+import FormButton from '.././form/FormButton';
+import FormFeedback from '.././form/FormFeedback';
 
 import styles from "./profilePageStyles.js";
-import axios from 'axios';
 
-import AppAppBar from "./AppAppBar";
+import AppFooter from '../views/AppFooter';
+
 
 const useStyles = makeStyles(styles);
 
 export default function ProfilePage(props) {
   const classes = useStyles();
   const { ...rest } = props;
-  const { user, isAuthenticated, loginWithRedirect, isLoading, getIdTokenClaims } = useAuth0();
+  const [sent, setSaved] = React.useState(false);
+  const [buttonIsHovered, setButtonHovered] = React.useState(false);
+  const { user, isAuthenticated, loginWithRedirect, isLoading } = useAuth0();
+            
+  const [state , setState] = useState({
+    email : "",
+    
+  })
   const imageClasses = classNames(
     classes.imgRaised,
     classes.imgRoundedCircle,
     classes.imgFluid
   );
-  if (isAuthenticated) {
-    user.app_metadata = user.app_metadata || {};
-    console.log(user)
-    console.log(user)
-  }
 
+  const fetchData = React.useCallback(() => {
+    if(user !== undefined)
+      setState(user.email);
+  }, [])
+  React.useEffect(() => {
+    fetchData()
+  }, [fetchData])
 
-  const navImageClasses = classNames(classes.imgRounded, classes.imgGallery);
-  let ETTprops = {}
-  if (user) {
-    ETTprops = {
-      email: user.email
-    }
+  const handleSubmit = () => {
+    setSaved(true);
+  };
+
+  const handleSubmitClick = (e) => {
+    e.preventDefault();
+        // const payload={
+        //     "email":state.email,
+        //     "password":state.password,
+        // }
+      console.log("Test");
   }
 
   if (!isAuthenticated && isLoading) {
@@ -76,7 +77,7 @@ export default function ProfilePage(props) {
     </div>)
   }
 
-  if (isAuthenticated && !isLoading)
+  if (isAuthenticated && !isLoading && user)
     return (
       <div>
         <Header
@@ -103,139 +104,94 @@ export default function ProfilePage(props) {
                     </div>
                     <div className={classes.name}>
                       <h3 className={classes.title}>{user.nickname}</h3>
-                      <h6>DESIGNER</h6>
+                      {/* <h6>DESIGNER</h6> */}
 
-                      <Button justIcon link className={classes.margin5}>
+                      {/* <Button justIcon link className={classes.margin5}>
                         <i className={"fab fa-twitter"} />
                         test
-                    </Button>
+                    </Button> */}
                     </div>
                   </div>
                 </GridItem>
               </GridContainer>
               <div className={classes.description}>
-                <EditableTextField {...ETTprops} />
+                <Form onSubmit={handleSubmit} subscription={{ submitting: true }} >
+                  {({ handleSubmit2, submitting }) => (
+                    <form onSubmit={handleSubmit2} className={classes.form} noValidate >
+                      <GridContainer justify="center" spacing={2}>
+                      <Grid container spacing={2}>
+                        <Grid item xs={12} sm={6}>
+                          <Field
+                            autoFocus
+                            component={RFTextField}
+                            autoComplete="fname"
+                            fullWidth
+                            label="First name"
+                            name="firstName"
+                            required
+                          />
+                        </Grid>
+                        <Grid item xs={12} sm={6}>
+                          <Field
+                            component={RFTextField}
+                            autoComplete="lname"
+                            fullWidth
+                            label="Last name"
+                            name="lastName"
+                            required
+                          />
+                        </Grid>
+                      </Grid>
+                      <Field
+                        component={RFTextField}
+                        disabled={submitting || sent}
+                        fullWidth
+                        value={state.email}
+                        label="Email"
+                        margin="normal"
+                        name="email"
+                        required
+                      />
+                      <Field
+                        fullWidth
+                        component={RFTextField}
+                        disabled={submitting || sent}
+                        required
+                        name="mobile"
+
+                        label="Mobile Number"
+                        type="mobile"
+                        margin="normal"
+                      />
+                      <FormSpy subscription={{ submitError: true }}>
+                        {({ submitError }) =>
+                          submitError ? (
+                            <FormFeedback className={classes.feedback} error>
+                              {submitError}
+                            </FormFeedback>
+                          ) : null
+                        }
+                      </FormSpy>
+                      <FormButton
+                        // className={classes.button}
+                        disabled={submitting || sent}
+                        onClick={handleSubmitClick}
+                        fullWidth
+                        onMouseEnter={() => setButtonHovered(true)} 
+                        onMouseLeave={() => setButtonHovered(false)}
+                        className={buttonIsHovered ? classes.buttonHover : classes.button}
+                      >
+                        {submitting || sent ? 'In progress…' : 'Save Changes'}
+                      </FormButton>
+                      </GridContainer>
+                    </form>
+                  )}
+                </Form>
               </div>
-              <GridContainer justify="center">
-                <GridItem xs={12} sm={12} md={8} className={classes.navWrapper}>
-                  <NavPills
-                    alignCenter
-                    color="primary"
-                    tabs={[
-                      {
-                        tabButton: "Studio",
-                        tabIcon: Camera,
-                        tabContent: (
-                          <GridContainer justify="center">
-                            <GridItem xs={12} sm={12} md={4}>
-                              <img
-                                alt="..."
-                                src={studio1}
-                                className={navImageClasses}
-                              />
-                              <img
-                                alt="..."
-                                src={studio2}
-                                className={navImageClasses}
-                              />
-                            </GridItem>
-                            <GridItem xs={12} sm={12} md={4}>
-                              <img
-                                alt="..."
-                                src={studio5}
-                                className={navImageClasses}
-                              />
-                              <img
-                                alt="..."
-                                src={studio4}
-                                className={navImageClasses}
-                              />
-                            </GridItem>
-                          </GridContainer>
-                        )
-                      },
-                      {
-                        tabButton: "Work",
-                        tabIcon: Palette,
-                        tabContent: (
-                          <GridContainer justify="center">
-                            <GridItem xs={12} sm={12} md={4}>
-                              <img
-                                alt="..."
-                                src={work1}
-                                className={navImageClasses}
-                              />
-                              <img
-                                alt="..."
-                                src={work2}
-                                className={navImageClasses}
-                              />
-                              <img
-                                alt="..."
-                                src={work3}
-                                className={navImageClasses}
-                              />
-                            </GridItem>
-                            <GridItem xs={12} sm={12} md={4}>
-                              <img
-                                alt="..."
-                                src={work4}
-                                className={navImageClasses}
-                              />
-                              <img
-                                alt="..."
-                                src={work5}
-                                className={navImageClasses}
-                              />
-                            </GridItem>
-                          </GridContainer>
-                        )
-                      },
-                      {
-                        tabButton: "Favorite",
-                        tabIcon: Favorite,
-                        tabContent: (
-                          <GridContainer justify="center">
-                            <GridItem xs={12} sm={12} md={4}>
-                              <img
-                                alt="..."
-                                src={work4}
-                                className={navImageClasses}
-                              />
-                              <img
-                                alt="..."
-                                src={studio3}
-                                className={navImageClasses}
-                              />
-                            </GridItem>
-                            <GridItem xs={12} sm={12} md={4}>
-                              <img
-                                alt="..."
-                                src={work2}
-                                className={navImageClasses}
-                              />
-                              <img
-                                alt="..."
-                                src={work1}
-                                className={navImageClasses}
-                              />
-                              <img
-                                alt="..."
-                                src={studio1}
-                                className={navImageClasses}
-                              />
-                            </GridItem>
-                          </GridContainer>
-                        )
-                      }
-                    ]}
-                  />
-                </GridItem>
-              </GridContainer>
             </div>
           </div>
         </div>
-        {/* <Footer /> */}
+        <AppFooter />
       </div>
     );
 }

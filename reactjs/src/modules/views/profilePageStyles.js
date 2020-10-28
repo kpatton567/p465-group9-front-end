@@ -1,6 +1,7 @@
 import { container, title } from "../assets/jss/material-kit-react";
 
 import imagesStyle from "../assets/jss/material-kit-react/imagesStyles.js";
+import theme from '../theme';
 
 const profilePageStyle = {
   container,
@@ -42,6 +43,18 @@ const profilePageStyle = {
     minHeight: "32px",
     textDecoration: "none"
   },
+  button: {
+    marginTop: theme.spacing(3),
+    marginBottom: theme.spacing(2),
+    color: 'primary',
+  },
+  buttonHover :{
+    marginTop: theme.spacing(3),
+    marginBottom: theme.spacing(2),
+    color: 'primary',
+    backgroundColor: 'black',
+  },
+
   socials: {
     marginTop: "0",
     width: "100%",

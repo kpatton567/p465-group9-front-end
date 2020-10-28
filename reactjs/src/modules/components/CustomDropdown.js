@@ -3,7 +3,6 @@ import React from "react";
 import classNames from "classnames";
 // nodejs library to set properties for components
 import PropTypes from "prop-types";
-
 // @material-ui/core components
 import { makeStyles } from "@material-ui/core/styles";
 import MenuItem from "@material-ui/core/MenuItem";
@@ -14,14 +13,9 @@ import Grow from "@material-ui/core/Grow";
 import Divider from "@material-ui/core/Divider";
 import Icon from "@material-ui/core/Icon";
 import Popper from "@material-ui/core/Popper";
-
-
 // core components
 import Button from "../components/CustomButton.js";
-
 import styles from "../assets/jss/material-kit-react/components/customDropdownStyle.js"
-import theme from "../theme"
-
 
 const useStyles = makeStyles(styles);
 

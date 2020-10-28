@@ -1,241 +1,240 @@
-import React, {Component} from 'react';
-import Button from '@material-ui/core/Button';
-import CameraIcon from '@material-ui/icons/PhotoCamera';
-import Card from '@material-ui/core/Card';
-import CardActions from '@material-ui/core/CardActions';
-import CardContent from '@material-ui/core/CardContent';
-import CardMedia from '@material-ui/core/CardMedia';
-import CssBaseline from '@material-ui/core/CssBaseline';
-import Grid from '@material-ui/core/Grid';
-import Toolbar from '@material-ui/core/Toolbar';
-import { makeStyles } from '@material-ui/core/styles';
+import React from 'react';
+import PropTypes from 'prop-types';
+import { withStyles } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
-import Link from '@material-ui/core/Link';
-import AppAppBar from './AppAppBar';
-import { withTheme } from '@material-ui/styles';
 import Typography from '../components/Typography';
-import axios from 'axios';
-import theme from '../theme';
+import Link from '@material-ui/core/Link';
 import ButtonBase from '@material-ui/core/ButtonBase';
+import axios from 'axios';
 
-const root = {
-  backgroundColor: '#363636',
-  color: '#FFFFFF',
-};
 
-const imagesStyle = {
-  marginTop: theme.spacing(8),
-  display: 'flex',
-  flexWrap: 'wrap',
-};
+// import PostsList from "../../PostsList";
 
-const imageWrapper = {
-  position: 'relative',
-  display: 'block',
-  padding: 0,
-  borderRadius: 0,
-  height: '60vh', // changes height of movie poster, 60 seems to show poster near-perfectly
-  [theme.breakpoints.down('sm')]: {
-    width: '100% !important',
-    height: 100,
+const styles = (theme) => ({
+  root: {
+    backgroundColor: '#363636',
+    color: '#FFFFFF',
   },
-  '&:hover': {
-    zIndex: 1,
+  images: {
+    marginTop: theme.spacing(8),
+    display: 'flex',
+    flexWrap: 'wrap',
   },
-  '&:hover $imageBackdrop': {
-    opacity: 0.15,
+  imageWrapper: {
+    position: 'relative',
+    display: 'block',
+    padding: 0,
+    borderRadius: 0,
+    height: '60vh', // changes height of movie poster, 60 seems to show poster near-perfectly
+    [theme.breakpoints.down('sm')]: {
+      width: '100% !important',
+      height: 100,
+    },
+    '&:hover': {
+      zIndex: 1,
+    },
+    '&:hover $imageBackdrop': {
+      opacity: 0.15,
+    },
+    '&:hover $imageMarked': {
+      opacity: 0,
+    },
+    '&:hover $imageTitle': {
+      border: '4px solid currentColor',
+    },
   },
-  '&:hover $imageMarked': {
-    opacity: 0,
+
+  // Button on image
+  imageButton: {
+    position: 'absolute',
+    left: 0,
+    right: 0,
+    top: 0,
+    bottom: 0,
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'center',
+    color: theme.palette.common.white,
   },
-  '&:hover $imageTitle': {
-    border: '4px solid currentColor',
+
+  // Image
+  imageSrc: {
+    position: 'absolute',
+    left: 0,
+    right: 0,
+    top: 0,
+    bottom: 0,
+    backgroundSize: 'cover',
+    backgroundPosition: 'center 60%',
   },
-};
 
-// Button on image
-const imageButton = {
-  position: 'absolute',
-  left: 0,
-  right: 0,
-  top: 0,
-  bottom: 0,
-  display: 'flex',
-  alignItems: 'center',
-  justifyContent: 'center',
-  color: theme.palette.common.white,
-};
+  imageBackdrop: {
+    position: 'absolute',
+    left: 0,
+    right: 0,
+    top: 0,
+    bottom: 0,
+    background: theme.palette.common.black,
+    opacity: 0.5,
+    transition: theme.transitions.create('opacity'),
+  },
 
-// Image
-const imageSrc = {
-  position: 'absolute',
-  left: 0,
-  right: 0,
-  top: 0,
-  bottom: 0,
-  backgroundSize: 'cover',
-  backgroundPosition: 'center 60%',
-};
+  // Text on each panel
+  imageTitle: {
+    position: 'relative',
+    padding: `${theme.spacing(2)}px ${theme.spacing(4)}px 14px`,
+  },
 
-const imageBackdrop = {
-  position: 'absolute',
-  left: 0,
-  right: 0,
-  top: 0,
-  bottom: 0,
-  background: theme.palette.common.black,
-  opacity: 0.5,
-  transition: theme.transitions.create('opacity'),
-};
+  // Line below text on each panel
+  imageMarked: {
+    height: 3,
+    width: 18,
+    background: theme.palette.common.white,
+    position: 'absolute',
+    bottom: -2,
+    left: 'calc(50% - 9px)',
+    transition: theme.transitions.create('opacity'),
+  },
 
-// Text on each panel
-const imageTitle = {
-  position: 'relative',
-  padding: `${theme.spacing(2)}px ${theme.spacing(4)}px 14px`,
-};
+  h5: {
+    marginTop: theme.spacing(2),
+   
+  },
+});
 
-// Line below text on each panel
-const imageMarked = {
-  height: 3,
-  width: 18,
-  background: theme.palette.common.white,
-  position: 'absolute',
-  bottom: -2,
-  left: 'calc(50% - 9px)',
-  transition: theme.transitions.create('opacity'),
-};
+// Concatenate the name of the movie to redirect the user to the proper url
+function CreateUrl(image)
+{
+  var mov = "/movieBooking/"
+  var res = mov.concat(image);
 
-const h5 = {
-  marginTop: theme.spacing(2),
-};
+  return res;
+}
 
+// Movie panels
+function ProductCategories(props) {
+  const { classes } = props;
+  const [images, setImages] = React.useState([]);
+  const fetchData = React.useCallback(() => {
+    axios({
+      "method": "GET",
+      "url": 'http://localhost:8080/api/home/movies'
+    })
+      .then((response) => {
+        // setImages(response.data)
+        setImages([...images, 
+          {
+            url: response.data[0].posterLink,
+            title: response.data[0].title,
+            width: '33%',
+            id: '1',
+          },
+          {
+            url: response.data[1].posterLink,
+            title: response.data[1].title,
+            width: '33%',
+            id: '2',
+          },
+          {
+            url: response.data[2].posterLink,
+            title: response.data[2].title,
+            width: '33%',
+            id: '3',
+          },
+          {
+            url: response.data[3].posterLink,
+            title: response.data[3].title,
+            width: '33%',
+            id: '4',
+          },
+          {
+            url: response.data[4].posterLink,
+            title: response.data[4].title,
+            width: '33%',
+            id: '5',
+          },
+          {
+            url: response.data[5].posterLink,
+            title: response.data[5].title,
+            width: '33%',
+            id: '6',
+          },
+          {
+            url: response.data[6].posterLink,
+            title: response.data[6].title,
+            width: '33%',
+            id: '7',
+          },
+          {
+            url: response.data[7].posterLink,
+            title: response.data[7].title,
+            width: '33%',
+            id: '8',
+          },
+          {
+            url: response.data[8].posterLink,
+            title: response.data[8].title,
+            width: '33%',
+            id: '9',
+          }
+          
+      ,]);
+        // console.log(response.data);
+      })
+      .catch((error) => {
+        console.log(error)
+      })
+  }, [])
+  React.useEffect(() => {
+    fetchData()
+  }, [fetchData])
 
-class ProductCategories extends Component {
-
-  constructor(props) {
-    super(props);
-    this.state = {
-      cards: [],
-      images: []
-    };
-  }
-
-  componentDidMount() {
-    const fetchMovies = async () => {
-      const res = await axios.get('http://localhost:8080/api/home/movies');
-      this.setState({ cards: res.data })
-      console.log(this.state.cards);
-      this.setState({ 
-        images: [
-        {
-          url: this.state.cards[0].posterLink,
-          title: this.state.cards[0].title,
-          width: '33%',
-          id: '1',
-        },
-        {
-          url: this.state.cards[1].posterLink,
-          title: this.state.cards[1].title,
-          width: '33%',
-          id: '2',
-        },
-        {
-          url: this.state.cards[2].posterLink,
-          title: this.state.cards[2].title,
-          width: '33%',
-          id: '3',
-        },
-        {
-          url: this.state.cards[3].posterLink,
-          title: this.state.cards[3].title,
-          width: '33%',
-          id: '4',
-        },
-        {
-          url: this.state.cards[4].posterLink,
-          title: this.state.cards[4].title,
-          width: '33%',
-          id: '5',
-        },
-        {
-          url: this.state.cards[5].posterLink,
-          title: this.state.cards[5].title,
-          width: '33%',
-          id: '6',
-        },
-        {
-          url: this.state.cards[6].posterLink,
-          title: this.state.cards[6].title,
-          width: '33%',
-          id: '7',
-        },
-        {
-          url: this.state.cards[7].posterLink,
-          title: this.state.cards[7].title,
-          width: '33%',
-          id: '8',
-        },
-        {
-          url: this.state.cards[8].posterLink,
-          title: this.state.cards[8].title,
-          width: '33%',
-          id: '9',
-        },
-      ] })
-    };
-    fetchMovies();
-  }
-  
-  handleSubmitClick(e) {
-    console.log("Test");
-  }
-
-  render() {
-    const { images } = this.state;
-    console.log(images);
-    return (
-      <Container
-      style={root}
+  return (
+    // Makes the background entirely black
+    <Container
+      className={classes.root} 
       component="section"
       maxWidth="xl"
     >
-      <Container
-        style={root}
+      <Container 
+        className={classes.root} 
         component="section"
       >
-
+    
         {/* Big text above movie panels */}
-        <Typography variant="h4" marked="center" align="center" component="h2" style={root}>
+        <Typography variant="h4" marked="center" align="center" component="h2" className={classes.root}>
           {'Check out these highly rated options'}
         </Typography>
 
 
         {/* Do the following for each image panel (map) */}
-        <div style={imagesStyle}>
+        <div className={classes.images}>
           {images.map((image) => (
             <ButtonBase
               key={image.title}
-              style= {imageWrapper}
-              style={{ width: image.width}}
-              href={`/moviebooking/${image.id}`} // send the user to the url according to the panel they clicked
+              className={classes.imageWrapper}
+              style={{
+                width: image.width,
+              }}
+              href={CreateUrl(image.id)} // send the user to the url according to the panel they clicked
             >
               {/* Import image from url */}
               <div
-                style={imageSrc}
+                className={classes.imageSrc}
                 style={{
                   backgroundImage: `url(${image.url})`,
                 }}
               />
-              <div style={imageBackdrop} />
-              <div style={imageButton}>
+              <div className={classes.imageBackdrop} />
+              <div className={classes.imageButton}>
                 <Typography
                   component="h3"
                   variant="h6"
                   color="inherit"
-                  style={imageTitle}
+                  className={classes.imageTitle}
                 >
                   {image.title}
-                  <div style={imageMarked} />
+                  <div className={classes.imageMarked} />
                 </Typography>
               </div>
             </ButtonBase>
@@ -243,21 +242,25 @@ class ProductCategories extends Component {
         </div>
 
         {/* Link to more movies below panels */}
-        <Typography variant="h4" align="center" component="h2" style={h5}>
-          <Link
+        <Typography variant="h4" align="center" component="h2" className={classes.h5}>
+        <Link
             variant="h5"
             underline="none"
             color="inherit"
             marked="center"
             href="/movies"
-            style={root}
-          >
+            className={classes.root}
+          >          
             {'Click here to view more'}
           </Link>
         </Typography>
       </Container>
     </Container>
-    );
-  }
+  );
 }
-export default ProductCategories;
+
+ProductCategories.propTypes = {
+  classes: PropTypes.object.isRequired,
+};
+
+export default withStyles(styles)(ProductCategories);

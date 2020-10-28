@@ -28,6 +28,7 @@
     "react-dom": "^16.13.1",
     "react-final-form": "^6.5.1",
     "react-json-pretty": "^2.2.0",
+    "react-native": "^0.63.3",
     "react-perfect-scrollbar": "^1.5.8",
     "react-router-dom": "^5.2.0",
     "react-scripts": "3.4.3",

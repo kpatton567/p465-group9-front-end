@@ -23,29 +23,17 @@ const heroContent = {
   padding: theme.spacing(8, 0, 1),
   color: '#FFFFFF'
 };
-const heroButtons = {
-  marginTop: theme.spacing(4),
-};
 const cardGrid = {
   paddingTop: theme.spacing(8),
   paddingBottom: theme.spacing(6),
   backgroundColor: theme.palette.primary.light,
   maxWidth: '100%',
 };
-const card = {
-  height: '100%', // height of white box
-  display: 'flex',
-  flexDirection: 'column',
-};
 const cardMedia = {
   paddingTop: '140%', // height of photo
 };
 const cardContent = {
   flexGrow: 1,
-};
-const footer = {
-  backgroundColor: theme.palette.primary.light,
-  padding: theme.spacing(6),
 };
 const h5 = {
   marginBottom: theme.spacing(4),

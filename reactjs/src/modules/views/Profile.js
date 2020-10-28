@@ -25,9 +25,6 @@ import PersonIcon from '@material-ui/icons/Person';
 import ListItemText from '@material-ui/core/ListItemText';
 import ListItemIcon from '@material-ui/core/ListItemIcon';
 
-import { Redirect } from "react-router-dom";
-import Can from "../../Can";
-import { AuthConsumer } from "../../authContext";
 
 const StyledMenuItem = withStyles((theme) => ({
   root: {
@@ -76,7 +73,7 @@ function Profile(props) {
   const { classes } = props;
   const [openProfile, setOpenProfile] = React.useState(null);
 
-  const { logout, user } = useAuth0();
+  const { logout } = useAuth0();
 
   const handleClickProfile = event => {
     if (openProfile && openProfile.contains(event.target)) {
@@ -129,9 +126,9 @@ function Profile(props) {
                 <Paper>
                   <ClickAwayListener onClickAway={handleCloseProfile}>
                     <MenuList role="menu">
-
-                      <Link href="/editProfile">
-                        <StyledMenuItem href="/editProfile" >
+                    
+                      <Link href="/profilePage">
+                        <StyledMenuItem href="/profilePage" >
 
                           <ListItemIcon>
                             <PersonIcon fontSize="small" />
