@@ -1,0 +1,89 @@
+<React.Fragment >
+      <CssBaseline />
+      <AppAppBar />
+      <Drawer
+        variant="permanent"
+        classes={{
+          paper: clsx(classes.drawerPaper),
+        }}
+        anchor="left"
+      >
+        <Divider />
+          <List>{mainListItems}</List>
+        <Divider />
+      </Drawer>
+      <main className={classes.content}>
+        <div />
+        <Container maxWidth="sm" className={classes.container}
+                   style = {{backgroundColor : '363636'}}>
+          
+          <Grid container spacing={0}>
+            <WhiteTextTypography variant="h6" gutterBottom>
+              Movie Information
+            </WhiteTextTypography>
+            <Grid container spacing={0}>
+              <Grid item xs={12}>
+              <style>{'body { background-color: #363636; }'}</style>
+                <TextField
+                  required
+                  id="movieTitle"
+                  name="movieTitle"
+                  label="Movie title"
+                  value={state.movieTitle}
+                  onChange={handleChange}
+                  fullWidth
+                  required
+                />
+              </Grid>
+              <Grid item xs={12}>
+                <TextField
+                  required
+                  id="movieDesc"
+                  name="movieDesc"
+                  label="Movie Description"
+                  value={state.movieDesc}
+                  onChange={handleChange}
+                  fullWidth
+                  required
+                />
+              </Grid>
+              <Grid item xs={12}>
+                <TextField
+                  required
+                  id="movieGenre"
+                  name="movieGenre"
+                  label="Movie Genre"
+                  value={state.movieGenre}
+                  onChange={handleChange}
+                  fullWidth
+                  required
+                />
+              </Grid>
+              <Grid item xs={12}>
+                <TextField
+                  id="movieURL"
+                  name="movieURL"
+                  label="Movie Poster URL"
+                  value={state.movieURL}
+                  onChange={handleChange}
+                  fullWidth
+                  required
+                />
+              </Grid>
+              <Button
+                variant="contained"
+                color="primary"
+                onClick={handleSubmitClick}
+                className={classes.button}
+              >
+                Add Movie
+              </Button>
+            </Grid>
+          </Grid>
+          <Box pt={4}>
+
+          </Box>
+        </Container>
+      </main>
+      <AppFooter />
+    </React.Fragment>
