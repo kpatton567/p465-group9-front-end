@@ -17,7 +17,8 @@ import ManageSnacks from './modules/views/ManageSnacks';
 import CustomerChat from './modules/views/CustomerChat';
 import TransactionPage from './modules/views/TransactionPage';
 import ReviewPage from './modules/views/ReviewPage';
-
+import Requests from './modules/views/Requests';
+import Payment from './modules/views/Payment';
 function App() {
   // const { isLoading } = useAuth0();
   // if (isLoading) return <div>Loading...</div>
@@ -40,6 +41,8 @@ function App() {
         <Route path= '/customerChat' exact={true}><CustomerChat/></Route>
         <Route path= '/transactionPage' exact={true}><TransactionPage/></Route>
         <Route path= '/reviewPage' exact={true}><ReviewPage/></Route>
+        <Route path= '/customerRequests' exact={true}><Requests/></Route>
+        <Route path= '/payment' exact={true}><Payment/></Route>
       </Router>
        </Auth>
   );

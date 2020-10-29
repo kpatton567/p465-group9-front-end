@@ -66,6 +66,14 @@ export const mainListItems = (
       primary="Reviews" 
       style={{ color: '#FFFFFF' }}/>
     </ListItem>
+    <ListItem button component={Link} to="/customerRequests">
+      <ListItemIcon>
+        <PeopleIcon style = {{color : '800000'}}/>
+      </ListItemIcon>
+      <ListItemText 
+      primary="Customer Cancelation Requests" 
+      style={{ color: '#FFFFFF' }}/>
+    </ListItem>
   </div>
 );
 

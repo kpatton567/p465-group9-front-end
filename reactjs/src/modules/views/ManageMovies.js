@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, { useState } from 'react';
 import clsx from 'clsx';
 import { makeStyles } from '@material-ui/core/styles';
 import CssBaseline from '@material-ui/core/CssBaseline';
@@ -23,7 +23,7 @@ import GridContainer from "../components/GridContainer.js";
 import Grid from '@material-ui/core/Grid';
 import FormButton from '.././form/FormButton';
 import axios from 'axios';
-const drawerWidth = 240;
+const drawerWidth = 250;
 const useStyles = makeStyles((theme) => ({
   root: {
     display: 'flex',
@@ -64,7 +64,8 @@ const useStyles = makeStyles((theme) => ({
   },
   drawerPaper: {
     position: 'relative',
-    whiteSpace: 'nowrap',
+    backgroundColor: '#363636',
+    // whiteSpace: 'nowrap',
     width: drawerWidth,
     transition: theme.transitions.create('width', {
       easing: theme.transitions.easing.sharp,
@@ -94,6 +95,7 @@ const useStyles = makeStyles((theme) => ({
   },
   paper: {
     padding: theme.spacing(1),
+    backgroundColor: '#363636',
     display: 'flex',
     overflow: 'auto',
     flexDirection: 'column',
@@ -103,18 +105,14 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 export default function ManageMovies() {
-  const [state, setState] = useState({
-    movieTitle: "",
-    movieDesc: "",
-    movieURL: "",
-    movieGenre: ""
-  })
-const handleChange = (e) => {
-    const { id, value } = e.target
-    setState(prevState => ({
-      ...prevState,
-      [id]: value
-    }))
+  const [movieTitle, setmovieTitle] = React.useState('');
+  const [movieDesc, setmovieDesc] = React.useState('');
+  const [movieGenre, setmovieGenre] = React.useState('');
+  const [movieURL, setmovieURL] = React.useState('');
+  const handleChange = (e) => {
+    // const { id, value } = e.target
+    console.log(e.target.value)
+    // setmovieTitle(e.target.value)
   }
   const handleSubmit = () => {
     setSaved(true);
@@ -131,25 +129,19 @@ const handleChange = (e) => {
   const handleSubmitClick = (e) => {
     e.preventDefault();
     const payload = {
-      "movieTitle": state.movieTitle,
-      "movieDesc": state.movieDesc,
-      "movieURL" :state.movieURL,
-      "movieGenre" : state.movieGenre
+      "movieTitle": movieTitle,
+      "movieDesc": movieDesc,
+      "movieURL": movieURL,
+      "movieGenre": movieGenre
     }
-      axios.post('http://localhost:8080/api/manage/add_movie', payload)
-        .then(function (response) {
-          if (response.status === 200) {
-            setState(prevState => ({
-              ...prevState,
-              'successMessage': 'Login successful. Redirecting to home page..'
-            }))
-            console.log(response.data)
-          }
-        })
-        .catch(function (error) {
-          console.log(error);
-        });
-    }
+    axios.post('http://localhost:8080/api/manage/add_movie', payload)
+      .then(function (response) {
+        
+      })
+      .catch(function (error) {
+        console.log(error);
+      });
+  }
   const fixedHeightPaper = clsx(classes.paper, classes.fixedHeight);
   return (
     <div className={classes.root}>
@@ -175,23 +167,25 @@ const handleChange = (e) => {
         <List>{mainListItems}</List>
         <Divider />
       </Drawer>
-      <main className={classes.content}>
+      <main className={classes.content}
+        style={{ background: '#808080' }}>
         <div className={classes.appBarSpacer} />
         <Container maxWidth="lg" className={classes.container}>
           <Form onSubmit={handleSubmit} subscription={{ submitting: true }} >
             {({ handleSubmit2, submitting }) => (
               <form onSubmit={handleSubmit2} className={classes.form} noValidate >
                 <GridContainer justify="center" spacing={2} maxWidth="sm" className={classes.margin}>
-                  <Grid container spacing={2}>
+                  <Grid container spacing={5}>
                     <Grid item xs={6}>
                       <Field
                         autoFocus
+                        defaultValue={movieTitle} 
+                        onChange={event => setmovieTitle(event.target.value)}
                         component={RFTextField}
                         id="movieTitle"
                         name="movieTitle"
                         label="Movie Title"
-                        value={state.movieTitle}
-                        onChange={handleChange}
+                        
                         fullWidth
                         required
                       />
@@ -202,8 +196,8 @@ const handleChange = (e) => {
                         id="movieDesc"
                         name="movieDesc"
                         label="Movie Description"
-                        value={state.movieDesc}
-                        onChange={handleChange}
+                        defaultValue={movieDesc} 
+                        onChange={event => setmovieDesc(event.target.value)}
                         fullWidth
                         required
                       />
@@ -212,10 +206,10 @@ const handleChange = (e) => {
                       <Field
                         component={RFTextField}
                         id="movieGenre"
-                        name="movieGEnre"
+                        name="movieGenre"
                         label="Movie Genre"
-                        value={state.movieGenre}
-                        onChange={handleChange}
+                        defaultValue={movieGenre} 
+                        onChange={event => setmovieGenre(event.target.value)}
                         fullWidth
                         required
                       />
@@ -226,12 +220,21 @@ const handleChange = (e) => {
                         id="URL"
                         name="movieURL"
                         label="Movie URL"
-                        value={state.movieURL}
-                        onChange={handleChange}
+                        defaultValue={movieURL} 
+                        onChange={event => setmovieURL(event.target.value)}
                         fullWidth
                         required
                       />
                     </Grid>
+                    <FormButton
+                      className={classes.button}
+                      disabled={submitting || sent}
+                      onClick={handleSubmitClick}
+                      fullWidth
+                      className={classes.button}
+                    >
+                      Add Movie
+                    </FormButton>
                   </Grid>
                   <FormSpy subscription={{ submitError: true }}>
                     {({ submitError }) =>
@@ -242,15 +245,6 @@ const handleChange = (e) => {
                       ) : null
                     }
                   </FormSpy>
-                  <FormButton
-                    // className={classes.button}
-                    disabled={submitting || sent}
-                    onClick={handleSubmitClick}
-                    fullWidth
-                    className={classes.button}
-                  >
-                    Add Movie
-                      </FormButton>
                 </GridContainer>
               </form>
             )}

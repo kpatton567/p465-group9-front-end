@@ -64,7 +64,8 @@ const useStyles = makeStyles((theme) => ({
   },
   drawerPaper: {
     position: 'relative',
-    whiteSpace: 'nowrap',
+    // whiteSpace: 'nowrap',
+    backgroundColor: '#363636',
     width: drawerWidth,
     transition: theme.transitions.create('width', {
       easing: theme.transitions.easing.sharp,
@@ -136,7 +137,8 @@ export default function Dashboard() {
         <List>{mainListItems}</List>
         <Divider />
       </Drawer>
-      <main className={classes.content}>
+      <main className={classes.content}
+      style={{background: '#808080'}}>
         <div className={classes.appBarSpacer} />
         <Container maxWidth="lg" className={classes.container}>
           <Grid container spacing={3}>

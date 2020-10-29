@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, { useState } from 'react';
 import clsx from 'clsx';
 import { makeStyles } from '@material-ui/core/styles';
 import CssBaseline from '@material-ui/core/CssBaseline';
@@ -23,7 +23,7 @@ import GridContainer from "../components/GridContainer.js";
 import Grid from '@material-ui/core/Grid';
 import FormButton from '.././form/FormButton';
 import axios from 'axios';
-const drawerWidth = 240;
+const drawerWidth = 250;
 const useStyles = makeStyles((theme) => ({
   root: {
     display: 'flex',
@@ -64,7 +64,8 @@ const useStyles = makeStyles((theme) => ({
   },
   drawerPaper: {
     position: 'relative',
-    whiteSpace: 'nowrap',
+    // whiteSpace: 'nowrap',
+    backgroundColor: '#363636',
     width: drawerWidth,
     transition: theme.transitions.create('width', {
       easing: theme.transitions.easing.sharp,
@@ -103,19 +104,8 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 export default function ManageMovies() {
-  const [state, setState] = useState({
-    movieTitle: "",
-    movieDesc: "",
-    movieURL: "",
-    movieGenre: ""
-  })
-const handleChange = (e) => {
-    const { id, value } = e.target
-    setState(prevState => ({
-      ...prevState,
-      [id]: value
-    }))
-  }
+  const [snackName, setsnackName] = React.useState('');
+  const [snackPrice, setsnackPrice] = React.useState('');
   const handleSubmit = () => {
     setSaved(true);
   };
@@ -131,23 +121,17 @@ const handleChange = (e) => {
   const handleSubmitClick = (e) => {
     e.preventDefault();
     const payload = {
-      "snackName": state.snackName,
-      "snackCost": state.movieDesc,
+      "snackName": snackName,
+      "snackPrice": snackPrice,
     }
-      axios.post('http://localhost:8080/api/manage/add_snack', payload)
-        .then(function (response) {
-          if (response.status === 200) {
-            setState(prevState => ({
-              ...prevState,
-              'successMessage': 'Login successful. Redirecting to home page..'
-            }))
-            console.log(response.data)
-          }
-        })
-        .catch(function (error) {
-          console.log(error);
-        });
-    }
+    axios.post('http://localhost:8080/api/manage/add_snack', payload)
+      .then(function (response) {
+
+      })
+      .catch(function (error) {
+        console.log(error);
+      });
+  }
   const fixedHeightPaper = clsx(classes.paper, classes.fixedHeight);
   return (
     <div className={classes.root}>
@@ -173,7 +157,8 @@ const handleChange = (e) => {
         <List>{mainListItems}</List>
         <Divider />
       </Drawer>
-      <main className={classes.content}>
+      <main className={classes.content}
+        style={{ background: '#808080' }}>
         <div className={classes.appBarSpacer} />
         <Container maxWidth="lg" className={classes.container}>
           <Form onSubmit={handleSubmit} subscription={{ submitting: true }} >
@@ -188,8 +173,8 @@ const handleChange = (e) => {
                         id="snackName"
                         name="snackName"
                         label="Snack Name"
-                        value={state.movieTitle}
-                        onChange={handleChange}
+                        defaultValue={snackName}
+                        onChange={event => setsnackName(event.target.value)}
                         fullWidth
                         required
                       />
@@ -200,12 +185,21 @@ const handleChange = (e) => {
                         id="snackPrice"
                         name="snackPrice"
                         label="Snack Price"
-                        value={state.movieDesc}
-                        onChange={handleChange}
+                        defaultValue={snackPrice}
+                        onChange={event => setsnackPrice(event.target.value)}
                         fullWidth
                         required
                       />
                     </Grid>
+                    <FormButton
+                      className={classes.button}
+                      disabled={submitting || sent}
+                      onClick={handleSubmitClick}
+                      fullWidth
+                      className={classes.button}
+                    >
+                      Add Movie
+                  </FormButton>
                   </Grid>
                   <FormSpy subscription={{ submitError: true }}>
                     {({ submitError }) =>
@@ -216,15 +210,7 @@ const handleChange = (e) => {
                       ) : null
                     }
                   </FormSpy>
-                  <FormButton
-                    // className={classes.button}
-                    disabled={submitting || sent}
-                    onClick={handleSubmitClick}
-                    fullWidth
-                    className={classes.button}
-                  >
-                    Add Movie
-                      </FormButton>
+
                 </GridContainer>
               </form>
             )}
