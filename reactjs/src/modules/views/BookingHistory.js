@@ -140,9 +140,7 @@ export default function BookingHistory(props) {
             <Container maxWidth="lg" className={classes.container}>
 
                 <div className={classes.root}>
-                    {/* <div style = {{backgroundImage: `url()`, height: '100%'}}> */}
                     <AppAppBar />
-
                     <main className={classes.content}>
                         <div style = {{paddingTop: 'theme.spacing(6)' }}>
                             <Row>
@@ -161,7 +159,7 @@ export default function BookingHistory(props) {
                                 <Paper className={classes.paper}>
                                     <Typography component="h2" variant="h6" color="primary" gutterBottom>
                                         Transaction History
-    </Typography>
+                                    </Typography>
                                     <Table size="small">
                                         <TableHead>
                                             <TableRow>

@@ -1,4 +1,7 @@
 import React from "react";
+import clsx from 'clsx';
+import { Row, Col } from 'reactstrap';
+import axios from 'axios';
 // nodejs library that concatenates classes
 import classNames from "classnames";
 // @material-ui/core components
@@ -10,71 +13,55 @@ import Card from '@material-ui/core/Card';
 import Container from '@material-ui/core/Container';
 import CardContent from '@material-ui/core/CardContent';
 import CardMedia from '@material-ui/core/CardMedia';
-import Typography from '../components/Typography';
 import CardActions from '@material-ui/core/CardActions';
 import Link from '@material-ui/core/Link';
+import Paper from '@material-ui/core/Paper';
+import Table from '@material-ui/core/Table';
+import TableBody from '@material-ui/core/TableBody';
+import TableCell from '@material-ui/core/TableCell';
+import TableHead from '@material-ui/core/TableHead';
+import TableRow from '@material-ui/core/TableRow';
 
 // core components
+import './BookingHistory';
+import Typography from '../components/Typography';
 import Button from "../components/CustomButton";
 import GridContainer from "../components/GridContainer.js";
 import GridItem from "../components/GridItem.js";
 import Parallax from "../components/Parallax.js";
-import styles from "./rewardsPageStyles.js";
+import styles from "./BookingHistPageStyles.js";
 import AppFooter from '../../modules/views/AppFooter';
 import AppAppBar from "./AppAppBar";
 import theme from '../theme';
-import axios from 'axios';
+import SalesSummary from './SalesSummary';
+import Feeds from './Feeds';
 
 
 const useStyles = makeStyles(styles);
 
-  const cardGrid = {
-    paddingTop: theme.spacing(8),
-    paddingBottom: theme.spacing(6),
-    backgroundColor: theme.palette.primary.light,
-    maxWidth: '100%',
-  };
-  const cardMedia = {
-    paddingTop: '70%', // height of photo
-  };
-  const cardContent = {
-    flexGrow: 1,
-  };
-  const h5 = {
-    marginBottom: theme.spacing(4),
-    marginTop: theme.spacing(4),
-    [theme.breakpoints.up('sm')]: {
-      marginTop: theme.spacing(5),
-    },
-  };
-  // For footer button
-  const root = {
-    color: theme.palette.common.black,
-    position: 'relative',
-    display: 'flex',
-    alignItems: 'center',
-    [theme.breakpoints.up('sm')]: {
-      height: '80vh',
-      minHeight: 10,
-      maxHeight: 40,
-    },
-  };
-  
-  const container = {
-    display: 'flex',
-    flexDirection: 'column',
-    alignItems: 'center',
-    backgroundColor: '#363636',
-    maxWidth: '100%',
-  };
-  const button = {
-    minWidth: 250,
-    marginBottom: theme.spacing(4),
-  };
+// Generate Order Data
+function createData(id, orderid, date, name, shipTo, paymentMethod, amount) {
+    return         {id, orderid, date, name, shipTo, paymentMethod, amount};
+}
+
+// NEED TO POPULATE W/ BACKEND INFO
+const rows = [
+    createData(0, '123', '16 Mar, 2019', 'Elvis Presley', 'Tupelo, MS', 'VISA ⠀•••• 3719', 312.44),
+    createData(1, '234', '16 Mar, 2019', 'Paul McCartney', 'London, UK', 'VISA ⠀•••• 2574', 866.99),
+    createData(2, '345', '16 Mar, 2019', 'Tom Scholz', 'Boston, MA', 'MC ⠀•••• 1253', 100.81),
+    createData(3, '456', '16 Mar, 2019', 'Michael Jackson', 'Gary, IN', 'AMEX ⠀•••• 2000', 654.39),
+    createData(4, '678', '15 Mar, 2019', 'Bruce Springsteen', 'Long Branch, NJ', 'VISA ⠀•••• 5919', 212.79),
+];
+
+function preventDefault(event) {
+    event.preventDefault();
+}
 
 
 
-export default function RewardsPage(props) 
+
+// Create page
+export default function BookingHistoryPage(props) 
 {
   // Bring in data from backend
   const [coupons, setCoupons] = React.useState([]);
@@ -117,12 +104,12 @@ export default function RewardsPage(props)
     classes.imgRoundedCircle,
     classes.imgFluid
   );
+
   if (isAuthenticated) {
     user.app_metadata = user.app_metadata || {};
     console.log(user)
     console.log(user)
   }
-
 
   const navImageClasses = classNames(classes.imgRounded, classes.imgGallery);
   let ETTprops = {}
@@ -156,7 +143,7 @@ export default function RewardsPage(props)
           {/* background image */}
           <Parallax small filter image={require("../assets/popcorn.jpg")} />
 
-          {/* Raised background page */}
+          {/* Raised background page, profile image, customer tag */}
           <div className={classNames(classes.main, classes.mainRaised)}>
             <div>
               <div className={classes.container}>
@@ -177,67 +164,49 @@ export default function RewardsPage(props)
             </div>
 
 
+            {/* Text below profile image */}
             <div>
               <Typography className={classes.title2} align="center" variant="h3" marked="center">
-                {'COUPON CODES AND OFFERS'}
+                {'TRANSACTION HISTORY'}
               </Typography>
             </div>
             <div>
               <Typography className={classes.subtext} align="center" variant="h5">
-                {'Check out these sweet deals made just for you!'}
-              </Typography>
-              <Typography className={classes.subtext} align="center" variant="h5">
-                {'Start saving now!'}
+                {''}
               </Typography>
             </div>
 
 
-            {/* Place cards on the raised background component */}
-            <React.Fragment>
-              <CssBaseline />
-              <main>
-                <Container style={cardGrid} maxWidth="lg">
-                  <Grid container spacing={4}>
-                    {coupons.map((coupon) => (
-                      <Grid item key={coupon} xs={12} sm={6} md={2} lg={3}>
-
-                        {/* Create each card using array from backend */}
-                        <Card>
-                          {/* Image on card */}
-                          <CardMedia
-                            style={cardMedia}
-                            image="https://images-na.ssl-images-amazon.com/images/I/71niXI3lxlL._AC_SL1183_.jpg"
-                            // image={coupon.url}
-                          />
-
-                          {/* Text on the card */}
-                          <CardContent style={cardContent}>
-                            <Typography gutterBottom variant="h5" component="h2">
-                              {"Test Title"}
-                              {/* {coupon.title} */}
-                            </Typography>
-                            <Typography>
-                              {"Test Description... Test test test"}
-                              {/* {coupon.description} */}
-                            </Typography>
-                          </CardContent>
-
-                          {/* Button on card */}
-                          <CardActions>
-                            <Link>
-                              <Button size="small" color="primary">
-                                {'CODE: '}{coupon.couponCode}
-                              </Button>
-                            </Link>
-                          </CardActions>
-                        </Card>
-                      </Grid>
-                    ))}
-                  </Grid>
-                </Container>
-              </main>
-            </React.Fragment>
-
+            {/* Order History Table */}
+            <Grid item xs={12}>
+                <Paper className={classes.paper}>
+                    <Table size="small">
+                        <TableHead>
+                            <TableRow>
+                                <TableCell>Order Number</TableCell>
+                                <TableCell>Date</TableCell>
+                                <TableCell>Movie Name</TableCell>
+                                <TableCell>Theatre</TableCell>
+                                <TableCell>Snacks</TableCell>
+                                <TableCell align="right">Total Bill</TableCell>
+                            </TableRow>
+                        </TableHead>
+                        <TableBody>
+                            {rows.map((row) => (
+                                <TableRow key={row.id}>
+                                    <TableCell>{row.orderid}</TableCell>
+                                    <TableCell>{row.date}</TableCell>
+                                    <TableCell>{row.name}</TableCell>
+                                    <TableCell>{row.shipTo}</TableCell>
+                                    <TableCell>{row.paymentMethod}</TableCell>
+                                    <TableCell align="right">{row.amount}</TableCell>
+                                </TableRow>
+                            ))}
+                        </TableBody>
+                    </Table>
+                </Paper>
+            </Grid>
+ 
           </div>
           {/* End main raised page */}
 
@@ -248,3 +217,7 @@ export default function RewardsPage(props)
       );
   }
 }
+
+
+
+
