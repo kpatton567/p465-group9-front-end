@@ -17,38 +17,34 @@ import DialogActions from '@material-ui/core/DialogActions';
 import DialogContent from '@material-ui/core/DialogContent';
 import DialogTitle from '@material-ui/core/DialogTitle';
 import theme from "../theme";
-
+import prevueLogo from '../assets/prevueLogo.png';
 const styles = (theme) => ({
-  title: {
-    fontSize: 24,
-  },
-
   placeholder: toolbarStyles(theme).root,
-
-  toolbar: {
-    justifyContent: 'space-between',
-  },
-
-  left: {
-    flex: 1,
-  },
-
   leftLinkActive: {
     color: theme.palette.common.white,
   },
-
+  // Login buttons
   right: {
-    flex: 1,
     display: 'flex',
     justifyContent: 'flex-end',
   },
-
   rightLink: {
     fontSize: 16,
     color: theme.palette.common.white,
-    marginLeft: theme.spacing(3),
+    marginLeft: theme.spacing(0),
   },
-
+  // Title, left justified
+  left: {
+    flex: 1,
+    display: 'flex',
+    justifyContent: 'flex-start',
+  },
+  leftLink: {
+    fontSize: 28,
+    color: theme.palette.common.white,
+    marginRight: theme.spacing(3),
+    marginLeft: theme.spacing(4),
+  },
   linkSecondary: {
     color: theme.palette.secondary.main,
   },
@@ -58,7 +54,6 @@ const styles = (theme) => ({
   successIcon: {
     color: 'green',
   },
-
   search: {
     position: 'relative',
     borderRadius: theme.shape.borderRadius,
@@ -66,7 +61,7 @@ const styles = (theme) => ({
     '&:hover': {
       backgroundColor: fade(theme.palette.common.white, 0.25),
     },
-    marginRight: theme.spacing(-32),
+    marginRight: theme.spacing(3),
     marginLeft: 0,
     width: '100%',
     [theme.breakpoints.up('sm')]: {
@@ -74,7 +69,7 @@ const styles = (theme) => ({
       width: 'auto',
     },
   },
-
+  // For the magnifying glass
   searchIcon: {
     padding: theme.spacing(0, 2),
     height: '100%',
@@ -84,11 +79,9 @@ const styles = (theme) => ({
     alignItems: 'center',
     justifyContent: 'center',
   },
-
   inputRoot: {
     color: 'inherit',
   },
-
   inputInput: {
     padding: theme.spacing(1, 1, 1, 0),
     // vertical padding + font size from searchIcon
@@ -99,43 +92,39 @@ const styles = (theme) => ({
       width: '20ch',
     },
   },
-
 });
-
-
 function AppAppBar(props) {
   const { classes } = props;
   const { loginWithRedirect, isAuthenticated, user } = useAuth0();
   const [open, setOpen] = React.useState(false);
-
     const handleClickOpen = () => {
       setOpen(true);
     };
     const handleClose = () => {
       setOpen(false);
     };
-
-    const handleClickLogin = () => {
-      console.log(user);
-      loginWithRedirect();
-    };
-
-
-
   // Change header according to whether user is logged in
   return isAuthenticated ?
     // User is logged in
     (
-
       <div>
         <AppBar position="fixed">
-          <Toolbar className={classes.toolbar}>
-
+          <Toolbar>
+           {/* PreVue Logo */}
+           <div className={classes.left}>
+              <div className={classes.leftLink}>
+                <Link href='/'>
+                  <img
+                    src={prevueLogo}
+                    alt="prevueLogo"
+                    height='40'
+                  />
+                </Link>
+              </div>
+            </div>
             {/* Search bar */}
             <div className={classes.search}>
-              <div className={classes.searchIcon}>
-                <SearchIcon />
-              </div>
+              <div className={classes.searchIcon}><SearchIcon /></div>
               <InputBase
                 placeholder="Search for viewings..."
                 classes={{
@@ -145,24 +134,9 @@ function AppAppBar(props) {
                 inputProps={{ 'aria-label': 'search' }}
               />
             </div>
-
-
-            {/* PreVue title/link */}
-            <div className={classes.left} />
-            <Link
-              // variant="h6"
-              underline="none"
-              color="inherit"
-              className={classes.title}
-              href="/"
-            >
-              {'PREVUE'}
-            </Link>
-
-            {/* Logout button */}
+            {/* Profile Icon */}
             <div className={classes.right}>
               <Link
-                // variant="h6"
                 underline="none"
                 className={clsx(classes.rightLink, classes.linkSecondary)}
                 style={{ display: isAuthenticated ? 'block' : 'none' }}
@@ -171,24 +145,29 @@ function AppAppBar(props) {
             </div>
           </Toolbar>
         </AppBar>
-
         <div className={classes.placeholder} />
       </div>
     ) :
-
     // Not logged in
     (
       <div>
-
         <AppBar position="fixed">
-          <Toolbar className={classes.toolbar}>
-
-
+          <Toolbar>
+            {/* PreVue Logo */}
+            <div className={classes.left}>
+              <div className={classes.leftLink}>
+                <Link href='/'>
+                  <img
+                    src={prevueLogo}
+                    alt="prevueLogo"
+                    height='40'
+                  />
+                </Link>
+              </div>
+            </div>
             {/* Search bar */}
             <div className={classes.search}>
-              <div className={classes.searchIcon}>
-                <SearchIcon />
-              </div>
+              <div className={classes.searchIcon}><SearchIcon /></div>
               <InputBase
                 placeholder="Search for viewings..."
                 classes={{
@@ -198,20 +177,6 @@ function AppAppBar(props) {
                 inputProps={{ 'aria-label': 'search' }}
               />
             </div>
-
-            {/* PreVue title/link */}
-            <div className={classes.left} />
-            <Link
-              // variant="h6"
-              underline="none"
-              color="inherit"
-              className={classes.title}
-              href="/"
-            >
-              {'PREVUE'}
-            </Link>
-
-
             {/* Log In/Sign up buttons */}
             <div className={classes.right}>
               <div>
@@ -219,41 +184,10 @@ function AppAppBar(props) {
                   // variant="h6"
                   underline="none"
                   // removed root in line below, might need
-                  className={classes.rightLink}>Log in / Sign up</Button>
-                <Dialog disableBackdropClick disableEscapeKeyDown open={open} onClose={handleClose}>
-                  <DialogTitle>Choose your profile</DialogTitle>
-                  <DialogContent>
-                    {/* <Button style={{ marginRight: theme.spacing(6) }}onClick={() => login({ appState: { returnTo: { pathname, query } } })}> */}
-                    <Button style={{ marginRight: theme.spacing(6) }} onClick={handleClickLogin}>
-
-                      {/* <AuthConsumer>
-                  {({ initiateLogin }) => (
-                    <button className="btn btn-sm btn-primary" >
-                     
-                     <Button style={{ marginRight: theme.spacing(6) }}  onClick={initiateLogin}>
-                      <FaceIcon fontSize="large" className={classes.largeIcon}></FaceIcon>
-                      </Button>
-                      Login
-                    </button>
-                  )}
-                </AuthConsumer> */}
-                      <FaceIcon fontSize="large" className={classes.largeIcon}></FaceIcon>
-                      Customer
-                  </Button>
-                    <Button style={{ marginRight: theme.spacing(6) }}>
-                      <SupervisorAccountIcon fontSize="large" className={classes.largeIcon} onClick={() => loginWithRedirect()}></SupervisorAccountIcon>
-                      Manager
-                  </Button>
-                  </DialogContent>
-                  <DialogActions>
-                    <Button onClick={handleClose} color="primary">
-                      Cancel
-          </Button>
-                    <Button onClick={handleClose} color="primary">
-                      Ok
-          </Button>
-                  </DialogActions>
-                </Dialog>
+                  className={classes.rightLink}
+                  onClick={() => loginWithRedirect()}
+                  // onClick={ () => handleLogin() }
+                  >Log in / Sign up</Button>
               </div>
             </div>
           </Toolbar>
@@ -262,32 +196,7 @@ function AppAppBar(props) {
       </div>
     );
 }
-
 AppAppBar.propTypes = {
   classes: PropTypes.object.isRequired,
 };
-
 export default withStyles(styles)(AppAppBar);
-
-// import React from "react";
-// import { Redirect } from "react-router-dom";
-
-// import { AuthConsumer } from "../../authContext";
-// import Login from "../../Login";
-
-// const AppAppBar = () => (
-//   <AuthConsumer>
-//     {({ authenticated }) =>
-//       authenticated ? (
-//         <Redirect to="/dashboard" />
-//       ) : (
-//         <div>
-//           {/* <h2>Welcome to React RBAC Tutorial.</h2> */}
-//           <Login />
-//         </div>
-//       )
-//     }
-//   </AuthConsumer>
-// );
-
-// export default AppAppBar;

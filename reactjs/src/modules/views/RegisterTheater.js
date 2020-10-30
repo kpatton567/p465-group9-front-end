@@ -26,7 +26,7 @@ import AppFooter from '../views/AppFooter';
 
 const useStyles = makeStyles(styles);
 
-export default function ProfilePage(props) {
+export default function RegisterTheater(props) {
   const classes = useStyles();
   const { ...rest } = props;
   const [sent, setSaved] = React.useState(false);
@@ -61,7 +61,7 @@ export default function ProfilePage(props) {
         //     "email":state.email,
         //     "password":state.password,
         // }
-      console.log("Test");
+    console.log("Test");
   }
 
   if (!isAuthenticated && isLoading) {
@@ -104,12 +104,6 @@ export default function ProfilePage(props) {
                     </div>
                     <div className={classes.name}>
                       <h3 className={classes.title}>{user.nickname}</h3>
-                      {/* <h6>DESIGNER</h6> */}
-
-                      {/* <Button justIcon link className={classes.margin5}>
-                        <i className={"fab fa-twitter"} />
-                        test
-                    </Button> */}
                     </div>
                   </div>
                 </GridItem>
@@ -126,42 +120,12 @@ export default function ProfilePage(props) {
                             component={RFTextField}
                             autoComplete="fname"
                             fullWidth
-                            label="First name"
-                            name="firstName"
-                            required
-                          />
-                        </Grid>
-                        <Grid item xs={12} sm={6}>
-                          <Field
-                            component={RFTextField}
-                            autoComplete="lname"
-                            fullWidth
-                            label="Last name"
-                            name="lastName"
+                            label="Theater name"
+                            name="theaterName"
                             required
                           />
                         </Grid>
                       </Grid>
-                      <Field
-                        component={RFTextField}
-                        disabled={submitting || sent}
-                        fullWidth
-                        value={state.email}
-                        label="Email"
-                        margin="normal"
-                        name="email"
-                        required
-                      />
-                      <Field
-                        fullWidth
-                        component={RFTextField}
-                        disabled={submitting || sent}
-                        required
-                        name="mobile"
-                        label="Mobile Number"
-                        type="mobile"
-                        margin="normal"
-                      />
                       <FormSpy subscription={{ submitError: true }}>
                         {({ submitError }) =>
                           submitError ? (
@@ -172,7 +136,6 @@ export default function ProfilePage(props) {
                         }
                       </FormSpy>
                       <FormButton
-                        // className={classes.button}
                         disabled={submitting || sent}
                         onClick={handleSubmitClick}
                         fullWidth

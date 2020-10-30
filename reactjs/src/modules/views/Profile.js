@@ -72,8 +72,38 @@ const styles = (theme) => ({
 function Profile(props) {
   const { classes } = props;
   const [openProfile, setOpenProfile] = React.useState(null);
-
+  
   const { logout } = useAuth0();
+
+//   const fetchData = React.useCallback(() => {
+//     axios({
+//       "method": "POST",
+//       "url": 'http://localhost:8080/api/auth/get_token' + userId
+//   })
+//       .then((response) => {
+//           console.log(response.data)
+//           setOldUser(response.data)
+//       })
+//       .catch((error) => {
+//           console.log(error)
+//       })
+
+//     axios({
+//         "method": "POST",
+//         "url": 'http://localhost:8080/api/auth/user_role' + userId
+//     })
+//         .then((response) => {
+//             console.log(response.data)
+//             setOldUser(response.data)
+//         })
+//         .catch((error) => {
+//             console.log(error)
+//         })
+// }, [])
+// React.useEffect(() => {
+//     fetchData()
+// }, [fetchData])
+
 
   const handleClickProfile = event => {
     if (openProfile && openProfile.contains(event.target)) {
@@ -146,7 +176,7 @@ function Profile(props) {
                           <ListItemText primary="Booking History" />
                         </StyledMenuItem>
                       </Link>
-                      <Link href="/editProfile">
+                      <Link href="/rewards">
                         <StyledMenuItem>
                           <ListItemIcon>
                             <AttachMoneyIcon fontSize="small" />
@@ -171,24 +201,16 @@ function Profile(props) {
                         </StyledMenuItem>
                       </Link>
 
-                      {/* <AuthConsumer>
-                      <Can
-                        role={user.role}
-                        perform="manager-page:visit"
-                        yes={() => (
-                          <Link href="/managerView">
-                          <StyledMenuItem>
-                            <ListItemIcon>
-                              <SettingsIcon fontSize="small" />
-                            </ListItemIcon>
-                            <ListItemText primary="Manager View" />
-                          </StyledMenuItem>
-                          </Link>
+                      <Link href="/managerView">
+                        <StyledMenuItem>
+                          <ListItemIcon>
+                            <SettingsIcon fontSize="small" />
+                          </ListItemIcon>
+                          <ListItemText primary="Manager View" />
+                        </StyledMenuItem>
+                      </Link>
+                      
 
-                        )}
-                        no={() => <Redirect to="/" />}
-                      />
-                      </AuthConsumer> */}
                       <Divider light />
 
                       <StyledMenuItem onClick={logout}>

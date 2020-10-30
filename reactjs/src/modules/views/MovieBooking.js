@@ -31,6 +31,7 @@ import { useAuth0 } from '@auth0/auth0-react';
 
 
 
+
 const mainFeaturedPost = {
     title: 'Title of the movie',
     description:
@@ -153,17 +154,7 @@ export default function MovieBooking(props) {
             <React.Fragment >
                 <CssBaseline />
 
-                <Header
-                    color="transparent"
-                    brand="Material Kit React"
-                    rightLinks={<HeaderLinks />}
-                    fixed
-                    changeColorOnScroll={{
-                        height: 200,
-                        color: "white"
-                    }}
-                    {...rest}
-                />
+                <AppAppBar/>
                 <Parallax small filter image={movie.posterLink} style={{ filter: "blur(8px)" }} />
                 <div className={classNames(classes.main, classes.mainRaised)}>
                     <div>
