@@ -18,7 +18,7 @@ const BHPageStyle =
   
   paper: {
       backgroundColor: '#FFFFFF',
-  },
+    },
 
   description: {
     margin: "1.071rem auto 0",
@@ -57,8 +57,8 @@ const BHPageStyle =
   },
 
   title2: {
-      marginTop: "100px",
-      marginBottom: "30px",
+      marginTop: "80px",
+      marginBottom: "25px",
       minHeight: "32px",
       textDecoration: "none",
       color: "#FFFFFF",
@@ -69,6 +69,13 @@ const BHPageStyle =
     textDecoration: "none",
     color: "#C5C5C5",
     marginBottom: '20px',
+},
+subtext2: {
+    minHeight: "32px",
+    textDecoration: "none",
+    color: "#C5C5C5",
+    marginBottom: '15px',
+    paddingBottom: '100px',
 },
 
   socials: {
@@ -86,7 +93,12 @@ const BHPageStyle =
   navWrapper: {
     margin: "20px auto 50px auto",
     textAlign: "center"
-  }
+  },
+
+  table: {
+    marginLeft: '40px',
+    marginRight: '40px',
+  },
 };
 
 export default BHPageStyle;

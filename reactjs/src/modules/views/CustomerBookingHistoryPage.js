@@ -44,46 +44,40 @@ function createData(id, orderid, date, name, shipTo, paymentMethod, amount) {
     return         {id, orderid, date, name, shipTo, paymentMethod, amount};
 }
 
-// NEED TO POPULATE W/ BACKEND INFO
-const rows = [
-    createData(0, '123', '16 Mar, 2019', 'Elvis Presley', 'Tupelo, MS', 'VISA ⠀•••• 3719', 312.44),
-    createData(1, '234', '16 Mar, 2019', 'Paul McCartney', 'London, UK', 'VISA ⠀•••• 2574', 866.99),
-    createData(2, '345', '16 Mar, 2019', 'Tom Scholz', 'Boston, MA', 'MC ⠀•••• 1253', 100.81),
-    createData(3, '456', '16 Mar, 2019', 'Michael Jackson', 'Gary, IN', 'AMEX ⠀•••• 2000', 654.39),
-    createData(4, '678', '15 Mar, 2019', 'Bruce Springsteen', 'Long Branch, NJ', 'VISA ⠀•••• 5919', 212.79),
-];
 
 function preventDefault(event) {
     event.preventDefault();
 }
 
 
+// Sample data for testing
+const orderz = [
+    createData(0, '425', '16 Sept, 2019', 'Avengers: Endgame', 'AMC', 'Package 1', 30.44),
+    createData(1, '234', '16 July, 2019', 'The Wolf of Snow Hollow', 'Carmike', '-', 18.99),
+    createData(2, '345', '16 May, 2019', 'Target Number One', 'AMC', '-', 15.99),
+    createData(3, '456', '16 Apr, 2019', 'The Silencing', 'AMC', 'Package 3', 30.39),
+    createData(4, '678', '15 Mar, 2019', 'Behind You', 'Carmike', '-', 18.99),
+];
 
 
 // Create page
 export default function BookingHistoryPage(props) 
 {
   // Bring in data from backend
-  const [coupons, setCoupons] = React.useState([]);
+  const [orders, setOrders] = React.useState([]);
   const fetchData = React.useCallback(() => 
   {
-    // need to include proper endpoint here, should be working though.
       axios({
         "method": "GET",
-        "url": 'http://localhost:8080/api/home/movies'
+        "url": 'http://localhost:8080/api/home/movies'     // need to include proper endpoint here, should be working though.
       })
       .then((response) => {
         
         const i = 0;
         for(i = 0; i < response.data.length; i++)
         {
-          coupons[i] = 
-          {
-            url: response.data[i].url,
-            title: response.data[i].title,
-            description: response.data[i].description,
-            couponCode: response.data[i].couponCode,
-          }
+          orders[i] = createData(response.data[i].id, response.data[i].orderid, response.data[i].date, response.data[i].name,
+                                 response.data[i].shipTo, response.data[i].paymentMethod, response.data[i].amount);
         }
       })
       .catch((error) => {
@@ -179,6 +173,7 @@ export default function BookingHistoryPage(props)
 
             {/* Order History Table */}
             <Grid item xs={12}>
+                <div className={classes.table}>
                 <Paper className={classes.paper}>
                     <Table size="small">
                         <TableHead>
@@ -192,20 +187,26 @@ export default function BookingHistoryPage(props)
                             </TableRow>
                         </TableHead>
                         <TableBody>
-                            {rows.map((row) => (
-                                <TableRow key={row.id}>
-                                    <TableCell>{row.orderid}</TableCell>
-                                    <TableCell>{row.date}</TableCell>
-                                    <TableCell>{row.name}</TableCell>
-                                    <TableCell>{row.shipTo}</TableCell>
-                                    <TableCell>{row.paymentMethod}</TableCell>
-                                    <TableCell align="right">{row.amount}</TableCell>
+                            {orders.map((order) => (
+                                <TableRow key={order.id}>
+                                    <TableCell>{order.orderid}</TableCell>
+                                    <TableCell>{order.date}</TableCell>
+                                    <TableCell>{order.name}</TableCell>
+                                    <TableCell>{order.shipTo}</TableCell>
+                                    <TableCell>{order.paymentMethod}</TableCell>
+                                    <TableCell align="right">{order.amount}</TableCell>
                                 </TableRow>
                             ))}
                         </TableBody>
                     </Table>
                 </Paper>
+                </div>
             </Grid>
+            <div>
+              <Typography className={classes.subtext2} align="center" variant="h5">
+                {''}
+              </Typography>
+            </div>
  
           </div>
           {/* End main raised page */}
