@@ -35,14 +35,14 @@ function App() {
         <Route path="/callback" component={CallbackPage}/>
         <Route path="/dashboard" component={DashboardPage}/>
         <Route path='/movies' exact={true}><MoviesPage/></Route>
-        <Route path= '/managerView' exact={true}><ManagerView/></Route>
-        <Route path= '/manageMovies' exact={true}><ManageMovies/></Route>
-        <Route path= '/manageSnacks' exact={true}><ManageSnacks/></Route>
-        <Route path= '/customerChat' exact={true}><CustomerChat/></Route>
-        <Route path= '/transactionPage' exact={true}><TransactionPage/></Route>
-        <Route path= '/reviewPage' exact={true}><ReviewPage/></Route>
-        <Route path= '/customerRequests' exact={true}><Requests/></Route>
-        <Route path= '/payment' exact={true}><Payment/></Route>
+        <Route path= 'manager/managerView' exact={true}><ManagerView/></Route>
+        <Route path= 'managerView/manageMovies' exact={true}><ManageMovies/></Route>
+        <Route path= 'managerView/manageSnacks' exact={true}><ManageSnacks/></Route>
+        <Route path= 'managerView/customerChat' exact={true}><CustomerChat/></Route>
+        <Route path= 'managerView/transactionPage' exact={true}><TransactionPage/></Route>
+        <Route path= 'managerView/reviewPage' exact={true}><ReviewPage/></Route>
+        <Route path= 'managerView/customerRequests' exact={true}><Requests/></Route>
+        <Route path= 'managerView/payment' exact={true}><Payment/></Route>
       </Router>
        </Auth>
   );

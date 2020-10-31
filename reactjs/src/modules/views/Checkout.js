@@ -20,17 +20,19 @@ export default function Checkout() {
             required
             id="cardNumber"
             label="Card number"
+            inputProps={{ maxLength: 16 }}
             fullWidth
             autoComplete="cc-number"
           />
         </Grid>
         <Grid item xs={12} md={6}>
-          <TextField required id="expDate" label="Expiry date" fullWidth autoComplete="cc-exp" />
+          <TextField required id="expDate" label="Expiry date (mm/yy)" inputProps={{ maxLength: 5 }} fullWidth autoComplete="cc-exp" />
         </Grid>
         <Grid item xs={12} md={6}>
           <TextField
             required
             id="cvv"
+            inputProps={{ maxLength: 3 }}
             label="CVV"
             helperText="Last three digits on signature strip"
             fullWidth
