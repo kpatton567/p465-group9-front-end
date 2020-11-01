@@ -74,6 +74,9 @@ const useStyles = makeStyles(styles);
   };
 
 
+// Sample data
+const couponz = [1,2,3,4];
+
 
 var token = localStorage.getItem(ACCESS_TOKEN_NAME);
 
@@ -202,7 +205,7 @@ export default function RewardsPage(props)
               <main>
                 <Container style={cardGrid} maxWidth="lg">
                   <Grid container spacing={4}>
-                    {coupons.map((coupon) => (
+                    {couponz.map((coupon) => (
                       <Grid item key={coupon} xs={12} sm={6} md={2} lg={3}>
 
                         {/* Create each card using array from backend */}
@@ -221,7 +224,7 @@ export default function RewardsPage(props)
                               {/* {coupon.title} */}
                             </Typography>
                             <Typography>
-                              {"Test Description... Test test test"}
+                              {"Test Description... The image on this tile will be an image associated with the coupon code"}
                               {/* {coupon.description} */}
                             </Typography>
                           </CardContent>

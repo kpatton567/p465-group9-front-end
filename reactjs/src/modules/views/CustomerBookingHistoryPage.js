@@ -42,7 +42,7 @@ function preventDefault(event) {
 
 
 // Sample data for testing
-const snackz1 = ['Pizza', 'Coke', 'Chocolate'];
+const snackz1 = ['Pizza, ', 'Coca-Cola, ', 'Chocolate'];
 const orderz = [
     createData('1', '16 Sept, 2019', 'Avengers: Endgame', 'AMC', snackz1, 30.44),
 ];
@@ -187,7 +187,7 @@ export default function BookingHistoryPage(props)
                             </TableRow>
                         </TableHead>
                         <TableBody>
-                            {orders.map((order) => (
+                            {orderz.map((order) => (
                                 <TableRow key={order.paymentId}>
                                     <TableCell>{order.paymentId}</TableCell>
                                     <TableCell>{order.date}</TableCell>
