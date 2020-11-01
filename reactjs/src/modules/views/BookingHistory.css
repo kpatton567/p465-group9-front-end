@@ -6,27 +6,25 @@
     background-blend-mode: luminosity;
  
 }
-.bg-image {  
-    /* Full height */
-    
-  
-  }
-  .bg-text {
-    /* background-color: rgb(0,0,0); Fallback color */
-    background-color: rgba(0,0,0, 0.4); 
-    /* Black w/opacity/see-through */
-    color: white;
-    font-weight: bold;
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    z-index: 2;
-    text-align: center;
-  }
-  * {
+
+.bg-text {
+  /* background-color: rgb(0,0,0); Fallback color */
+  background-color: rgba(0,0,0, 0.4); 
+  /* Black w/opacity/see-through */
+  color: white;
+  font-weight: bold;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 2;
+  text-align: center;
+}
+* {
     box-sizing: border-box;
   }
-  body, html {
-    height: 100%;
-  }
+   
+body, html 
+{
+  height: 100%;
+}

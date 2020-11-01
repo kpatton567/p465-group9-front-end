@@ -24,11 +24,11 @@ import './MovieBooking.css';
 import AppFooter from './AppFooter';
 import axios from 'axios';
 import Parallax from "../components/Parallax.js";
-import  { apiVariables } from '../../environmentVariables';
 import classNames from "classnames";
 import GridContainer from "../components/GridContainer.js";
 import GridItem from "../components/GridItem.js";
 import { useAuth0 } from '@auth0/auth0-react';
+import {apiVariables} from '../../APIConstants';
 
 
 

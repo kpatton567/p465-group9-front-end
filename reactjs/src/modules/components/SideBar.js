@@ -28,7 +28,6 @@ import  { apiVariables } from '../../APIConstants';
 import GridContainer from "../components/GridContainer.js";
 import GridItem from "../components/GridItem.js";
 import { Chip, Box } from '@material-ui/core'
-import { ChipSet } from '@material/react-chips';
 
 import theme from "../theme";
 import CancelIcon from '@material-ui/icons/Cancel';

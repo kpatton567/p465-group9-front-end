@@ -1,12 +1,14 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { withStyles } from '@material-ui/core/styles';
+import { Redirect } from "react-router-dom";
+import Profile from "./Profile";
 import Container from '@material-ui/core/Container';
 import Typography from '../components/Typography';
 import Link from '@material-ui/core/Link';
 import ButtonBase from '@material-ui/core/ButtonBase';
 import axios from 'axios';
-import  { apiVariables } from '../../environmentVariables';
+import  { apiVariables } from '../../APIConstants';
 
 
 // import PostsList from "../../PostsList";
@@ -44,7 +46,6 @@ const styles = (theme) => ({
       border: '4px solid currentColor',
     },
   },
-
   // Button on image
   imageButton: {
     position: 'absolute',
@@ -57,7 +58,6 @@ const styles = (theme) => ({
     justifyContent: 'center',
     color: theme.palette.common.white,
   },
-
   // Image
   imageSrc: {
     position: 'absolute',
@@ -68,7 +68,6 @@ const styles = (theme) => ({
     backgroundSize: 'cover',
     backgroundPosition: 'center 60%',
   },
-
   imageBackdrop: {
     position: 'absolute',
     left: 0,
@@ -79,13 +78,11 @@ const styles = (theme) => ({
     opacity: 0.5,
     transition: theme.transitions.create('opacity'),
   },
-
   // Text on each panel
   imageTitle: {
     position: 'relative',
     padding: `${theme.spacing(2)}px ${theme.spacing(4)}px 14px`,
   },
-
   // Line below text on each panel
   imageMarked: {
     height: 3,
@@ -96,10 +93,8 @@ const styles = (theme) => ({
     left: 'calc(50% - 9px)',
     transition: theme.transitions.create('opacity'),
   },
-
   h5: {
     marginTop: theme.spacing(2),
-   
   },
 });
 
@@ -108,22 +103,23 @@ function CreateUrl(image)
 {
   var mov = "/movieBooking/"
   var res = mov.concat(image);
-
   return res;
 }
 
+
 // Movie panels
-function ProductCategories(props) {
+function ProductCategories(props) 
+{
   const { classes } = props;
   const [images, setImages] = React.useState([]);
   const fetchData = React.useCallback(() => {
     axios({
       "method": "GET",
-      "url": apiVariables.apiUrl +'/api/home/movies'
+      "url": 'http://localhost:8080/api/home/movies'
     })
       .then((response) => {
         // setImages(response.data)
-        setImages([...images, 
+        setImages([...images,
           {
             url: response.data[0].posterLink,
             title: response.data[0].title,
@@ -178,7 +174,6 @@ function ProductCategories(props) {
             width: '33%',
             id: '9',
           }
-          
       ,]);
         // console.log(response.data);
       })
@@ -189,25 +184,21 @@ function ProductCategories(props) {
   React.useEffect(() => {
     fetchData()
   }, [fetchData])
-
   return (
     // Makes the background entirely black
     <Container
-      className={classes.root} 
+      className={classes.root}
       component="section"
       maxWidth="xl"
     >
-      <Container 
-        className={classes.root} 
+      <Container
+        className={classes.root}
         component="section"
       >
-    
         {/* Big text above movie panels */}
         <Typography variant="h4" marked="center" align="center" component="h2" className={classes.root}>
           {'Check out these highly rated options'}
         </Typography>
-
-
         {/* Do the following for each image panel (map) */}
         <div className={classes.images}>
           {images.map((image) => (
@@ -241,7 +232,6 @@ function ProductCategories(props) {
             </ButtonBase>
           ))}
         </div>
-
         {/* Link to more movies below panels */}
         <Typography variant="h4" align="center" component="h2" className={classes.h5}>
         <Link
@@ -251,7 +241,7 @@ function ProductCategories(props) {
             marked="center"
             href="/movies"
             className={classes.root}
-          >          
+          >
             {'Click here to view more'}
           </Link>
         </Typography>
@@ -259,9 +249,7 @@ function ProductCategories(props) {
     </Container>
   );
 }
-
 ProductCategories.propTypes = {
   classes: PropTypes.object.isRequired,
 };
-
 export default withStyles(styles)(ProductCategories);

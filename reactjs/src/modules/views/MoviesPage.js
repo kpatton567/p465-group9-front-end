@@ -14,7 +14,7 @@ import AppAppBar from './AppAppBar';
 import Typography from '../components/Typography';
 import axios from 'axios';
 import theme from '../theme';
-import  { apiVariables } from '../../environmentVariables';
+import  { apiVariables } from '../../APIConstants';
 
 const icon = {
   marginRight: theme.spacing(2),
