@@ -1,4 +1,5 @@
 import React from "react";
+import {ACCESS_TOKEN_NAME, apiVariables} from '../../apiConstants';
 // nodejs library that concatenates classes
 import classNames from "classnames";
 // @material-ui/core components
@@ -74,6 +75,8 @@ const useStyles = makeStyles(styles);
 
 
 
+var token = localStorage.getItem(ACCESS_TOKEN_NAME);
+
 export default function RewardsPage(props) 
 {
   // Bring in data from backend
@@ -83,7 +86,8 @@ export default function RewardsPage(props)
     // need to include proper endpoint here, should be working though.
       axios({
         "method": "GET",
-        "url": 'http://localhost:8080/api/home/movies'
+        "url": apiVariables.apiUrl + '/api/home/movies',
+        "authorization": 'Bearer ' + token,
       })
       .then((response) => {
         

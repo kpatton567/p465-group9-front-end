@@ -2,19 +2,13 @@ import React from "react";
 import clsx from 'clsx';
 import { Row, Col } from 'reactstrap';
 import axios from 'axios';
+import {ACCESS_TOKEN_NAME, apiVariables} from '../../apiConstants';
 // nodejs library that concatenates classes
 import classNames from "classnames";
 // @material-ui/core components
 import { makeStyles } from "@material-ui/core/styles";
 import { useAuth0 } from '@auth0/auth0-react';
-import CssBaseline from '@material-ui/core/CssBaseline';
 import Grid from '@material-ui/core/Grid';
-import Card from '@material-ui/core/Card';
-import Container from '@material-ui/core/Container';
-import CardContent from '@material-ui/core/CardContent';
-import CardMedia from '@material-ui/core/CardMedia';
-import CardActions from '@material-ui/core/CardActions';
-import Link from '@material-ui/core/Link';
 import Paper from '@material-ui/core/Paper';
 import Table from '@material-ui/core/Table';
 import TableBody from '@material-ui/core/TableBody';
@@ -25,23 +19,20 @@ import TableRow from '@material-ui/core/TableRow';
 // core components
 import './BookingHistory';
 import Typography from '../components/Typography';
-import Button from "../components/CustomButton";
 import GridContainer from "../components/GridContainer.js";
 import GridItem from "../components/GridItem.js";
 import Parallax from "../components/Parallax.js";
 import styles from "./BookingHistPageStyles.js";
 import AppFooter from '../../modules/views/AppFooter';
 import AppAppBar from "./AppAppBar";
-import theme from '../theme';
-import SalesSummary from './SalesSummary';
-import Feeds from './Feeds';
 
 
 const useStyles = makeStyles(styles);
 
 // Generate Order Data
-function createData(id, orderid, date, name, shipTo, paymentMethod, amount) {
-    return         {id, orderid, date, name, shipTo, paymentMethod, amount};
+function createData(paymentId, date, movieName, theaterName, snacks, total) 
+{
+    return         {paymentId, date, movieName, theaterName, snacks, total};
 }
 
 
@@ -50,15 +41,15 @@ function preventDefault(event) {
 }
 
 
+
 // Sample data for testing
+const snackz1 = ['Pizza', 'Coke', 'Chocolate'];
 const orderz = [
-    createData(0, '425', '16 Sept, 2019', 'Avengers: Endgame', 'AMC', 'Package 1', 30.44),
-    createData(1, '234', '16 July, 2019', 'The Wolf of Snow Hollow', 'Carmike', '-', 18.99),
-    createData(2, '345', '16 May, 2019', 'Target Number One', 'AMC', '-', 15.99),
-    createData(3, '456', '16 Apr, 2019', 'The Silencing', 'AMC', 'Package 3', 30.39),
-    createData(4, '678', '15 Mar, 2019', 'Behind You', 'Carmike', '-', 18.99),
+    createData('1', '16 Sept, 2019', 'Avengers: Endgame', 'AMC', snackz1, 30.44),
 ];
 
+
+var token = localStorage.getItem(ACCESS_TOKEN_NAME);
 
 // Create page
 export default function BookingHistoryPage(props) 
@@ -69,15 +60,25 @@ export default function BookingHistoryPage(props)
   {
       axios({
         "method": "GET",
-        "url": 'http://localhost:8080/api/home/movies'     // need to include proper endpoint here, should be working though.
+        "url": apiVariables.apiUrl + '/api/customer/payment_history',
+        "authorization": 'Bearer ' + token,
       })
       .then((response) => {
         
-        const i = 0;
+        var i = 0;
+        var j = 0;
+
         for(i = 0; i < response.data.length; i++)
         {
-          orders[i] = createData(response.data[i].id, response.data[i].orderid, response.data[i].date, response.data[i].name,
-                                 response.data[i].shipTo, response.data[i].paymentMethod, response.data[i].amount);
+            // Create an array with all of the snacks from each order (to be passed to createData)
+            const snackz = [];
+            for (j = 0; j < response.data[i].snacks.length; j++)
+            {
+                snackz[j] = response.data[i].snacks[j];
+            }
+
+            orders[i] = createData(response.data[i].paymentId, response.data[i].date, response.data[i].movieName,
+                                   response.data[i].theaterName, snackz, response.data[i].total);
         }
       })
       .catch((error) => {
@@ -181,20 +182,20 @@ export default function BookingHistoryPage(props)
                                 <TableCell>Order Number</TableCell>
                                 <TableCell>Date</TableCell>
                                 <TableCell>Movie Name</TableCell>
-                                <TableCell>Theatre</TableCell>
+                                <TableCell>Theatre Name</TableCell>
                                 <TableCell>Snacks</TableCell>
                                 <TableCell align="right">Total Bill</TableCell>
                             </TableRow>
                         </TableHead>
                         <TableBody>
                             {orders.map((order) => (
-                                <TableRow key={order.id}>
-                                    <TableCell>{order.orderid}</TableCell>
+                                <TableRow key={order.paymentId}>
+                                    <TableCell>{order.paymentId}</TableCell>
                                     <TableCell>{order.date}</TableCell>
-                                    <TableCell>{order.name}</TableCell>
-                                    <TableCell>{order.shipTo}</TableCell>
-                                    <TableCell>{order.paymentMethod}</TableCell>
-                                    <TableCell align="right">{order.amount}</TableCell>
+                                    <TableCell>{order.movieName}</TableCell>
+                                    <TableCell>{order.theaterName}</TableCell>
+                                    <TableCell>{order.snacks}</TableCell>
+                                    <TableCell align="right">{order.total}</TableCell>
                                 </TableRow>
                             ))}
                         </TableBody>
