@@ -14,8 +14,7 @@ import SupervisorAccountIcon from '@material-ui/icons/SupervisorAccount';
 import AppBar from '../components/AppBar';
 import Toolbar, { styles as toolbarStyles } from '../components/Toolbar';
 import Home from '../../Home';
-import { apiVariables } from '../../APIConstants';
-
+import { apiVariables, ACCESS_TOKEN_NAME } from '../../APIConstants';
 const useStyles = makeStyles((theme) => ({
     title: {
         fontSize: 24,
@@ -24,15 +23,12 @@ const useStyles = makeStyles((theme) => ({
     toolbar: {
         justifyContent: 'space-between',
     },
-
     left: {
         flex: 1,
     },
-
     leftLinkActive: {
         color: theme.palette.common.white,
     },
-
     right: {
         flex: 1,
         display: 'flex',
@@ -53,31 +49,28 @@ const useStyles = makeStyles((theme) => ({
         color: 'green',
     }
 }));
-    
-
 const IsLoading = () => {
     const { user, isAuthenticated } = useAuth0();
     const classes = useStyles();
     const [open, setOpen] = React.useState(true);
+    const [oldUser, setOldUser] = React.useState(false);
     const handleClose = () => {
         setOpen(false);
     };
-    
     if(user){
-        console.log(user);
+        // console.log(user);
         axios({
         "method": "POST",
         "url": apiVariables.apiUrl +'/api/auth/check_user?userId=' + user.sub.substring(6)
         })
         .then((response) => {
-            console.log(response.data)
-            // setOldUser(response.data)
+            //console.log(response.data)
+            setOldUser(response.data)
         })
         .catch((error) => {
             console.log(error)
         })
     }
-        
     const registerUser = (userRole) => {
     var role = userRole;
     axios({
@@ -91,10 +84,12 @@ const IsLoading = () => {
         .catch((error) => {
             console.log(error)
         })
-
    };
     return (
         isAuthenticated && (
+            oldUser ?
+            <div>{window.location.href = "/home"}</div>
+            :
             <div>
                 {/* <JSONPretty data={user} /> */}
                 <div className={classes.right}>
@@ -121,5 +116,4 @@ const IsLoading = () => {
         )
     )
 }
-
 export default IsLoading
