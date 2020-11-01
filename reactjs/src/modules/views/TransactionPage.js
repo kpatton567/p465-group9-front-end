@@ -123,7 +123,13 @@ function preventDefault(event) {
   event.preventDefault();
 }
 
-
+axios.get('http://localhost:8080/api/manage/transaction_history', payload)
+      .then(function (response) {
+        
+      })
+      .catch(function (error) {
+        console.log(error);
+      });
 export default function TransactionPage() {
   const [state, setState] = useState({
     movieTitle: "",
