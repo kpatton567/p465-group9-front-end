@@ -14,6 +14,7 @@ import AppAppBar from './AppAppBar';
 import Typography from '../components/Typography';
 import axios from 'axios';
 import theme from '../theme';
+import  { apiVariables } from '../../environmentVariables';
 
 const icon = {
   marginRight: theme.spacing(2),
@@ -79,7 +80,7 @@ class MoviesPage extends Component {
 
   componentDidMount() {
     const fetchMovies = async () => {
-      const res = await axios.get('http://localhost:8080/api/home/movies');
+      const res = await axios.get(apiVariables.apiUrl+'/api/home/movies');
       this.setState({ cards: res.data })
     };
     fetchMovies();

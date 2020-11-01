@@ -24,6 +24,7 @@ import './MovieBooking.css';
 import AppFooter from './AppFooter';
 import axios from 'axios';
 import Parallax from "../components/Parallax.js";
+import  { apiVariables } from '../../environmentVariables';
 import classNames from "classnames";
 import GridContainer from "../components/GridContainer.js";
 import GridItem from "../components/GridItem.js";
@@ -119,7 +120,7 @@ export default function MovieBooking(props) {
     const fetchData = React.useCallback(() => {
         axios({
             "method": "GET",
-            "url": 'http://localhost:8080/api/home/movie/' + props.match.params.movie,
+            "url": apiVariables.apiUrl + '/api/home/movie/' + props.match.params.movie,
         })
             .then((response) => {
                 setMovie(response.data)
@@ -193,7 +194,7 @@ export default function MovieBooking(props) {
                                                     title={movie.title}
                                                 />
                                                 <CardContent>
-                                                    <Typography variant="body2" color="textSecondary" component="p" disableSpacing>
+                                                    <Typography variant="body2" color="textSecondary" component="p">
                                                         <List className={classes.listRoot}>
                                                             <ListItem>
                                                                 <ListItemAvatar>

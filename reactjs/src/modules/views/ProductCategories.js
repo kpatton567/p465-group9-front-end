@@ -6,6 +6,7 @@ import Typography from '../components/Typography';
 import Link from '@material-ui/core/Link';
 import ButtonBase from '@material-ui/core/ButtonBase';
 import axios from 'axios';
+import  { apiVariables } from '../../environmentVariables';
 
 
 // import PostsList from "../../PostsList";
@@ -118,7 +119,7 @@ function ProductCategories(props) {
   const fetchData = React.useCallback(() => {
     axios({
       "method": "GET",
-      "url": 'http://localhost:8080/api/home/movies'
+      "url": apiVariables.apiUrl +'/api/home/movies'
     })
       .then((response) => {
         // setImages(response.data)

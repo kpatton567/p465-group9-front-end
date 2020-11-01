@@ -104,12 +104,6 @@ export default function ProfilePage(props) {
                     </div>
                     <div className={classes.name}>
                       <h3 className={classes.title}>{user.nickname}</h3>
-                      {/* <h6>DESIGNER</h6> */}
-
-                      {/* <Button justIcon link className={classes.margin5}>
-                        <i className={"fab fa-twitter"} />
-                        test
-                    </Button> */}
                     </div>
                   </div>
                 </GridItem>

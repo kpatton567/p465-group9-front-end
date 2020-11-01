@@ -67,7 +67,11 @@ function ProductHero(props)
         size="large"
         className={classes.button}
         component="a"
-        onClick={()=> loginWithRedirect()}
+        onClick={()=> 
+          loginWithRedirect({
+            screen_hint: "signup",
+          })}
+        
       >
         {'SIGN UP'}
       </Button>

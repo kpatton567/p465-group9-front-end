@@ -21,6 +21,7 @@ import Grid from '@material-ui/core/Grid';
 import Paper from '@material-ui/core/Paper';
 import Link from '@material-ui/core/Link';
 import MenuIcon from '@material-ui/icons/Menu';
+import  { apiVariables } from '../../environmentVariables';
 import ChevronLeftIcon from '@material-ui/icons/ChevronLeft';
 import NotificationsIcon from '@material-ui/icons/Notifications';
 import { mainListItems } from '../views/listItems';
@@ -161,7 +162,7 @@ export default function Dashboard() {
       "movieURL" :state.movieURL,
       "movieGenre" : state.movieGenre
     }
-      axios.post('http://localhost:8080/api/manage/add_movie', payload)
+      axios.post(apiVariables.apiUrl + '/api/manage/add_movie', payload)
         .then(function (response) {
           if (response.status === 200) {
             setState(prevState => ({

@@ -14,15 +14,21 @@ import Input from '@material-ui/core/Input';
 import FormControl from '@material-ui/core/FormControl';
 import Select from '@material-ui/core/Select';
 import axios from 'axios';
-import SeatPicker from "react-seat-picker";
 import Stepper from '@material-ui/core/Stepper';
 import Step from '@material-ui/core/Step';
 import StepLabel from '@material-ui/core/StepLabel';
+import MenuItem from '@material-ui/core/MenuItem';
+
+import ReviewOrder from '../views/ReviewOrder';
+import TextField from '@material-ui/core/TextField';
+import FormControlLabel from '@material-ui/core/FormControlLabel';
+import Checkbox from '@material-ui/core/Checkbox';
+import  { apiVariables } from '../../APIConstants';
 
 import GridContainer from "../components/GridContainer.js";
 import GridItem from "../components/GridItem.js";
 import { Chip, Box } from '@material-ui/core'
-import {ChipSet} from '@material/react-chips';
+import { ChipSet } from '@material/react-chips';
 
 import theme from "../theme";
 import CancelIcon from '@material-ui/icons/Cancel';
@@ -84,10 +90,10 @@ const useStyles = makeStyles((theme) => ({
     marginTop: theme.spacing(3),
     marginLeft: theme.spacing(1),
   },
-  boxStyle:{
-    border:"1px solid",
+  boxStyle: {
+    border: "1px solid",
     borderColor: theme.palette.secondary.light,
-    margin:theme.spacing(1)
+    margin: theme.spacing(1)
   }
 }));
 
@@ -95,84 +101,29 @@ export default function Sidebar(props) {
   const classes = useStyles();
   const { description, movieId } = props;
   const [open, setOpen] = React.useState(false);
+  const [ticketsopen, setTicketsOpen] = React.useState(false);
   const [response, setResponse] = React.useState([]);
-  const [selectedTheatre, setSelectedTheatre] = React.useState('');
-  const [value, setValue] = useState("Showtime");
+  const [theaters, setTheaters] = React.useState([]);
+  const [theaterId, setSelectedTheatre] = React.useState('');
+  const [snacks, setSnacks] = useState([]);
+  const [showtimes, setShowtimes] = useState([]);
   const [selectedShowtime, setSelectedShowtime] = React.useState('');
-  const [selectSeats, setSelectSeats] = React.useState(false);
+  const [selectedSnack, setSelectedSnack] = React.useState('');
   const [activeStep, setActiveStep] = React.useState(0);
-  const steps = ['Theatre and Showtimes', 'Preferred Seats', 'Payment details'];
-  const rows = [
-    [
-      { id: 1, number: 1 },
-      { id: 2, number: 2, tooltip: "Cost: 15$" },
-      null,
-      {
-        id: 3,
-        number: "3",
-        // isReserved: true,
-        orientation: "east",
-        // tooltip: "Reserved by Rogger"
-      },
-      { id: 4, number: "4", orientation: "west" },
-      null,
-      { id: 5, number: 5 },
-      { id: 6, number: 6 }
-    ],
-    [
-      {
-        id: 7,
-        number: 1,
-        // isReserved: true,
-        // tooltip: "Reserved by Matthias Nadler"
-      },
-      { id: 8, number: 2 },
-      null,
-      { id: 9, number: "3", orientation: "east" },
-      { id: 10, number: "4", orientation: "west" },
-      null,
-      { id: 11, number: 5 },
-      { id: 12, number: 6 }
-    ],
-    [
-      { id: 13, number: 1 },
-      { id: 14, number: 2 },
-      null,
-      { id: 15, number: 3, orientation: "east" },
-      { id: 16, number: "4", orientation: "west" },
-      null,
-      { id: 17, number: 5 },
-      { id: 18, number: 6 }
-    ],
-    [
-      { id: 19, number: 1, tooltip: "Cost: 25$" },
-      { id: 20, number: 2 },
-      null,
-      { id: 21, number: 3, orientation: "east" },
-      { id: 22, number: "4", orientation: "west" },
-      null,
-      { id: 23, number: 5 },
-      { id: 24, number: 6 }
-    ],
-    [
-      { id: 25, number: 1, isReserved: true },
-      { id: 26, number: 2, orientation: "east" },
-      null,
-      { id: 27, number: "3", isReserved: true },
-      { id: 28, number: "4", orientation: "west" },
-      null,
-      { id: 29, number: 5, tooltip: "Cost: 11$" },
-      { id: 30, number: 6, isReserved: true }
-    ]
-  ];
+  const steps = ['Theatres ','Showtimes' ,'Snacks'];
+  const PaymentSteps = ['Review Order', 'Checkout'];
+
+  
 
   const handleNext = () => {
     setActiveStep(activeStep + 1);
   };
 
-  const handleShowTimeClick = (showtime) => {
+  const handleSnackClick = (selectedSnack) =>{
+    setSelectedSnack(selectedSnack)
+  }
+  const handleShowTimeClick = (showtime) =>{
     setSelectedShowtime(showtime);
-    console.log(selectedShowtime);
   }
 
   const handleBack = () => {
@@ -182,12 +133,10 @@ export default function Sidebar(props) {
   const fetchData = React.useCallback(() => {
     axios({
       "method": "POST",
-      "url": 'http://localhost:8080/api/home/movie_showtimes?movieId=' + movieId,
+      "url": apiVariables.apiUrl + '/api/home/movie_showtimes?movieId=' + movieId,
     })
       .then((response) => {
-        // console.log(response.data)
-        setResponse(response.data)
-
+        setTheaters(response.data)
       })
       .catch((error) => {
         console.log(error)
@@ -202,74 +151,159 @@ export default function Sidebar(props) {
       case 0:
         return (
           <div>
-            
-            {response.map((item) =>
-              <Box className={classes.boxStyle}>
-                  <div>{item.theater.name}</div>
-                    <Grid item xs>
-                      <Grid container spacing={1}>
-                        <Grid item>
-                        <ChipSet
-                          choice
-                          // selectedChipIds={selectedShowtime}
-                          // handleSelect={(selectedShowtime) => setSelectedShowtime({selectedShowtime})}
-                        >
-                          {item.showtimes.map((showtime =>
-                          <Chip clickable id={showtime} label={showtime} onClick={ () => handleShowTimeClick(showtime) }/>
-                          ))}
-                        </ChipSet>
-                          
-                        </Grid>
-                      </Grid>
-                    </Grid>
-              </Box>
-            )}
+            <form className={classes.container}>
+              <FormControl className={classes.formControl}>
+              <InputLabel shrink id="demo-simple-select-placeholder-label-label">Theatre</InputLabel>
+
+              <Select
+          labelId="demo-simple-select-placeholder-label-label"
+          id="demo-simple-select-placeholder-label"
+          value={theaterId}
+          onChange={handleTheaterChange}
+          displayEmpty
+          className={classes.selectEmpty}
+        >
+          <MenuItem value=""><em>None</em></MenuItem>
+          {theaters.map((item) =>
+          <MenuItem key = {item.theaterId} value={item.theaterId}>{item.theaterName}</MenuItem>
+          )}
+          
+        </Select>
+               
+        </FormControl></form>
           </div>
         )
       case 1:
         return (
-          <SeatPicker
-            visible={selectSeats}
-            // addSeatCallback={this.addSeatCallback}
-            // removeSeatCallback={this.removeSeatCallback}
-            rows={rows}
-            maxReservableSeats={3}
-            alpha
-            visible
-            selectedByDefault
-            // loading={loading}
-            tooltipProps={{ multiline: true }}
-          />
+          <div>
+          {showtimes.map((showtime) => (
+            // <div>{snack.name}</div>
+             <Chip clickable id={showtime.showtime} label={showtime.showtime} onClick={() => handleShowTimeClick(showtime.showtime)}/>
+          ))}
+          </div>
         );
       case 2:
-        return <div>Payments</div>;
+        return <div>
+          {snacks.map((snack) => (
+            // <div>{snack.name}</div>
+             <Chip clickable id={snack.name} label={snack.name} onClick={() => handleSnackClick(snack.name)} />
+
+            ))}
+            {/* <SelectSnacks theaterId={theaterId}/> */}
+        </div>;
       default:
         throw new Error('Unknown step');
     }
   }
-
-  const handleTheatreChange = (event) => {
-    setSelectedTheatre(event.target.value);
-  };
+  function getPaymentStepContent(step) {
+    switch (step) {
+      case 0:
+      return (
+        <div>
+          <ReviewOrder/>
+        </div>
+      );
+      case 1:
+          return (
+          <React.Fragment>
+          <Typography variant="h6" gutterBottom>
+            Payment method
+          </Typography>
+          <Grid container spacing={3}>
+            <Grid item xs={12} md={6}>
+              <TextField required id="cardName" label="Name on card" fullWidth autoComplete="cc-name" />
+            </Grid>
+            <Grid item xs={12} md={6}>
+              <TextField
+                required
+                id="cardNumber"
+                label="Card number"
+                inputProps={{ maxLength: 16 }}
+                fullWidth
+                autoComplete="cc-number"
+              />
+            </Grid>
+            <Grid item xs={12} md={6}>
+              <TextField required id="expDate" label="Expiry date (mm/yy)" inputProps={{ maxLength: 5 }} fullWidth autoComplete="cc-exp" />
+            </Grid>
+            <Grid item xs={12} md={6}>
+              <TextField
+                required
+                id="cvv"
+                inputProps={{ maxLength: 3 }}
+                label="CVV"
+                helperText="Last three digits on signature strip"
+                fullWidth
+                autoComplete="cc-csc"
+              />
+            </Grid>
+            <Grid item xs={12}>
+              <FormControlLabel
+                control={<Checkbox color="secondary" name="saveCard" value="yes" />}
+                label="Remember credit card details for next time"
+              />
+            </Grid>
+          </Grid>
+        </React.Fragment>
+        )
+    }
+  }
   const handleTheatreChangeSetTimes = (item) => {
   }
   const handleClickOpen = () => {
     setOpen(true);
+  };
+  
+  const handleClickTicketsOpen = () => {
+    setTicketsOpen(true);
   };
 
   const handleClose = () => {
     setOpen(false);
     setActiveStep(0);
   };
-
-  const handleChange = () => {
-    console.log("test")
+  
+  const handleTicketsClose = () => {
+    setTicketsOpen(false);
+  };
+  const handlePreferences = () => {
+    console.log(selectedShowtime)
+    console.log(selectedSnack)
+    console.log(theaterId)
+    setActiveStep(activeStep + 1);
   }
 
-  const handleSelectSeats = () => {
-    setSelectSeats(true);
-  };
+  const handleTheaterChange = (event) => {
+    //console.log(event.target.value);
+    setSelectedTheatre(event.target.value);   
+    axios({
+      "method": "POST",
+      "url": apiVariables.apiUrl + '/api/home/movie_theater_showtimes?theaterId=' + event.target.value +'&movieId=' +movieId,
+      "crossdomain" : "true"
+    })
+      .then((response) => {
+          setShowtimes(response.data)
+         // console.log(response.data)
+      })
+      .catch((error) => {
+          console.log(error)
+    })
 
+    axios({
+      "method": "GET",
+      "url": apiVariables.apiUrl + '/api/home/snacks/' + event.target.value,
+    })
+      .then((response) => {
+         // console.log(response.data)
+          setSnacks(response.data)
+      })
+      .catch((error) => {
+          console.log(error)
+      })
+  }
+  const handlePayment = () => {
+    console.log("pay");
+  }
   return (
     <Grid item xs={12} md={4} className={classes.sidebarStyle}>
       <Paper elevation={0} className={classes.sidebarAboutBox}>
@@ -290,7 +324,7 @@ export default function Sidebar(props) {
                     )
                   },
                   {
-                    tabButton: "Show time",
+                    tabButton: "Theaters",
                     tabIcon: WatchLaterIcon,
                     tabContent: (
                       <GridContainer justify="center">
@@ -298,12 +332,9 @@ export default function Sidebar(props) {
                           <Button onClick={handleClickOpen} style={{ color: theme.palette.secondary.light }}>See availability</Button>
                           <Dialog disableBackdropClick disableEscapeKeyDown open={open} onClose={handleClose}>
                             {/* <DialogTitle>Choose your theatre</DialogTitle> */}
-
                             <Paper className={classes.paper}>
                               <CancelIcon onClick={handleClose} style={{ cursor: 'pointer', float: 'right', marginTop: '5px', width: '20px' }} />
-                              <Typography component="h1" variant="h4" align="center">
-                                Checkout
-                              </Typography>
+                             
                               <Stepper activeStep={activeStep} className={classes.stepper}>
                                 {steps.map((label) => (
                                   <Step key={label}>
@@ -315,12 +346,11 @@ export default function Sidebar(props) {
                                 {activeStep === steps.length ? (
                                   <React.Fragment>
                                     <Typography variant="h5" gutterBottom>
-                                      Thank you for your order.
-                </Typography>
+                                      Your preferences have been saved.
+                                    </Typography>
                                     <Typography variant="subtitle1">
-                                      Your order number is #2001539. We have emailed your order confirmation, and will
-                                      send you an update when your order has shipped.
-                </Typography>
+
+                                    </Typography>
                                   </React.Fragment>
                                 ) : (
                                     <React.Fragment>
@@ -331,43 +361,23 @@ export default function Sidebar(props) {
                                             Back
                     </Button>
                                         )}
+                                      
+                                       
                                         <Button
                                           variant="contained"
                                           color="primary"
-                                          onClick={handleNext}
+                                          onClick={activeStep === steps.length - 1 ? handlePreferences : handleNext}
                                           className={classes.button}
                                         >
-                                          {activeStep === steps.length - 1 ? 'Place order' : 'Next'}
+                                          {activeStep === steps.length - 1 ? 'Choose' : 'Next'}
                                         </Button>
-
                                       </div>
                                     </React.Fragment>
                                   )}
 
                               </React.Fragment>
                             </Paper>
-                            {/* <DialogActions>
-                              <Button onClick={handleClose} color="primary">
-                                Cancel
-          </Button>
-                              <Button onClick={handleSelectSeats} color="primary">
-                                SelectSeats
-          </Button>            <div style={{ marginTop: "100px" }}>
-                              <SeatPicker
-                                visible = {selectSeats}
-                                // addSeatCallback={this.addSeatCallback}
-                                // removeSeatCallback={this.removeSeatCallback}
-                                rows={rows}
-                                maxReservableSeats={3}
-                                alpha
-                                visible
-                                selectedByDefault
-                                // loading={loading}
-                                tooltipProps={{ multiline: true }}
-                              />
-                            </div> */}
 
-                            {/* </DialogActions> */}
                           </Dialog>
                         </GridItem>
                         <GridItem xs={12} sm={12} md={4}>
@@ -382,13 +392,59 @@ export default function Sidebar(props) {
                     tabIcon: AttachMoneyIcon,
                     tabContent: (
                       <GridContainer justify="center">
-                        <GridItem xs={12} sm={12} md={4}>
-
+                        <GridItem >
+                          <Button onClick={handleClickTicketsOpen} style={{ color: theme.palette.secondary.light }}>Book Tickets</Button>
+                          <Dialog disableBackdropClick disableEscapeKeyDown open={ticketsopen} onClose={handleClose}>
+                            {/* <DialogTitle>Choose your theatre</DialogTitle> */}
+                            <Paper className={classes.paper}>
+                              <CancelIcon onClick={handleTicketsClose} style={{ cursor: 'pointer', float: 'right', marginTop: '5px', width: '20px' }} />
+                              <Stepper activeStep={activeStep} className={classes.stepper}>
+                                {PaymentSteps.map((label) => (
+                                  <Step key={label}>
+                                    <StepLabel>{label}</StepLabel>
+                                  </Step>
+                                ))}
+                              </Stepper>
+                              <React.Fragment>
+                                {activeStep === PaymentSteps.length ? (
+                                  <React.Fragment>
+                                    <Typography variant="h5" gutterBottom>
+                                      Thank you for your order.
+                                    </Typography>
+                                    <Typography variant="subtitle1">
+                                    </Typography>
+                                  </React.Fragment>
+                                ) : (
+                                    <React.Fragment>
+                                      {getPaymentStepContent(activeStep)}
+                                      <div className={classes.buttons}>
+                                        {activeStep !== 0 && (
+                                          <Button onClick={handleBack} className={classes.button}>
+                                            Back
+                    </Button>
+                                        )}
+                                      
+                                       
+                                        <Button
+                                          variant="contained"
+                                          color="primary"
+                                          onClick={handlePayment}
+                                          className={classes.button}
+                                        >
+                                          {activeStep === steps.length - 1 ? 'Place Order' : 'Next'}
+                                        </Button>
+                                      </div>
+                                    </React.Fragment>
+                                  )}
+                              </React.Fragment>
+                             </Paper>
+                          </Dialog>
                         </GridItem>
                         <GridItem xs={12} sm={12} md={4}>
 
                         </GridItem>
                       </GridContainer>
+
                     )
                   }
                 ]}
@@ -396,7 +452,6 @@ export default function Sidebar(props) {
             </GridItem>
           </GridContainer>
         </Typography>
-        {/* <SelectSeats/> */}
       </Paper>
 
     </Grid>
