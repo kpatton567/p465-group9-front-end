@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, { useState } from 'react';
 import clsx from 'clsx';
 import { makeStyles } from '@material-ui/core/styles';
 import CssBaseline from '@material-ui/core/CssBaseline';
@@ -10,44 +10,20 @@ import List from '@material-ui/core/List';
 import Typography from '@material-ui/core/Typography';
 import Divider from '@material-ui/core/Divider';
 import IconButton from '@material-ui/core/IconButton';
-import FormButton from '.././form/FormButton';
-import Badge from '@material-ui/core/Badge';
+
 import Container from '@material-ui/core/Container';
+import ChevronLeftIcon from '@material-ui/icons/ChevronLeft';
+import NotificationsIcon from '@material-ui/icons/Notifications';
+import { mainListItems } from './listItems';
+import AppAppBar from './../views/AppAppBar';
 import FormFeedback from '.././form/FormFeedback';
 import RFTextField from '.././form/RFTextField';
 import { Field, Form, FormSpy } from 'react-final-form';
 import GridContainer from "../components/GridContainer.js";
 import Grid from '@material-ui/core/Grid';
-import Paper from '@material-ui/core/Paper';
-import Link from '@material-ui/core/Link';
-import MenuIcon from '@material-ui/icons/Menu';
-import  { apiVariables } from '../../APIConstants';
-import ChevronLeftIcon from '@material-ui/icons/ChevronLeft';
-import NotificationsIcon from '@material-ui/icons/Notifications';
-import { mainListItems } from '../views/listItems';
-import Chart from './Chart';
-import Deposits from './Deposits';
-import Orders from './Orders';
+import FormButton from '.././form/FormButton';
 import axios from 'axios';
-import Button from '@material-ui/core/Button';
-import TextField from '@material-ui/core/TextField';
-import AppAppBar from './../views/AppAppBar';
-
-function Copyright() {
-  return (
-    <Typography variant="body2" color="textSecondary" align="center">
-      {'Copyright © '}
-      <Link color="inherit" href="https://material-ui.com/">
-        Your Website
-      </Link>{' '}
-      {new Date().getFullYear()}
-      {'.'}
-    </Typography>
-  );
-}
-
-const drawerWidth = 240;
-
+const drawerWidth = 250;
 const useStyles = makeStyles((theme) => ({
   root: {
     display: 'flex',
@@ -88,7 +64,8 @@ const useStyles = makeStyles((theme) => ({
   },
   drawerPaper: {
     position: 'relative',
-    whiteSpace: 'nowrap',
+    backgroundColor: '#363636',
+    // whiteSpace: 'nowrap',
     width: drawerWidth,
     transition: theme.transitions.create('width', {
       easing: theme.transitions.easing.sharp,
@@ -117,7 +94,8 @@ const useStyles = makeStyles((theme) => ({
     paddingBottom: theme.spacing(4),
   },
   paper: {
-    padding: theme.spacing(2),
+    padding: theme.spacing(1),
+    backgroundColor: '#363636',
     display: 'flex',
     overflow: 'auto',
     flexDirection: 'column',
@@ -126,8 +104,20 @@ const useStyles = makeStyles((theme) => ({
     height: 240,
   },
 }));
-
-export default function Dashboard() {
+export default function ManageMovies() {
+  const [movieTitle, setmovieTitle] = React.useState('');
+  const [movieDesc, setmovieDesc] = React.useState('');
+  const [movieGenre, setmovieGenre] = React.useState('');
+  const [movieURL, setmovieURL] = React.useState('');
+  const handleChange = (e) => {
+    // const { id, value } = e.target
+    console.log(e.target.value)
+    // setmovieTitle(e.target.value)
+  }
+  const handleSubmit = () => {
+    setSaved(true);
+  };
+  const [sent, setSaved] = React.useState(false);
   const classes = useStyles();
   const [open, setOpen] = React.useState(true);
   const handleDrawerOpen = () => {
@@ -136,51 +126,31 @@ export default function Dashboard() {
   const handleDrawerClose = () => {
     setOpen(false);
   };
-  const fixedHeightPaper = clsx(classes.paper, classes.fixedHeight);
-  const [state, setState] = useState({
-    movieTitle: "",
-    movieDesc: "",
-    movieURL: "",
-    movieGenre: ""
-  })
-  const [sent, setSaved] = React.useState(false);
-  const handleChange = (e) => {
-    const { id, value } = e.target
-    setState(prevState => ({
-      ...prevState,
-      [id]: value
-    }))
-  }
-  const handleSubmit = () => {
-    setSaved(true);
-  };
   const handleSubmitClick = (e) => {
     e.preventDefault();
     const payload = {
-      "movieTitle": state.movieTitle,
-      "movieDesc": state.movieDesc,
-      "movieURL" :state.movieURL,
-      "movieGenre" : state.movieGenre
+      "movieTitle": movieTitle,
+      "movieDesc": movieDesc,
+      "movieURL": movieURL,
+      "movieGenre": movieGenre
     }
-      axios.post(apiVariables.apiUrl + '/api/manage/add_movie', payload)
-        .then(function (response) {
-          if (response.status === 200) {
-            setState(prevState => ({
-              ...prevState,
-              'successMessage': 'Login successful. Redirecting to home page..'
-            }))
-            console.log(response.data)
-          }
-        })
-        .catch(function (error) {
-          console.log(error);
-        });
-    }
-
+    axios.post('http://localhost:8080/api/manage/add_movie', payload)
+      .then(function (response) {
+        
+      })
+      .catch(function (error) {
+        console.log(error);
+      });
+  }
+  const fixedHeightPaper = clsx(classes.paper, classes.fixedHeight);
   return (
     <div className={classes.root}>
       <CssBaseline />
-      <AppAppBar/>
+      <AppBar position="absolute" className={clsx(classes.appBar, open && classes.appBarShift)}>
+        <Toolbar className={classes.toolbar}>
+          <AppAppBar />
+        </Toolbar>
+      </AppBar>
       <Drawer
         variant="permanent"
         classes={{
@@ -188,112 +158,97 @@ export default function Dashboard() {
         }}
         open={open}
       >
-        {/* <div className={classes.toolbarIcon}>
+        <div className={classes.toolbarIcon}>
           <IconButton onClick={handleDrawerClose}>
             <ChevronLeftIcon />
           </IconButton>
-        </div> */}
+        </div>
         <Divider />
         <List>{mainListItems}</List>
         <Divider />
-        
       </Drawer>
-      <main className={classes.content}>
+      <main className={classes.content}
+        style={{ background: '#808080' }}>
         <div className={classes.appBarSpacer} />
         <Container maxWidth="lg" className={classes.container}>
-          <Grid container spacing={3}>
-            
-            {/* Recent Orders */}
-            <Grid item xs={12}>
-              <Paper className={classes.paper}>
-                        {/* <Container maxWidth="sm" className={classes.container}
-                   style = {{backgroundColor : '363636'}}> */}
-          <Container>
-          <Form onSubmit={handleSubmit} subscription={{ submitting: true }} >
-                  {({ handleSubmit2, submitting }) => (
-                    <form onSubmit={handleSubmit2} className={classes.form} noValidate >
-                      <GridContainer justify="center" spacing={2}maxWidth = "sm">
-                      <Grid container spacing={2}>
-                        <Grid item xs={6}>
-                          <Field
-                            autoFocus
-                            component={RFTextField}
-                            id="movieTitle"
-                            name="movieTitle"
-                            label="Movie Title"
-                            value={state.movieTitle}
-                            onChange={handleChange}
-                            fullWidth
-                            required
-                          />
-                        </Grid>
-                        <Grid item xs={6}>
-                          <Field
-                            component={RFTextField}
-                            id="movieDesc"
-                            name="movieDesc"
-                            label="Movie Description"
-                            value={state.movieDesc}
-                            onChange={handleChange}
-                            fullWidth
-                            required
-                          />
-                        </Grid>
-                        <Grid item xs={6}>
-                          <Field
-                            component={RFTextField}
-                            id="movieGenre"
-                            name="movieGEnre"
-                            label="Movie Genre"
-                            value={state.movieGenre}
-                            onChange={handleChange}
-                            fullWidth
-                            required
-                          />
-                        </Grid>
-                        <Grid item xs={12} sm={6}>
-                          <Field
-                            component={RFTextField}
-                            id="URL"
-                            name="movieURL"
-                            label="Movie URL"
-                            value={state.movieURL}
-                            onChange={handleChange}
-                            fullWidth
-                            required
-                          />
-                        </Grid>
-                      </Grid>
-                      <FormSpy subscription={{ submitError: true }}>
-                        {({ submitError }) =>
-                          submitError ? (
-                            <FormFeedback className={classes.feedback} error>
-                              {submitError}
-                            </FormFeedback>
-                          ) : null
-                        }
-                      </FormSpy>
-                      <FormButton
-                        // className={classes.button}
-                        disabled={submitting || sent}
-                        onClick={handleSubmitClick}
+          <Form onSubmit={handleSubmit} subscription={{ submitting: true }} >
+            {({ handleSubmit2, submitting }) => (
+              <form onSubmit={handleSubmit2} className={classes.form} noValidate >
+                <GridContainer justify="center" spacing={2} maxWidth="sm" className={classes.margin}>
+                  <Grid container spacing={5}>
+                    <Grid item xs={6}>
+                      <Field
+                        autoFocus
+                        defaultValue={movieTitle} 
+                        onChange={event => setmovieTitle(event.target.value)}
+                        component={RFTextField}
+                        id="movieTitle"
+                        name="movieTitle"
+                        label="Movie Title"
+                        
                         fullWidth
-                      
-                        className={classes.button}
-                      >
-                        Add Movie
-                      </FormButton>
-                      </GridContainer>
-                    </form>
-                  )}
-                </Form>
-        </Container>
-              </Paper>
-            </Grid>
-          </Grid>
-          <Box pt={4}>
-            <Copyright />
-          </Box>
+                        required
+                      />
+                    </Grid>
+                    <Grid item xs={6}>
+                      <Field
+                        component={RFTextField}
+                        id="movieDesc"
+                        name="movieDesc"
+                        label="Movie Description"
+                        defaultValue={movieDesc} 
+                        onChange={event => setmovieDesc(event.target.value)}
+                        fullWidth
+                        required
+                      />
+                    </Grid>
+                    <Grid item xs={6}>
+                      <Field
+                        component={RFTextField}
+                        id="movieGenre"
+                        name="movieGenre"
+                        label="Movie Genre"
+                        defaultValue={movieGenre} 
+                        onChange={event => setmovieGenre(event.target.value)}
+                        fullWidth
+                        required
+                      />
+                    </Grid>
+                    <Grid item xs={12} sm={6}>
+                      <Field
+                        component={RFTextField}
+                        id="URL"
+                        name="movieURL"
+                        label="Movie URL"
+                        defaultValue={movieURL} 
+                        onChange={event => setmovieURL(event.target.value)}
+                        fullWidth
+                        required
+                      />
+                    </Grid>
+                    <FormButton
+                      className={classes.button}
+                      disabled={submitting || sent}
+                      onClick={handleSubmitClick}
+                      fullWidth
+                      className={classes.button}
+                    >
+                      Add Movie
+                    </FormButton>
+                  </Grid>
+                  <FormSpy subscription={{ submitError: true }}>
+                    {({ submitError }) =>
+                      submitError ? (
+                        <FormFeedback className={classes.feedback} error>
+                          {submitError}
+                        </FormFeedback>
+                      ) : null
+                    }
+                  </FormSpy>
+                </GridContainer>
+              </form>
+            )}
+          </Form>
         </Container>
       </main>
     </div>

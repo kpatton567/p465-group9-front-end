@@ -8,12 +8,18 @@ import DashboardPage  from './Dashboard';
 import MoviesPage from "../src/modules/views/MoviesPage";
 import ManagerView from './modules/views/ManagerView';
 import ProfilePage from './modules/views/ProfilePage';
-import ManageMovies from './modules/views/ManageMovies';
 import { useAuth0 } from '@auth0/auth0-react';
 import IsLoading from './modules/views/isLoading';
 import RewardsPage from './modules/views/RewardsPage';
 import BookingHistoryPage from './modules/views/CustomerBookingHistoryPage';
 import RegisterTheater from './modules/views/RegisterTheater';
+import ManageMovies from './modules/views/ManageMovies';
+import ManageSnacks from './modules/views/ManageSnacks';
+import CustomerChat from './modules/views/CustomerChat';
+import TransactionPage from './modules/views/TransactionPage';
+import ReviewPage from './modules/views/ReviewPage';
+import Requests from './modules/views/Requests';
+
 function App() {
   return (
       <Router>
@@ -28,9 +34,14 @@ function App() {
         <Route path='/bookingHistory'><BookingHistoryPage/></Route>
 
         {/* Manager View Options */}
-        <Route path= '/managerView' exact={true}><ManagerView/></Route>
         <Route path= '/registerTheater'><RegisterTheater/></Route> 
-        <Route path= '/manageMovies' exact={true}><ManageMovies/></Route> 
+        <Route path= 'manager/managerView' exact={true}><ManagerView/></Route>
+        <Route path= 'managerView/manageMovies' exact={true}><ManageMovies/></Route>
+        <Route path= 'managerView/manageSnacks' exact={true}><ManageSnacks/></Route>
+        <Route path= 'managerView/customerChat' exact={true}><CustomerChat/></Route>
+        <Route path= 'managerView/transactionPage' exact={true}><TransactionPage/></Route>
+        <Route path= 'managerView/reviewPage' exact={true}><ReviewPage/></Route>
+        <Route path= 'managerView/customerRequests' exact={true}><Requests/></Route>
         
         {/* Other Options*/}
         <Route path= '/isLoading'><IsLoading/></Route>

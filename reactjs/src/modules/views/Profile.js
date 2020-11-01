@@ -200,17 +200,32 @@ function Profile(props) {
                           <ListItemText primary="Settings" />
                         </StyledMenuItem>
                       </Link>
-
                       <Link href="/managerView">
-                        <StyledMenuItem>
-                          <ListItemIcon>
-                            <SettingsIcon fontSize="small" />
-                          </ListItemIcon>
-                          <ListItemText primary="Manager View" />
-                        </StyledMenuItem>
-                      </Link>
-                      
+                          <StyledMenuItem>
+                            <ListItemIcon>
+                              <SettingsIcon fontSize="small" />
+                            </ListItemIcon>
+                            <ListItemText primary="Manager View" />
+                          </StyledMenuItem>
+                          </Link>
+                      {/* <AuthConsumer>
+                      <Can
+                        role={user.role}
+                        perform="manager-page:visit"
+                        yes={() => (
+                          <Link href="/managerView">
+                          <StyledMenuItem>
+                            <ListItemIcon>
+                              <SettingsIcon fontSize="small" />
+                            </ListItemIcon>
+                            <ListItemText primary="Manager View" />
+                          </StyledMenuItem>
+                          </Link>
 
+                        )}
+                        no={() => <Redirect to="/" />}
+                      />
+                      </AuthConsumer> */}
                       <Divider light />
 
                       <StyledMenuItem onClick={logout}>
