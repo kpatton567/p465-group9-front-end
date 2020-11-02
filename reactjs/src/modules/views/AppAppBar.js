@@ -17,7 +17,7 @@ import DialogActions from '@material-ui/core/DialogActions';
 import DialogContent from '@material-ui/core/DialogContent';
 import DialogTitle from '@material-ui/core/DialogTitle';
 import theme from "../theme";
-import prevueLogo from '../assets/PreVueLogo.png';
+//import prevueLogo from '../assets/PreVueLogo.png';
 
 const styles = (theme) => ({
   placeholder: toolbarStyles(theme).root,
@@ -118,11 +118,11 @@ function AppAppBar(props) {
            <div className={classes.left}>
               <div className={classes.leftLink}>
                 <Link href='/'>
-                  <img
-                    src={prevueLogo}
-                    alt="prevueLogo"
-                    height='40'
-                  />
+                  //<img
+                  // src={prevueLogo}
+                  //  alt="prevueLogo"
+                  //  height='40'
+                  ///>
                 </Link>
               </div>
             </div>
@@ -165,11 +165,11 @@ function AppAppBar(props) {
             <div className={classes.left}>
               <div className={classes.leftLink}>
                 <Link href='/'>
-                  <img
-                    src={prevueLogo}
-                    alt="prevueLogo"
-                    height='40'
-                  />
+                  //<img
+                  //  src={prevueLogo}
+                  //  alt="prevueLogo"
+                  //  height='40'
+                  ///>
                 </Link>
               </div>
             </div>
