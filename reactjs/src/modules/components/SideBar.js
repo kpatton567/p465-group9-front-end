@@ -18,12 +18,12 @@ import Stepper from '@material-ui/core/Stepper';
 import Step from '@material-ui/core/Step';
 import StepLabel from '@material-ui/core/StepLabel';
 import MenuItem from '@material-ui/core/MenuItem';
+import Tooltip from "@material-ui/core/Tooltip";
 
 import ReviewOrder from '../views/ReviewOrder';
 import TextField from '@material-ui/core/TextField';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
 import Checkbox from '@material-ui/core/Checkbox';
-import  { apiVariables } from '../../APIConstants';
 
 import GridContainer from "../components/GridContainer.js";
 import GridItem from "../components/GridItem.js";
@@ -37,6 +37,7 @@ import NavPills from "../components/NavPills.js";
 import WatchLaterIcon from '@material-ui/icons/WatchLater';
 import ForumIcon from '@material-ui/icons/Forum';
 import AttachMoneyIcon from '@material-ui/icons/AttachMoney';
+import { apiVariables, ACCESS_TOKEN_NAME } from '../../APIConstants';
 
 const useStyles = makeStyles((theme) => ({
   sidebarAboutBox: {
@@ -100,24 +101,31 @@ export default function Sidebar(props) {
   const classes = useStyles();
   const { description, movieId } = props;
   const [open, setOpen] = React.useState(false);
-  const [ticketsopen, setTicketsOpen] = React.useState(false);
-  const [response, setResponse] = React.useState([]);
+  const [ticketsOpen, setTicketsOpen] = React.useState(false);
   const [theaters, setTheaters] = React.useState([]);
   const [theaterId, setSelectedTheatre] = React.useState('');
+  const [theaterName, setSelectedTheatreName] = React.useState('');
   const [snacks, setSnacks] = useState([]);
   const [showtimes, setShowtimes] = useState([]);
   const [selectedShowtime, setSelectedShowtime] = React.useState('');
-  const [selectedSnack, setSelectedSnack] = React.useState('');
+  const [selectedSnack, setSelectedSnack] = React.useState([]);
   const [activeStep, setActiveStep] = React.useState(0);
+  const [activeTicketsStep, setActiveTicketsStep] = React.useState(0);
   const steps = ['Theatres ','Showtimes' ,'Snacks'];
-  const PaymentSteps = ['Review Order', 'Checkout'];
-
-  
+  const ticketssteps = ['Review Order', 'Checkout'];
+  const [ccNum, setccNum] = React.useState('');
+  const [cvv, setcvv] = React.useState('');
+  const [userName, setUserName] = React.useState('');
+  const [zip, setZip] = React.useState('');
+  const [ticketQuantity, setTicketQuantity] = React.useState('');
 
   const handleNext = () => {
     setActiveStep(activeStep + 1);
   };
-
+  const handleTicketsNext = () => {
+    setActiveTicketsStep(activeTicketsStep + 1);
+  };
+ 
   const handleSnackClick = (selectedSnack) =>{
     setSelectedSnack(selectedSnack)
   }
@@ -128,13 +136,17 @@ export default function Sidebar(props) {
   const handleBack = () => {
     setActiveStep(activeStep - 1);
   };
-
+  const handleTicketsBack = () => {
+    setActiveTicketsStep(activeTicketsStep - 1);
+  };
+  
   const fetchData = React.useCallback(() => {
     axios({
       "method": "POST",
       "url": apiVariables.apiUrl + '/api/home/movie_showtimes?movieId=' + movieId,
     })
       .then((response) => {
+        console.log(response.data)
         setTheaters(response.data)
       })
       .catch((error) => {
@@ -155,16 +167,17 @@ export default function Sidebar(props) {
               <InputLabel shrink id="demo-simple-select-placeholder-label-label">Theatre</InputLabel>
 
               <Select
-          labelId="demo-simple-select-placeholder-label-label"
-          id="demo-simple-select-placeholder-label"
-          value={theaterId}
-          onChange={handleTheaterChange}
-          displayEmpty
-          className={classes.selectEmpty}
-        >
+              labelId="demo-simple-select-placeholder-label-label"
+              id="demo-simple-select-placeholder-label"
+              value={theaterId}
+              name={theaterName}
+              onChange={handleTheaterChange}
+              displayEmpty
+              className={classes.selectEmpty}
+            >
           <MenuItem value=""><em>None</em></MenuItem>
           {theaters.map((item) =>
-          <MenuItem key = {item.theaterId} value={item.theaterId}>{item.theaterName}</MenuItem>
+          <MenuItem value = {item.theaterId} name={item.theaterName}>{item.theaterName}</MenuItem>
           )}
           
         </Select>
@@ -176,32 +189,38 @@ export default function Sidebar(props) {
         return (
           <div>
           {showtimes.map((showtime) => (
-            // <div>{snack.name}</div>
-             <Chip clickable id={showtime.showtime} label={showtime.showtime} onClick={() => handleShowTimeClick(showtime.showtime)}/>
+            <Tooltip
+            title={`$${showtime.price}`}
+            placement="top"
+          >
+             <Chip clickable key={showtime.showtimeId} label={showtime.date} onClick={() => handleShowTimeClick(showtime.showtimeId)}/>
+            </Tooltip>
           ))}
           </div>
         );
       case 2:
         return <div>
           {snacks.map((snack) => (
-            // <div>{snack.name}</div>
-             <Chip clickable id={snack.name} label={snack.name} onClick={() => handleSnackClick(snack.name)} />
-
+            <Tooltip
+            title={`$${snack.price}`}
+            placement="top"
+          >
+             <Chip clickable key={snack.snackId} label={snack.name} onClick={() => handleSnackClick(snack.name)} />
+            </Tooltip>
             ))}
-            {/* <SelectSnacks theaterId={theaterId}/> */}
         </div>;
       default:
         throw new Error('Unknown step');
     }
   }
-  function getPaymentStepContent(step) {
+  function getTicketsStepContent(step) {
     switch (step) {
       case 0:
       return (
         <div>
-          <ReviewOrder/>
+          {/* <ReviewOrder theaterName={setSelectedTheatre} selectedSnack={selectedSnack} selectedShowtime={selectedShowtime} /> */}
         </div>
-      );
+      )
       case 1:
           return (
           <React.Fragment>
@@ -210,13 +229,17 @@ export default function Sidebar(props) {
           </Typography>
           <Grid container spacing={3}>
             <Grid item xs={12} md={6}>
-              <TextField required id="cardName" label="Name on card" fullWidth autoComplete="cc-name" />
+              <TextField required id="cardName" label="Name on card" fullWidth autoComplete="cc-name"
+              defaultValue={userName}
+              onChange={event => setUserName(event.target.value)} />
             </Grid>
             <Grid item xs={12} md={6}>
               <TextField
                 required
                 id="cardNumber"
                 label="Card number"
+                defaultValue={ccNum}
+                onChange={event => setccNum(event.target.value)}
                 inputProps={{ maxLength: 16 }}
                 fullWidth
                 autoComplete="cc-number"
@@ -229,9 +252,42 @@ export default function Sidebar(props) {
               <TextField
                 required
                 id="cvv"
+                type="password"
                 inputProps={{ maxLength: 3 }}
                 label="CVV"
                 helperText="Last three digits on signature strip"
+                defaultValue={cvv}
+                onChange={event => setcvv(event.target.value)}
+                fullWidth
+                autoComplete="cc-csc"
+              />
+            </Grid>
+            <Grid item xs={12} md={6}>
+              <Select
+                required
+                helperText="Last three digits on signature strip"
+                defaultValue={ticketQuantity}
+                onChange={event => setTicketQuantity(event.target.value)}
+                fullWidth
+                autoComplete="cc-csc"
+              >
+                
+                <MenuItem value = "1" >1</MenuItem>
+                <MenuItem value = "2" >2</MenuItem>
+                <MenuItem value = "3">3</MenuItem>
+                <MenuItem value = "4" >4</MenuItem>
+                <MenuItem value = "5">5</MenuItem>
+
+              </Select>
+            </Grid>
+            <Grid item xs={12} md={6}>
+              <TextField
+                required
+                id="zip"
+                inputProps={{ maxLength: 5 }}
+                label="ZIP"
+                defaultValue={zip}
+                onChange={event => setZip(event.target.value)}
                 fullWidth
                 autoComplete="cc-csc"
               />
@@ -245,15 +301,15 @@ export default function Sidebar(props) {
           </Grid>
         </React.Fragment>
         )
+      default:
+        throw new Error('Unknown step');
     }
   }
-  const handleTheatreChangeSetTimes = (item) => {
-  }
+
   const handleClickOpen = () => {
     setOpen(true);
   };
-  
-  const handleClickTicketsOpen = () => {
+  const handleTicketsClickOpen = () => {
     setTicketsOpen(true);
   };
 
@@ -264,25 +320,25 @@ export default function Sidebar(props) {
   
   const handleTicketsClose = () => {
     setTicketsOpen(false);
+    setActiveTicketsStep(0);
   };
+
   const handlePreferences = () => {
-    console.log(selectedShowtime)
-    console.log(selectedSnack)
-    console.log(theaterId)
     setActiveStep(activeStep + 1);
   }
 
   const handleTheaterChange = (event) => {
     //console.log(event.target.value);
     setSelectedTheatre(event.target.value);   
+    setSelectedTheatreName(event.target.name);
     axios({
       "method": "POST",
       "url": apiVariables.apiUrl + '/api/home/movie_theater_showtimes?theaterId=' + event.target.value +'&movieId=' +movieId,
       "crossdomain" : "true"
     })
       .then((response) => {
-          setShowtimes(response.data)
-         // console.log(response.data)
+        setShowtimes(response.data.showtimes)
+         //console.log(response.data)
       })
       .catch((error) => {
           console.log(error)
@@ -293,8 +349,8 @@ export default function Sidebar(props) {
       "url": apiVariables.apiUrl + '/api/home/snacks/' + event.target.value,
     })
       .then((response) => {
-         // console.log(response.data)
-          setSnacks(response.data)
+         console.log(response.data)
+         setSnacks(response.data)
       })
       .catch((error) => {
           console.log(error)
@@ -302,6 +358,34 @@ export default function Sidebar(props) {
   }
   const handlePayment = () => {
     console.log("pay");
+    var token = localStorage.getItem(ACCESS_TOKEN_NAME)
+   
+    const payload = {
+      "theaterId": theaterId,
+      "movieId": movieId,
+      "selectedShowtime": selectedShowtime,
+      "ccNum": ccNum,
+      "cvv": cvv,
+      "userName": userName,
+      "zip": zip,
+      "ticketQuantity": ticketQuantity,
+      "selectedSnack": selectedSnack,
+    }
+    axios.post(apiVariables.apiUrl +'/api/customer/customer_payment', payload, {
+    headers: {
+        'Authorization': 'Bearer ' + token
+    }
+    }).then(function (response) {
+        if(response.status === 200){
+            
+        }
+    })
+    .catch(function (error) {
+        console.log(error);
+    });
+ 
+   
+    console.log(payload);
   }
   return (
     <Grid item xs={12} md={4} className={classes.sidebarStyle}>
@@ -368,7 +452,7 @@ export default function Sidebar(props) {
                                           onClick={activeStep === steps.length - 1 ? handlePreferences : handleNext}
                                           className={classes.button}
                                         >
-                                          {activeStep === steps.length - 1 ? 'Choose' : 'Next'}
+                                          {activeStep === steps.length - 1 ? 'Save' : 'Next'}
                                         </Button>
                                       </div>
                                     </React.Fragment>
@@ -392,51 +476,53 @@ export default function Sidebar(props) {
                     tabContent: (
                       <GridContainer justify="center">
                         <GridItem >
-                          <Button onClick={handleClickTicketsOpen} style={{ color: theme.palette.secondary.light }}>Book Tickets</Button>
-                          <Dialog disableBackdropClick disableEscapeKeyDown open={ticketsopen} onClose={handleClose}>
-                            {/* <DialogTitle>Choose your theatre</DialogTitle> */}
+                          <Button onClick={handleTicketsClickOpen} style={{ color: theme.palette.secondary.light }}>Book Tickets</Button>
+                          <Dialog disableBackdropClick disableEscapeKeyDown open={ticketsOpen} onClose={handleTicketsClose}>
                             <Paper className={classes.paper}>
                               <CancelIcon onClick={handleTicketsClose} style={{ cursor: 'pointer', float: 'right', marginTop: '5px', width: '20px' }} />
-                              <Stepper activeStep={activeStep} className={classes.stepper}>
-                                {PaymentSteps.map((label) => (
+                             
+                              <Stepper activeStep={activeTicketsStep} className={classes.stepper}>
+                                {ticketssteps.map((label) => (
                                   <Step key={label}>
                                     <StepLabel>{label}</StepLabel>
                                   </Step>
                                 ))}
                               </Stepper>
                               <React.Fragment>
-                                {activeStep === PaymentSteps.length ? (
+                                {activeTicketsStep === ticketssteps.length ? (
                                   <React.Fragment>
                                     <Typography variant="h5" gutterBottom>
-                                      Thank you for your order.
+                                      Your preferences have been saved.
                                     </Typography>
                                     <Typography variant="subtitle1">
+
                                     </Typography>
                                   </React.Fragment>
                                 ) : (
                                     <React.Fragment>
-                                      {getPaymentStepContent(activeStep)}
+                                      {getTicketsStepContent(activeTicketsStep)}
                                       <div className={classes.buttons}>
-                                        {activeStep !== 0 && (
-                                          <Button onClick={handleBack} className={classes.button}>
+                                        {activeTicketsStep !== 0 && (
+                                          <Button onClick={handleTicketsBack} className={classes.button}>
                                             Back
                     </Button>
                                         )}
-                                      
                                        
                                         <Button
                                           variant="contained"
                                           color="primary"
-                                          onClick={handlePayment}
+                                          onClick={activeTicketsStep === ticketssteps.length - 1 ? handlePayment : handleTicketsNext}
                                           className={classes.button}
                                         >
-                                          {activeStep === steps.length - 1 ? 'Place Order' : 'Next'}
+                                          {activeTicketsStep === ticketssteps.length - 1 ? 'Place order' : 'Next'}
                                         </Button>
                                       </div>
                                     </React.Fragment>
                                   )}
+
                               </React.Fragment>
-                             </Paper>
+                            </Paper>
+
                           </Dialog>
                         </GridItem>
                         <GridItem xs={12} sm={12} md={4}>
@@ -445,7 +531,7 @@ export default function Sidebar(props) {
                       </GridContainer>
 
                     )
-                  }
+                  },
                 ]}
               />
             </GridItem>
