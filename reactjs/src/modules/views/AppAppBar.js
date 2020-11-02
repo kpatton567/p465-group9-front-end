@@ -17,7 +17,7 @@ import DialogActions from '@material-ui/core/DialogActions';
 import DialogContent from '@material-ui/core/DialogContent';
 import DialogTitle from '@material-ui/core/DialogTitle';
 import theme from "../theme";
-import prevueLogo from '../assets/prevueLogo.png';
+import prevueLogo from '../assets/PreVueLogo.png';
 
 const styles = (theme) => ({
   placeholder: toolbarStyles(theme).root,
