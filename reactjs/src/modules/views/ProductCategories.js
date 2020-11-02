@@ -115,7 +115,7 @@ function ProductCategories(props)
   const fetchData = React.useCallback(() => {
     axios({
       "method": "GET",
-      "url": 'http://localhost:8080/api/home/movies'
+      "url": apiVariables.apiUrl +'/api/home/movies'
     })
       .then((response) => {
         // setImages(response.data)

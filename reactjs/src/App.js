@@ -35,13 +35,13 @@ function App() {
 
         {/* Manager View Options */}
         <Route path= '/registerTheater'><RegisterTheater/></Route> 
-        <Route path= 'manager/managerView' exact={true}><ManagerView/></Route>
-        <Route path= 'managerView/manageMovies' exact={true}><ManageMovies/></Route>
-        <Route path= 'managerView/manageSnacks' exact={true}><ManageSnacks/></Route>
-        <Route path= 'managerView/customerChat' exact={true}><CustomerChat/></Route>
-        <Route path= 'managerView/transactionPage' exact={true}><TransactionPage/></Route>
-        <Route path= 'managerView/reviewPage' exact={true}><ReviewPage/></Route>
-        <Route path= 'managerView/customerRequests' exact={true}><Requests/></Route>
+        <Route path= '/manager/managerView' exact={true}><ManagerView/></Route>
+        <Route path= '/manager/managerView/manageMovies' exact={true}><ManageMovies/></Route>
+        <Route path= '/manager/managerView/manageSnacks' exact={true}><ManageSnacks/></Route>
+        <Route path= '/manager/managerView/customerChat' exact={true}><CustomerChat/></Route>
+        <Route path= '/manager/managerView/transactionPage' exact={true}><TransactionPage/></Route>
+        <Route path= '/manager/managerView/reviewPage' exact={true}><ReviewPage/></Route>
+        <Route path= '/manager/managerView/customerRequests' exact={true}><Requests/></Route>
         
         {/* Other Options*/}
         <Route path= '/isLoading'><IsLoading/></Route>

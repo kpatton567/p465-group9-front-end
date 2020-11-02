@@ -23,6 +23,7 @@ import GridContainer from "../components/GridContainer.js";
 import Grid from '@material-ui/core/Grid';
 import FormButton from '.././form/FormButton';
 import axios from 'axios';
+import  { apiVariables } from '../../APIConstants';
 const drawerWidth = 250;
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -134,7 +135,7 @@ export default function ManageMovies() {
       "movieURL": movieURL,
       "movieGenre": movieGenre
     }
-    axios.post('http://localhost:8080/api/manage/add_movie', payload)
+    axios.post((apiVariables.apiUrl + '/api/manage/add_movie'), payload)
       .then(function (response) {
         
       })

@@ -11,7 +11,7 @@ ReactDOM.render(
   <Auth0Provider
     domain={domain}
     clientId={clientId}
-    redirectUri="http://localhost:3000/isLoading">
+    redirectUri="https://prevue-backend.herokuapp.com/isLoading">
     <App />
   </Auth0Provider>,
   document.getElementById('root')
