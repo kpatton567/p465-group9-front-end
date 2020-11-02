@@ -112,7 +112,7 @@ export default function Sidebar(props) {
   const [activeStep, setActiveStep] = React.useState(0);
   const [activeTicketsStep, setActiveTicketsStep] = React.useState(0);
   const steps = ['Theatres ','Showtimes' ,'Snacks'];
-  const ticketssteps = ['Review Order', 'Checkout'];
+  const ticketssteps = ['Checkout'];
   const [ccNum, setccNum] = React.useState('');
   const [cvv, setcvv] = React.useState('');
   const [userName, setUserName] = React.useState('');
@@ -216,12 +216,6 @@ export default function Sidebar(props) {
   function getTicketsStepContent(step) {
     switch (step) {
       case 0:
-      return (
-        <div>
-          {/* <ReviewOrder theaterName={setSelectedTheatre} selectedSnack={selectedSnack} selectedShowtime={selectedShowtime} /> */}
-        </div>
-      )
-      case 1:
           return (
           <React.Fragment>
           <Typography variant="h6" gutterBottom>
@@ -376,8 +370,7 @@ export default function Sidebar(props) {
         'Authorization': 'Bearer ' + token
     }
     }).then(function (response) {
-        if(response.status === 200){
-            
+        if(response.status === 200){  
         }
     })
     .catch(function (error) {
