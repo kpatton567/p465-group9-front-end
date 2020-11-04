@@ -23,7 +23,7 @@ import GridContainer from "../components/GridContainer.js";
 import Grid from '@material-ui/core/Grid';
 import FormButton from '.././form/FormButton';
 import axios from 'axios';
-import  { apiVariables } from '../../APIConstants';
+import  { ACCESS_TOKEN_NAME,apiVariables } from '../../APIConstants';
 const drawerWidth = 250;
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -147,10 +147,10 @@ export default function ManageMovies() {
       .catch(function (error) {
         console.log(error);
       });
-      movieTitle = ""
-      movieDesc = ""
-      movieGenre = ""
-      movieURL = ""
+      setmovieDesc("")
+      setmovieTitle("")
+      setmovieGenre("")
+      setmovieURL("")
   }
   const fixedHeightPaper = clsx(classes.paper, classes.fixedHeight);
   return (
@@ -186,7 +186,7 @@ export default function ManageMovies() {
               <form onSubmit={handleSubmit2} className={classes.form} noValidate >
                 <GridContainer justify="center" spacing={2} maxWidth="sm" className={classes.margin}>
                   <Grid container spacing={5}>
-                    <Grid item xs={6}>
+                    <Grid item xs={12}>
                       <Field
                         autoFocus
                         defaultValue={movieTitle} 
@@ -200,7 +200,7 @@ export default function ManageMovies() {
                         required
                       />
                     </Grid>
-                    <Grid item xs={6}>
+                    <Grid item xs={12}>
                       <Field
                         component={RFTextField}
                         id="movieDesc"
@@ -212,7 +212,7 @@ export default function ManageMovies() {
                         required
                       />
                     </Grid>
-                    <Grid item xs={6}>
+                    <Grid item xs={12}>
                       <Field
                         component={RFTextField}
                         id="movieGenre"
@@ -224,7 +224,7 @@ export default function ManageMovies() {
                         required
                       />
                     </Grid>
-                    <Grid item xs={12} sm={6}>
+                    <Grid item xs={12}>
                       <Field
                         component={RFTextField}
                         id="URL"

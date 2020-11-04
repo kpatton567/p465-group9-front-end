@@ -23,7 +23,7 @@ import GridContainer from "../components/GridContainer.js";
 import Grid from '@material-ui/core/Grid';
 import FormButton from '.././form/FormButton';
 import axios from 'axios';
-import  { apiVariables } from '../../APIConstants';
+import  { ACCESS_TOKEN_NAME,apiVariables } from '../../APIConstants';
 const drawerWidth = 250;
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -137,8 +137,8 @@ export default function ManageMovies() {
       .catch(function (error) {
         console.log(error);
       });
-      snackName = ""
-      snackPrice = ""
+      setsnackName("")
+      setsnackPrice("")
   }
   const fixedHeightPaper = clsx(classes.paper, classes.fixedHeight);
   return (

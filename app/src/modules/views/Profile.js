@@ -200,7 +200,7 @@ function Profile(props) {
                           <ListItemText primary="Settings" />
                         </StyledMenuItem>
                       </Link>
-                      <Link href="/managerView">
+                      <Link href="/manager/managerView">
                           <StyledMenuItem>
                             <ListItemIcon>
                               <SettingsIcon fontSize="small" />
