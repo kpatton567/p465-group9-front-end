@@ -105,6 +105,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 export default function ManageMovies() {
+  var token = localStorage.getItem(ACCESS_TOKEN_NAME);
   const [snackName, setsnackName] = React.useState('');
   const [snackPrice, setsnackPrice] = React.useState('');
   const handleSubmit = () => {
@@ -125,7 +126,11 @@ export default function ManageMovies() {
       "snackName": snackName,
       "snackPrice": snackPrice,
     }
-    axios.post((apiVariables.apiUrl + '/api/manage/add_snack'), payload)
+    axios.post((apiVariables.apiUrl + '/api/manage/add_snack'), payload,{
+      headers: {
+        "Authorization": 'Bearer ' + token
+      }
+    })
       .then(function (response) {
 
       })
@@ -199,7 +204,7 @@ export default function ManageMovies() {
                       fullWidth
                       className={classes.button}
                     >
-                      Add Movie
+                      Add Snack
                   </FormButton>
                   </Grid>
                   <FormSpy subscription={{ submitError: true }}>

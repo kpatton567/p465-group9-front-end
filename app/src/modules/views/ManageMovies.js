@@ -106,6 +106,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 export default function ManageMovies() {
+  var token = localStorage.getItem(ACCESS_TOKEN_NAME);
   const [movieTitle, setmovieTitle] = React.useState('');
   const [movieDesc, setmovieDesc] = React.useState('');
   const [movieGenre, setmovieGenre] = React.useState('');
@@ -135,7 +136,11 @@ export default function ManageMovies() {
       "movieURL": movieURL,
       "movieGenre": movieGenre
     }
-    axios.post((apiVariables.apiUrl + '/api/manage/add_movie'), payload)
+    axios.post((apiVariables.apiUrl + '/api/manage/add_movie'), payload,{
+      headers: {
+        "Authorization": 'Bearer ' + token
+      }
+    })
       .then(function (response) {
         
       })
