@@ -18,9 +18,9 @@ import AppFooter from '../views/AppFooter';
 import Snackbar from '@material-ui/core/Snackbar';
 import Alert from '@material-ui/lab/Alert';
 import { withRouter } from 'react-router'
+import Typography from '../components/Typography';
 
 const useStyles = makeStyles(styles);
-
 function RegisterTheater(props) {
   const classes = useStyles();
   // const { ...rest } = props;
@@ -32,14 +32,12 @@ function RegisterTheater(props) {
   const [alertOpen, setAlertOpen] = React.useState(false);
   const [state , setState] = useState({
     email : "",
-    
   })
   const imageClasses = classNames(
     classes.imgRaised,
     classes.imgRoundedCircle,
     classes.imgFluid
   );
-
   const fetchData = React.useCallback(() => {
     if(user !== undefined)
       setState(user.email);
@@ -47,11 +45,9 @@ function RegisterTheater(props) {
   React.useEffect(() => {
     fetchData()
   }, [fetchData])
-
   const handleSubmit = () => {
     setSaved(true);
   };
-
   const handleSubmitClick = (e) => {
     e.preventDefault();
     const payload={
@@ -60,10 +56,8 @@ function RegisterTheater(props) {
       "capacity":theaterCapacity,
     }
     axios.post(apiVariables.apiUrl +'/api/admin/add_theater', payload, {
-
     })
     .then((response) => {
-        console.log(response.data)
         setAlertOpen(true);
         setTimeout(()=> props.history.push('/manager/managerView/manageMovies'), 2000);
     })
@@ -72,34 +66,20 @@ function RegisterTheater(props) {
     })
     console.log(payload);
   }
-
   if (!isAuthenticated && isLoading) {
     return (<div>
       Loading
     </div>)
   }
-
   if (!isAuthenticated && !isLoading) {
     return (<div>
       Loading
     {loginWithRedirect()}
     </div>)
   }
-
   if (isAuthenticated && !isLoading && user && !alertOpen)
     return (
       <div>
-        {/* <Header
-          color="transparent"
-          brand="Material Kit React"
-          rightLinks={<HeaderLinks />}
-          fixed
-          changeColorOnScroll={{
-            height: 200,
-            color: "white"
-          }}
-          {...rest}
-        /> */}
         <AppAppBar/>
         <Parallax small filter image={require("../assets/popcorn.jpg")} />
         <div className={classNames(classes.main, classes.mainRaised)}>
@@ -113,6 +93,7 @@ function RegisterTheater(props) {
                     </div>
                     <div className={classes.name}>
                       <h3 className={classes.title}>{user.nickname}</h3>
+                      <h6>CUSTOMER</h6>
                     </div>
                   </div>
                 </GridItem>
@@ -122,32 +103,27 @@ function RegisterTheater(props) {
                   {({ handleSubmit2, submitting }) => (
                     <form onSubmit={handleSubmit2} className={classes.form} noValidate >
                       <GridContainer justify="center" spacing={2}>
-                      <Grid container spacing={2}>
-                        <Grid item xs={12} sm={6}>
                           <Field
-                            autoFocus
                             component={RFTextField}
                             autoComplete="fname"
                             fullWidth
-                            label="Theater name"
+                            placeholder="Theater Name"
                             name="theaterName"
                             required
                             defaultValue={theaterName}
+                            margin="normal"
                             onChange={event => setTheaterName(event.target.value)} />
-
                           <Field
-                            autoFocus
+                            fullWidth
                             component={RFTextField}
                             autoComplete="fname"
-                            fullWidth
-                            label="Theater Capacity"
+                            margin="normal"
+                            placeholder="Theater Capacity"
                             name="theaterCapacity"
                             required
                             defaultValue={theaterCapacity}
                             onChange={event => setTheaterCapacity(event.target.value)}
                           />
-                        </Grid>
-                      </Grid>
                       <FormSpy subscription={{ submitError: true }}>
                         {({ submitError }) =>
                           submitError ? (
@@ -165,9 +141,14 @@ function RegisterTheater(props) {
                         onMouseLeave={() => setButtonHovered(false)}
                         className={buttonIsHovered ? classes.buttonHover : classes.button}
                       >
-                        {submitting || sent ? 'In progress…' : 'Register Theater'}
+                        {submitting || sent ? 'In progressâ€¦' : 'Register Theater'}
                       </FormButton>
                       </GridContainer>
+                      <div>
+                        <Typography className={classes.subtext} align="center" variant="h5">
+                          {''}
+                        </Typography>
+                      </div>
                     </form>
                   )}
                 </Form>

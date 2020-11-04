@@ -19,6 +19,7 @@ import CustomerChat from './modules/views/CustomerChat';
 import TransactionPage from './modules/views/TransactionPage';
 import ReviewPage from './modules/views/ReviewPage';
 import Requests from './modules/views/Requests';
+import Checkout from './modules/views/Checkout';
 
 function App() {
   return (
@@ -42,7 +43,6 @@ function App() {
         <Route path= '/manager/managerView/transactionPage' exact={true}><TransactionPage/></Route>
         <Route path= '/manager/managerView/reviewPage' exact={true}><ReviewPage/></Route>
         <Route path= '/manager/managerView/customerRequests' exact={true}><Requests/></Route>
-        
         
         {/* Other Options*/}
         <Route path= '/isLoading'><IsLoading/></Route>

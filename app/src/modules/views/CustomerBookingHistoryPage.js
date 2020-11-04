@@ -124,7 +124,6 @@ export default function BookingHistoryPage(props)
                       </div>
                       <div className={classes.name}>
                         <h3 className={classes.title}>{user.nickname}</h3>
-                        <h6>CUSTOMER</h6>
                       </div>
                     </div>
                   </GridItem>
@@ -134,7 +133,7 @@ export default function BookingHistoryPage(props)
             {/* Text below profile image */}
             <div>
               <Typography className={classes.title2} align="center" variant="h3" marked="center">
-                {'TRANSACTION HISTORY'}
+                {'Your Orders'}
               </Typography>
             </div>
             <div>

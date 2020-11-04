@@ -4,9 +4,10 @@ import ListItemText from '@material-ui/core/ListItemText';
 import ButtonGroup from "@material-ui/core/ButtonGroup";
 import Button from '@material-ui/core/Button';
 import { makeStyles } from '@material-ui/core/styles';
+import theme from '../theme';
 
   const listItem= {
-    // padding: theme.spacing(2, 2),
+    marginRight : theme.spacing(20)
   }
 
 class Snacks extends Component {
@@ -14,27 +15,7 @@ class Snacks extends Component {
       super(props);
       this.state = { counter: 0, totalPrice: 0 }; 
     }
-    
-    
-    // handleIncrement = () => {
-    //   const { count, totalPrice } = this.state;
-    //   const { price, increaseTotals } = this.props; 
-    //   const newCount = count + 1;
-    //   const newTotal = newCount * price;
-    //   this.setState({ count: newCount, totalPrice: newTotal }, () => {
-    //     increaseTotals(price);
-    //   });
-    // }
-    // handleDecrement = () => {
-    //   const { count, totalPrice } = this.state;
-    //   const { price, decreaseTotals } = this.props; 
-    //   const newCount = count - 1;
-    //   const newTotal = newCount * price;
-    //   this.setState({ count: newCount, totalPrice: newTotal }, () => {
-    //     decreaseTotals(price);
-    //   });
-    // }
-      
+
     handleIncrement = () => {
         const { price, increaseTotals, snackId } = this.props; 
         const newTotal = (this.state.counter + 1) * price;

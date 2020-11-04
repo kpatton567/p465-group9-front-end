@@ -1,10 +1,13 @@
 import { container, title } from "../assets/jss/material-kit-react";
-
 import imagesStyle from "../assets/jss/material-kit-react/imagesStyles.js";
 import theme from '../theme';
-
 const profilePageStyle = {
   container,
+  subtext: {
+    minHeight: "200px",
+    textDecoration: "none",
+    color: "#C5C5C5",
+},
   profile: {
     textAlign: "center",
     "& img": {
@@ -17,15 +20,16 @@ const profilePageStyle = {
   description: {
     margin: "1.071rem auto 0",
     maxWidth: "600px",
-    color: "#999",
     textAlign: "center !important"
   },
   name: {
-    marginTop: "-80px"
+    marginTop: "-80px",
+    color: '#C5C5C5',
+    marginBottom: '50px',
   },
   ...imagesStyle,
   main: {
-    background: "#FFFFFF",
+    background: "#363636",
     position: "relative",
     zIndex: "3"
   },
@@ -41,20 +45,21 @@ const profilePageStyle = {
     position: "relative",
     marginTop: "30px",
     minHeight: "32px",
-    textDecoration: "none"
+    textDecoration: "none",
+    color: '#FFFFFF',
   },
   button: {
     marginTop: theme.spacing(3),
     marginBottom: theme.spacing(2),
     color: 'primary',
+    backgroundColor: '#800000',
   },
   buttonHover :{
     marginTop: theme.spacing(3),
     marginBottom: theme.spacing(2),
     color: 'primary',
-    backgroundColor: 'black',
+    backgroundColor: '#363636',
   },
-
   socials: {
     marginTop: "0",
     width: "100%",
@@ -71,5 +76,4 @@ const profilePageStyle = {
     textAlign: "center"
   }
 };
-
 export default profilePageStyle;

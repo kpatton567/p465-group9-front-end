@@ -1,8 +1,12 @@
 import React, {useState} from "react";
+// nodejs library that concatenates classes
 import classNames from "classnames";
+// @material-ui/core components
 import { makeStyles } from "@material-ui/core/styles";
 import { useAuth0 } from '@auth0/auth0-react';
+// core components
 import Header from "../components/Header.js";
+// import Footer from "components/Footer/Footer.js";
 import GridContainer from "../components/GridContainer.js";
 import GridItem from "../components/GridItem.js";
 import HeaderLinks from "../components/HeaderLinks.js";
@@ -13,28 +17,24 @@ import Grid from '@material-ui/core/Grid';
 import FormButton from '.././form/FormButton';
 import FormFeedback from '.././form/FormFeedback';
 import styles from "./profilePageStyles.js";
+import AppAppBar from "./AppAppBar";
 import AppFooter from '../views/AppFooter';
-import { withRouter } from 'react-router'
-
+import Typography from '../components/Typography';
 const useStyles = makeStyles(styles);
-
-function ProfilePage(props) {
+export default function ProfilePage(props) {
   const classes = useStyles();
   const { ...rest } = props;
   const [sent, setSaved] = React.useState(false);
   const [buttonIsHovered, setButtonHovered] = React.useState(false);
   const { user, isAuthenticated, loginWithRedirect, isLoading } = useAuth0();
-            
   const [state , setState] = useState({
     email : "",
-    
   })
   const imageClasses = classNames(
     classes.imgRaised,
     classes.imgRoundedCircle,
     classes.imgFluid
   );
-
   const fetchData = React.useCallback(() => {
     if(user !== undefined)
       setState(user.email);
@@ -42,11 +42,9 @@ function ProfilePage(props) {
   React.useEffect(() => {
     fetchData()
   }, [fetchData])
-
   const handleSubmit = () => {
     setSaved(true);
   };
-
   const handleSubmitClick = (e) => {
     e.preventDefault();
         // const payload={
@@ -55,35 +53,21 @@ function ProfilePage(props) {
         // }
       console.log("Test");
   }
-
   if (!isAuthenticated && isLoading) {
     return (<div>
       Loading
     </div>)
   }
-
   if (!isAuthenticated && !isLoading) {
     return (<div>
       Loading
     {loginWithRedirect()}
     </div>)
   }
-
   if (isAuthenticated && !isLoading && user)
     return (
       <div>
-        <Header
-          color="transparent"
-          brand="Material Kit React"
-          rightLinks={<HeaderLinks />}
-          fixed
-          changeColorOnScroll={{
-            height: 200,
-            color: "white"
-          }}
-          {...rest}
-        />
-        {/* <AppAppBar/> */}
+        <AppAppBar/>  
         <Parallax small filter image={require("../assets/popcorn.jpg")} />
         <div className={classNames(classes.main, classes.mainRaised)}>
           <div>
@@ -103,7 +87,7 @@ function ProfilePage(props) {
               <div className={classes.description}>
                 <Form onSubmit={handleSubmit} subscription={{ submitting: true }} >
                   {({ handleSubmit2, submitting }) => (
-                    <form onSubmit={handleSubmit2} className={classes.form} noValidate >
+                    <form onSubmit={handleSubmit2} noValidate >
                       <GridContainer justify="center" spacing={2}>
                       <Grid container spacing={2}>
                         <Grid item xs={12} sm={6}>
@@ -112,7 +96,7 @@ function ProfilePage(props) {
                             component={RFTextField}
                             autoComplete="fname"
                             fullWidth
-                            label="First name"
+                            placeholder="First name"
                             name="firstName"
                             required
                           />
@@ -122,7 +106,7 @@ function ProfilePage(props) {
                             component={RFTextField}
                             autoComplete="lname"
                             fullWidth
-                            label="Last name"
+                            placeholder="Last name"
                             name="lastName"
                             required
                           />
@@ -133,7 +117,7 @@ function ProfilePage(props) {
                         disabled={submitting || sent}
                         fullWidth
                         value={state.email}
-                        label="Email"
+                        placeholder="Email"
                         margin="normal"
                         name="email"
                         required
@@ -144,7 +128,7 @@ function ProfilePage(props) {
                         disabled={submitting || sent}
                         required
                         name="mobile"
-                        label="Mobile Number"
+                        placeholder="Mobile Number"
                         type="mobile"
                         margin="normal"
                       />
@@ -157,6 +141,7 @@ function ProfilePage(props) {
                           ) : null
                         }
                       </FormSpy>
+                      {/* Submit button */}
                       <FormButton
                         // className={classes.button}
                         disabled={submitting || sent}
@@ -169,6 +154,11 @@ function ProfilePage(props) {
                         {submitting || sent ? 'In progress…' : 'Save Changes'}
                       </FormButton>
                       </GridContainer>
+                      <div>
+                        <Typography className={classes.subtext} align="center" variant="h5">
+                          {''}
+                        </Typography>
+                      </div>
                     </form>
                   )}
                 </Form>
@@ -180,4 +170,3 @@ function ProfilePage(props) {
       </div>
     );
 }
-export default withRouter(ProfilePage);

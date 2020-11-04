@@ -12,8 +12,6 @@ import CardContent from '@material-ui/core/CardContent';
 import Avatar from '@material-ui/core/Avatar';
 import Typography from '@material-ui/core/Typography';
 import { red } from '@material-ui/core/colors';
-import Header from "../components/Header.js";
-import HeaderLinks from "../components/HeaderLinks.js";
 import List from '@material-ui/core/List';
 import ListItem from '@material-ui/core/ListItem';
 import ListItemText from '@material-ui/core/ListItemText';
@@ -31,16 +29,6 @@ import { useAuth0 } from '@auth0/auth0-react';
 import {apiVariables} from '../../APIConstants';
 
 
-
-
-const mainFeaturedPost = {
-    title: 'Title of the movie',
-    description:
-        "Movie caption",
-    image: 'https://source.unsplash.com/random',
-    imgText: 'main image description',
-    //   linkText: 'Continue reading…',
-};
 const useStyles = makeStyles((theme) => ({
     mainGrid: {
         paddingTop: theme.spacing(6),
@@ -125,7 +113,6 @@ export default function MovieBooking(props) {
             .then((response) => {
                 setMovie(response.data)
                 setGenres(response.data.genres);
-                // console.log(response.data.genres);
             })
             .catch((error) => {
                 console.log(error)
@@ -138,19 +125,7 @@ export default function MovieBooking(props) {
         title: 'Synopsis',
         description: movie.description
     };
-    if (!isAuthenticated && isLoading) {
-        return (<div>
-            Loading
-        </div>)
-    }
-
-    if (!isAuthenticated && !isLoading) {
-        return (<div>
-            Loading
-        {loginWithRedirect()}
-        </div>)
-    }
-    if (isAuthenticated && !isLoading && user)
+    
         return (
             <React.Fragment >
                 <CssBaseline />
@@ -163,16 +138,6 @@ export default function MovieBooking(props) {
                             <GridContainer justify="center">
                                 <GridItem xs={12} sm={12} md={6}>
                                     <div className={classes.profile}>
-                                        <div>
-                                            {/* <img src={movie.posterLink} alt="..." className={imageClasses} /> */}
-                                        </div>
-                                        <div className={classes.name}>
-
-                                            {/* <Button justIcon link className={classes.margin5}>
-                        <i className={"fab fa-twitter"} />
-                        test
-                    </Button> */}
-                                        </div>
                                     </div>
                                 </GridItem>
                             </GridContainer>
@@ -180,7 +145,6 @@ export default function MovieBooking(props) {
                                 <Container
                                     class="mainBGcolor"
                                 >
-                                    {/* <div class="bg-image" style={{ backgroundImage: `url(${movie.posterLink})` }}></div> */}
                                     <div class="bg-text">
                                         <Grid container className={classes.mainGrid}>
                                             <Card className={classes.root}>
@@ -231,28 +195,12 @@ export default function MovieBooking(props) {
                                             {/* <Main title="From the firehose" posts={posts} /> */}
                                            
                                             <Sidebar
-                            title={sidebar.title}
-                            description={sidebar.description}
-                            movieId={props.match.params.movie}
-                        />
+                                            title={sidebar.title}
+                                            description={sidebar.description}
+                                            movieId={props.match.params.movie}
+                                            />
                                         </Grid>
-                                        {/* tabs about the movie */}
-                                        {/* <Toolbar component="nav" variant="dense" className={classes.toolbarSecondary}>
-                        {sections.map((section) => (
-                            <Link
-                                color="inherit"
-                                noWrap
-                                key={section.title}
-                                variant="body2"
-                                href={section.url}
-                                className={classes.toolbarLink}
-                            >
-                                {section.title}
-                                {section.text}
-                            </Link>
-                        ))}
-                    </Toolbar> */}
-                                        {/* </main> */}
+                                        
 
                                     </div>
                                 </Container>
