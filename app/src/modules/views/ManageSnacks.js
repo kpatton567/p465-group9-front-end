@@ -137,6 +137,8 @@ export default function ManageMovies() {
       .catch(function (error) {
         console.log(error);
       });
+      snackName = ""
+      snackPrice = ""
   }
   const fixedHeightPaper = clsx(classes.paper, classes.fixedHeight);
   return (
@@ -172,7 +174,7 @@ export default function ManageMovies() {
               <form onSubmit={handleSubmit2} className={classes.form} noValidate >
                 <GridContainer justify="center" spacing={2} maxWidth="sm" className={classes.margin}>
                   <Grid container spacing={2}>
-                    <Grid item xs={6}>
+                    <Grid item xs={12}>
                       <Field
                         autoFocus
                         component={RFTextField}
@@ -185,7 +187,7 @@ export default function ManageMovies() {
                         required
                       />
                     </Grid>
-                    <Grid item xs={6}>
+                    <Grid item xs={12}>
                       <Field
                         component={RFTextField}
                         id="snackPrice"

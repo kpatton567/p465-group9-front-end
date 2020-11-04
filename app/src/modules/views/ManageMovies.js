@@ -147,6 +147,10 @@ export default function ManageMovies() {
       .catch(function (error) {
         console.log(error);
       });
+      movieTitle = ""
+      movieDesc = ""
+      movieGenre = ""
+      movieURL = ""
   }
   const fixedHeightPaper = clsx(classes.paper, classes.fixedHeight);
   return (
