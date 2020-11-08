@@ -10,7 +10,6 @@ import List from '@material-ui/core/List';
 import Typography from '@material-ui/core/Typography';
 import Divider from '@material-ui/core/Divider';
 import IconButton from '@material-ui/core/IconButton';
-
 import Container from '@material-ui/core/Container';
 import ChevronLeftIcon from '@material-ui/icons/ChevronLeft';
 import NotificationsIcon from '@material-ui/icons/Notifications';
@@ -23,7 +22,7 @@ import GridContainer from "../components/GridContainer.js";
 import Grid from '@material-ui/core/Grid';
 import FormButton from '.././form/FormButton';
 import axios from 'axios';
-import  { ACCESS_TOKEN_NAME,apiVariables } from '../../APIConstants';
+import { ACCESS_TOKEN_NAME, apiVariables } from '../../APIConstants';
 const drawerWidth = 250;
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -65,7 +64,7 @@ const useStyles = makeStyles((theme) => ({
   },
   drawerPaper: {
     position: 'relative',
-    backgroundColor: '#363636',
+    backgroundColor: '#0c0c0c',
     // whiteSpace: 'nowrap',
     width: drawerWidth,
     transition: theme.transitions.create('width', {
@@ -86,13 +85,17 @@ const useStyles = makeStyles((theme) => ({
   },
   appBarSpacer: theme.mixins.toolbar,
   content: {
-    flexGrow: 1,
+    flexGrow: 3,
     height: '100vh',
-    overflow: 'auto',
+    // overflow: 'auto',
   },
+  
   container: {
     paddingTop: theme.spacing(4),
     paddingBottom: theme.spacing(4),
+  },
+  dividerColor: {
+    backgroundColor: '#800000',
   },
   paper: {
     padding: theme.spacing(1),
@@ -106,6 +109,11 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 export default function ManageMovies() {
+  const styles = theme => ({
+    multilineColor:{
+        color:'#800000'
+    }
+});
   var token = localStorage.getItem(ACCESS_TOKEN_NAME);
   const [movieTitle, setmovieTitle] = React.useState('');
   const [movieDesc, setmovieDesc] = React.useState('');
@@ -136,22 +144,27 @@ export default function ManageMovies() {
       "movieURL": movieURL,
       "movieGenre": movieGenre
     }
-    axios.post((apiVariables.apiUrl + '/api/manage/add_movie'), payload,{
+    axios.post((apiVariables.apiUrl + '/api/manage/add_movie'), payload, {
       headers: {
         "Authorization": 'Bearer ' + token
       }
     })
       .then(function (response) {
-        
+
       })
       .catch(function (error) {
         console.log(error);
       });
-      setmovieDesc("")
-      setmovieTitle("")
-      setmovieGenre("")
-      setmovieURL("")
+    setmovieDesc("")
+    setmovieTitle("")
+    setmovieGenre("")
+    setmovieURL("")
   }
+  // const styles = StyleSheet.create({
+  //   textInput: {
+  //    color: '#800000',
+  //   },
+  //  });
   const fixedHeightPaper = clsx(classes.paper, classes.fixedHeight);
   return (
     <div className={classes.root}>
@@ -173,78 +186,89 @@ export default function ManageMovies() {
             <ChevronLeftIcon />
           </IconButton>
         </div>
-        <Divider />
+        
         <List>{mainListItems}</List>
-        <Divider />
+        
+        <Divider classes={{root: classes.dividerColor}}/>
       </Drawer>
       <main className={classes.content}
-        style={{ background: '#808080' }}>
+        style={{ background: '#0c0c0c' }}>
         <div className={classes.appBarSpacer} />
-        <Container maxWidth="lg" className={classes.container}>
+        <Container maxWidth="sm" className={classes.container}>
           <Form onSubmit={handleSubmit} subscription={{ submitting: true }} >
             {({ handleSubmit2, submitting }) => (
               <form onSubmit={handleSubmit2} className={classes.form} noValidate >
-                <GridContainer justify="center" spacing={2} maxWidth="sm" className={classes.margin}>
-                  <Grid container spacing={5}>
-                    <Grid item xs={12}>
+                <GridContainer spacing={2} fixed className={classes.margin}>
+                  <Grid container spacing={2} alignItems="flex-start" direction = "collumn" justify = "left">
+                    <Grid item xs={10}>
                       <Field
                         autoFocus
-                        defaultValue={movieTitle} 
+                        color = "secondary"
+                        defaultValue={movieTitle}
                         onChange={event => setmovieTitle(event.target.value)}
                         component={RFTextField}
                         id="movieTitle"
                         name="movieTitle"
                         label="Movie Title"
-                        
                         fullWidth
                         required
                       />
                     </Grid>
-                    <Grid item xs={12}>
+                    <Grid item xs={10}>
                       <Field
+                        color = "secondary"
+                        backgroundColor = "secondary"
                         component={RFTextField}
                         id="movieDesc"
                         name="movieDesc"
                         label="Movie Description"
-                        defaultValue={movieDesc} 
+                        defaultValue={movieDesc}
                         onChange={event => setmovieDesc(event.target.value)}
                         fullWidth
                         required
                       />
                     </Grid>
-                    <Grid item xs={12}>
+                    <Grid item xs={10}>
                       <Field
+                        color = "secondary"
+                        backgroundColor = "secondary"
                         component={RFTextField}
                         id="movieGenre"
                         name="movieGenre"
                         label="Movie Genre"
-                        defaultValue={movieGenre} 
+                        defaultValue={movieGenre}
                         onChange={event => setmovieGenre(event.target.value)}
                         fullWidth
-                        required
                       />
                     </Grid>
-                    <Grid item xs={12}>
+                    <Grid item xs={10}>
                       <Field
+                        color = "secondary"
+                        backgroundColor = "secondary"
                         component={RFTextField}
                         id="URL"
                         name="movieURL"
                         label="Movie URL"
-                        defaultValue={movieURL} 
+                        defaultValue={movieURL}
                         onChange={event => setmovieURL(event.target.value)}
                         fullWidth
                         required
                       />
                     </Grid>
-                    <FormButton
-                      className={classes.button}
-                      disabled={submitting || sent}
-                      onClick={handleSubmitClick}
-                      fullWidth
-                      className={classes.button}
-                    >
-                      Add Movie
-                    </FormButton>
+                    
+                    <Grid item xs={10}justify="center">
+                      <FormButton
+                        color = "secondary"
+                        backgroundColor = "secondary"
+                        className={classes.button}
+                        disabled={submitting || sent}
+                        onClick={handleSubmitClick}
+                        fullWidth
+                        className={classes.button}
+                      >
+                          Add Movie
+                      </FormButton>
+                    </Grid> 
                   </Grid>
                   <FormSpy subscription={{ submitError: true }}>
                     {({ submitError }) =>
