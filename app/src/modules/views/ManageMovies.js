@@ -112,7 +112,10 @@ export default function ManageMovies() {
   const styles = theme => ({
     multilineColor:{
         color:'#800000'
-    }
+    },
+    setFontSizeTwo: {
+      fontSize: 50
+    },
 });
   var token = localStorage.getItem(ACCESS_TOKEN_NAME);
   const [movieTitle, setmovieTitle] = React.useState('');
@@ -201,6 +204,7 @@ export default function ManageMovies() {
                 <GridContainer spacing={2} fixed className={classes.margin}>
                   <Grid container spacing={2} alignItems="flex-start" direction = "collumn" justify = "left">
                     <Grid item xs={10}>
+                    <h6 style={{ color: '#800000' }}>Movie Title*</h6>
                       <Field
                         autoFocus
                         color = "secondary"
@@ -209,19 +213,19 @@ export default function ManageMovies() {
                         component={RFTextField}
                         id="movieTitle"
                         name="movieTitle"
-                        label="Movie Title"
+                        style={styles.setFontSizeTwo}
                         fullWidth
                         required
                       />
                     </Grid>
                     <Grid item xs={10}>
+                    <h6 style={{ color: '#800000' }}>Movie Description*</h6>
                       <Field
                         color = "secondary"
                         backgroundColor = "secondary"
                         component={RFTextField}
                         id="movieDesc"
                         name="movieDesc"
-                        label="Movie Description"
                         defaultValue={movieDesc}
                         onChange={event => setmovieDesc(event.target.value)}
                         fullWidth
@@ -229,26 +233,26 @@ export default function ManageMovies() {
                       />
                     </Grid>
                     <Grid item xs={10}>
+                    <h6 style={{ color: '#800000' }}>Movie Genre*</h6>
                       <Field
                         color = "secondary"
                         backgroundColor = "secondary"
                         component={RFTextField}
                         id="movieGenre"
                         name="movieGenre"
-                        label="Movie Genre"
                         defaultValue={movieGenre}
                         onChange={event => setmovieGenre(event.target.value)}
                         fullWidth
                       />
                     </Grid>
                     <Grid item xs={10}>
+                    <h6 style={{ color: '#800000' }}>Movie URL*</h6>
                       <Field
                         color = "secondary"
                         backgroundColor = "secondary"
                         component={RFTextField}
                         id="URL"
                         name="movieURL"
-                        label="Movie URL"
                         defaultValue={movieURL}
                         onChange={event => setmovieURL(event.target.value)}
                         fullWidth
@@ -265,8 +269,9 @@ export default function ManageMovies() {
                         onClick={handleSubmitClick}
                         fullWidth
                         className={classes.button}
+                        title = "Click Here To Add Movie"
                       >
-                          Add Movie
+                        Click Here To Add Movie
                       </FormButton>
                     </Grid> 
                   </Grid>

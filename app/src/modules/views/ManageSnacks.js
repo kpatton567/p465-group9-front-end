@@ -66,12 +66,15 @@ const useStyles = makeStyles((theme) => ({
   drawerPaper: {
     position: 'relative',
     // whiteSpace: 'nowrap',
-    backgroundColor: '#363636',
+    backgroundColor: '#0c0c0c',
     width: drawerWidth,
     transition: theme.transitions.create('width', {
       easing: theme.transitions.easing.sharp,
       duration: theme.transitions.duration.enteringScreen,
     }),
+  },
+  dividerColor: {
+    backgroundColor: '#800000',
   },
   drawerPaperClose: {
     overflowX: 'hidden',
@@ -161,53 +164,61 @@ export default function ManageMovies() {
             <ChevronLeftIcon />
           </IconButton>
         </div>
-        <Divider />
+        <Divider classes={{root: classes.dividerColor}}/>
         <List>{mainListItems}</List>
-        <Divider />
+        <Divider classes={{root: classes.dividerColor}}/>
       </Drawer>
       <main className={classes.content}
-        style={{ background: '#808080' }}>
+        style={{ background: '#0c0c0c' }}>
         <div className={classes.appBarSpacer} />
-        <Container maxWidth="lg" className={classes.container}>
+        <Container maxWidth="sm" className={classes.container}>
           <Form onSubmit={handleSubmit} subscription={{ submitting: true }} >
             {({ handleSubmit2, submitting }) => (
               <form onSubmit={handleSubmit2} className={classes.form} noValidate >
-                <GridContainer justify="center" spacing={2} maxWidth="sm" className={classes.margin}>
-                  <Grid container spacing={2}>
-                    <Grid item xs={12}>
+                <GridContainer spacing={3} fixed>
+                  <Grid container spacing={3} alignItems="flex-start" direction = "collumn" justify = "left">
+                    <Grid item xs={10} justify = "left">
+                      <h6 style={{ color: '#800000' }}>Snack Name*</h6>
                       <Field
                         autoFocus
                         component={RFTextField}
+                        color = "secondary"
                         id="snackName"
                         name="snackName"
-                        label="Snack Name"
+                        variant="outlined"
                         defaultValue={snackName}
                         onChange={event => setsnackName(event.target.value)}
                         fullWidth
                         required
                       />
                     </Grid>
-                    <Grid item xs={12}>
+                    <Grid item xs={10}>
+                      <h6 style={{ color: '#800000' }}>Snack Price*</h6>
                       <Field
+                      
                         component={RFTextField}
+                        color = "secondary"
+                        variant="outlined"
                         id="snackPrice"
                         name="snackPrice"
-                        label="Snack Price"
                         defaultValue={snackPrice}
                         onChange={event => setsnackPrice(event.target.value)}
                         fullWidth
                         required
                       />
                     </Grid>
-                    <FormButton
-                      className={classes.button}
-                      disabled={submitting || sent}
-                      onClick={handleSubmitClick}
-                      fullWidth
-                      className={classes.button}
-                    >
-                      Add Snack
-                  </FormButton>
+                    <Grid item xs={10}justify="center">
+                      <FormButton
+                        color = "secondary"
+                        className={classes.button}
+                        disabled={submitting || sent}
+                        onClick={handleSubmitClick}
+                        fullWidth
+                        className={classes.button}
+                      >
+                        Add Snack
+                    </FormButton>
+                  </Grid>
                   </Grid>
                   <FormSpy subscription={{ submitError: true }}>
                     {({ submitError }) =>
