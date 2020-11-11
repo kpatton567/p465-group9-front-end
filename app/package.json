@@ -1,69 +1,68 @@
 {
-  "name": "prevue-frontend",
-  "version": "0.1.0",
+  "name": "paper-kit-react",
+  "version": "1.2.0",
   "private": true,
   "dependencies": {
     "@auth0/auth0-react": "^1.1.0",
-    "@instacart/radium": "^0.26.6",
+    "@cometchat-pro/chat": "^2.1.4",
     "@material-ui/core": "^4.11.0",
-    "@material-ui/icons": "^4.9.1",
-    "@material-ui/lab": "^4.0.0-alpha.56",
-    "@material-ui/styles": "^4.10.0",
-    "@material/react-chips": "^0.15.0",
-    "@reduxjs/toolkit": "^1.4.0",
-    "@testing-library/jest-dom": "^4.2.4",
-    "@testing-library/react": "^9.5.0",
-    "@testing-library/user-event": "^7.2.1",
-    "auth0-js": "^9.14.0",
-    "axios": "^0.20.0",
-    "bootstrap": "^4.5.2",
-    "chart.js": "^2.9.3",
-    "classnames": "^2.2.6",
-    "clsx": "^1.1.1",
-    "date-fns": "^2.16.1",
-    "final-form": "^4.20.1",
-    "ic-snacks": "0.0.156",
-    "markdown-to-jsx": "^7.0.1",
-    "material-ui": "^0.20.2",
-    "material-ui-icons": "^1.0.0-beta.36",
-    "prop-types": "^15.7.2",
-    "react": "^16.13.1",
-    "react-chartjs-2": "^2.10.0",
-    "react-dom": "^16.13.1",
-    "react-final-form": "^6.5.1",
-    "react-json-pretty": "^2.2.0",
-    "react-native": "^0.63.3",
-    "react-perfect-scrollbar": "^1.5.8",
+    "auth0": "^2.30.0",
+    "axios": "^0.21.0",
+    "bootstrap": "^4.5.3",
+    "classnames": "2.2.6",
+    "events": "^3.2.0",
+    "express": "^4.17.1",
+    "mdbreact": "^4.27.0",
+    "moment": "2.26.0",
+    "next": "^10.0.1",
+    "node-sass": "4.14.1",
+    "nouislider": "14.5.0",
+    "pusher-js": "^7.0.1",
+    "react": "16.13.1",
+    "react-bootstrap": "^1.4.0",
+    "react-bootstrap-switch": "15.5.3",
+    "react-chat-widget": "^3.0.5",
+    "react-datetime": "2.16.3",
+    "react-dom": "16.13.1",
+    "react-google-maps": "^9.4.5",
+    "react-md-spinner": "^1.0.0",
+    "react-notification-alert": "0.0.12",
+    "react-responsive-carousel": "^3.2.10",
+    "react-router": "5.2.0",
     "react-router-dom": "^5.2.0",
-    "react-scripts": "3.4.3",
-    "react-seat-picker": "^1.5.3",
-    "react-swipeable-views": "^0.13.9",
-    "react-tap-event-plugin": "^3.0.3",
-    "react-tooltip": "^4.2.10",
-    "react-transition-group": "^4.4.1",
-    "reactstrap": "^8.6.0",
-    "recharts": "^1.8.5",
-    "validator": "^13.1.17"
+    "react-scripts": "3.4.1",
+    "react-slick": "^0.27.13",
+    "reactstrap": "8.4.1",
+    "stream-chat": "^2.7.4",
+    "stream-chat-react": "^3.2.2"
   },
   "scripts": {
     "start": "react-scripts start",
-    "build": "react-scripts build",
+    "build": "react-scripts build && gulp licenses",
     "test": "react-scripts test",
-    "eject": "react-scripts eject"
+    "eject": "react-scripts eject",
+    "install:clean": "rm -rf node_modules/ && rm -rf package-lock.json && npm install && npm start",
+    "compile-sass": "node-sass src/assets/scss/paper-kit.scss src/assets/css/paper-kit.css",
+    "minify-sass": "node-sass src/assets/scss/paper-kit.scss src/assets/css/paper-kit.min.css --output-style compressed",
+    "map-sass": "node-sass src/assets/scss/paper-kit.scss src/assets/css/paper-kit.css --source-map true"
   },
   "eslintConfig": {
     "extends": "react-app"
   },
-  "browserslist": {
-    "production": [
-      ">0.2%",
-      "not dead",
-      "not op_mini all"
-    ],
-    "development": [
-      "last 1 chrome version",
-      "last 1 firefox version",
-      "last 1 safari version"
-    ]
+
+  "browserslist": [
+    ">0.2%",
+    "not dead",
+    "not ie <= 11",
+    "not op_mini all"
+   ],
+   "proxy": "http://localhost:5000",
+   
+  "optionalDependencies": {
+    "typescript": "3.9.5"
+  },
+  "devDependencies": {
+    "gulp": "4.0.2",
+    "gulp-append-prepend": "1.0.8"
   }
 }
