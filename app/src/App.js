@@ -15,19 +15,24 @@ import NucleoIcons from "views/NucleoIcons.js";
 import LandingPage from "views/examples/LandingPage.js";
 import ProfilePage from "views/examples/ProfilePage.js";
 import RewardsPage from "views/examples/RewardsPage.js";
+import MoviesPage from "views/examples/MoviesPage.js";
 import Manager from "./layouts/Manager";
 import MovieBookingPage from "views/examples/MovieBookingPage";
 // others
-function App() {
+
+
+function App() 
+{
   return (
 
     <Router>
       {/* Public View Options */}
       <Route path="/" exact={true}><LandingPage /></Route>
+      <Route path='/movies'><MoviesPage/></Route>
 
       {/* Customer View Options */}
-      <Route path='/profile-page'><ProfilePage /></Route>
-      <Route path='/rewards-page'><RewardsPage /></Route>
+      <Route path='/profile'><ProfilePage /></Route>
+      <Route path='/rewards'><RewardsPage/></Route>
       {/* <Route path='/bookingHistory'><BookingHistoryPage/></Route> */}
 
       {/* Manager View Options */}
