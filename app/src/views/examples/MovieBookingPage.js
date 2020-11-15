@@ -67,11 +67,17 @@ function MovieBookingPage(props) {
               Genre
             </PaginationLink>
           </PaginationItem>
-        </Pagination>
+        </Pagination>              
         <h1 className="banner_description" title={movie.description}>{truncate(movie.description, 150)}</h1>
         <div className = "banner_buttons">
           {/* <button className="banner_button" href="">Book Tickets</button> */}
           <Button onClick={handleClickOpen} className="banner_button" >Book Tickets</Button>
+          <Button
+            href="/movies"
+          >
+            {'MORE MOVIES'}
+          </Button>
+                            
       <Modal disableBackdropClick disableEscapeKeyDown isOpen={open} >
       {/* <CancelIcon onClick={handleClose} style={{ cursor: 'pointer', marginTop: '10px', width: '40px'}} /> */}
       <i class="nc-icon nc-simple-remove"  onClick={handleClose} style={{ cursor: 'pointer', marginTop: '10px', width: '40px'}}/>
