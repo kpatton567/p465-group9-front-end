@@ -205,7 +205,6 @@ export default function ExamplesNavbar() {
             href="/"
             // target="_blank"
             // title="Coded by Creative Tim"
-            // tag={Link}
           >
             PreVue
           </NavbarBrand>
