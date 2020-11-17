@@ -20,6 +20,7 @@ import { apiVariables, ACCESS_TOKEN_NAME } from '../../APIConstants';
 import Snackbar from '@material-ui/core/Snackbar';
 import { withRouter } from 'react-router';
 import { useAuth0 } from '@auth0/auth0-react';
+import { Link } from 'react-router-dom';
 import {
     Button, Container} from "reactstrap";
 
@@ -86,7 +87,6 @@ function Checkout(props) {
     const movieId = props.movieId;
     const [alertOpen, setAlertOpen] = React.useState(false);
     const { loginWithRedirect, isAuthenticated, user } = useAuth0();
-
     const fetchData = React.useCallback(() => {
         axios({
           "method": "POST",
@@ -195,11 +195,6 @@ function Checkout(props) {
                                 />
                             </Grid>
                             <Grid item xs={12} md={6}>
-
-                                {/* <TextField required
-                                    id="expDate" format={'MM/YY'} inputType="number"
-                                    label="Expiry date (mm/yy)"
-                                    inputProps={{ maxLength: 5 }} fullWidth autoComplete="cc-exp" /> */}
                                 <Input fullWidth style={{paddingTop:"15px"}}label="Expiration Date" type="month" name="exp_date" />
 
                             </Grid>
@@ -393,6 +388,8 @@ function Checkout(props) {
                 </Button>
                                         )}
 
+                                        {/* <Link style={{ marginRight: 'auto'}} to={props.isCustomer ? '/client' : ''} >Questions? Contact us</Link> */}
+                                        <Link style={{ marginRight: 'auto'}} to= '/client'  >Questions? Contact us</Link>
 
                                         <Button
                                             variant="contained"

@@ -3,20 +3,19 @@ import ExamplesNavbar from "components/Navbars/ExamplesNavbar.js";
 import '../styles/MovieBookingPage.scss'
 // reactstrap components
 import {
-  Button, Container, Row, Col, NavItem,
-  NavLink,
-  Nav, Pagination,Modal,
+  Button,
+  Pagination,Modal,
   PaginationItem,
   PaginationLink,
-  Card, CardImg, CardText, CardBody, CardTitle, CardSubtitle
 } from "reactstrap";
-
-// core components
 import { useAuth0 } from '@auth0/auth0-react';
+
 import axios from 'axios';
-import  { apiVariables } from '../../APIConstants';
+import  { apiVariables, ACCESS_TOKEN_NAME  } from '../../APIConstants';
 // import CancelIcon from '@material-ui/icons/Cancel';
 import Checkout from './Checkout';
+import { CometChat } from '@cometchat-pro/chat';
+import { COMETCHAT_CONSTANTS } from '../../consts';
 
 function MovieBookingPage(props) {
   const [open, setOpen] = React.useState(false);
@@ -25,6 +24,40 @@ function MovieBookingPage(props) {
   }
   let [movie, setMovie] = React.useState('');
   let [genres, setGenres] = React.useState([]);
+  const {user} = useAuth0();
+  const [isCustomer, setIsCustomer] = React.useState(false);
+
+  if(user){
+    CometChat.login(user.sub.substring(6),COMETCHAT_CONSTANTS .API_KEY).then(
+      User => {
+          console.log("Login Successful:", { User });
+          // User logged in successfully.
+      },
+      error => {
+          console.log("Login failed with exception:", { error });
+          // User login failed, check error and take appropriate action.
+      }
+      );
+  }
+  if(user){
+    var token = localStorage.getItem(ACCESS_TOKEN_NAME)
+    const body = {};
+      axios.post(apiVariables.apiUrl +'/api/auth/user_role', body, {
+        headers: {
+            'Authorization': 'Bearer ' + token
+        }
+        }).then(function (response) {
+            if(response.status === 200){
+              if(response.data == 'ROLE_CUSTOMER'){
+                setIsCustomer(true);
+              }
+            }
+        })
+        .catch(function (error) {
+            console.log(error);
+        });
+  }
+
   const fetchData = React.useCallback(() => {
     axios({
       "method": "GET",
@@ -37,6 +70,7 @@ function MovieBookingPage(props) {
       .catch((error) => {
         console.log(error)
       })
+      
   }, [])
   React.useEffect(() => {
     fetchData()
@@ -45,10 +79,12 @@ function MovieBookingPage(props) {
   const handleClickOpen = () => {
     setOpen(true);
   };
-
   const handleClose = () => {
     setOpen(false);
   };
+  const handleClickChatOpen = () => {
+    
+  }
   if(movie)
   return (
     <div className="mainBGcolor ">
@@ -70,15 +106,16 @@ function MovieBookingPage(props) {
         </Pagination>
         <h1 className="banner_description" title={movie.description}>{truncate(movie.description, 150)}</h1>
         <div className = "banner_buttons">
-          {/* <button className="banner_button" href="">Book Tickets</button> */}
-          <Button onClick={handleClickOpen} className="banner_button" >Book Tickets</Button>
+        <Button onClick={handleClickOpen} className="banner_button" >Book Tickets</Button>
+        
       <Modal disableBackdropClick disableEscapeKeyDown isOpen={open} >
-      {/* <CancelIcon onClick={handleClose} style={{ cursor: 'pointer', marginTop: '10px', width: '40px'}} /> */}
-      <i class="nc-icon nc-simple-remove"  onClick={handleClose} style={{ cursor: 'pointer', marginTop: '10px', width: '40px'}}/>
-        <Checkout movieId={props.match.params.movie}/>
+      <i class="nc-icon nc-simple-remove"  onClick={handleClose} style={{ cursor: 'pointer', marginTop: '10px', width: '40px', marginLeft: 'auto'}}/>
+        <Checkout movieId={props.match.params.movie} isCustomer={isCustomer}/>
       </Modal>
+      
         </div>
       </div>
+      
       <div className="banner_fadeBottom"/>
     </header> 
     </div>

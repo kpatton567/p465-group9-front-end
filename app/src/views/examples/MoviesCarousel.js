@@ -100,7 +100,7 @@ export default function MoviesCarousel(){
                 <MDBCardBody>
                   <MDBCardTitle>{images[0].title}</MDBCardTitle>
                   <MDBCardText>{images[0].description}</MDBCardText>
-                  <MDBBtn color="primary" href={`/moviebooking-page/${images[0].id}`}>Book Tickets</MDBBtn>
+                  <MDBBtn color="primary" href={`/movieBooking/${images[0].id}`}>Book Tickets</MDBBtn>
                 </MDBCardBody>
               </MDBCard>
               </MDBCol>
@@ -110,7 +110,7 @@ export default function MoviesCarousel(){
                 <MDBCardBody>
                   <MDBCardTitle>{images[1].title}</MDBCardTitle>
                   <MDBCardText>{images[1].description}</MDBCardText>
-                  <MDBBtn color="primary" href={`/moviebooking-page/${images[1].id}`}>Book Tickets</MDBBtn>
+                  <MDBBtn color="primary" href={`/movieBooking/${images[1].id}`}>Book Tickets</MDBBtn>
                 </MDBCardBody>
               </MDBCard>
             </MDBCol>
@@ -120,7 +120,7 @@ export default function MoviesCarousel(){
                 <MDBCardBody>
                 <MDBCardTitle>{images[2].title}</MDBCardTitle>
                   <MDBCardText>{images[2].description}</MDBCardText>
-                  <MDBBtn color="primary" href={`/moviebooking-page/${images[2].id}`}>Book Tickets</MDBBtn>
+                  <MDBBtn color="primary" href={`/movieBooking/${images[2].id}`}>Book Tickets</MDBBtn>
                 </MDBCardBody>
               </MDBCard>
             </MDBCol>
@@ -134,7 +134,7 @@ export default function MoviesCarousel(){
                 <MDBCardBody>
                 <MDBCardTitle>{images[3].title}</MDBCardTitle>
                   <MDBCardText>{images[3].description}</MDBCardText>
-                  <MDBBtn color="primary" href={`/moviebooking-page/${images[3].id}`}>Book Tickets</MDBBtn>
+                  <MDBBtn color="primary" href={`/movieBooking/${images[3].id}`}>Book Tickets</MDBBtn>
                 </MDBCardBody>
               </MDBCard>
             </MDBCol>
@@ -144,7 +144,7 @@ export default function MoviesCarousel(){
                 <MDBCardBody>
                 <MDBCardTitle>{images[4].title}</MDBCardTitle>
                   <MDBCardText>{images[4].description}</MDBCardText>
-                  <MDBBtn color="primary" href={`/moviebooking-page/${images[4].id}`}>Book Tickets</MDBBtn>
+                  <MDBBtn color="primary" href={`/movieBooking/${images[4].id}`}>Book Tickets</MDBBtn>
                 </MDBCardBody>
               </MDBCard>
             </MDBCol>
@@ -154,7 +154,7 @@ export default function MoviesCarousel(){
                 <MDBCardBody>
                 <MDBCardTitle>{images[5].title}</MDBCardTitle>
                   <MDBCardText>{images[5].description}</MDBCardText>
-                  <MDBBtn color="primary" href={`/moviebooking-page/${images[5].id}`}>Book Tickets</MDBBtn>
+                  <MDBBtn color="primary" href={`/movieBooking/${images[5].id}`}>Book Tickets</MDBBtn>
                 </MDBCardBody>
               </MDBCard>
             </MDBCol>
@@ -168,7 +168,7 @@ export default function MoviesCarousel(){
                 <MDBCardBody>
                 <MDBCardTitle>{images[6].title}</MDBCardTitle>
                   <MDBCardText>{images[6].description}</MDBCardText>
-                  <MDBBtn color="primary" href={`/moviebooking-page/${images[6].id}`}>Book Tickets</MDBBtn>
+                  <MDBBtn color="primary" href={`/movieBooking/${images[6].id}`}>Book Tickets</MDBBtn>
                 </MDBCardBody>
               </MDBCard>
             </MDBCol>
@@ -178,7 +178,7 @@ export default function MoviesCarousel(){
                 <MDBCardBody>
                 <MDBCardTitle>{images[7].title}</MDBCardTitle>
                   <MDBCardText>{images[7].description}</MDBCardText>
-                  <MDBBtn color="primary" href={`/moviebooking-page/${images[7].id}`}>Book Tickets</MDBBtn>
+                  <MDBBtn color="primary" href={`/movieBooking/${images[7].id}`}>Book Tickets</MDBBtn>
                 </MDBCardBody>
               </MDBCard>
             </MDBCol>
@@ -188,7 +188,7 @@ export default function MoviesCarousel(){
                 <MDBCardBody>
                 <MDBCardTitle>{images[8].title}</MDBCardTitle>
                   <MDBCardText>{images[8].description}</MDBCardText>
-                  <MDBBtn color="primary" href={`/moviebooking-page/${images[8].id}`}>Book Tickets</MDBBtn>
+                  <MDBBtn color="primary" href={`/movieBooking/${images[8].id}`}>Book Tickets</MDBBtn>
                 </MDBCardBody>
               </MDBCard>
             </MDBCol>
