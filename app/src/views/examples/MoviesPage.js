@@ -19,10 +19,18 @@ import Card from '@material-ui/core/Card';
 import Typography from '../../components/Typography/Typography';
 import Link from '@material-ui/core/Link';
 import Button from '@material-ui/core/Button';
+import InputLabel from '@material-ui/core/InputLabel';
+import Select from '@material-ui/core/Select';
+import MenuItem from '@material-ui/core/MenuItem';
+import FormHelperText from '@material-ui/core/FormHelperText';
+import FormControl from '@material-ui/core/FormControl';
+import NativeSelect from '@material-ui/core/NativeSelect';
+
+
 import theme from '../theme';
 
 const cardMedia = {
-    paddingTop: '90%', // height of photo
+    paddingTop: '100%', // height of photo
 };
 const cardContent = {
     flexGrow: 1,
@@ -48,6 +56,16 @@ const button = {
     minWidth: 250,
     marginBottom: theme.spacing(4),
 };
+const formControl = {
+    margin: theme.spacing(1),
+    minWidth: 120,
+};
+const selectEmpty = {
+    marginTop: theme.spacing(2),
+};
+
+
+
 class MoviesPage extends Component {
     constructor(props) {
         super(props);
@@ -69,7 +87,10 @@ class MoviesPage extends Component {
         const { cards } = this.state;
         return (
             <>
+                {/* Header bar */}
                 <ExamplesNavbar />
+
+                {/* Page title */}
                 <ProfilePageHeader posterLink={require("assets/img/fabio-mangione.jpg")} />
                 <div className="section profile-content">
                     <Container>
@@ -79,14 +100,78 @@ class MoviesPage extends Component {
                                 <br />
                                 <h2>ALL MOVIES</h2>
                                 <br />
+                                <br />
+                                <br />
                             </Col>
                         </Row>
                         <br />
-                        <div style={{ display: 'flex',flexWrap: 'wrap' }}>
+
+                        {/* Search filters */}
+                        <div>
+                            <FormControl variant="outlined" style={formControl}>
+                                <InputLabel htmlFor="outlined-age-native-simple">Theater</InputLabel>
+                                <Select
+                                    native
+                                    //   value={state.age}
+                                    //   onChange={handleChange}
+                                    label="Age"
+                                    inputProps={{
+                                        name: 'age',
+                                        id: 'outlined-age-native-simple',
+                                    }}
+                                >
+                                    <option aria-label="None" value="" />
+                                    <option value={10}>AMC</option>
+                                    <option value={20}>IMAX</option>
+                                    <option value={30}>Carmike</option>
+                                </Select>
+                            </FormControl>
+                            <FormControl variant="filled" style={formControl}>
+                                <InputLabel htmlFor="filled-age-native-simple">Date</InputLabel>
+                                <Select
+                                    native
+                                    //   value={state.age}
+                                    //   onChange={handleChange}
+                                    inputProps={{
+                                        name: 'age',
+                                        id: 'filled-age-native-simple',
+                                    }}
+                                >
+                                    <option aria-label="None" value="" />
+                                    <option value={10}>Jan 10, 2021</option>
+                                    <option value={20}>Jan 11, 2021</option>
+                                    <option value={30}>Jan 14, 2021</option>
+                                </Select>
+                            </FormControl>
+                            <FormControl variant="filled" style={formControl}>
+                                <InputLabel htmlFor="filled-age-native-simple">Price</InputLabel>
+                                <Select
+                                    native
+                                    //   value={state.age}
+                                    //   onChange={handleChange}
+                                    inputProps={{
+                                        name: 'age',
+                                        id: 'filled-age-native-simple',
+                                    }}
+                                >
+                                    <option aria-label="None" value="" />
+                                    <option value={10}>Low Price</option>
+                                    <option value={20}>Average Price</option>
+                                    <option value={30}>Higher Price</option>
+                                </Select>
+                            </FormControl>
+                            <FormControl variant="outlined" style={formControl}>
+                               <Typography style={theme.typography2}>
+                                   Filter Results
+                               </Typography>
+                            </FormControl>
+                        </div>
+
+                        {/* All movie cards */}
+                        <div style={{ display: 'flex', flexWrap: 'wrap' }}>
                             {cards.map((card) => (
-                                <Grid item key={card} xs={12} sm={6} md={2} lg={3} style={{ margin: '10px', minWidth: '30%'}}>
-                                    {/* Create each card using array from backend */}
-                                    <Card style = {{height: '40vw'}}>
+                                <Grid item key={card} xs={12} sm={6} md={2} lg={3} style={{ margin: '10px', minWidth: '30%' }}>
+                                    <Card style={{ height: '40vw' }}>
                                         <CardMedia
                                             style={cardMedia}
                                             image={card.posterLink}
@@ -96,7 +181,6 @@ class MoviesPage extends Component {
                                                 {card.title}
                                             </Typography>
                                             <Typography>
-                                                {/* {processDescription(card.description)} */}
                                                 {card.description}
                                             </Typography>
                                         </CardContent>
@@ -111,8 +195,9 @@ class MoviesPage extends Component {
                                     </Card>
                                 </Grid>
                             ))}
-                            </div>
-                        {/* Button at bottom of page to bring user back to top of page */}
+                        </div>
+
+                        {/* Button at bottom to bring user back to top of page */}
                         <section style={root}>
                             <div style={container2}>
                                 <Button
