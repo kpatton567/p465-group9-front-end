@@ -1,11 +1,10 @@
 import React from "react";
-import { Link } from "react-router-dom";
 import classnames from "classnames";
-
+import { CometChat } from '@cometchat-pro/chat';
+import {dropMessages} from 'react-chat-widget';
 // reactstrap components
 
 import {
-  UncontrolledCollapse,
   DropdownToggle,
   Collapse,
   DropdownMenu,
@@ -20,11 +19,17 @@ import {
   Button
 } from "reactstrap";
 import { useAuth0 } from '@auth0/auth0-react';
+import { apiVariables, ACCESS_TOKEN_NAME } from '../../APIConstants';
+import axios from "axios";
 
-
-export default function ExamplesNavbar() {
+export default function ExamplesNavbar(props) {
   const [navbarColor, setNavbarColor] = React.useState("navbar-transparent");
   const [navbarCollapse, setNavbarCollapse] = React.useState(false);
+  const CUSTOMER_MESSAGE_LISTENER_KEY = ""
+  if(user){
+     CUSTOMER_MESSAGE_LISTENER_KEY = user.sub.substring(6);
+  }
+    
   const {
     isLoading,
     isAuthenticated,
@@ -39,23 +44,32 @@ export default function ExamplesNavbar() {
     document.documentElement.classList.toggle("nav-open");
   };
   const handlelogout = () => {
-    // var token = localStorage.getItem(ACCESS_TOKEN_NAME)
-    // const body = {};
-    // axios.post(apiVariables.apiUrl +'/api/auth/invalidate_token', body, {
-    // headers: {
-    //     'Authorization': 'Bearer ' + token
-    // }
-    // }).then(function (response) {
-    //     if(response.status === 200){
-    //         console.log("Invalidated token successfully!");
-    //         localStorage.clear();
-    //         props.showError(null)
-    //     }
-    // })
-    // .catch(function (error) {
-    //     console.log(error);
-    // });
-    console.log(isAuthenticated)
+    //invalidate token
+    var token = localStorage.getItem(ACCESS_TOKEN_NAME)
+    const body = {};
+    axios.post(apiVariables.apiUrl +'/api/auth/invalidate_token', body, {
+    headers: {
+        'Authorization': 'Bearer ' + token
+    }
+    }).then(function (response) {
+        if(response.status === 200){
+            console.log("Invalidated token successfully!");
+            localStorage.clear();
+            props.showError(null)
+        }
+    })
+    .catch(function (error) {
+        console.log(error);
+    });
+
+    //cometchat logout
+
+    CometChat.removeMessageListener(CUSTOMER_MESSAGE_LISTENER_KEY);
+    CometChat.logout();
+    dropMessages();
+    
+    //auth0 logout
+    console.log(isAuthenticated);
     logout();
   }
 
@@ -157,7 +171,7 @@ export default function ExamplesNavbar() {
                         className="dropdown-info"
                       >
                         <DropdownItem
-                          href="/profile-page"
+                          href="/profile"
                         >
                           Profile Page
                         </DropdownItem>
@@ -167,7 +181,7 @@ export default function ExamplesNavbar() {
                           Your Orders
                         </DropdownItem>
                         <DropdownItem
-                          href="/rewards-page"
+                          href="/rewards"
                         >
                           Rewards
                         </DropdownItem>
