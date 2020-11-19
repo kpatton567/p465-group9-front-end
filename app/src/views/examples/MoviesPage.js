@@ -25,8 +25,20 @@ import MenuItem from '@material-ui/core/MenuItem';
 import FormHelperText from '@material-ui/core/FormHelperText';
 import FormControl from '@material-ui/core/FormControl';
 import NativeSelect from '@material-ui/core/NativeSelect';
+import TextField from '@material-ui/core/TextField';
 
 import theme from '../theme';
+
+const container = {
+    display: 'flex',
+    flexWrap: 'wrap',
+};
+
+const textField = {
+    marginLeft: theme.spacing(1),
+    marginRight: theme.spacing(1),
+    width: 200,
+};
 
 const cardMedia = {
     paddingTop: '100%', // height of photo
@@ -57,9 +69,20 @@ const button = {
 };
 const formControl = {
     margin: theme.spacing(1),
-    minWidth: 120,
+    minWidth: 140,
 };
 
+const handleTheaterChange = (event) => {
+    console.log("Theater modified\n");
+};
+
+const handlePriceChange = (event) => {
+    console.log("Theater modified\n");
+};
+
+const handleDateChange = (event) => {
+    console.log("Date modified\n");
+};
 
 
 class MoviesPage extends Component {
@@ -81,13 +104,7 @@ class MoviesPage extends Component {
     }
     render() {
         const { cards } = this.state;
-
-        
-        const handleChange = (event) => {
-            console.log("Dropdown modified\n");
-          };
-        
-          return (
+        return (
             <>
                 {/* Header bar */}
                 <ExamplesNavbar />
@@ -116,7 +133,7 @@ class MoviesPage extends Component {
                                     labelId="theater-dropdown-label"
                                     id="theater-dropdown"
                                     // value={theater}
-                                    onChange={handleChange}
+                                    onChange={handleTheaterChange}
                                     label="Theater"
                                 >
                                     <MenuItem value="">
@@ -128,42 +145,40 @@ class MoviesPage extends Component {
                                 </Select>
                             </FormControl>
                             <FormControl variant="outlined" style={formControl}>
-                                <InputLabel id="date-dropdown-label">Date</InputLabel>
-                                <Select
-                                    labelId="date-dropdown-label"
-                                    id="date-dropdown"
-                                    // value={age}
-                                    onChange={handleChange}
-                                    label="Date"
-                                >
-                                    <MenuItem value="">
-                                        <em>None</em>
-                                    </MenuItem>
-                                    <MenuItem value={10}>Jan 10, 2021</MenuItem>
-                                    <MenuItem value={20}>Jan 11, 2021</MenuItem>
-                                    <MenuItem value={30}>Jan 12, 2021</MenuItem>
-                                </Select>
-                            </FormControl>
-                            <FormControl variant="outlined" style={formControl}>
-                                <InputLabel id="price-dropdown-label">Price</InputLabel>
+                                <InputLabel id="price-dropdown-label">Price Range</InputLabel>
                                 <Select
                                     labelId="price-dropdown-label"
                                     id="price-dropdown"
                                     // value={age}
-                                    onChange={handleChange}
+                                    onChange={handlePriceChange}
                                     label="Price"
                                 >
                                     <MenuItem value="">
                                         <em>None</em>
                                     </MenuItem>
-                                    <MenuItem value={10}>Low Price</MenuItem>
-                                    <MenuItem value={20}>Average Price</MenuItem>
-                                    <MenuItem value={30}>Higher Price</MenuItem>
+                                    <MenuItem value={10}>$0.00 - $4.99</MenuItem>
+                                    <MenuItem value={20}>$5.00 - $9.99 </MenuItem>
+                                    <MenuItem value={30}>$10.00 +</MenuItem>
                                 </Select>
                             </FormControl>
+                            <FormControl style={formControl}>
+                                <form style={container} noValidate>
+                                    <TextField
+                                        id="date"
+                                        label="Date"
+                                        type="date"
+                                        style={textField}
+                                        // value = {date}
+                                        onChange={handleDateChange}
+                                        InputLabelProps={{
+                                            shrink: true,
+                                        }}
+                                    />
+                                </form>
+                            </FormControl>
                             <FormControl variant="outlined" style={formControl}>
-                               <Typography style={theme.typography2}>
-                                   Filter Results
+                                <Typography style={theme.typography2}>
+                                    Filter Results
                                </Typography>
                             </FormControl>
                         </div>
