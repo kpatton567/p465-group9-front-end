@@ -26,7 +26,6 @@ import FormHelperText from '@material-ui/core/FormHelperText';
 import FormControl from '@material-ui/core/FormControl';
 import NativeSelect from '@material-ui/core/NativeSelect';
 
-
 import theme from '../theme';
 
 const cardMedia = {
@@ -60,9 +59,6 @@ const formControl = {
     margin: theme.spacing(1),
     minWidth: 120,
 };
-const selectEmpty = {
-    marginTop: theme.spacing(2),
-};
 
 
 
@@ -85,7 +81,13 @@ class MoviesPage extends Component {
     }
     render() {
         const { cards } = this.state;
-        return (
+
+        
+        const handleChange = (event) => {
+            console.log("Dropdown modified\n");
+          };
+        
+          return (
             <>
                 {/* Header bar */}
                 <ExamplesNavbar />
@@ -109,55 +111,54 @@ class MoviesPage extends Component {
                         {/* Search filters */}
                         <div>
                             <FormControl variant="outlined" style={formControl}>
-                                <InputLabel htmlFor="outlined-age-native-simple">Theater</InputLabel>
+                                <InputLabel id="theater-dropdown-label">Theater</InputLabel>
                                 <Select
-                                    native
-                                    //   value={state.age}
-                                    //   onChange={handleChange}
-                                    label="Age"
-                                    inputProps={{
-                                        name: 'age',
-                                        id: 'outlined-age-native-simple',
-                                    }}
+                                    labelId="theater-dropdown-label"
+                                    id="theater-dropdown"
+                                    // value={theater}
+                                    onChange={handleChange}
+                                    label="Theater"
                                 >
-                                    <option aria-label="None" value="" />
-                                    <option value={10}>AMC</option>
-                                    <option value={20}>IMAX</option>
-                                    <option value={30}>Carmike</option>
+                                    <MenuItem value="">
+                                        <em>None</em>
+                                    </MenuItem>
+                                    <MenuItem value={10}>AMC</MenuItem>
+                                    <MenuItem value={20}>IMAX</MenuItem>
+                                    <MenuItem value={30}>Carmike</MenuItem>
                                 </Select>
                             </FormControl>
-                            <FormControl variant="filled" style={formControl}>
-                                <InputLabel htmlFor="filled-age-native-simple">Date</InputLabel>
+                            <FormControl variant="outlined" style={formControl}>
+                                <InputLabel id="date-dropdown-label">Date</InputLabel>
                                 <Select
-                                    native
-                                    //   value={state.age}
-                                    //   onChange={handleChange}
-                                    inputProps={{
-                                        name: 'age',
-                                        id: 'filled-age-native-simple',
-                                    }}
+                                    labelId="date-dropdown-label"
+                                    id="date-dropdown"
+                                    // value={age}
+                                    onChange={handleChange}
+                                    label="Date"
                                 >
-                                    <option aria-label="None" value="" />
-                                    <option value={10}>Jan 10, 2021</option>
-                                    <option value={20}>Jan 11, 2021</option>
-                                    <option value={30}>Jan 14, 2021</option>
+                                    <MenuItem value="">
+                                        <em>None</em>
+                                    </MenuItem>
+                                    <MenuItem value={10}>Jan 10, 2021</MenuItem>
+                                    <MenuItem value={20}>Jan 11, 2021</MenuItem>
+                                    <MenuItem value={30}>Jan 12, 2021</MenuItem>
                                 </Select>
                             </FormControl>
-                            <FormControl variant="filled" style={formControl}>
-                                <InputLabel htmlFor="filled-age-native-simple">Price</InputLabel>
+                            <FormControl variant="outlined" style={formControl}>
+                                <InputLabel id="price-dropdown-label">Price</InputLabel>
                                 <Select
-                                    native
-                                    //   value={state.age}
-                                    //   onChange={handleChange}
-                                    inputProps={{
-                                        name: 'age',
-                                        id: 'filled-age-native-simple',
-                                    }}
+                                    labelId="price-dropdown-label"
+                                    id="price-dropdown"
+                                    // value={age}
+                                    onChange={handleChange}
+                                    label="Price"
                                 >
-                                    <option aria-label="None" value="" />
-                                    <option value={10}>Low Price</option>
-                                    <option value={20}>Average Price</option>
-                                    <option value={30}>Higher Price</option>
+                                    <MenuItem value="">
+                                        <em>None</em>
+                                    </MenuItem>
+                                    <MenuItem value={10}>Low Price</MenuItem>
+                                    <MenuItem value={20}>Average Price</MenuItem>
+                                    <MenuItem value={30}>Higher Price</MenuItem>
                                 </Select>
                             </FormControl>
                             <FormControl variant="outlined" style={formControl}>
