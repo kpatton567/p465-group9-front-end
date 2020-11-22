@@ -12,6 +12,7 @@ import NucleoIcons from "views/NucleoIcons.js";
 import LandingPage from "views/examples/LandingPage.js";
 import ProfilePage from "views/examples/ProfilePage.js";
 import RewardsPage from "views/examples/RewardsPage.js";
+import MoviesPage from "views/examples/MoviesPage.js";
 import Manager from "./layouts/Manager";
 import MovieBookingPage from "views/examples/MovieBookingPage";
 import CometChatApp from "views/examples/CometChatApp";
@@ -22,6 +23,7 @@ import Client from 'views/examples/Client';
 import ContactPage from 'views/examples/ContactPage';
 import KitchenSinkApp from './CometChat/defaultPages/KitchenSinkApp';
 import HomePage from './CometChat/defaultPages/HomePage';
+import RegisterPage from 'views/examples/RegisterPage'
 import {
   CometChatConversationList,
   CometChatUserList,
@@ -39,14 +41,16 @@ function App() {
       {/* Public View Options */}
       <Route path="/" exact={true}><LandingPage /></Route>
       <Route path="/index"><Index/></Route>
+      <Route path='/movies'><MoviesPage/></Route>
+
       {/* Customer View Options */}
-      <Route path='/profile-page'><ProfilePage /></Route>
-      <Route path='/rewards-page'><RewardsPage /></Route>
+      <Route path='/profile'><ProfilePage /></Route>
+      <Route path='/rewards'><RewardsPage /></Route>
       <Route path='/nucleo-icons'><NucleoIcons /></Route>
       {/* <Route path='/bookingHistory'><BookingHistoryPage/></Route> */}
 
       {/* Manager View Options */}
-      {/* <Route path= '/registerTheater'><RegisterTheater/></Route>  */}
+      <Route path= '/registerTheater'><RegisterPage/></Route> 
       <Route
         path="/manager"
         render={(props) => <Manager {...props} />}

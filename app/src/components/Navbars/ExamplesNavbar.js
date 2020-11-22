@@ -171,7 +171,7 @@ export default function ExamplesNavbar(props) {
                         className="dropdown-info"
                       >
                         <DropdownItem
-                          href="/profile-page"
+                          href="/profile"
                         >
                           Profile Page
                         </DropdownItem>
@@ -181,7 +181,7 @@ export default function ExamplesNavbar(props) {
                           Your Orders
                         </DropdownItem>
                         <DropdownItem
-                          href="/rewards-page"
+                          href="/rewards"
                         >
                           Rewards
                         </DropdownItem>
@@ -219,7 +219,6 @@ export default function ExamplesNavbar(props) {
             href="/"
             // target="_blank"
             // title="Coded by Creative Tim"
-            // tag={Link}
           >
             PreVue
           </NavbarBrand>

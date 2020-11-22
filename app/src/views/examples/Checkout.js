@@ -20,7 +20,6 @@ import { apiVariables, ACCESS_TOKEN_NAME } from '../../APIConstants';
 import Snackbar from '@material-ui/core/Snackbar';
 import { withRouter } from 'react-router';
 import { useAuth0 } from '@auth0/auth0-react';
-import { Link } from 'react-router-dom';
 import {
     Button, Container} from "reactstrap";
 
@@ -389,8 +388,7 @@ function Checkout(props) {
                                         )}
 
                                         {/* <Link style={{ marginRight: 'auto'}} to={props.isCustomer ? '/client' : ''} >Questions? Contact us</Link> */}
-                                        <Link style={{ marginRight: 'auto'}} to= '/client'  >Questions? Contact us</Link>
-
+                                       
                                         <Button
                                             variant="contained"
                                             color="primary"

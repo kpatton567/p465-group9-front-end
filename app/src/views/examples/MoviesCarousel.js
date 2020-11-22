@@ -83,7 +83,7 @@ export default function MoviesCarousel(){
   if(images.length > 0)
   return (
     <MDBContainer>
-    <Button className="btn-round" color="neutral" type="button" style={{float:'right'}}>
+    <Button href='/movies' className="btn-round" color="neutral" type="button" style={{float:'right'}}>
                 View More
     </Button>
     <Button

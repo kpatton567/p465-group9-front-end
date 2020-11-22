@@ -45,6 +45,7 @@ function ChooseRole() {
     const handleClose = () => {
         setOpen(false);
     };
+  
     if(user){
         axios({
         "method": "POST",
@@ -68,16 +69,12 @@ function ChooseRole() {
         })
         .catch((error) => {
             console.log(error)
-        })
-
-        // CometChat.login('5f7f79850046a0006e76cab4','d8dee6a22683724af8502b02929f601f6f30f43c')
-        // .then(user => {
-        //     console.log(user+ "cometchat logged in");
-        // })
-            
+        })  
     }
+
     //cometchat signup
     if(user){
+
         fetch("https://api-us.cometchat.io/v2.0/users", {
         "method": "POST",
         "headers": {
@@ -89,10 +86,8 @@ function ChooseRole() {
         "body": "{\"uid\":\"" +user.sub.substring(6)+ "\",\"name\":\""+user.name+"\",\"role\":\"customer\"}"
         })
         .then(response => {
-        console.log(response);
         })
         .catch(err => {
-        console.error(err);
         });
     }
 

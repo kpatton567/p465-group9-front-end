@@ -23,7 +23,6 @@ import { COMETCHAT_CONSTANTS } from './consts';
 
 import reducer from './store/reducer';
 
-
 const domain = "dev-dxbzrhs3.us.auth0.com";
 const clientId = "5sKjWXaUsg0itiHJiV0YDJ4xjQE7rDP5";
 
@@ -56,7 +55,6 @@ CometChat.init(appID, appSetting).then(() => {
   },
   error => {
     console.log("Initialization failed with error:", error);
-    // Check the reason for error and take appropriate action.
   }
 );
 

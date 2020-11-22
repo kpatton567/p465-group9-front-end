@@ -59,7 +59,7 @@ function SectionExamples() {
               <Button
                 className="btn-outline-neutral btn-round"
                 color="default"
-                href="/profile-page"
+                href="/profile"
                 target="_blank"
               >
                 Profile Page
