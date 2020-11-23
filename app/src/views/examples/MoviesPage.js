@@ -72,166 +72,152 @@ const formControl = {
     minWidth: 140,
 };
 
-const handleTheaterChange = (event) => {
-    console.log("Theater modified\n");
-};
-
-const handlePriceChange = (event) => {
-    console.log("Theater modified\n");
-};
-
-const handleDateChange = (event) => {
-    console.log("Date modified\n");
-};
 
 
-class MoviesPage extends Component {
-    constructor(props) {
-        super(props);
-        this.state = {
-            cards: [],
-        };
-    }
-    componentDidMount() {
-        const fetchMovies = async () => {
-            const res = await axios.get(apiVariables.apiUrl + '/api/home/movies');
-            this.setState({ cards: res.data })
-        };
-        fetchMovies();
-    }
-    handleSubmitClick(e) {
-        console.log("Test");
-    }
-    render() {
-        const { cards } = this.state;
-        return (
-            <>
-                {/* Header bar */}
-                <ExamplesNavbar />
+function MoviesPage() 
+{   
+    const [cards, setCards] = React.useState([]);
+    const fetchData = React.useCallback(() => 
+    {
+        axios({
+            "method": "GET",
+            "url": apiVariables.apiUrl + '/api/home/movies',
+        })
+            .then((response) => {
+                setCards(response.data)
+            })
+                .catch((error) => {
+                    console.log(error)
+                })
+    }, [])
 
-                {/* Page title */}
-                <ProfilePageHeader posterLink={require("assets/img/fabio-mangione.jpg")} />
-                <div className="section profile-content">
-                    <Container>
-                        <Row>
-                            <Col className="ml-auto mr-auto text-center" md="6">
-                                <br />
-                                <br />
-                                <h2>ALL MOVIES</h2>
-                                <br />
-                                <br />
-                                <br />
-                            </Col>
-                        </Row>
-                        <br />
+    React.useEffect(() => 
+    {
+        fetchData()
+    }, [fetchData])
 
-                        {/* Search filters */}
-                        <div>
-                            <FormControl variant="outlined" style={formControl}>
-                                <InputLabel id="theater-dropdown-label">Theater</InputLabel>
-                                <Select
-                                    labelId="theater-dropdown-label"
-                                    id="theater-dropdown"
-                                    // value={theater}
-                                    onChange={handleTheaterChange}
-                                    label="Theater"
-                                >
-                                    <MenuItem value="">
-                                        <em>None</em>
-                                    </MenuItem>
-                                    <MenuItem value={10}>AMC</MenuItem>
-                                    <MenuItem value={20}>IMAX</MenuItem>
-                                    <MenuItem value={30}>Carmike</MenuItem>
-                                </Select>
-                            </FormControl>
-                            <FormControl variant="outlined" style={formControl}>
-                                <InputLabel id="price-dropdown-label">Price Range</InputLabel>
-                                <Select
-                                    labelId="price-dropdown-label"
-                                    id="price-dropdown"
-                                    // value={age}
-                                    onChange={handlePriceChange}
-                                    label="Price"
-                                >
-                                    <MenuItem value="">
-                                        <em>None</em>
-                                    </MenuItem>
-                                    <MenuItem value={10}>$0.00 - $4.99</MenuItem>
-                                    <MenuItem value={20}>$5.00 - $9.99 </MenuItem>
-                                    <MenuItem value={30}>$10.00 +</MenuItem>
-                                </Select>
-                            </FormControl>
-                            <FormControl style={formControl}>
-                                <form style={container} noValidate>
-                                    <TextField
-                                        id="date"
-                                        label="Date"
-                                        type="date"
-                                        style={textField}
-                                        // value = {date}
-                                        onChange={handleDateChange}
-                                        InputLabelProps={{
-                                            shrink: true,
-                                        }}
-                                    />
-                                </form>
-                            </FormControl>
-                            <FormControl variant="outlined" style={formControl}>
-                                <Typography style={theme.typography2}>
-                                    Filter Results
+    return (
+        <>
+            <ExamplesNavbar />
+            {/* Page title */}
+            <ProfilePageHeader posterLink={require("assets/img/fabio-mangione.jpg")} />
+            <div className="section profile-content">
+                <Container>
+                    <Row>
+                        <Col className="ml-auto mr-auto text-center" md="6">
+                            <br />
+                            <br />
+                            <h2>ALL MOVIES</h2>
+                            <br />
+                            <br />
+                            <br />
+                        </Col>
+                    </Row>
+                    <br />
+
+                    {/* Search filters */}
+                    <div>
+                        <FormControl variant="outlined" style={formControl}>
+                            <InputLabel id="theater-dropdown-label">Theater</InputLabel>
+                            <Select
+                                label="Theater"
+                                labelId="theater-dropdown-label"
+                                id="theater-dropdown"
+                            // onChange={handleTheaterChange}
+                            >
+                                <MenuItem value="">
+                                    <em>None</em>
+                                </MenuItem>
+                                <MenuItem value={10}>AMC</MenuItem>
+                                <MenuItem value={20}>IMAX</MenuItem>
+                                <MenuItem value={30}>Carmike</MenuItem>
+                            </Select>
+                        </FormControl>
+                        <FormControl variant="outlined" style={formControl}>
+                            <InputLabel id="price-dropdown-label">Price Range</InputLabel>
+                            <Select
+                                label="Price"
+                                labelId="price-dropdown-label"
+                                id="price-dropdown"
+                            // onChange={handlePriceChange}
+                            >
+                                <MenuItem value="">
+                                    <em>None</em>
+                                </MenuItem>
+                                <MenuItem value={10}>$0.00 - $4.99</MenuItem>
+                                <MenuItem value={20}>$5.00 - $9.99 </MenuItem>
+                                <MenuItem value={30}>$10.00 +</MenuItem>
+                            </Select>
+                        </FormControl>
+                        <FormControl style={formControl}>
+                            <form style={container} noValidate>
+                                <TextField
+                                    label="Date"
+                                    id="date"
+                                    type="date"
+                                    style={textField}
+                                    // onChange={handleDateChange}
+                                    InputLabelProps={{
+                                        shrink: true,
+                                    }}
+                                />
+                            </form>
+                        </FormControl>
+                        <FormControl variant="outlined" style={formControl}>
+                            <Typography style={theme.typography2}>
+                                Filter Results
                                </Typography>
-                            </FormControl>
-                        </div>
+                        </FormControl>
+                    </div>
 
-                        {/* All movie cards */}
-                        <div style={{ display: 'flex', flexWrap: 'wrap' }}>
-                            {cards.map((card) => (
-                                <Grid item key={card} xs={12} sm={6} md={2} lg={3} style={{ margin: '10px', minWidth: '30%' }}>
-                                    <Card style={{ height: '40vw' }}>
-                                        <CardMedia
-                                            style={cardMedia}
-                                            image={card.posterLink}
-                                        />
-                                        <CardContent style={cardContent}>
-                                            <Typography gutterBottom variant="h5" component="h2">
-                                                {card.title}
-                                            </Typography>
-                                            <Typography>
-                                                {card.description}
-                                            </Typography>
-                                        </CardContent>
-                                        {/* Book Tickets Button */}
-                                        <CardActions>
-                                            <Link>
-                                                <Button size="small" color="primary" href={`/moviebooking/${card.id}`}>
-                                                    {'Book Tickets'}
-                                                </Button>
-                                            </Link>
-                                        </CardActions>
-                                    </Card>
-                                </Grid>
-                            ))}
-                        </div>
+                    {/* All movie cards */}
+                    <div style={{ display: 'flex', flexWrap: 'wrap' }}>
+                        {cards.map((card) => (
+                            <Grid item key={card} xs={12} sm={6} md={2} lg={3} style={{ margin: '10px', minWidth: '30%' }}>
+                                <Card style={{ height: '40vw' }}>
+                                    <CardMedia
+                                        style={cardMedia}
+                                        image={card.posterLink}
+                                    />
+                                    <CardContent style={cardContent}>
+                                        <Typography gutterBottom variant="h5" component="h2">
+                                            {card.title}
+                                        </Typography>
+                                        <Typography>
+                                            {card.description}
+                                        </Typography>
+                                    </CardContent>
+                                    {/* Book Tickets Button */}
+                                    <CardActions>
+                                        <Link>
+                                            <Button size="small" color="primary" href={`/moviebooking/${card.id}`}>
+                                                {'Book Tickets'}
+                                            </Button>
+                                        </Link>
+                                    </CardActions>
+                                </Card>
+                            </Grid>
+                        ))}
+                    </div>
 
-                        {/* Button at bottom to bring user back to top of page */}
-                        <section style={root}>
-                            <div style={container2}>
-                                <Button
-                                    color="secondary"
-                                    variant="contained"
-                                    size="large"
-                                    style={button}
-                                    href="/movies"
-                                >
-                                    {'Back to Top'}
-                                </Button>
-                            </div>
-                        </section>
-                    </Container>
-                </div>
-                <DemoFooter />
-            </>
-        );
-    }
+                    {/* Button at bottom to bring user back to top of page */}
+                    <section style={root}>
+                        <div style={container2}>
+                            <Button
+                                color="secondary"
+                                variant="contained"
+                                size="large"
+                                style={button}
+                                href="/movies"
+                            >
+                                {'Back to Top'}
+                            </Button>
+                        </div>
+                    </section>
+                </Container>
+            </div>
+            <DemoFooter />
+        </>
+    );
 }
 export default MoviesPage;
