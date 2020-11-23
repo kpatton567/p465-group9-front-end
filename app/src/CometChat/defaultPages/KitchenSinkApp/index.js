@@ -58,61 +58,27 @@ class KitchenSinkApp extends React.PureComponent {
     }
 
     let authRedirect = null;
-    if (this.props.isLoggedIn) {
-      authRedirect = <Redirect to="/" />
-    }
+    // if (this.props.isLoggedIn) {
+    //   authRedirect = <Redirect to="/" />
+    // }
 
     return (
       <React.Fragment>
-      <Global styles={loaderStyle} />
-      <div css={wrapperStyle()}>
+      <div css={loginBtn()}><button onClick={() => this.login()}>Go Online</button></div>
+
+      {/* <Global /> */}
+      {/* <div >
           {authRedirect}
           {loader}
           {errorMessage}
-          <p css={titleStyle()}>Kitchen Sink App</p>
-          <p css={subtitleStyle()}>Login with one of our sample users</p>
-          <div css={userContainerStyle()}>
-            <div css={userWrapperStyle()} onClick={()=>this.login('superhero1')}>
-              <div css={thumbnailWrapperStyle()}>
-                <Avatar image='https://data-us.cometchat.io/assets/images/avatars/ironman.png' />
-              </div>
-              <p>superhero1</p>
-            </div>
-            <div css={userWrapperStyle()} onClick={()=>this.login('superhero2')}>
-              <div css={thumbnailWrapperStyle()}>
-                <Avatar image='https://data-us.cometchat.io/assets/images/avatars/captainamerica.png' />
-              </div>
-              <p>superhero2</p>
-            </div>
-            <div css={userWrapperStyle()} onClick={()=>this.login('superhero3')}>
-              <div css={thumbnailWrapperStyle()}>
-                <Avatar image='https://data-us.cometchat.io/assets/images/avatars/spiderman.png' />
-              </div>
-              <p>superhero3</p>
-            </div>
-            <div css={userWrapperStyle()} onClick={()=>this.login('superhero4')}>
-              <div css={thumbnailWrapperStyle()}>
-                <Avatar image='https://data-us.cometchat.io/assets/images/avatars/wolverine.png' />
-              </div>
-              <p>superhero4</p>
-            </div>
-            <div css={userWrapperStyle()} onClick={()=>this.login('superhero5')}>
-              <div css={thumbnailWrapperStyle()}>
-                <Avatar image='https://data-us.cometchat.io/assets/images/avatars/cyclops.png' />
-              </div>
-              <p>superhero5</p>
-            </div>
-          </div>
-          <div css={uidWrapperStyle()}>
-            <div>
-              <p css={subtitleStyle()}> Login continue with UID</p>
-            </div>
-            <div css={inputWrapperStyle()}>
-              <input ref={this.myRef} type="text" placeholder="Enter your UID here" />
-            </div>
-            <div css={loginBtn()}><button onClick={() => this.login()}>Login</button></div>
-          </div>
-        </div>
+          <div >
+            {/* <div>
+              <p css={subtitleStyle()}> Go online</p>
+            </div> */}
+            
+            {/* <div css={loginBtn()}><button onClick={() => this.login()}>Go Online</button></div> */}
+          {/* </div>
+        </div> */}
       </React.Fragment>
     );
   }

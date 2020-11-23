@@ -280,8 +280,6 @@ class MessageHeader extends React.Component {
           </div>
         </div>
         <div css={chatOptionWrapStyle()} className="chat__options">
-          {audioCallBtn}
-          {videoCallBtn}
           {viewDetailBtn}
         </div>
       </div>

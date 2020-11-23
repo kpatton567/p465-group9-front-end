@@ -11,65 +11,46 @@ import PrivateRoute from '../../CometChat/PrivateRoute';
 import KitchenSinkApp from '../../CometChat/defaultPages/KitchenSinkApp';
 import HomePage from '../../CometChat/defaultPages/HomePage';
 
-import * as actions from '../../store/action';
 
-import {
-    CometChatConversationList,
-    CometChatUserList,
-    CometChatUnified,
-    CometChatGroupList,
-    CometChatUserListScreen,
-    CometChatConversationListScreen,
-    CometChatGroupListScreen
-} from '../../CometChat';
-
+import { useAuth0 } from '@auth0/auth0-react';
 import {
     wrapperStyle
 } from "../styles/CometChatAppStyle";
+import {CometChat} from '@cometchat-pro/chat';
 
 const history = createBrowserHistory();
 
-class CometChatApp extends React.Component {
-    state = {
-        isLoggedin: false
+function CometChatApp(){
+    const {
+        user,
+      } = useAuth0();
+    if(user){
+        CometChat.login(user.sub.substring(6),'d8dee6a22683724af8502b02929f601f6f30f43c')
+        .then( user => {
+        console.log("Login successfully:", { user });
+    })
     }
+    if(user){
+    let GUID = "theatermanagers";
+    let membersList = [
+    new CometChat.GroupMember(user.sub.substring(6), CometChat.GROUP_MEMBER_SCOPE.PARTICIPANT),
+    ];
 
-    componentDidMount() {
-        this.props.getLoggedinUser();
+    CometChat.addMembersToGroup(GUID, membersList, []).then(
+    response => {
+        console.log("response", response);
+    },
+    error => {
+        console.log("Something went wrong", error);
     }
-
-    render() {
-
-        return (
-            <div css={wrapperStyle()}>
-                <Router history={history}>
-                    <Switch>
-                        <Route path="/groupchat/embedded-app" component={CometChatUnified} />
-                        <Route path="/groupchat/contact-list" component={CometChatUserList} />
-                        <Route path="/groupchat/group-list" component={CometChatGroupList} />
-                        <Route path="/groupchat/conversations-list" component={CometChatConversationList} />
-                        <Route path="/groupchat/contact-screen" component={CometChatUserListScreen} />
-                        <Route path="/groupchat/conversation-screen" component={CometChatConversationListScreen} />
-                        <Route path="/groupchat/group-screen" component={CometChatGroupListScreen} />
-                        <Route exact path="/manager/groupchat" component={HomePage} />
-                        <Route path="/login" component={KitchenSinkApp} />
-                    </Switch>
-                </Router>
-            </div>
-        );
+    );
     }
+    
+    return (
+        <div css={wrapperStyle()}>
+            <HomePage/>
+        </div>
+    );
 }
 
-const mapStateToProps = state => {
-    return {
-        isLoggedIn: state.isLoggedIn
-    };
-};
-
-const mapDispatchToProps = dispatch => {
-    return {
-        getLoggedinUser: () => dispatch(actions.authCheckState())
-    };
-};
-
-export default connect(mapStateToProps , mapDispatchToProps)(CometChatApp);
+export default (CometChatApp);
