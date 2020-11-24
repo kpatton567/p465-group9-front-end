@@ -77,6 +77,10 @@ const formControl = {
 function MoviesPage() 
 {   
     const [cards, setCards] = React.useState([]);
+    const [theaters, setTheaters] = React.useState([]);
+    const [theaterId, setSelectedTheatre] = React.useState('');
+    const [price, setSelectedPrice] = React.useState('');
+
     const fetchData = React.useCallback(() => 
     {
         axios({
@@ -89,12 +93,76 @@ function MoviesPage()
                 .catch((error) => {
                     console.log(error)
                 })
+        
+        // populate the theaters list
+        axios({
+            "method": "GET",
+            "url": apiVariables.apiUrl + '/api/home/theaters',
+        })
+            .then((response) => {
+                setTheaters(response.data)
+            })
+                .catch((error) => {
+                    console.log(error)
+                })
     }, [])
 
     React.useEffect(() => 
     {
         fetchData()
     }, [fetchData])
+
+
+    
+
+    const handleTheaterChange = (event) => 
+    {
+        setSelectedTheatre(event.target.value);
+        axios({
+            "method": "POST",
+            "url": apiVariables.apiUrl + '/api/home/search',
+        })
+            .then((response) => {
+                // do something w response
+            })
+                .catch((error) => {
+                    console.log(error)
+                })
+    }
+
+    const handlePriceChange = (event) => 
+    {
+        setSelectedPrice(event.target.value);
+
+        var toSend;
+
+        if(event.target.value == 10)
+        {
+            toSend = "lowPrice";
+        }
+        else if(event.target.value == 20)
+        {
+            toSend = "midPrice";
+        }
+        else
+        {
+            toSend = "highPrice";
+        }
+        
+
+        axios({
+            "method": "POST",
+            "url": apiVariables.apiUrl + '/api/home/search',
+        })
+            .then((response) => {
+                // do something w response
+            })
+                .catch((error) => {
+                    console.log(error)
+                })
+    }
+
+
 
     return (
         <>
@@ -123,14 +191,15 @@ function MoviesPage()
                                 label="Theater"
                                 labelId="theater-dropdown-label"
                                 id="theater-dropdown"
-                            // onChange={handleTheaterChange}
+                                onChange={handleTheaterChange}
                             >
                                 <MenuItem value="">
                                     <em>None</em>
                                 </MenuItem>
-                                <MenuItem value={10}>AMC</MenuItem>
-                                <MenuItem value={20}>IMAX</MenuItem>
-                                <MenuItem value={30}>Carmike</MenuItem>
+                                {/* Populate from backend */}
+                                {theaters.map((theater) => (
+                                    <MenuItem value={theater.id}>{theater.name}</MenuItem>
+                                ))}
                             </Select>
                         </FormControl>
                         <FormControl variant="outlined" style={formControl}>
@@ -139,7 +208,7 @@ function MoviesPage()
                                 label="Price"
                                 labelId="price-dropdown-label"
                                 id="price-dropdown"
-                            // onChange={handlePriceChange}
+                                onChange={handlePriceChange}
                             >
                                 <MenuItem value="">
                                     <em>None</em>
