@@ -71,6 +71,10 @@ const formControl = {
     margin: theme.spacing(1),
     minWidth: 140,
 };
+const formControl2 = {
+    margin: theme.spacing(2),
+    backgroundColor: theme.palette.secondary.main,
+};
 
 
 
@@ -80,7 +84,10 @@ function MoviesPage()
     const [theaters, setTheaters] = React.useState([]);
     const [theaterId, setSelectedTheatre] = React.useState('');
     const [price, setSelectedPrice] = React.useState('');
+    const [date, setSelectedDate] = React.useState('');
 
+
+    // Initial page load
     const fetchData = React.useCallback(() => 
     {
         axios({
@@ -106,35 +113,20 @@ function MoviesPage()
                     console.log(error)
                 })
     }, [])
-
     React.useEffect(() => 
     {
         fetchData()
     }, [fetchData])
 
 
-    
-
     const handleTheaterChange = (event) => 
     {
         setSelectedTheatre(event.target.value);
-        axios({
-            "method": "POST",
-            "url": apiVariables.apiUrl + '/api/home/search',
-        })
-            .then((response) => {
-                // do something w response
-            })
-                .catch((error) => {
-                    console.log(error)
-                })
     }
 
     const handlePriceChange = (event) => 
     {
-        setSelectedPrice(event.target.value);
-
-        var toSend;
+        var toSend = "";
 
         if(event.target.value == 10)
         {
@@ -148,20 +140,19 @@ function MoviesPage()
         {
             toSend = "highPrice";
         }
-        
 
-        axios({
-            "method": "POST",
-            "url": apiVariables.apiUrl + '/api/home/search',
-        })
-            .then((response) => {
-                // do something w response
-            })
-                .catch((error) => {
-                    console.log(error)
-                })
+        setSelectedPrice(toSend);
     }
 
+    const handleDateChange = (event) => 
+    {
+        setSelectedDate(event.target.value);
+    }
+
+    const filterMovies = (event) =>
+    {
+        // Send price, theater, date to backend and process response
+    }
 
 
     return (
@@ -225,17 +216,26 @@ function MoviesPage()
                                     id="date"
                                     type="date"
                                     style={textField}
-                                    // onChange={handleDateChange}
+                                    onChange={handleDateChange}
                                     InputLabelProps={{
                                         shrink: true,
                                     }}
                                 />
                             </form>
                         </FormControl>
-                        <FormControl variant="outlined" style={formControl}>
-                            <Typography style={theme.typography2}>
-                                Filter Results
-                               </Typography>
+                        <FormControl variant="outlined" style={formControl2}>
+                            <section style={root}>
+                                <div style={container2}>
+                                    <Button
+                                        color="secondary"
+                                        variant="contained"
+                                        size="large"
+                                        onClick={filterMovies()}
+                                    >
+                                        {'Apply Filters'}
+                                    </Button>
+                                </div>
+                            </section>
                         </FormControl>
                     </div>
 
