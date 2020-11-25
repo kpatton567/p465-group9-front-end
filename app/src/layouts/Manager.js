@@ -5,7 +5,6 @@ import { Route, Switch } from "react-router-dom";
 
 import DemoNavbar from "components/Navbars/DemoNavbar.js";
 import Sidebar from "components/Sidebar/Sidebar.js";
-import FixedPlugin from "components/FixedPlugin/FixedPlugin.js";
 import "bootstrap/dist/css/bootstrap.css";
 import "managerview-assets/scss/paper-dashboard.scss?v=1.2.0";
 import "perfect-scrollbar/css/perfect-scrollbar.css";
@@ -71,12 +70,6 @@ class Dashboard extends React.Component {
           </Switch>
           {/* <Footer fluid /> */}
         </div>
-        <FixedPlugin
-          bgColor={this.state.backgroundColor}
-          activeColor={this.state.activeColor}
-          handleActiveClick={this.handleActiveClick}
-          handleBgClick={this.handleBgClick}
-        />
       </div>
     );
   }
