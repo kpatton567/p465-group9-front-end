@@ -9,12 +9,11 @@ import {
   PaginationLink,
 } from "reactstrap";
 import { useAuth0 } from '@auth0/auth0-react';
-
+import Client from "./Client.js";
 import axios from 'axios';
 import  { apiVariables, ACCESS_TOKEN_NAME  } from '../../APIConstants';
-// import CancelIcon from '@material-ui/icons/Cancel';
 import Checkout from './Checkout';
-import { CometChat } from '@cometchat-pro/chat';
+import {CometChat} from '@cometchat-pro/chat';
 import { COMETCHAT_CONSTANTS } from '../../consts';
 
 function MovieBookingPage(props) {
@@ -26,20 +25,10 @@ function MovieBookingPage(props) {
   let [genres, setGenres] = React.useState([]);
   const {user} = useAuth0();
   const [isCustomer, setIsCustomer] = React.useState(false);
+  const [theaters, setTheaters] = React.useState([]);
 
   if(user){
-    CometChat.login(user.sub.substring(6),COMETCHAT_CONSTANTS .API_KEY).then(
-      User => {
-          console.log("Login Successful:", { User });
-          // User logged in successfully.
-      },
-      error => {
-          console.log("Login failed with exception:", { error });
-          // User login failed, check error and take appropriate action.
-      }
-      );
-  }
-  if(user){
+
     var token = localStorage.getItem(ACCESS_TOKEN_NAME)
     const body = {};
       axios.post(apiVariables.apiUrl +'/api/auth/user_role', body, {
@@ -48,7 +37,7 @@ function MovieBookingPage(props) {
         }
         }).then(function (response) {
             if(response.status === 200){
-              if(response.data == 'ROLE_CUSTOMER'){
+              if(response.data === 'ROLE_CUSTOMER'){
                 setIsCustomer(true);
               }
             }
@@ -71,6 +60,17 @@ function MovieBookingPage(props) {
         console.log(error)
       })
       
+      axios({
+        "method": "POST",
+        "url": apiVariables.apiUrl + '/api/home/movie_showtimes?movieId=' + props.match.params.movie,
+      })
+        .then((response) => {
+          setTheaters(response.data)
+        })
+        .catch((error) => {
+          console.log(error)
+        })
+
   }, [])
   React.useEffect(() => {
     fetchData()
@@ -82,10 +82,52 @@ function MovieBookingPage(props) {
   const handleClose = () => {
     setOpen(false);
   };
-  const handleClickChatOpen = () => {
-    
-  }
-  if(movie)
+
+  if(movie && (isCustomer))
+  return (
+    <div className="mainBGcolor ">
+      <ExamplesNavbar />
+      <Client theaters = {theaters} userId = {user ? user.sub.substring(6) : ''} userName = {user ? user.nickname : ''} managerId = '5f8b6eb173ef49007032ca5b'/>
+    <header className="banner" style={{backgroundSize : "cover", backgroundImage: `url(${movie.posterLink})`,
+    backgroundPosition: 'center center'}}>
+      <div className = "banner_contents">
+        <h1 className="banner_title">{movie.title}</h1>
+        <Pagination>
+          <PaginationItem>
+            <PaginationLink
+              aria-label="Genre"
+              href="#pablo"
+            >
+              <span className="sr-only">Previous</span>
+              Genre
+            </PaginationLink>
+          </PaginationItem>
+        </Pagination>              
+        <Button onClick={handleClickOpen} className="banner_button" >Book Tickets</Button>
+          <Button
+            href="/movies"
+          >
+            {'MORE MOVIES'}
+        </Button>
+        <h1 className="banner_description" title={movie.description}>{truncate(movie.description, 150)}</h1>
+        <div className = "banner_buttons">
+      
+        
+      <Modal disableBackdropClick disableEscapeKeyDown isOpen={open} >
+      <i class="nc-icon nc-simple-remove"  onClick={handleClose} style={{ cursor: 'pointer', marginTop: '10px', width: '40px', marginLeft: 'auto'}}/>
+        <Checkout movieId={props.match.params.movie} isCustomer={isCustomer}/>
+      </Modal>
+      
+        </div>
+       
+      </div>
+     
+      <div className="banner_fadeBottom"/>
+     
+    </header> 
+    </div>
+  )
+  if(movie && !isCustomer)
   return (
     <div className="mainBGcolor ">
       <ExamplesNavbar />
@@ -120,12 +162,15 @@ function MovieBookingPage(props) {
       </Modal>
       
         </div>
+       
       </div>
-      
+     
       <div className="banner_fadeBottom"/>
+     
     </header> 
     </div>
   )
+
   if(!movie)
   return null;
 }

@@ -20,7 +20,7 @@ function ManageMovies() {
     const [movieDesc, setmovieDesc] = React.useState('');
     const [movieGenre, setmovieGenre] = React.useState('');
     const [movieURL, setmovieURL] = React.useState('');
-
+  
     return (
       <>
         <div className="content">

@@ -1,12 +1,13 @@
 
 import Dashboard from "views/examples/DashboardPage.js";
 import Notifications from "views/examples/Notifications.js";
-import Typography from "views/examples/Typography.js";
 import TableList from "views/examples/Tables.js";
 import ManageMovies from "views/examples/ManageMovies.js";
 import ManageSnacks from "views/examples/ManageMovies.js";
 import UserPage from "views/examples/User.js";
 import CometChatApp from 'views/examples/CometChatApp';
+
+
 var routes = [
   {
     path: "/dashboard",
@@ -29,13 +30,13 @@ var routes = [
     component: ManageSnacks,
     layout: "/manager",
   },
-  // {
-  //   path: "/groupchat",
-  //   name: "",
-  //   icon: "nc-icon nc-tile-56",
-  //   component: CometChatApp,
-  //   layout: "/manager",
-  // },
+  {
+    path: "/groupchat",
+    name: "Chat Support",
+    icon: "nc-icon nc-tile-56",
+    component: CometChatApp,
+    layout: "/manager",
+  },
   {
     path: "/notifications",
     name: "Notifications",

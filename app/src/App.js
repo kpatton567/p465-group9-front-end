@@ -23,6 +23,7 @@ import Client from 'views/examples/Client';
 import ContactPage from 'views/examples/ContactPage';
 import KitchenSinkApp from './CometChat/defaultPages/KitchenSinkApp';
 import HomePage from './CometChat/defaultPages/HomePage';
+import RegisterPage from 'views/examples/RegisterPage'
 import {
   CometChatConversationList,
   CometChatUserList,
@@ -49,7 +50,7 @@ function App() {
       {/* <Route path='/bookingHistory'><BookingHistoryPage/></Route> */}
 
       {/* Manager View Options */}
-      {/* <Route path= '/registerTheater'><RegisterTheater/></Route>  */}
+      <Route path= '/registerTheater'><RegisterPage/></Route> 
       <Route
         path="/manager"
         render={(props) => <Manager {...props} />}

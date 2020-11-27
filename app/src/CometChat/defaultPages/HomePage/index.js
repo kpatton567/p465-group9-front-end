@@ -7,12 +7,12 @@ import { Link, Redirect } from 'react-router-dom';
 import { connect } from 'react-redux';
 
 import { Avatar } from '../../../CometChat';
+import { COMETCHAT_CONSTANTS } from '../../../consts';
+
+import * as actions from '../../../store/action';
 
 import {
   wrapperStyle,
-  titleStyle,
-  subTitleStyle,
-  helpTextStyle,
   componentStyle,
   boxStyle,
   titleWrapperStyle,
@@ -21,11 +21,22 @@ import {
   descWrapperStyle,
   linkWrapperStyle,
   linkStyle,
-  logoutBtn
 } from "./style";
 
 
 class HomePage extends React.Component {
+
+
+  login = (uid) => {
+        
+    if(!uid) {
+      uid = this.myRef.current.value;
+    }
+
+    this.uid = uid;
+    this.props.onLogin(this.uid, COMETCHAT_CONSTANTS.AUTH_KEY);
+    this.setState({ isLoggedin: true })
+  }
 
   render() {
     return (
@@ -44,7 +55,7 @@ class HomePage extends React.Component {
                 <p>Group chat with other theater managers</p>
               </div>
               <ul css={linkWrapperStyle()}>
-                <li><Link css={linkStyle()} to="/groupchat/embedded-app">Chat now</Link></li>
+                <li><Link css={linkStyle()} to="/groupchat/embedded-app" target="_blank" >Go Online</Link></li>
               </ul>
             </div>
           </div>
@@ -52,4 +63,16 @@ class HomePage extends React.Component {
     );
   }
 }
-export default ( HomePage );
+const mapStateToProps = state => {
+  return {
+      isLoggedIn: state.isLoggedIn
+  };
+};
+
+const mapDispatchToProps = dispatch => {
+  return {
+      onLogin: ( uid, authKey ) => dispatch( actions.auth( uid, authKey ) )
+  };
+};
+
+export default connect(mapStateToProps , mapDispatchToProps)(HomePage);

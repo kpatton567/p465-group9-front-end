@@ -1,22 +1,4 @@
-/*!
 
-=========================================================
-* Paper Kit React - v1.2.0
-=========================================================
-
-* Product Page: https://www.creative-tim.com/product/paper-kit-react
-
-* Copyright 2020 Creative Tim (https://www.creative-tim.com)
-* Licensed under MIT (https://github.com/creativetimofficial/paper-kit-react/blob/master/LICENSE.md)
-
-* Coded by Creative Tim
-
-=========================================================
-
-* The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
-
-*/
-/*eslint-disable*/
 import React from "react";
 
 // reactstrap components
@@ -30,8 +12,9 @@ function IndexHeader() {
       <div
         className="page-header section-dark"
         style={{
+          opacity: '.9',
           backgroundImage:
-            "url(" + require("assets/img/antoine-barres.jpg") + ")",
+            "url(" + require("assets/img/vintage_movie_projector.png") + ")",
         }}
       >
         <div className="filter" />
@@ -39,24 +22,24 @@ function IndexHeader() {
           <Container>
             <div className="title-brand">
               <h1 className="presentation-title">PreVue</h1>
-              <div className="fog-low">
+              {/* <div className="fog-low">
                 <img alt="..." src={require("assets/img/fog-low.png")} />
               </div>
               <div className="fog-low right">
                 <img alt="..." src={require("assets/img/fog-low.png")} />
-              </div>
+              </div> */}
             </div>
             <h2 className="presentation-subtitle text-center">
               Welcome to the future of movie viewing!
             </h2>
           </Container>
         </div>
-        <div
+        {/* <div
           className="moving-clouds"
           style={{
             backgroundImage: "url(" + require("assets/img/clouds.png") + ")",
           }}
-        />
+        /> */}
       </div>
     </>
   );
