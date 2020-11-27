@@ -6,7 +6,6 @@ import {
   Card,
   CardHeader,
   CardBody,
-  CardFooter,
   CardTitle,
   FormGroup,
   Form,
@@ -18,7 +17,7 @@ import {
 function ManageMovies() {
     const [movieTitle, setmovieTitle] = React.useState('');
     const [movieDesc, setmovieDesc] = React.useState('');
-    const [movieGenre, setmovieGenre] = React.useState('');
+    // const [movieGenre, setmovieGenre] = React.useState('');
     const [movieURL, setmovieURL] = React.useState('');
 
     return (
