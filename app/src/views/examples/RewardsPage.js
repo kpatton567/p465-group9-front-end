@@ -59,7 +59,7 @@ function RewardsPage() {
   return (
     <>
       <ExamplesNavbar />
-      <ProfilePageHeader posterLink = {require("assets/img/fabio-mangione.jpg")}/>
+      <ProfilePageHeader posterLink = {require("assets/img/pexels-acharaporn-kamornboonyarush-1028723.jpg")}/>
       <div className="section profile-content">
         <Container>
           <div className="owner">

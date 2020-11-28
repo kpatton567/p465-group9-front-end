@@ -15,7 +15,7 @@ function RegisterPage(props) {
 
   const [theaterName, setTheaterName] = React.useState('');
   const [theaterCapacity, setTheaterCapacity] =  React.useState('');
-  const { user, isAuthenticated, loginWithRedirect, isLoading } = useAuth0();
+  const { user} = useAuth0();
   const [alertOpen, setAlertOpen] = React.useState(false);
   document.documentElement.classList.remove("nav-open");
   React.useEffect(() => {
@@ -26,14 +26,15 @@ function RegisterPage(props) {
   });
 
   const handleTheaterRegister = (e) => {
-    if(theaterName != '' && theaterCapacity != ''){
+    if(theaterName !== '' && theaterCapacity !== ''){
       console.log(theaterName);
       console.log(theaterCapacity);
     }
     // e.preventDefault();
+    var userId = user.sub.length === 35 ? user.sub.substring(14) : user.sub.substring(6)
     const payload={
       "name":theaterName,
-      "managerId" : user.sub.substring(6),
+      "managerId" : userId,
       "capacity":theaterCapacity,
     }
     axios.post(apiVariables.apiUrl +'/api/admin/add_theater', payload, {

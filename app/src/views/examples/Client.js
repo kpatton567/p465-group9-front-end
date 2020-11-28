@@ -123,27 +123,24 @@ class Client extends Component {
   }
 
   handleQuickButtonClicked = (e) => {
-    console.log(e)
 
     var token = localStorage.getItem(ACCESS_TOKEN_NAME)
-    const body = {};
- 
+
     axios.get(apiVariables.apiUrl +'/api/customer/theater_manager/'+ e, {
     headers: {
         'Authorization': 'Bearer ' + token
     }
     }).then((response) => {
         if(response.status === 200){
-            this.setState({agentUID : response.data.userId})
+          this.setState({agentUID : response.data.userId})
         }
     })
     .catch(function (error) {
         console.log(error);
     });
-    //set agentuid here
-    
     addResponseMessage('Connecting you to ' + e);
     setQuickButtons([]);
+    addResponseMessage('You are now connected to ' + e);
 }
 
   handleNewUserMessage = newMessage => {
@@ -155,9 +152,6 @@ class Client extends Component {
         result => {
           console.log('auth token fetched', result);
           localStorage.setItem("cc-uid",result.uid)
-          // CometChat.login(this.state.userId,'d8dee6a22683724af8502b02929f601f6f30f43c')
-          // .then(user => {
-          //   console.log("Login successfully:", { user });
             fetch("https://api-us.cometchat.io/v2.0/users/"+this.state.userId+"/messages", {
             "method": "POST",
             "headers": {
