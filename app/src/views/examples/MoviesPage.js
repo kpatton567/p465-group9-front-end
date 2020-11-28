@@ -130,15 +130,15 @@ function MoviesPage()
 
         if(event.target.value == 10)
         {
-            toSend = "lowPrice";
+            toSend = "LOW";
         }
         else if(event.target.value == 20)
         {
-            toSend = "midPrice";
+            toSend = "MID";
         }
         else
         {
-            toSend = "highPrice";
+            toSend = "HIGH";
         }
 
         setSelectedPrice(toSend);
@@ -151,7 +151,30 @@ function MoviesPage()
 
     const filterMovies = (event) =>
     {
-        // Send price, theater, date to backend and process response
+        var sDate = null;
+        var sTheater = null;
+        var sPrice = null;
+
+        if(date != '') sDate = date;
+        if(theaterId != '') sTheater = theaterId;
+        if(price != '') sPrice = price;
+
+        axios({
+            "method": "POST",
+            "url": apiVariables.apiUrl + '/api/home/search',
+            "data": {
+                date: sDate,
+                theater: sTheater,
+                price: sPrice,
+            }
+        })
+            .then((response) => {
+                // console.log(response.data);
+                setCards(response.data);
+            })
+                .catch((error) => {
+                    console.log(error)
+                })
     }
 
 
@@ -230,7 +253,7 @@ function MoviesPage()
                                         color="secondary"
                                         variant="contained"
                                         size="large"
-                                        onClick={filterMovies()}
+                                        onClick={filterMovies}
                                     >
                                         {'Apply Filters'}
                                     </Button>
