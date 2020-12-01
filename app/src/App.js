@@ -1,7 +1,5 @@
 import React from "react";
-import { BrowserRouter as Router, Route, Redirect, Switch, Link } from "react-router-dom";
-
-
+import { BrowserRouter as Router, Route } from "react-router-dom";
 // styles
 import "assets/css/bootstrap.min.css";
 import "assets/scss/paper-kit.scss?v=1.2.0";
@@ -15,10 +13,9 @@ import RewardsPage from "views/examples/RewardsPage.js";
 import MoviesPage from "views/examples/MoviesPage.js";
 import Manager from "./layouts/Manager";
 import MovieBookingPage from "views/examples/MovieBookingPage";
-import CometChatApp from "views/examples/CometChatApp";
 import ChooseRole from "views/examples/ChooseRole";
-
-// others
+import BookingHistoryPage from "views/examples/BookingHistoryPage";
+import AddReview from 'views/examples/AddReview.js';
 import Client from 'views/examples/Client';
 import ContactPage from 'views/examples/ContactPage';
 import KitchenSinkApp from './CometChat/defaultPages/KitchenSinkApp';
@@ -33,21 +30,21 @@ import {
   CometChatConversationListScreen,
   CometChatGroupListScreen
 } from './CometChat';
-
 function App() {
+  
   return (
-
     <Router>
       {/* Public View Options */}
-      <Route path="/" exact={true}><LandingPage /></Route>
-      <Route path="/index"><Index/></Route>
-      <Route path='/movies'><MoviesPage/></Route>
+       <Route path="/" exact={true}><LandingPage /></Route>
+       <Route path="/index"><Index/></Route> 
+       <Route path='/movies'><MoviesPage/></Route> 
 
       {/* Customer View Options */}
       <Route path='/profile'><ProfilePage /></Route>
       <Route path='/rewards'><RewardsPage /></Route>
       <Route path='/nucleo-icons'><NucleoIcons /></Route>
-      {/* <Route path='/bookingHistory'><BookingHistoryPage/></Route> */}
+      <Route path='/your-orders'><BookingHistoryPage/></Route>
+      <Route path='/addReview/:userId/:movie' render={(props) => <AddReview {...props} />} />
 
       {/* Manager View Options */}
       <Route path= '/registerTheater'><RegisterPage/></Route> 
@@ -60,7 +57,7 @@ function App() {
       <Route path="/movieBooking/:movie" component={MovieBookingPage} />
 
       {/* chat */}
-      <Route path="/client" component={Client} ></Route>
+       <Route path="/client" component={Client} ></Route>
       <Route path="/contact" component={ContactPage } ></Route>
       <Route path="/groupchat/embedded-app" component={CometChatUnified} />
       <Route path="/contact-list" component={CometChatUserList} />
@@ -72,7 +69,7 @@ function App() {
       <Route exact path="/manager/groupchat" component={HomePage} />
       <Route path="/login" component={KitchenSinkApp} />
 
-    </Router>
+    </Router> 
   );
 }
 export default (App);

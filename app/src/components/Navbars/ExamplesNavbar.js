@@ -2,8 +2,6 @@ import React from "react";
 import classnames from "classnames";
 import { CometChat } from '@cometchat-pro/chat';
 import {dropMessages} from 'react-chat-widget';
-// reactstrap components
-
 import {
   DropdownToggle,
   Collapse,
@@ -16,20 +14,17 @@ import {
   NavLink,
   Nav,
   Container,
-  Button
 } from "reactstrap";
 import { useAuth0 } from '@auth0/auth0-react';
 import { apiVariables, ACCESS_TOKEN_NAME } from '../../APIConstants';
 import axios from "axios";
 
 export default function ExamplesNavbar(props) {
+
   const [navbarColor, setNavbarColor] = React.useState("navbar-transparent");
   const [navbarCollapse, setNavbarCollapse] = React.useState(false);
-  const CUSTOMER_MESSAGE_LISTENER_KEY = ""
-  if(user){
-     CUSTOMER_MESSAGE_LISTENER_KEY = user.sub.substring(6);
-  }
-    
+  let CUSTOMER_MESSAGE_LISTENER_KEY = ""
+  
   const {
     isLoading,
     isAuthenticated,
@@ -39,6 +34,10 @@ export default function ExamplesNavbar(props) {
     logout,
   } = useAuth0();
 
+  if(user){
+    var userId = user.sub.length === 35 ? user.sub.substring(14) : user.sub.substring(6)
+    CUSTOMER_MESSAGE_LISTENER_KEY = userId;
+ }
   const toggleNavbarCollapse = () => {
     setNavbarCollapse(!navbarCollapse);
     document.documentElement.classList.toggle("nav-open");
@@ -112,16 +111,20 @@ export default function ExamplesNavbar(props) {
       className={classnames("fixed-top", navbarColor)}
       color-on-scroll="300"
       expand="lg"
+      style = {{borderBlock: 'unset'}}
     >
       <Container>
         <div className="navbar-translate">
           <NavbarBrand
             data-placement="bottom"
             href="/"
-            // target="_blank"
-            // title="Coded by Creative Tim"
+            style = {{
+              height: '45px' , width : '10.5rem',
+              margin: '5px 0',
+              backgroundImage :  "url(" + require("assets/img/prevuelogo.png") + ")",
+            }}
           >
-            PreVue
+            
           </NavbarBrand>
           <button
             aria-expanded={navbarCollapse}
@@ -140,18 +143,7 @@ export default function ExamplesNavbar(props) {
           navbar
           isOpen={navbarCollapse}
         >
-          <Nav navbar>
-            <NavItem>
-              <NavLink
-                data-placement="bottom"
-                // href="https://www.github.com/CreativeTimOfficial?ref=creativetim"
-                target="_blank"
-                title="Star on GitHub"
-              >
-                <i className="fa fa-github" />
-                <p className="d-lg-none">GitHub</p>
-              </NavLink>
-            </NavItem>
+          <Nav navbar >
             <UncontrolledDropdown nav inNavbar>
                       <DropdownToggle
                         aria-expanded={false}
@@ -163,7 +155,9 @@ export default function ExamplesNavbar(props) {
                         id="dropdownMenuButton"
                         nav
                         onClick={(e) => e.preventDefault()}
-                        role="button"
+                        role="button" 
+                        style = {{color: '#fff',
+                          borderColor: '#fff'}}
                       ><i className="nc-icon nc-single-02" />
                       </DropdownToggle>
                       <DropdownMenu
@@ -206,7 +200,8 @@ export default function ExamplesNavbar(props) {
       </Container>
     </Navbar>
   )} 
-  else return (
+  if(!isAuthenticated)
+  return (
     <Navbar
       className={classnames("fixed-top", navbarColor)}
       color-on-scroll="300"
@@ -217,10 +212,14 @@ export default function ExamplesNavbar(props) {
           <NavbarBrand
             data-placement="bottom"
             href="/"
-            // target="_blank"
-            // title="Coded by Creative Tim"
+            style = {{
+              height: '45px' , width : '10.5rem',
+              margin: '5px 0',
+              // padding: '20px 15px',
+              backgroundImage :  "url(" + require("assets/img/prevuelogo.png") + ")",
+            }}
           >
-            PreVue
+            {/* PreVue */}
           </NavbarBrand>
           <button
             aria-expanded={navbarCollapse}
@@ -242,7 +241,6 @@ export default function ExamplesNavbar(props) {
           <Nav navbar>
             <NavItem>
               <NavLink
-                // target="_blank"
                 onClick={handlelogin}
               >
                 <i className="nc-icon nc-book-bookmark" /> Login 

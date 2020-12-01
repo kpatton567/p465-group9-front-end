@@ -46,6 +46,7 @@ function RegisterPage(props) {
       console.log(theaterCapacity);
     }
     // e.preventDefault();
+    var userId = user.sub.length === 35 ? user.sub.substring(14) : user.sub.substring(6)
     const payload={
       "name":theaterName,
       "managerId" : user.sub.substring(6),
