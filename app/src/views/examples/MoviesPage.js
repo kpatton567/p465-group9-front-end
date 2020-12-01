@@ -169,7 +169,6 @@ function MoviesPage()
             }
         })
             .then((response) => {
-                // console.log(response.data);
                 setCards(response.data);
             })
                 .catch((error) => {
