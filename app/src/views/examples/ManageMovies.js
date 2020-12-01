@@ -1,5 +1,6 @@
 import React from "react";
-
+import axios from 'axios';
+import { apiVariables, ACCESS_TOKEN_NAME } from '../../APIConstants';
 // reactstrap components
 import {
   Button,
@@ -19,6 +20,27 @@ function ManageMovies() {
     const [movieDesc, setmovieDesc] = React.useState('');
     // const [movieGenre, setmovieGenre] = React.useState('');
     const [movieURL, setmovieURL] = React.useState('');
+    const fetchData = React.useCallback(() => {
+      axios({
+          "method": "POST",
+          "url": apiVariables.apiUrl + '/api/manage/add_movie' + 
+          {
+            "title": movieTitle,
+            "description":movieDesc,
+            "posterLink":movieURL,
+            "genre":""
+          },
+      })
+          .then((response) => {
+              console.log(response.data)
+          })
+          .catch((error) => {
+              console.log(error)
+          })
+  }, [])
+  React.useEffect(() => {
+      fetchData()
+  }, [fetchData])
 
     return (
       <>

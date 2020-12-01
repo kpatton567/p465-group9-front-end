@@ -21,19 +21,18 @@ import Snackbar from '@material-ui/core/Snackbar';
 import { withRouter } from 'react-router';
 import { useAuth0 } from '@auth0/auth0-react';
 import { Link } from 'react-router-dom';
-import Marker from google.maps.Marker;
+import Geocode from "react-geocode";
+// import Marker from google.maps.Marker;
 import {
     Button, Container
 } from "reactstrap";
 import GoogleMapReact from 'google-map-react';
-import { Marker } from 'react-google-maps';
-class AnyReactComponent extends React.Component {
-    render() {
-       const { text } = this.props;
+import Marker from 'react-google-maps';
 
-       return <div>{text}</div>;
-    }
-}
+Geocode.setApiKey("AIzaSyD9aslGTBwYBGkOZ858OLJtDvmmjovPs10");
+Geocode.setLanguage("en");
+Geocode.setRegion("na");
+Geocode.enableDebug();
 const useStyles = makeStyles((theme) => ({
 
     container: {
@@ -75,13 +74,7 @@ const useStyles = makeStyles((theme) => ({
         padding: theme.spacing(2, 2),
     }
 }));
-const defaultProps = {
-    center: {
-      lat: 59.95,
-      lng: 30.33
-    },
-    zoom: 11
-  };
+
 function Checkout(props) {
     const classes = useStyles();
     const [open, setOpen] = React.useState(false);
@@ -99,10 +92,25 @@ function Checkout(props) {
     const [userName, setUserName] = React.useState('');
     const [zip, setZip] = React.useState('');
     const [ticketQuantity, setTicketQuantity] = React.useState('');
+    const [theaterAddress, setAddress] = React.useState('');
+    const [theaterLatitude, setLatitude] = React.useState('');
+    const [theaterLongitude, setLongitude] = React.useState('');
     var selectedSnacks = [];
     const movieId = props.movieId;
     const [alertOpen, setAlertOpen] = React.useState(false);
     const { loginWithRedirect, isAuthenticated, user } = useAuth0();
+    const defaultProps = {
+        center: {
+          lat: theaterLatitude,
+          lng: theaterLongitude
+        },
+        Marker:{
+            lat: theaterLatitude,
+            lng: theaterLongitude,
+            label:theaterAddress
+        },
+        zoom: 11
+      };
     const fetchData = React.useCallback(() => {
         axios({
             "method": "POST",
@@ -115,6 +123,17 @@ function Checkout(props) {
             .catch((error) => {
                 console.log(error)
             })
+            axios({
+                "method": "GET",
+                "url": apiVariables.apiUrl + '/api/home/snacks/' + event.target.value,
+            })
+                .then((response) => {
+                    console.log(response.data)
+                    setSnacks(response.data)
+                })
+                .catch((error) => {
+                    console.log(error)
+                })
     }, [])
     React.useEffect(() => {
         fetchData()
@@ -321,11 +340,11 @@ function Checkout(props) {
 
         axios({
             "method": "GET",
-            "url": apiVariables.apiUrl + '/api/home/snacks/' + event.target.value,
+            "url": apiVariables.apiUrl + '/api/home/theater_address/' + theaterId,
         })
             .then((response) => {
                 console.log(response.data)
-                setSnacks(response.data)
+                setAddress(response.data)
             })
             .catch((error) => {
                 console.log(error)
@@ -412,11 +431,11 @@ function Checkout(props) {
                                                     defaultCenter={defaultProps.center}
                                                     defaultZoom={defaultProps.zoom}
                                                 >
-                                                    <p
-                                                        lat={59.955413}
-                                                        lng={30.337844}
+                                                    {/* <google.maps.Marker
+                                                        lat={theaterLatitude}
+                                                        lng={theaterLongitude}
                                                         text="My Marker"
-                                                    />
+                                                    /> */}
                                                 </GoogleMapReact>
                                             </div>
                                             <Button

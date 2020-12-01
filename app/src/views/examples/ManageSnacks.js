@@ -18,7 +18,25 @@ import {
 function ManageMovies() {
     const [snackName, setsnackName] = React.useState('');
     const [snackPrice, setsnackPrice] = React.useState('');
-
+    const fetchData = React.useCallback(() => {
+      axios({
+          "method": "POST",
+          "url": apiVariables.apiUrl + '/api/manage/add_snack' + 
+          {
+            "name": snackName,
+            "price":snackPrice
+          },
+      })
+          .then((response) => {
+              console.log(response.data)
+          })
+          .catch((error) => {
+              console.log(error)
+          })
+  }, [])
+  React.useEffect(() => {
+      fetchData()
+  }, [fetchData])
     return (
       <>
         <div className="content">
