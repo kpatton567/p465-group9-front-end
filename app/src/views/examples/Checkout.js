@@ -123,17 +123,7 @@ function Checkout(props) {
             .catch((error) => {
                 console.log(error)
             })
-            axios({
-                "method": "GET",
-                "url": apiVariables.apiUrl + '/api/home/snacks/' + event.target.value,
-            })
-                .then((response) => {
-                    console.log(response.data)
-                    setSnacks(response.data)
-                })
-                .catch((error) => {
-                    console.log(error)
-                })
+            
     }, [])
     React.useEffect(() => {
         fetchData()
@@ -337,7 +327,17 @@ function Checkout(props) {
             .catch((error) => {
                 console.log(error)
             })
-
+        axios({
+                "method": "GET",
+                "url": apiVariables.apiUrl + '/api/home/snacks/' + event.target.value,
+            })
+                .then((response) => {
+                    console.log(response.data)
+                    setSnacks(response.data)
+                })
+                .catch((error) => {
+                    console.log(error)
+                })
         axios({
             "method": "GET",
             "url": apiVariables.apiUrl + '/api/home/theater_address/' + theaterId,
