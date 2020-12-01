@@ -20,9 +20,19 @@ import { apiVariables, ACCESS_TOKEN_NAME } from '../../APIConstants';
 import Snackbar from '@material-ui/core/Snackbar';
 import { withRouter } from 'react-router';
 import { useAuth0 } from '@auth0/auth0-react';
+import { Link } from 'react-router-dom';
+import Geocode from "react-geocode";
+// import Marker from google.maps.Marker;
 import {
-    Button, Container} from "reactstrap";
+    Button, Container
+} from "reactstrap";
+import GoogleMapReact from 'google-map-react';
+import Marker from 'react-google-maps';
 
+Geocode.setApiKey("AIzaSyD9aslGTBwYBGkOZ858OLJtDvmmjovPs10");
+Geocode.setLanguage("en");
+Geocode.setRegion("na");
+Geocode.enableDebug();
 const useStyles = makeStyles((theme) => ({
 
     container: {
@@ -82,27 +92,43 @@ function Checkout(props) {
     const [userName, setUserName] = React.useState('');
     const [zip, setZip] = React.useState('');
     const [ticketQuantity, setTicketQuantity] = React.useState('');
+    const [theaterAddress, setAddress] = React.useState('');
+    const [theaterLatitude, setLatitude] = React.useState('');
+    const [theaterLongitude, setLongitude] = React.useState('');
     var selectedSnacks = [];
     const movieId = props.movieId;
     const [alertOpen, setAlertOpen] = React.useState(false);
     const { loginWithRedirect, isAuthenticated, user } = useAuth0();
+    const defaultProps = {
+        center: {
+          lat: theaterLatitude,
+          lng: theaterLongitude
+        },
+        Marker:{
+            lat: theaterLatitude,
+            lng: theaterLongitude,
+            label:theaterAddress
+        },
+        zoom: 11
+      };
     const fetchData = React.useCallback(() => {
         axios({
-          "method": "POST",
-          "url": apiVariables.apiUrl + '/api/home/movie_showtimes?movieId=' + movieId,
+            "method": "POST",
+            "url": apiVariables.apiUrl + '/api/home/movie_showtimes?movieId=' + movieId,
         })
-          .then((response) => {
-            console.log(response.data)
-            setTheaters(response.data)
-          })
-          .catch((error) => {
-            console.log(error)
-          })
-      }, [])
-      React.useEffect(() => {
+            .then((response) => {
+                console.log(response.data)
+                setTheaters(response.data)
+            })
+            .catch((error) => {
+                console.log(error)
+            })
+            
+    }, [])
+    React.useEffect(() => {
         fetchData()
-      }, [fetchData])
-      
+    }, [fetchData])
+
     function getStepContent(step) {
         switch (step) {
             case 0:
@@ -159,132 +185,132 @@ function Checkout(props) {
                     </form>
                 </div>;
             case 3:
-                if(!isAuthenticated)
-                {
-                    return(
+                if (!isAuthenticated) {
+                    return (
                         <Button onClick={handleClickOpen} color="inherit"
-                        underline="none"
-                        className={classes.rightLink}
-                        onClick={() => loginWithRedirect()}
+                            underline="none"
+                            className={classes.rightLink}
+                            onClick={() => loginWithRedirect()}
                         >Log in / Sign up to continue</Button>
                     )
                 }
-                if(isAuthenticated)
-                {return (
-                    <React.Fragment>
-                        <Typography variant="h6" gutterBottom>
-                            Payment method
+                if (isAuthenticated) {
+                    return (
+                        <React.Fragment>
+                            <Typography variant="h6" gutterBottom>
+                                Payment method
                 </Typography>
-                        <Grid container spacing={3}>
-                            <Grid item xs={12} md={6}>
-                                <TextField required id="cardName" label="Name on card" fullWidth autoComplete="cc-name"
-                                    defaultValue={userName}
-                                    onChange={event => setUserName(event.target.value)} />
-                            </Grid>
-                            <Grid item xs={12} md={6}>
-                                <TextField
-                                    required
-                                    id="cardNumber"
-                                    label="Credit Card number"
-                                    defaultValue={ccNum}
-                                    onChange={event => setccNum(event.target.value)}
-                                    inputProps={{ maxLength: 16 }}
-                                    fullWidth
-                                    autoComplete="cc-number"
-                                />
-                            </Grid>
-                            <Grid item xs={12} md={6}>
-                                <Input fullWidth style={{paddingTop:"15px"}}label="Expiration Date" type="month" name="exp_date" />
+                            <Grid container spacing={3}>
+                                <Grid item xs={12} md={6}>
+                                    <TextField required id="cardName" label="Name on card" fullWidth autoComplete="cc-name"
+                                        defaultValue={userName}
+                                        onChange={event => setUserName(event.target.value)} />
+                                </Grid>
+                                <Grid item xs={12} md={6}>
+                                    <TextField
+                                        required
+                                        id="cardNumber"
+                                        label="Credit Card number"
+                                        defaultValue={ccNum}
+                                        onChange={event => setccNum(event.target.value)}
+                                        inputProps={{ maxLength: 16 }}
+                                        fullWidth
+                                        autoComplete="cc-number"
+                                    />
+                                </Grid>
+                                <Grid item xs={12} md={6}>
+                                    <Input fullWidth style={{ paddingTop: "15px" }} label="Expiration Date" type="month" name="exp_date" />
 
-                            </Grid>
-                            <Grid item xs={12} md={6}>
-                                <TextField
-                                    required
-                                    id="cvv"
-                                    type="password"
-                                    inputProps={{ maxLength: 3 }}
-                                    label="CVV"
-                                    helperText="Last three digits on signature strip"
-                                    defaultValue={cvv}
-                                    onChange={event => setcvv(event.target.value)}
-                                    fullWidth
-                                    autoComplete="cc-csc"
-                                />
-                            </Grid>
-                            <Grid item xs={12} md={6}>
-                                <InputLabel id="demo-simple-select-helper-label">Ticket Quantity</InputLabel>
-                                <Select
-                                    required
-                                    label="test"
-                                    helperText=""
-                                    defaultValue={ticketQuantity}
-                                    onChange={event => setTicketQuantity(event.target.value)}
-                                    fullWidth
-                                    autoComplete="cc-csc"
-                                    InputLabelProps={{ shrink: true }}
-                                >
+                                </Grid>
+                                <Grid item xs={12} md={6}>
+                                    <TextField
+                                        required
+                                        id="cvv"
+                                        type="password"
+                                        inputProps={{ maxLength: 3 }}
+                                        label="CVV"
+                                        helperText="Last three digits on signature strip"
+                                        defaultValue={cvv}
+                                        onChange={event => setcvv(event.target.value)}
+                                        fullWidth
+                                        autoComplete="cc-csc"
+                                    />
+                                </Grid>
+                                <Grid item xs={12} md={6}>
+                                    <InputLabel id="demo-simple-select-helper-label">Ticket Quantity</InputLabel>
+                                    <Select
+                                        required
+                                        label="test"
+                                        helperText=""
+                                        defaultValue={ticketQuantity}
+                                        onChange={event => setTicketQuantity(event.target.value)}
+                                        fullWidth
+                                        autoComplete="cc-csc"
+                                        InputLabelProps={{ shrink: true }}
+                                    >
 
-                                    <MenuItem value="1" >1</MenuItem>
-                                    <MenuItem value="2" >2</MenuItem>
-                                    <MenuItem value="3">3</MenuItem>
-                                    <MenuItem value="4" >4</MenuItem>
-                                    <MenuItem value="5">5</MenuItem>
+                                        <MenuItem value="1" >1</MenuItem>
+                                        <MenuItem value="2" >2</MenuItem>
+                                        <MenuItem value="3">3</MenuItem>
+                                        <MenuItem value="4" >4</MenuItem>
+                                        <MenuItem value="5">5</MenuItem>
 
-                                </Select>
+                                    </Select>
+                                </Grid>
+                                <Grid item xs={12} md={6}>
+                                    <TextField
+                                        required
+                                        id="zip"
+                                        inputProps={{ maxLength: 5 }}
+                                        label="ZIP"
+                                        defaultValue={zip}
+                                        onChange={event => setZip(event.target.value)}
+                                        fullWidth
+                                        autoComplete="cc-csc"
+                                    />
+                                </Grid>
                             </Grid>
-                            <Grid item xs={12} md={6}>
-                                <TextField
-                                    required
-                                    id="zip"
-                                    inputProps={{ maxLength: 5 }}
-                                    label="ZIP"
-                                    defaultValue={zip}
-                                    onChange={event => setZip(event.target.value)}
-                                    fullWidth
-                                    autoComplete="cc-csc"
-                                />
-                            </Grid>
-                        </Grid>
 
-                        
-                    </React.Fragment>)}
+
+                        </React.Fragment>)
+                }
             default:
                 throw new Error('Unknown step');
         }
     }
     const handlePayment = () => {
-    
+
         console.log(selectedSnack)
         var token = localStorage.getItem(ACCESS_TOKEN_NAME)
-       
+
         const payload = {
-          "theaterId": theaterId,
-          "movieId": movieId,
-          "showtimeId": selectedShowtime,
-          "creditCardNumber": ccNum,
-          "cvv": cvv,
-          "name": userName,
-          "zip": zip,
-          "ticketQuantity": ticketQuantity,
-          "snacks": selectedSnack,
+            "theaterId": theaterId,
+            "movieId": movieId,
+            "showtimeId": selectedShowtime,
+            "creditCardNumber": ccNum,
+            "cvv": cvv,
+            "name": userName,
+            "zip": zip,
+            "ticketQuantity": ticketQuantity,
+            "snacks": selectedSnack,
         }
         console.log(payload);
-    
-        axios.post(apiVariables.apiUrl +'/api/customer/customer_payment', payload, {
-        headers: {
-            'Authorization': 'Bearer ' + token
-        }
+
+        axios.post(apiVariables.apiUrl + '/api/customer/customer_payment', payload, {
+            headers: {
+                'Authorization': 'Bearer ' + token
+            }
         }).then(function (response) {
-            if(response.status === 200){
+            if (response.status === 200) {
                 setAlertOpen(true);
-                setTimeout(()=> props.history.push('/bookingHistory'), 3000);
+                setTimeout(() => props.history.push('/bookingHistory'), 3000);
             }
         })
-        .catch(function (error) {
-            console.log(error);
-        });
+            .catch(function (error) {
+                console.log(error);
+            });
         console.log(payload);
-      }
+    }
     const handleTheaterChange = (event) => {
 
         setSelectedTheatre(event.target.value);
@@ -301,14 +327,24 @@ function Checkout(props) {
             .catch((error) => {
                 console.log(error)
             })
-
+        axios({
+                "method": "GET",
+                "url": apiVariables.apiUrl + '/api/home/snacks/' + event.target.value,
+            })
+                .then((response) => {
+                    console.log(response.data)
+                    setSnacks(response.data)
+                })
+                .catch((error) => {
+                    console.log(error)
+                })
         axios({
             "method": "GET",
-            "url": apiVariables.apiUrl + '/api/home/snacks/' + event.target.value,
+            "url": apiVariables.apiUrl + '/api/home/theater_address/' + theaterId,
         })
             .then((response) => {
                 console.log(response.data)
-                setSnacks(response.data)
+                setAddress(response.data)
             })
             .catch((error) => {
                 console.log(error)
@@ -357,65 +393,78 @@ function Checkout(props) {
         selectedSnacks[snackId] = counter
     };
 
-    if(!alertOpen)
-    return (
-        <Container justify="center">
-            < >
-                <Paper className={classes.paper}>
-                    <Stepper activeStep={activeStep} className={classes.stepper}>
-                        {steps.map((label) => (
-                            <Step key={label}>
-                                <StepLabel>{label}</StepLabel>
-                            </Step>
-                        ))}
-                    </Stepper>
-                    <React.Fragment>
-                        {activeStep === steps.length ? (
-                            <React.Fragment>
-                                <Typography variant="h5" gutterBottom>
-                                    Your order has been placed.
+    if (!alertOpen)
+        return (
+            <Container justify="center">
+                < >
+                    <Paper className={classes.paper}>
+                        <Stepper activeStep={activeStep} className={classes.stepper}>
+                            {steps.map((label) => (
+                                <Step key={label}>
+                                    <StepLabel>{label}</StepLabel>
+                                </Step>
+                            ))}
+                        </Stepper>
+                        <React.Fragment>
+                            {activeStep === steps.length ? (
+                                <React.Fragment>
+                                    <Typography variant="h5" gutterBottom>
+                                        Your order has been placed.
                                 </Typography>
 
-                            </React.Fragment>
-                        ) : (
-                                <React.Fragment>
-                                    {getStepContent(activeStep)}
-                                    <div className={classes.buttons}>
-                                        {activeStep !== 0 && (
-                                            <Button onClick={handleBack} className={classes.button}>
-                                                Back
-                </Button>
-                                        )}
-
-                                        {/* <Link style={{ marginRight: 'auto'}} to={props.isCustomer ? '/client' : ''} >Questions? Contact us</Link> */}
-                                       
-                                        <Button
-                                            variant="contained"
-                                            color="primary"
-                                            onClick={activeStep === steps.length - 1 ? handlePayment : handleNext}
-                                            className={classes.button}
-                                        >
-                                            {activeStep === steps.length - 1 ? 'Place Order' : 'Next'}
-                                        </Button>
-                                    </div>
                                 </React.Fragment>
-                            )}
+                            ) : (
+                                    <React.Fragment>
+                                        {getStepContent(activeStep)}
+                                        <div className={classes.buttons}>
+                                            {activeStep !== 0 && (
+                                                <Button onClick={handleBack} className={classes.button}>
+                                                    Back
+                                                </Button>
+                                            )}
 
-                    </React.Fragment>
-                </Paper>
-            </>
+                                            {/* <Link style={{ marginRight: 'auto'}} to={props.isCustomer ? '/client' : ''} >Questions? Contact us</Link> */}
+                                            <Link style={{ marginRight: 'auto' }} to='/client'  >Questions? Contact us</Link>
+                                            <div style={{ height: '25vh', width: '100%' }}>
+                                                <GoogleMapReact
+                                                    bootstrapURLKeys={{ key: 'AIzaSyD9aslGTBwYBGkOZ858OLJtDvmmjovPs10' }}
+                                                    defaultCenter={defaultProps.center}
+                                                    defaultZoom={defaultProps.zoom}
+                                                >
+                                                    {/* <google.maps.Marker
+                                                        lat={theaterLatitude}
+                                                        lng={theaterLongitude}
+                                                        text="My Marker"
+                                                    /> */}
+                                                </GoogleMapReact>
+                                            </div>
+                                            <Button
+                                                variant="contained"
+                                                color="primary"
+                                                onClick={activeStep === steps.length - 1 ? handlePayment : handleNext}
+                                                className={classes.button}
+                                            >
+                                                {activeStep === steps.length - 1 ? 'Place Order' : 'Next'}
+                                            </Button>
+                                        </div>
+                                    </React.Fragment>
+                                )}
 
-        </Container>
-    );
-    if(alertOpen)
-      return (
-        <Snackbar open={alertOpen} autoHideDuration={6000} >
-        <div  >
-          Your order has been placed. Redirecting you to Your Orders page!
+                        </React.Fragment>
+                    </Paper>
+                </>
+
+            </Container>
+        );
+    if (alertOpen)
+        return (
+            <Snackbar open={alertOpen} autoHideDuration={6000} >
+                <div  >
+                    Your order has been placed. Redirecting you to Your Orders page!
         </div>
-        {/* <div>{window.location='/managemovies'}</div> */}
-      </Snackbar>
-      )
+                {/* <div>{window.location='/managemovies'}</div> */}
+            </Snackbar>
+        )
 }
 
 export default withRouter(Checkout)
