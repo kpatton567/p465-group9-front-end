@@ -292,7 +292,6 @@ function MoviesPage()
                         ))}
                     </div>
 
-                    {/* Button at bottom to bring user back to top of page */}
                     <section style={root}>
                         <div style={container2}>
                             <Button
@@ -302,7 +301,7 @@ function MoviesPage()
                                 style={button}
                                 href="/movies"
                             >
-                                {'Back to Top'}
+                                {'Reset Filters'}
                             </Button>
                         </div>
                     </section>
