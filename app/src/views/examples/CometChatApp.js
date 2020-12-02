@@ -1,14 +1,7 @@
-import React from 'react';
-import { Router, Route, Switch } from 'react-router-dom';
-import { connect } from 'react-redux';
-import { createBrowserHistory } from 'history';
 
 /** @jsx jsx */
 import { jsx } from '@emotion/react';
 
-import PrivateRoute from '../../CometChat/PrivateRoute';
-
-import KitchenSinkApp from '../../CometChat/defaultPages/KitchenSinkApp';
 import HomePage from '../../CometChat/defaultPages/HomePage';
 
 
@@ -18,22 +11,22 @@ import {
 } from "../styles/CometChatAppStyle";
 import {CometChat} from '@cometchat-pro/chat';
 
-const history = createBrowserHistory();
-
 function CometChatApp(){
     const {
         user,
       } = useAuth0();
     if(user){
-        CometChat.login(user.sub.substring(6),'d8dee6a22683724af8502b02929f601f6f30f43c')
+        var userId = user.sub.length === 35 ? user.sub.substring(14) : user.sub.substring(6)
+        CometChat.login(userId,'d8dee6a22683724af8502b02929f601f6f30f43c')
         .then( user => {
         console.log("Login successfully:", { user });
     })
     }
     if(user){
     let GUID = "theatermanagers";
+    var userId = user.sub.length === 35 ? user.sub.substring(14) : user.sub.substring(6)
     let membersList = [
-    new CometChat.GroupMember(user.sub.substring(6), CometChat.GROUP_MEMBER_SCOPE.PARTICIPANT),
+    new CometChat.GroupMember(userId, CometChat.GROUP_MEMBER_SCOPE.PARTICIPANT),
     ];
 
     CometChat.addMembersToGroup(GUID, membersList, []).then(

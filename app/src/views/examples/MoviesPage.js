@@ -71,167 +71,243 @@ const formControl = {
     margin: theme.spacing(1),
     minWidth: 140,
 };
-
-const handleTheaterChange = (event) => {
-    console.log("Theater modified\n");
-};
-
-const handlePriceChange = (event) => {
-    console.log("Theater modified\n");
-};
-
-const handleDateChange = (event) => {
-    console.log("Date modified\n");
+const formControl2 = {
+    margin: theme.spacing(2),
+    backgroundColor: theme.palette.secondary.main,
 };
 
 
-class MoviesPage extends Component {
-    constructor(props) {
-        super(props);
-        this.state = {
-            cards: [],
-        };
-    }
-    componentDidMount() {
-        const fetchMovies = async () => {
-            const res = await axios.get(apiVariables.apiUrl + '/api/home/movies');
-            this.setState({ cards: res.data })
-        };
-        fetchMovies();
-    }
-    handleSubmitClick(e) {
-        console.log("Test");
-    }
-    render() {
-        const { cards } = this.state;
-        return (
-            <>
-                {/* Header bar */}
-                <ExamplesNavbar />
 
-                {/* Page title */}
-                <ProfilePageHeader posterLink={require("assets/img/fabio-mangione.jpg")} />
-                <div className="section profile-content">
-                    <Container>
-                        <Row>
-                            <Col className="ml-auto mr-auto text-center" md="6">
-                                <br />
-                                <br />
-                                <h2>ALL MOVIES</h2>
-                                <br />
-                                <br />
-                                <br />
-                            </Col>
-                        </Row>
-                        <br />
+function MoviesPage() 
+{   
+    const [cards, setCards] = React.useState([]);
+    const [theaters, setTheaters] = React.useState([]);
+    const [theaterId, setSelectedTheatre] = React.useState('');
+    const [price, setSelectedPrice] = React.useState('');
+    const [date, setSelectedDate] = React.useState('');
 
-                        {/* Search filters */}
-                        <div>
-                            <FormControl variant="outlined" style={formControl}>
-                                <InputLabel id="theater-dropdown-label">Theater</InputLabel>
-                                <Select
-                                    labelId="theater-dropdown-label"
-                                    id="theater-dropdown"
-                                    // value={theater}
-                                    onChange={handleTheaterChange}
-                                    label="Theater"
-                                >
-                                    <MenuItem value="">
-                                        <em>None</em>
-                                    </MenuItem>
-                                    <MenuItem value={10}>AMC</MenuItem>
-                                    <MenuItem value={20}>IMAX</MenuItem>
-                                    <MenuItem value={30}>Carmike</MenuItem>
-                                </Select>
-                            </FormControl>
-                            <FormControl variant="outlined" style={formControl}>
-                                <InputLabel id="price-dropdown-label">Price Range</InputLabel>
-                                <Select
-                                    labelId="price-dropdown-label"
-                                    id="price-dropdown"
-                                    // value={age}
-                                    onChange={handlePriceChange}
-                                    label="Price"
-                                >
-                                    <MenuItem value="">
-                                        <em>None</em>
-                                    </MenuItem>
-                                    <MenuItem value={10}>$0.00 - $4.99</MenuItem>
-                                    <MenuItem value={20}>$5.00 - $9.99 </MenuItem>
-                                    <MenuItem value={30}>$10.00 +</MenuItem>
-                                </Select>
-                            </FormControl>
-                            <FormControl style={formControl}>
-                                <form style={container} noValidate>
-                                    <TextField
-                                        id="date"
-                                        label="Date"
-                                        type="date"
-                                        style={textField}
-                                        // value = {date}
-                                        onChange={handleDateChange}
-                                        InputLabelProps={{
-                                            shrink: true,
-                                        }}
+
+    // Initial page load
+    const fetchData = React.useCallback(() => 
+    {
+        axios({
+            "method": "GET",
+            "url": apiVariables.apiUrl + '/api/home/movies',
+        })
+            .then((response) => {
+                setCards(response.data)
+            })
+                .catch((error) => {
+                    console.log(error)
+                })
+        
+        // populate the theaters list
+        axios({
+            "method": "GET",
+            "url": apiVariables.apiUrl + '/api/home/theaters',
+        })
+            .then((response) => {
+                setTheaters(response.data)
+            })
+                .catch((error) => {
+                    console.log(error)
+                })
+    }, [])
+    React.useEffect(() => 
+    {
+        fetchData()
+    }, [fetchData])
+
+
+    const handleTheaterChange = (event) => 
+    {
+        setSelectedTheatre(event.target.value);
+    }
+
+    const handlePriceChange = (event) => 
+    {
+        var toSend = "";
+
+        if(event.target.value == 10)
+        {
+            toSend = "LOW";
+        }
+        else if(event.target.value == 20)
+        {
+            toSend = "MID";
+        }
+        else
+        {
+            toSend = "HIGH";
+        }
+
+        setSelectedPrice(toSend);
+    }
+
+    const handleDateChange = (event) => 
+    {
+        setSelectedDate(event.target.value);
+    }
+
+    const filterMovies = (event) =>
+    {
+        var sDate = null;
+        var sTheater = null;
+        var sPrice = null;
+
+        if(date != '') sDate = date;
+        if(theaterId != '') sTheater = theaterId;
+        if(price != '') sPrice = price;
+
+        axios({
+            "method": "POST",
+            "url": apiVariables.apiUrl + '/api/home/search',
+            "data": {
+                date: sDate,
+                theater: sTheater,
+                price: sPrice,
+            }
+        })
+            .then((response) => {
+                setCards(response.data);
+            })
+                .catch((error) => {
+                    console.log(error)
+                })
+    }
+
+
+    return (
+        <>
+            <ExamplesNavbar />
+            {/* Page title */}
+            <ProfilePageHeader posterLink={require("assets/img/fabio-mangione.jpg")} />
+            <div className="section profile-content">
+                <Container>
+                    <Row>
+                        <Col className="ml-auto mr-auto text-center" md="6">
+                            <br />
+                            <br />
+                            <h2>ALL MOVIES</h2>
+                            <br />
+                            <br />
+                            <br />
+                        </Col>
+                    </Row>
+                    <br />
+
+                    {/* Search filters */}
+                    <div>
+                        <FormControl variant="outlined" style={formControl}>
+                            <InputLabel id="theater-dropdown-label">Theater</InputLabel>
+                            <Select
+                                label="Theater"
+                                labelId="theater-dropdown-label"
+                                id="theater-dropdown"
+                                onChange={handleTheaterChange}
+                            >
+                                <MenuItem value="">
+                                    <em>None</em>
+                                </MenuItem>
+                                {/* Populate from backend */}
+                                {theaters.map((theater) => (
+                                    <MenuItem value={theater.id}>{theater.name}</MenuItem>
+                                ))}
+                            </Select>
+                        </FormControl>
+                        <FormControl variant="outlined" style={formControl}>
+                            <InputLabel id="price-dropdown-label">Price Range</InputLabel>
+                            <Select
+                                label="Price"
+                                labelId="price-dropdown-label"
+                                id="price-dropdown"
+                                onChange={handlePriceChange}
+                            >
+                                <MenuItem value="">
+                                    <em>None</em>
+                                </MenuItem>
+                                <MenuItem value={10}>$0.00 - $4.99</MenuItem>
+                                <MenuItem value={20}>$5.00 - $9.99 </MenuItem>
+                                <MenuItem value={30}>$10.00 +</MenuItem>
+                            </Select>
+                        </FormControl>
+                        <FormControl style={formControl}>
+                            <form style={container} noValidate>
+                                <TextField
+                                    label="Date"
+                                    id="date"
+                                    type="date"
+                                    style={textField}
+                                    onChange={handleDateChange}
+                                    InputLabelProps={{
+                                        shrink: true,
+                                    }}
+                                />
+                            </form>
+                        </FormControl>
+                        <FormControl variant="outlined" style={formControl2}>
+                            <section style={root}>
+                                <div style={container2}>
+                                    <Button
+                                        color="secondary"
+                                        variant="contained"
+                                        size="large"
+                                        onClick={filterMovies}
+                                    >
+                                        {'Apply Filters'}
+                                    </Button>
+                                </div>
+                            </section>
+                        </FormControl>
+                    </div>
+
+                    {/* All movie cards */}
+                    <div style={{ display: 'flex', flexWrap: 'wrap' }}>
+                        {cards.map((card) => (
+                            <Grid item key={card} xs={12} sm={6} md={2} lg={3} style={{ margin: '10px', minWidth: '30%' }}>
+                                <Card style={{ height: '40vw' }}>
+                                    <CardMedia
+                                        style={cardMedia}
+                                        image={card.posterLink}
                                     />
-                                </form>
-                            </FormControl>
-                            <FormControl variant="outlined" style={formControl}>
-                                <Typography style={theme.typography2}>
-                                    Filter Results
-                               </Typography>
-                            </FormControl>
-                        </div>
+                                    <CardContent style={cardContent}>
+                                        <Typography gutterBottom variant="h5" component="h2">
+                                            {card.title}
+                                        </Typography>
+                                        <Typography>
+                                            {card.description}
+                                        </Typography>
+                                    </CardContent>
+                                    {/* Book Tickets Button */}
+                                    <CardActions>
+                                        <Link>
+                                            <Button size="small" color="primary" href={`/moviebooking/${card.id}`}>
+                                                {'Book Tickets'}
+                                            </Button>
+                                        </Link>
+                                    </CardActions>
+                                </Card>
+                            </Grid>
+                        ))}
+                    </div>
 
-                        {/* All movie cards */}
-                        <div style={{ display: 'flex', flexWrap: 'wrap' }}>
-                            {cards.map((card) => (
-                                <Grid item key={card} xs={12} sm={6} md={2} lg={3} style={{ margin: '10px', minWidth: '30%' }}>
-                                    <Card style={{ height: '40vw' }}>
-                                        <CardMedia
-                                            style={cardMedia}
-                                            image={card.posterLink}
-                                        />
-                                        <CardContent style={cardContent}>
-                                            <Typography gutterBottom variant="h5" component="h2">
-                                                {card.title}
-                                            </Typography>
-                                            <Typography>
-                                                {card.description}
-                                            </Typography>
-                                        </CardContent>
-                                        {/* Book Tickets Button */}
-                                        <CardActions>
-                                            <Link>
-                                                <Button size="small" color="primary" href={`/moviebooking/${card.id}`}>
-                                                    {'Book Tickets'}
-                                                </Button>
-                                            </Link>
-                                        </CardActions>
-                                    </Card>
-                                </Grid>
-                            ))}
+                    <section style={root}>
+                        <div style={container2}>
+                            <Button
+                                color="secondary"
+                                variant="contained"
+                                size="large"
+                                style={button}
+                                href="/movies"
+                            >
+                                {'Reset Filters'}
+                            </Button>
                         </div>
-
-                        {/* Button at bottom to bring user back to top of page */}
-                        <section style={root}>
-                            <div style={container2}>
-                                <Button
-                                    color="secondary"
-                                    variant="contained"
-                                    size="large"
-                                    style={button}
-                                    href="/movies"
-                                >
-                                    {'Back to Top'}
-                                </Button>
-                            </div>
-                        </section>
-                    </Container>
-                </div>
-                <DemoFooter />
-            </>
-        );
-    }
+                    </section>
+                </Container>
+            </div>
+            <DemoFooter />
+        </>
+    );
 }
 export default MoviesPage;

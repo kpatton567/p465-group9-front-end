@@ -13,8 +13,6 @@ import CometChatMessageListScreen from "../CometChatMessageListScreen";
 import CometChatUserDetail from "../CometChatUserDetail";
 import CometChatGroupDetail from "../CometChatGroupDetail";
 import MessageThread from "../MessageThread";
-import CallAlert from "../CallAlert";
-import CallScreen from "../CallScreen";
 import ImageView from "../ImageView";
 
 import { theme } from "../../resources/theme";
