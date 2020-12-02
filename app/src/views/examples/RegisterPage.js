@@ -109,7 +109,7 @@ function RegisterPage(props) {
                     </InputGroupAddon>
                     <Input placeholder="Theater Address" type="text"
                     onChange= {event =>
-                    setTheaterAddress(event.target.value)}/>
+                    setAddress(event.target.value)}/>
                   </InputGroup>
                   <Button
                   className="btn-round mr-1"
