@@ -233,7 +233,7 @@ class CometChatUserList extends React.PureComponent {
     let currentLetter = "";
 
     const users = userList.map((user, key) => {
-      if(user.uid == 'superhero1'){
+      if(user.uid === 'superhero1'){
       const chr = user.name[0].toUpperCase();
       let firstChar = null;
       if (chr !== currentLetter) {

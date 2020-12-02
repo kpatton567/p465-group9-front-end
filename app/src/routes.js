@@ -1,12 +1,13 @@
 
 import Dashboard from "views/examples/DashboardPage.js";
 import Notifications from "views/examples/Notifications.js";
-import Typography from "views/examples/Typography.js";
 import TableList from "views/examples/Tables.js";
 import ManageMovies from "views/examples/ManageMovies.js";
-import ManageSnacks from "views/examples/ManageMovies.js";
+import ManageSnacks from "views/examples/ManageSnacks.js";
 import UserPage from "views/examples/User.js";
 import CometChatApp from 'views/examples/CometChatApp';
+
+
 var routes = [
   {
     path: "/dashboard",
@@ -29,34 +30,34 @@ var routes = [
     component: ManageSnacks,
     layout: "/manager",
   },
+  {
+    path: "/groupchat",
+    name: "Chat Support",
+    icon: "nc-icon nc-tile-56",
+    component: CometChatApp,
+    layout: "/manager",
+  },
   // {
-  //   path: "/groupchat",
-  //   name: "",
-  //   icon: "nc-icon nc-tile-56",
-  //   component: CometChatApp,
+  //   path: "/notifications",
+  //   name: "Notifications",
+  //   icon: "nc-icon nc-bell-55",
+  //   component: Notifications,
   //   layout: "/manager",
   // },
-  {
-    path: "/notifications",
-    name: "Notifications",
-    icon: "nc-icon nc-bell-55",
-    component: Notifications,
-    layout: "/manager",
-  },
-  {
-    path: "/user-page",
-    name: "User Profile",
-    icon: "nc-icon nc-single-02",
-    component: UserPage,
-    layout: "/manager",
-  },
-  {
-    path: "/tables",
-    name: "Table List",
-    icon: "nc-icon nc-tile-56",
-    component: TableList,
-    layout: "/manager",
-  },
+  // {
+  //   path: "/user-page",
+  //   name: "User Profile",
+  //   icon: "nc-icon nc-single-02",
+  //   component: UserPage,
+  //   layout: "/manager",
+  // },
+  // {
+  //   path: "/tables",
+  //   name: "Table List",
+  //   icon: "nc-icon nc-tile-56",
+  //   component: TableList,
+  //   layout: "/manager",
+  // },
   
   // {
   //   path: "/typography",

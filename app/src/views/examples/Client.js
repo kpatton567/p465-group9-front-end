@@ -1,27 +1,47 @@
 import React, {Component} from 'react';
-import {Widget, addResponseMessage, addUserMessage, dropMessages, toggleMsgLoader} from 'react-chat-widget';
+import {Widget, addResponseMessage, addUserMessage, dropMessages, toggleMsgLoader, addLinkSnippet, setQuickButtons} from 'react-chat-widget';
 import {CometChat} from '@cometchat-pro/chat';
 import 'react-chat-widget/lib/styles.css';
+import { apiVariables, ACCESS_TOKEN_NAME } from '../../APIConstants';
+import axios from "axios";
 
-const agentUID = '5f8aefe6edc64a00681ecafa';
 const CUSTOMER_MESSAGE_LISTENER_KEY = "client-listener";
 const limit = 30;
 class Client extends Component {
+
+  constructor(props){
+    super(props);
+    this.state = {
+      agentUID : '',
+      userId : props.userId,
+      userName : props.userName
+    }
+  }
   componentDidMount() {
-    addResponseMessage('Welcome to our theater!');
-    addResponseMessage('Are you looking for anything in particular?');
-    
+    addResponseMessage('Welcome to our customer care!');
+    addResponseMessage('Choose a theater');
+    let theaterButtons = []
+    for (var i = 0 ; i < this.props.theaters.length ; i ++){
+      theaterButtons.push
+      ({
+        label: this.props.theaters[i].theaterName,
+        value: this.props.theaters[i].theaterId,
+      })
+    }
+    setQuickButtons(theaterButtons)    
+
     let uid = localStorage.getItem("cc-uid");
     // check for uid, if exist then get auth token, login, create message listener and fetch previous messages
    if ( uid !== null) {
      this.fetchAuthToken(uid).then(
        result => {
          console.log('auth token fetched', result);
-         CometChat.login('5f7f79850046a0006e76cab4','d8dee6a22683724af8502b02929f601f6f30f43c')
+         CometChat.login(this.state.userId,'d8dee6a22683724af8502b02929f601f6f30f43c')
          .then( user => {
            console.log("Login successfully:", { user });
            this.createMessageListener();
         })
+        this.createMessageListener();
        },
        error => {
          console.log('Initialization failed with error:', error);
@@ -31,7 +51,7 @@ class Client extends Component {
   }
 
   fetchAuthToken = async uid => {
-    fetch("https://api-us.cometchat.io/v2.0/users/5f7f79850046a0006e76cab4/auth_tokens", {
+    fetch("https://api-us.cometchat.io/v2.0/users/"+this.state.userId+"/auth_tokens", {
         "method": "POST",
         "headers": {
           "appId": "254719f4f395024",
@@ -53,8 +73,8 @@ class Client extends Component {
   }
 
   createUser = async ()=> {
-    var user = new CometChat.User('5f7f79850046a0006e76cab4');
-    user.name = "Pranamya"
+    var user = new CometChat.User(this.state.userId);
+    user.name = this.state.userName
     CometChat.createUser(user, '8af2ab1e74163bd038e0d0de4aa54f495812ef6e').then(
         user => {
             console.log("user created", user);
@@ -66,13 +86,13 @@ class Client extends Component {
   }
 
   createMessageListener = () => {
-      if(CUSTOMER_MESSAGE_LISTENER_KEY != agentUID){
+      if(CUSTOMER_MESSAGE_LISTENER_KEY != this.state.agentUID){
     CometChat.addMessageListener(
       CUSTOMER_MESSAGE_LISTENER_KEY,
       new CometChat.MessageListener({
         onTextMessageReceived: message => {
           console.log("Incoming Message Log", { message });
-          if(message.sender.uid != '5f7f79850046a0006e76cab4')
+          if(message.sender.uid != this.state.userId)
             addResponseMessage(message.text);
         }
       })
@@ -81,7 +101,7 @@ class Client extends Component {
 
   fetchPreviousMessages = () => {
     var messagesRequest = new CometChat.MessagesRequestBuilder()
-    .setUID(agentUID)
+    .setUID(this.state.agentUID)
     .setLimit(limit)
     .build();   
 
@@ -89,7 +109,7 @@ class Client extends Component {
       messages => {
         console.log("Message list fetched:", messages);
         messages.forEach( message => {
-          if(message.receiver !== agentUID){
+          if(message.receiver !== this.state.agentUID){
             // addResponseMessage(message.text);
           } else {
             addUserMessage(message.text)
@@ -102,6 +122,27 @@ class Client extends Component {
     );
   }
 
+  handleQuickButtonClicked = (e) => {
+
+    var token = localStorage.getItem(ACCESS_TOKEN_NAME)
+
+    axios.get(apiVariables.apiUrl +'/api/customer/theater_manager/'+ e, {
+    headers: {
+        'Authorization': 'Bearer ' + token
+    }
+    }).then((response) => {
+        if(response.status === 200){
+          this.setState({agentUID : response.data.userId})
+        }
+    })
+    .catch(function (error) {
+        console.log(error);
+    });
+    addResponseMessage('Connecting you to ' + e);
+    setQuickButtons([]);
+    addResponseMessage('You are now connected to ' + e);
+}
+
   handleNewUserMessage = newMessage => {
     // console.log(`New message incoming! ${newMessage}`);
     let uid = localStorage.getItem("cc-uid");
@@ -111,10 +152,7 @@ class Client extends Component {
         result => {
           console.log('auth token fetched', result);
           localStorage.setItem("cc-uid",result.uid)
-          CometChat.login('5f7f79850046a0006e76cab4','d8dee6a22683724af8502b02929f601f6f30f43c')
-          .then(user => {
-            console.log("Login successfully:", { user });
-            fetch("https://api-us.cometchat.io/v2.0/users/5f7f79850046a0006e76cab4/messages", {
+            fetch("https://api-us.cometchat.io/v2.0/users/"+this.state.userId+"/messages", {
             "method": "POST",
             "headers": {
                 "appId": "254719f4f395024",
@@ -122,7 +160,7 @@ class Client extends Component {
                 "Content-Type": "application/json",
                 "Accept": "application/json"
             },
-            "body": "{\"category\":\"message\",\"type\":\"text\",\"data\":{\"text\":\""+newMessage+"\",\"metadata\":{\"key1\":\"value1\",\"key2\":\"value2\"}},\"multipleReceivers\":{\"uids\":[\""+agentUID+"\",\"uid2\"],\"guids\":[\"\"]}}"
+            "body": "{\"category\":\"message\",\"type\":\"text\",\"data\":{\"text\":\""+newMessage+"\",\"metadata\":{\"key1\":\"value1\",\"key2\":\"value2\"}},\"multipleReceivers\":{\"uids\":[\""+this.state.agentUID+"\",\"uid2\"],\"guids\":[\"\"]}}"
             }).then(
                 message => {
                     console.log('Message sent successfully:', message);
@@ -131,14 +169,14 @@ class Client extends Component {
                     console.log('Message sending failed with error:', error);
                 }
             )
-          })
+          // })
       },
       error => {
         console.log('Initialization failed with error:', error);
       })
     } else {
       // we have uid, do send
-    fetch("https://api-us.cometchat.io/v2.0/users/5f7f79850046a0006e76cab4/messages", {
+    fetch("https://api-us.cometchat.io/v2.0/users/"+this.state.userId+"/messages", {
             "method": "POST",
             "headers": {
                 "appId": "254719f4f395024",
@@ -146,7 +184,7 @@ class Client extends Component {
                 "Content-Type": "application/json",
                 "Accept": "application/json"
             },
-            "body": "{\"category\":\"message\",\"type\":\"text\",\"data\":{\"text\":\""+newMessage+"\",\"metadata\":{\"key1\":\"value1\",\"key2\":\"value2\"}},\"multipleReceivers\":{\"uids\":[\""+agentUID+"\",\"uid2\"],\"guids\":[\"\"]}}"
+            "body": "{\"category\":\"message\",\"type\":\"text\",\"data\":{\"text\":\""+newMessage+"\",\"metadata\":{\"key1\":\"value1\",\"key2\":\"value2\"}},\"multipleReceivers\":{\"uids\":[\""+this.state.agentUID+"\",\"uid2\"],\"guids\":[\"\"]}}"
             }).then(
                 message => {
                     console.log('Message sent successfully:', message);
@@ -169,6 +207,7 @@ class Client extends Component {
       <div className='App'>
         <Widget
           handleNewUserMessage={this.handleNewUserMessage}
+          handleQuickButtonClicked={this.handleQuickButtonClicked}
           title='Chat with Theater Agent'
           subtitle='Ready to help you'
         />

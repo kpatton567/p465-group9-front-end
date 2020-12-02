@@ -13,12 +13,9 @@ import CometChatMessageListScreen from "../CometChatMessageListScreen";
 import CometChatUserDetail from "../CometChatUserDetail";
 import CometChatGroupDetail from "../CometChatGroupDetail";
 import MessageThread from "../MessageThread";
-import CallAlert from "../CallAlert";
-import CallScreen from "../CallScreen";
 import ImageView from "../ImageView";
 
 import { theme } from "../../resources/theme";
-import { useAuth0 } from '@auth0/auth0-react';
 
 import {
   unifiedStyle,
@@ -28,15 +25,15 @@ import {
 } from "./style";
 
 class CometChatUnified extends React.Component {
-  
-  // loggedInUser = null;
+
+  loggedInUser = null;
 
   constructor(props) {
     
     super(props);
 
     this.state = {
-      darktheme: true,
+      darktheme: false,
       viewdetailscreen: false,
       item: {},
       type: "user",
@@ -527,7 +524,6 @@ class CometChatUnified extends React.Component {
         tab={this.state.tab}
         type={this.state.type}
         composedthreadmessage={this.state.composedthreadmessage}
-        callmessage={this.state.callmessage}
         groupmessage={this.state.groupmessage}
         loggedInUser={this.loggedInUser}
         actionGenerated={this.actionHandler} />
@@ -540,6 +536,10 @@ class CometChatUnified extends React.Component {
     }
     
     return (
+      <div style = {{
+        width: '100vw',
+        height: '100vh'
+     }}>
       <div css={unifiedStyle(this.theme)} className="cometchat cometchat--unified">
         <div css={unifiedSidebarStyle(this.state, this.theme)} className="unified__sidebar">
           <NavBar 
@@ -558,18 +558,9 @@ class CometChatUnified extends React.Component {
         <div css={unifiedMainStyle(this.state)} className="unified__main">{messageScreen}</div>
         {detailScreen}
         {threadMessageView}
-        <CallAlert 
-        theme={this.theme} 
-        actionGenerated={this.actionHandler}  />
-        <CallScreen
-        theme={this.theme}
-        item={this.state.item} 
-        type={this.state.type}
-        incomingCall={this.state.incomingCall}
-        outgoingCall={this.state.outgoingCall}
-        loggedInUser={this.loggedInUser}
-        actionGenerated={this.actionHandler} />
+        
         {imageView}
+      </div>
       </div>
     );
   }

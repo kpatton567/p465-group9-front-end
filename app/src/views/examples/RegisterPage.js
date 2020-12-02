@@ -2,6 +2,9 @@ import React from "react";
 import axios from 'axios';
 import {apiVariables} from '../../APIConstants'
 import { useAuth0 } from '@auth0/auth0-react';
+import Geocode from "react-geocode";
+
+
 // reactstrap components
 import { Button, Card, Form, Input, Container, Row, Col,
   InputGroupAddon,
@@ -43,6 +46,7 @@ function RegisterPage(props) {
       console.log(theaterCapacity);
     }
     // e.preventDefault();
+    var userId = user.sub.length === 35 ? user.sub.substring(14) : user.sub.substring(6)
     const payload={
       "name":theaterName,
       "managerId" : user.sub.substring(6),
@@ -62,7 +66,6 @@ function RegisterPage(props) {
     })
     console.log(payload);
   };
-
   if (user && !alertOpen)
   return (
     <>

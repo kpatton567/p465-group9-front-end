@@ -10,7 +10,7 @@ const rawTheme = createMuiTheme({
     },
     secondary: {
       light: '#993333',
-      main: '#800000',
+      main: '#f50057',
       dark: '#590000',
     },
     warning: {
@@ -31,6 +31,15 @@ const rawTheme = createMuiTheme({
   typography: {
     fontFamily: "'Work Sans', sans-serif",
     fontSize: 14,
+    fontWeightLight: 300, // Work Sans
+    fontWeightRegular: 400, // Work Sans
+    fontWeightMedium: 700, // Roboto Condensed
+    fontFamilySecondary: "'Roboto Condensed', sans-serif",
+  },
+  typography2: {
+    fontFamily: "'Work Sans', sans-serif",
+    fontSize: 25,
+    lineHeight: 2.4,
     fontWeightLight: 300, // Work Sans
     fontWeightRegular: 400, // Work Sans
     fontWeightMedium: 700, // Roboto Condensed

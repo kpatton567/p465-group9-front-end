@@ -1,4 +1,6 @@
 import React from "react";
+import axios from 'axios';
+import { apiVariables, ACCESS_TOKEN_NAME } from '../../APIConstants';
 
 // reactstrap components
 import {
@@ -15,7 +17,7 @@ import {
   Col,
 } from "reactstrap";
 
-function ManageMovies() {
+function ManageSnacks() {
     const [snackName, setsnackName] = React.useState('');
     const [snackPrice, setsnackPrice] = React.useState('');
     const fetchData = React.useCallback(() => {
@@ -95,4 +97,4 @@ function ManageMovies() {
     );
 }
 
-export default ManageMovies;
+export default ManageSnacks;

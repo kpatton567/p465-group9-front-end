@@ -10,7 +10,6 @@ import Button from '@material-ui/core/Button';
 import FaceIcon from '@material-ui/icons/Face';
 import SupervisorAccountIcon from '@material-ui/icons/SupervisorAccount';
 import { apiVariables, ACCESS_TOKEN_NAME } from '../../APIConstants';
-import {CometChat} from '@cometchat-pro/chat';
 
 const useStyles = makeStyles((theme) => ({
     title: {
@@ -45,10 +44,12 @@ function ChooseRole() {
     const handleClose = () => {
         setOpen(false);
     };
+  
     if(user){
+        var userId = user.sub.length === 35 ? user.sub.substring(14) : user.sub.substring(6)
         axios({
         "method": "POST",
-        "url": apiVariables.apiUrl +'/api/auth/check_user?userId=' + user.sub.substring(6)
+        "url": apiVariables.apiUrl +'/api/auth/check_user?userId=' + userId
         })
         .then((response) => {
             console.log(response.data)
@@ -59,25 +60,22 @@ function ChooseRole() {
         })
     }
     if(user){
+        var userId = user.sub.length === 35 ? user.sub.substring(14) : user.sub.substring(6)
          axios({
         "method": "POST",
-        "url": apiVariables.apiUrl +'/api/auth/get_token?userId=' + user.sub.substring(6)
+        "url": apiVariables.apiUrl +'/api/auth/get_token?userId=' + userId
         })
         .then((response) => {
             localStorage.setItem(ACCESS_TOKEN_NAME,response.data.token);
         })
         .catch((error) => {
             console.log(error)
-        })
-
-        // CometChat.login('5f7f79850046a0006e76cab4','d8dee6a22683724af8502b02929f601f6f30f43c')
-        // .then(user => {
-        //     console.log(user+ "cometchat logged in");
-        // })
-            
+        })  
     }
+
     //cometchat signup
     if(user){
+        var userId = user.sub.length === 35 ? user.sub.substring(14) : user.sub.substring(6)
         fetch("https://api-us.cometchat.io/v2.0/users", {
         "method": "POST",
         "headers": {
@@ -86,21 +84,22 @@ function ChooseRole() {
             "Content-Type": "application/json",
             "Accept": "application/json"
         },
-        "body": "{\"uid\":\"" +user.sub.substring(6)+ "\",\"name\":\""+user.name+"\",\"role\":\"customer\"}"
+        "body": "{\"uid\":\"" + userId + "\",\"name\":\""+user.name+"\",\"role\":\"customer\"}"
         })
         .then(response => {
-        console.log(response);
         })
         .catch(err => {
-        console.error(err);
         });
     }
-
+    //userId=-oauth2|117950300573138642682
     const registerUser = (userRole) => {
+        
     var role = userRole;
+    var userId = user.sub.length === 35 ? user.sub.substring(14) : user.sub.substring(6)
+
     axios({
         "method": "POST",
-        "url": apiVariables.apiUrl + '/api/auth/register?userId=' + user.sub.substring(6) +'&role='+ role
+        "url": apiVariables.apiUrl + '/api/auth/register?userId=' + userId +'&role='+ role
     })
         .then((response) => {
             console.log(response.data)
