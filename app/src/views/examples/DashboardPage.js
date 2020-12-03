@@ -27,6 +27,8 @@ import TableBody from '@material-ui/core/TableBody';
 import TableCell from '@material-ui/core/TableCell';
 import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
+import axios from "axios";
+import { apiVariables, ACCESS_TOKEN_NAME } from '../../APIConstants';
 
 
 
@@ -54,18 +56,29 @@ const useStyles = makeStyles((theme) => ({
     height: 350,
     marginBottom: 40,
   },
+  table: {
+    marginLeft: '40px',
+    marginRight: '40px',
+    marginBottom: '50px'
+  },
 }));
 
 
-function createData(name, timesPurchased, revenue) 
-{
-    return         {name, timesPurchased, revenue};
+function pairData(title, amount) {
+  return { title, amount };
 }
 
-
-const orderz = [
-  createData('Avengers: Endgame', 10, 59.90),
+const orders = [
 ];
+
+// Test data
+const orderz = [
+  pairData("Avengers: Endgame", 30.99),
+  pairData("Kung-Fu Chicken", 400.99),
+  pairData("Broccoli", 304.44),
+];
+
+
 
 function Dashboard()
 {
@@ -78,6 +91,35 @@ function Dashboard()
     setOpen(false);
   };
   const fixedHeightPaper = clsx(classes.paper, classes.fixedHeight);
+
+  const fetchData = React.useCallback(() => 
+    {
+        var token = localStorage.getItem(ACCESS_TOKEN_NAME)
+      
+        axios.get(apiVariables.apiUrl + '/api/manage/movie_revenue', 
+        {
+            headers: {
+                'Authorization': 'Bearer ' + token
+            }
+        })
+            .then((response) => {
+                var keys = Object.keys(response.data);
+
+                for(var i = 0; i < response.data.length; i++)
+                {
+                    orders[i] = pairData(keys[i], response.data[i]);
+                }
+
+            })
+                .catch((error) => {
+                    console.log(error)
+                })
+    }, [])
+
+    React.useEffect(() => 
+    {
+        fetchData()
+    }, [fetchData])
 
 
   return (
@@ -119,23 +161,21 @@ function Dashboard()
                 <CardTitle tag="h5">Revenue Generated (by Movie)</CardTitle>
               </CardHeader>
               <CardBody>
-                <Grid item xs={12}>
+                <Grid item xs={8}>
                   <div className={classes.table}>
-                    <Paper className={classes.paper}>
-                      <Table size="small">
+                    <Paper>
+                      <Table size="medium">
                         <TableHead>
                           <TableRow>
-                            <TableCell>Movie Name</TableCell>
-                            <TableCell>Quantity Sold</TableCell>
-                            <TableCell align="right">Total Revenue</TableCell>
+                            <TableCell><h6>Movie Name</h6></TableCell>
+                            <TableCell align="right"><h6>Total Revenue</h6></TableCell>
                           </TableRow>
                         </TableHead>
                         <TableBody>
-                          {orderz.map((order) => (
-                            <TableRow key={order.name}>
-                              <TableCell>{order.name}</TableCell>
-                              <TableCell>{order.timesPurchased}</TableCell>
-                              <TableCell align="right">{order.revenue}</TableCell>
+                          {orders.map((order) => (
+                            <TableRow key={order.title}>
+                              <TableCell>{order.title}</TableCell>
+                              <TableCell align="right">{order.amount}</TableCell>
                             </TableRow>
                           ))}
                         </TableBody>
@@ -149,8 +189,6 @@ function Dashboard()
         </Row>
       </div>
     </>
-
-    
   );
 }
 
