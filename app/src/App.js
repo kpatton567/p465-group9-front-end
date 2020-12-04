@@ -44,7 +44,7 @@ function App() {
       <Route path='/rewards'><RewardsPage /></Route>
       <Route path='/nucleo-icons'><NucleoIcons /></Route>
       <Route path='/your-orders'><BookingHistoryPage/></Route>
-      <Route path='/addReview/:userId/:movie' render={(props) => <AddReview {...props} />} />
+      <Route path='/addReview/:userId/:movieId/:movie' render={(props) => <AddReview {...props} />} />
 
       {/* Manager View Options */}
       <Route path= '/registerTheater'><RegisterPage/></Route> 

@@ -21,7 +21,7 @@ import ExamplesNavbar from "components/Navbars/ExamplesNavbar.js";
 import ProfilePageHeader from "components/Headers/ProfilePageHeader.js";
 import DemoFooter from "components/Footers/DemoFooter.js";
 
-function BookingHistoryPage() {
+function ManagerTransactionHistory() {
 
   const { user, isAuthenticated, isLoading, loginWithRedirect } = useAuth0();
   let userId = ''
@@ -33,7 +33,7 @@ function BookingHistoryPage() {
   const fetchData = React.useCallback(() => {
   var token = localStorage.getItem(ACCESS_TOKEN_NAME)
 
-  axios.get(apiVariables.apiUrl + '/api/customer/payment_history', {
+  axios.get(apiVariables.apiUrl + '/api/manage/transaction_history', {
   headers: {
       'Authorization': 'Bearer ' + token
   }
@@ -62,37 +62,13 @@ React.useEffect(() => {
   }
   if (isAuthenticated && !isLoading && user)
     return (
-      <>
-        <ExamplesNavbar />
-        <ProfilePageHeader posterLink={require("assets/img/historybg.jpg")} />
-        <div className="section profile-content">
-          <Container>
-            <div className="owner">
-              <div className="avatar">
-                <img
-                  alt="..."
-                  className="img-circle img-no-padding img-responsive"
-                  src={user.picture}
-                />
-              </div>
-              <div className="name">
-                <h4 className="title">
-                  {user.nickname} <br />
-                </h4>
-              </div>
-            </div>
-            <Row>
-              <Col className="ml-auto mr-auto text-center" md="6">
-                <p>
-                    Go through your previous orders, give a rating and add a review for your previous movies and help others pick a movie
-              </p>
-                <br />
-              </Col>
-            </Row>
-            <br />
-            <Card>
+        <>
+        <div className="content">
+          <Row>
+            <Col md="12">
+              <Card>
                 <CardHeader>
-                  <CardTitle tag="h4">Booking History</CardTitle>
+                  <CardTitle tag="h4">Simple Table</CardTitle>
                 </CardHeader>
                 <CardBody>
                   <Table responsive>
@@ -122,11 +98,11 @@ React.useEffect(() => {
                   </Table>
                 </CardBody>
               </Card>
-          </Container>
+            </Col>
+          </Row>
         </div>
-        <DemoFooter />
       </>
     );
 }
 
-export default BookingHistoryPage;
+export default ManagerTransactionHistory;

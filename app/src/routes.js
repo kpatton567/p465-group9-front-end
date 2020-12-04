@@ -6,7 +6,7 @@ import ManageMovies from "views/examples/ManageMovies.js";
 import ManageSnacks from "views/examples/ManageMovies.js";
 import UserPage from "views/examples/User.js";
 import CometChatApp from 'views/examples/CometChatApp';
-
+import ManagerTransactionHistory from 'views/examples/ManagerTransactionHistory';
 
 var routes = [
   {
@@ -38,6 +38,13 @@ var routes = [
     layout: "/manager",
   },
   {
+    path: "/transactionHistory",
+    name: "Transaction History",
+    icon: "nc-icon nc-tile-56",
+    component: ManagerTransactionHistory,
+    layout: "/manager",
+  },
+  {
     path: "/notifications",
     name: "Notifications",
     icon: "nc-icon nc-bell-55",
@@ -51,14 +58,6 @@ var routes = [
     component: UserPage,
     layout: "/manager",
   },
-  {
-    path: "/tables",
-    name: "Table List",
-    icon: "nc-icon nc-tile-56",
-    component: TableList,
-    layout: "/manager",
-  },
-  
   // {
   //   path: "/typography",
   //   name: "Typography",
