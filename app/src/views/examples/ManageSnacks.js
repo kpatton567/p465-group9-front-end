@@ -18,27 +18,26 @@ import {
 } from "reactstrap";
 
 function ManageSnacks() {
+    var token = localStorage.getItem(ACCESS_TOKEN_NAME);
     const [snackName, setsnackName] = React.useState('');
     const [snackPrice, setsnackPrice] = React.useState('');
-    const fetchData = React.useCallback(() => {
-      axios({
-          "method": "POST",
-          "url": apiVariables.apiUrl + '/api/manage/add_snack' + 
-          {
-            "name": snackName,
-            "price":snackPrice
-          },
+    const handleSubmitClick = (e) => {
+      e.preventDefault();
+      const payload = {
+        "name": snackName,
+        "price": snackPrice,
+      }
+      axios.post((apiVariables.apiUrl + '/api/manage/add_snack'), payload,{
+        headers: {
+          "Authorization": 'Bearer ' + token
+        }
       })
-          .then((response) => {
-              console.log(response.data)
-          })
-          .catch((error) => {
-              console.log(error)
-          })
-  }, [])
-  React.useEffect(() => {
-      fetchData()
-  }, [fetchData])
+        .then(function (response) {
+        })
+        .catch(function (error) {
+          console.log(error);
+        });
+    }
     return (
       <>
         <div className="content">
@@ -82,6 +81,7 @@ function ManageSnacks() {
                           className="btn-round"
                           color="primary"
                           type="submit"
+                          onClick={handleSubmitClick}
                         >
                           Add Snacks
                         </Button>

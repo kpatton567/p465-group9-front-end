@@ -6,6 +6,7 @@ import ManageMovies from "views/examples/ManageMovies.js";
 import ManageSnacks from "views/examples/ManageSnacks.js";
 import UserPage from "views/examples/User.js";
 import CometChatApp from 'views/examples/CometChatApp';
+import Showtimes from "views/examples/Showtimes.js";
 
 
 var routes = [
@@ -21,6 +22,13 @@ var routes = [
     name: "Manage Movies",
     icon: "nc-icon nc-camera-compact",
     component: ManageMovies,
+    layout: "/manager",
+  },
+  {
+    path: "/addshowtimes",
+    name: "Manage Showtimes",
+    icon: "nc-icon nc-bank",
+    component: Showtimes,
     layout: "/manager",
   },
   {

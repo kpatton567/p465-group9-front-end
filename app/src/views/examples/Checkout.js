@@ -387,6 +387,7 @@ function Checkout(props) {
         selectedSnacks[snackId] = counter
     };
 
+    const MarkersC = ( {text} ) => <div >{text}</div>;
     if (!alertOpen)
         return (
             <Container justify="center">
@@ -445,11 +446,7 @@ function Checkout(props) {
                                                     defaultCenter={defaultProps.center}
                                                     defaultZoom={defaultProps.zoom}
                                                 >
-                                                    {/* <google.maps.Marker
-                                                        lat={theaterLatitude}
-                                                        lng={theaterLongitude}
-                                                        text="My Marker"
-                                                    /> */}
+                                                    <MarkersC lat={theaterLatitude} lng={theaterLongitude} text={theaterAddress} key={'AIzaSyD9aslGTBwYBGkOZ858OLJtDvmmjovPs10'} />
                                                 </GoogleMapReact>
                                             </div>
                                             <Button

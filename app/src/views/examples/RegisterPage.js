@@ -59,7 +59,7 @@ function RegisterPage(props) {
     })
     .then((response) => {
         setAlertOpen(true);
-        setTimeout(()=> props.history.push('/manager/managerView/manageMovies'), 2000);
+        // setTimeout(()=> props.history.push('/manager/managerView/manageMovies'), 2000);
     })
     .catch((error) => {
         console.log(error)
