@@ -10,7 +10,7 @@ import {
   PaginationLink
 } from "reactstrap";
 
-import { MDBCarousel, MDBCarouselInner, MDBCarouselItem, MDBRow, MDBCol } from "mdbreact";
+import { MDBCarousel, MDBCarouselInner, MDBCarouselItem, MDBRow, MDBCol, MDBRating } from "mdbreact";
 
 import { useAuth0 } from '@auth0/auth0-react';
 import Client from "./Client.js";
@@ -85,6 +85,7 @@ function MovieBookingPage(props) {
       "url": apiVariables.apiUrl + '/api/home/reviews/' + props.match.params.movie,
     })
       .then((response) => {
+        console.log(response.data)
         setReviews(response.data)
         setReviewChunks(splitArrayIntoChunksOfLen(response.data, 3))
         reviewChunks = splitArrayIntoChunksOfLen(response.data, 3)
@@ -126,7 +127,7 @@ function MovieBookingPage(props) {
   if (movie && (isCustomer))
     return (
       <div className="mainBGcolor">
-        <ExamplesNavbar />
+        <ExamplesNavbar style = {{backgroundColor : 'black !important'}}/>
         <Client theaters={theaters} userId={userId} userName={user ? user.nickname : ''} managerId='5f8b6eb173ef49007032ca5b' />
         <header className="banner" style={{
           backgroundSize: "cover", backgroundImage: `url(${movie.posterLink})`,
@@ -173,13 +174,22 @@ function MovieBookingPage(props) {
                       <div className='row' style={{display:'flex'}}> 
                         {reviewChunk.map((item, i) =>
                           <MDBCol md="4" style={{ display: 'flex' }}>
+                            <div>
+                            {/* <Rating name="read-only" value={value} readOnly size="small" /> */}
                             <div className="typography-line">
                               <blockquote className="blockquote">
+                              {/* <Rating name="read-only" value={value} readOnly size="small" /> */}
+
+                                <p className="mb-0" style = {{fontWeight: '600', lineHeight: '1',
+  paddingTop: '.8rem', paddingBottom : '1rem'}}>
+                                  {item.headline}
+                                </p>
                                 <p className="mb-0 review_description">
-                                  {item.review}
+                                {item.review}
                                 </p>
                                 <br />
                               </blockquote>
+                            </div>
                             </div>
                           </MDBCol>
                         )}

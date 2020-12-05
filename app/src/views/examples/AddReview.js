@@ -4,7 +4,6 @@ import React from "react";
 import {
   Button,
   FormGroup,
-  InputGroup,
   Input,
   Container,
   Row,
@@ -21,7 +20,10 @@ import DemoFooter from "components/Footers/DemoFooter.js";
 import { makeStyles } from '@material-ui/core/styles';
 import Rating from '@material-ui/lab/Rating';
 import Box from '@material-ui/core/Box';
-import {CardContent, Typography, Divider, Grid, Card} from '@material-ui/core'
+import {Card} from '@material-ui/core'
+import { apiVariables, ACCESS_TOKEN_NAME } from '../../APIConstants';
+import axios from 'axios';
+
 const useStyles = makeStyles({
     root: {
       width: 200,
@@ -48,12 +50,34 @@ function AddReview(props) {
   const [headline, setHeadline] = React.useState('');
   const [review, setReview] = React.useState('');
   const classes = useStyles();
+  const [alertOpen, setAlertOpen] = React.useState(false);
   
   const savereview = () =>{
-      console.log(value)
-      console.log(headline)
-      console.log(review)
+    var token = localStorage.getItem(ACCESS_TOKEN_NAME)
 
+    const payload = {
+      "movieId": props.match.params.movieId,
+      "stars": value,
+      "headline": headline,
+      "review": review
+    }
+    if(value != 0 && review != '' && headline != ''){
+      axios.post(apiVariables.apiUrl +'/api/customer/post_review', payload, {
+        headers: {
+            'Authorization': 'Bearer ' + token
+        }
+        }).then(function (response) {
+            if(response.status === 200){
+              setAlertOpen(true);
+            }
+        })
+        .catch(function (error) {
+            console.log(error);
+        });
+      }
+      else{
+        window.alert("Please enter all the required fields")
+      }
   }
   document.documentElement.classList.remove("nav-open");
   React.useEffect(() => {
@@ -71,7 +95,7 @@ function AddReview(props) {
     {loginWithRedirect()}
     </div>)
   }
-  if (isAuthenticated && !isLoading && user)
+  if (isAuthenticated && !isLoading && user && !alertOpen)
     return (
       <>
         <ExamplesNavbar />
@@ -95,7 +119,7 @@ function AddReview(props) {
             <Row>
               <Col className="ml-auto mr-auto text-center" md="6">
                 <p>
-                    What did you like or dislike about {props.match.params.movie}
+                    Please provide your feedback on {props.match.params.movie}
               </p>
                 <br />
               </Col>
@@ -112,7 +136,7 @@ function AddReview(props) {
                     }}>
                       <Form inline style = {{paddingTop : '3rem'}}>
                       <FormGroup className="mb-2 mr-sm-2 mb-sm-0" style = {{width : '100%'}} >
-                      <label style = {{marginRight: '17rem'}}>Overall Rating</label>
+                      <label style = {{marginRight: '17rem'}}>Overall Rating*</label>
                       <Rating
                         name="hover-feedback"
                         value={value}
@@ -129,12 +153,14 @@ function AddReview(props) {
                     {value !== null && <Box ml={2}>{labels[hover !== -1 ? hover : value]}</Box>}
                     </div></FormGroup>
                         <FormGroup className="mb-2 mr-sm-2 mb-sm-0" style = {{width : '100%', marginTop: '1rem'}}>
+                        <label style = {{marginRight: '17rem'}}>Add a Headline*</label>
                           <Input
                             placeholder="Add a Headline"
                             style={{ width: '50rem', marginBottom:'1rem'}}
                             onChange= {event => 
                                 setHeadline(event.target.value)}
                           />
+                          <label style = {{marginRight: '17rem'}}>Add a Review*</label>
                           <textarea style={{ width: '50rem',height: '200', marginBottom:'1rem',border: '1px solid #DDDDDD',borderRadius: '4px',color: '#66615b' }} rows={8} cols={50}
                           placeholder="What did you like/dislike about this movie? Would you recommend it to others?" onChange= {event => 
                             setReview(event.target.value)}
@@ -153,6 +179,62 @@ function AddReview(props) {
         <DemoFooter />
       </>
     );
+    if(alertOpen)
+      return (
+        <>
+        <ExamplesNavbar />
+        <ProfilePageHeader posterLink={require("assets/img/profilebg.jpg")} />
+        <div className="section profile-content">
+          <Container>
+            <div className="owner">
+              <div className="avatar">
+                <img
+                  alt="..."
+                  className="img-circle img-no-padding img-responsive"
+                  src={user.picture}
+                />
+              </div>
+              <div className="name">
+                <h4 className="title">
+                  {user.nickname} <br />
+                </h4>
+              </div>
+            </div>
+            <Row>
+              <Col className="ml-auto mr-auto text-center" md="6">
+               
+                <br />
+              </Col>
+            </Row>
+            <br />
+            
+                <Row>
+                  <Col className="ml-auto mr-auto" md="6">
+                    <Card style={{
+                      borderRadius: "8px",
+                      margin: "20px 0 70px",
+                      minHeight: "400px",
+                      padding: "30px"
+                    }}>
+
+                    <div style = {{margin : '10px'}}>
+                    <h5>Your movie review has been added. Thank you for your response.</h5>
+                    <div className={classes.buttons}>
+                    <Button href='/' className={classes.button} style = {{color: 'white', background: '#51cbce'}}color="primary">Go Home</Button> 
+                    <Button href='/your-orders' className={classes.button} style = {{color: 'white', background: '#51cbce'}}color="primary">Your Orders</Button> 
+                    </div>
+                    </div>
+                    </Card>
+        
+                  </Col>
+                </Row>
+          </Container>
+        </div>
+        <DemoFooter />
+
+</>
+       
+      )
 }
 
 export default AddReview;
