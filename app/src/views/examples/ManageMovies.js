@@ -16,31 +16,30 @@ import {
 } from "reactstrap";
 
 function ManageMovies() {
+    var token = localStorage.getItem(ACCESS_TOKEN_NAME);
     const [movieTitle, setmovieTitle] = React.useState('');
     const [movieDesc, setmovieDesc] = React.useState('');
-    // const [movieGenre, setmovieGenre] = React.useState('');
+    const [movieGenre, setmovieGenre] = React.useState();
     const [movieURL, setmovieURL] = React.useState('');
-    const fetchData = React.useCallback(() => {
-      axios({
-          "method": "POST",
-          "url": apiVariables.apiUrl + '/api/manage/add_movie' + 
-          {
-            "title": movieTitle,
-            "description":movieDesc,
-            "posterLink":movieURL,
-            "genre":""
-          },
+    const handleSubmitClick = (e) => {
+      e.preventDefault();
+      const payload = {
+        "title": movieTitle,
+        "description":movieDesc,
+        "posterLink":movieURL,
+        "genre":[]
+      }
+      axios.post((apiVariables.apiUrl + '/api/manage/add_movie'), payload,{
+        headers: {
+          "Authorization": 'Bearer ' + token
+        }
       })
-          .then((response) => {
-              console.log(response.data)
-          })
-          .catch((error) => {
-              console.log(error)
-          })
-  }, [])
-  React.useEffect(() => {
-      fetchData()
-  }, [fetchData])
+        .then(function (response) {
+        })
+        .catch(function (error) {
+          console.log(error);
+        });
+    }
 
     return (
       <>
@@ -54,18 +53,7 @@ function ManageMovies() {
                 <CardBody>
                   <Form>
                     <Row>
-                      <Col className="pr-1" md="5">
-                        <FormGroup>
-                          <label>Company (disabled)</label>
-                          <Input
-                            defaultValue="Company"
-                            disabled
-                            placeholder="Company"
-                            type="text"
-                          />
-                        </FormGroup>
-                      </Col>
-                      <Col className="px-1" md="3">
+                      <Col md="12">
                         <FormGroup>
                           <label>Movie Title*</label>
                           <Input
@@ -73,36 +61,6 @@ function ManageMovies() {
                             onChange={event => setmovieTitle(event.target.value)}
                             required
                             placeholder="Movie Title"
-                            type="text"
-                          />
-                        </FormGroup>
-                      </Col>
-                      <Col className="pl-1" md="4">
-                        <FormGroup>
-                          <label htmlFor="exampleInputEmail1">
-                            Email address
-                          </label>
-                          <Input placeholder="Email" type="email" />
-                        </FormGroup>
-                      </Col>
-                    </Row>
-                    <Row>
-                      <Col className="pr-1" md="6">
-                        <FormGroup>
-                          <label>First Name</label>
-                          <Input
-                            defaultValue="Chet"
-                            placeholder="Company"
-                            type="text"
-                          />
-                        </FormGroup>
-                      </Col>
-                      <Col className="pl-1" md="6">
-                        <FormGroup>
-                          <label>Last Name</label>
-                          <Input
-                            defaultValue="Faker"
-                            placeholder="Last Name"
                             type="text"
                           />
                         </FormGroup>
@@ -141,6 +99,7 @@ function ManageMovies() {
                           className="btn-round"
                           color="primary"
                           type="submit"
+                          onClick={handleSubmitClick}
                         >
                           Add Movie
                         </Button>
