@@ -61,7 +61,7 @@ export const componentStyle = () => {
         alignItems: "center",
         justifyContent: "center",
         padding: "25px 50px",
-        width: "100%",
+        width: "70%",
         [mq[0]]: {
             flexDirection: "column",
             padding: "50px 100px",

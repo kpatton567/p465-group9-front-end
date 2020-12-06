@@ -52,27 +52,6 @@ var routes = [
     icon: "nc-icon nc-tile-56",
     component: ManagerTransactionHistory,
     layout: "/manager",
-  },
-  {
-    path: "/notifications",
-    name: "Notifications",
-    icon: "nc-icon nc-bell-55",
-    component: Notifications,
-    layout: "/manager",
-  },
-  {
-    path: "/user-page",
-    name: "User Profile",
-    icon: "nc-icon nc-single-02",
-    component: UserPage,
-    layout: "/manager",
-  },
-  // {
-  //   path: "/typography",
-  //   name: "Typography",
-  //   icon: "nc-icon nc-caps-small",
-  //   component: Typography,
-  //   layout: "/manager",
-  // },
+  }
 ];
 export default routes;
