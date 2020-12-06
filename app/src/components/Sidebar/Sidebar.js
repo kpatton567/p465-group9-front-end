@@ -4,7 +4,14 @@ import { Nav } from "reactstrap";
 // javascript plugin used to create scrollbars on windows
 import PerfectScrollbar from "perfect-scrollbar";
 
-import logo from "logo.svg";
+import logo from "PrevueP.png";
+
+const Plogo = {
+  marginLeft: '10px',
+  maxWidth: '80%',
+  minHeight: '80%',
+}
+
 
 var ps;
 
@@ -43,8 +50,8 @@ class Sidebar extends React.Component {
             href="/manager/dashboard"
             className="simple-text logo-mini"
           >
-            <div className="logo-img">
-              <img src={logo} alt="react-logo" />
+            <div style={Plogo}>
+              <img src={logo} alt="prevue-logo" />
             </div>
           </a>
           <a
