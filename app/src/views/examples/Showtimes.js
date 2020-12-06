@@ -81,11 +81,7 @@ const formControl2 = {
 function Showtimes() 
 {   
     const [cards, setCards] = React.useState([]);
-    const [theaters, setTheaters] = React.useState([]);
-    const [theaterId, setSelectedTheatre] = React.useState('');
-    const [price, setSelectedPrice] = React.useState('');
-    const [date, setSelectedDate] = React.useState('');
-
+    const [range, setSelectedRange] = React.useState('');
 
     // Initial page load
     const fetchData = React.useCallback(() => 
@@ -100,22 +96,58 @@ function Showtimes()
                 .catch((error) => {
                     console.log(error)
                 })
-
-        axios({
-            "method": "GET",
-            "url": apiVariables.apiUrl + '/api/home/theaters',
-        })
-            .then((response) => {
-                setTheaters(response.data)
-            })
-                .catch((error) => {
-                    console.log(error)
-                })
     }, [])
     React.useEffect(() => 
     {
         fetchData()
     }, [fetchData])
+
+
+    const handleRangeChange = (event) => 
+    {
+        var toSend = "";
+
+        if(event.target.value == 10)
+        {
+            toSend = "A";
+        }
+        else if(event.target.value == 20)
+        {
+            toSend = "G";
+        }
+        else if(event.target.value == 30)
+        {
+            toSend = "M";
+        }
+        else if(event.target.value == 40)
+        {
+            toSend = "S";
+        }
+
+        setSelectedRange(toSend);
+    }
+
+    const filterMovies = (event) =>
+    {
+        var sRange = null;
+
+        if(range != '') sRange = range;
+
+        axios({
+            "method": "POST",
+            "url": apiVariables.apiUrl + '/api/home/search', /* need to update the URL here */
+            "data": {
+                range: sRange,
+            }
+        })
+            .then((response) => {
+                setCards(response.data);
+            })
+                .catch((error) => {
+                    console.log(error)
+                })
+    }
+
 
     return (
         <>
@@ -131,6 +163,39 @@ function Showtimes()
                         </Col>
                     </Row>
                     <br />
+                    <div>                        
+                        <FormControl variant="outlined" style={formControl}>
+                            <InputLabel id="range-dropdown-label">First Letter</InputLabel>
+                            <Select
+                                label="Range"
+                                labelId="range-dropdown-label"
+                                id="range-dropdown"
+                                onChange={handleRangeChange}
+                            >
+                                <MenuItem value="">
+                                    <em>None</em>
+                                </MenuItem>
+                                <MenuItem value={10}>A to F</MenuItem>
+                                <MenuItem value={20}>G to L</MenuItem>
+                                <MenuItem value={30}>M to R</MenuItem>
+                                <MenuItem value={40}>S to Z</MenuItem>
+                            </Select>
+                        </FormControl>
+                        <FormControl variant="outlined" style={formControl2}>
+                            <section style={root}>
+                                <div style={container2}>
+                                    <Button
+                                        color="secondary"
+                                        variant="contained"
+                                        size="large"
+                                        onClick={filterMovies}
+                                    >
+                                        {'Filter Movies'}
+                                    </Button>
+                                </div>
+                            </section>
+                        </FormControl>
+                    </div>
 
                     {/* All movie cards */}
                     <div style={{ display: 'flex', flexWrap: 'wrap' }}>
