@@ -100,8 +100,7 @@ function Showtimes()
                 .catch((error) => {
                     console.log(error)
                 })
-        
-        // populate the theaters list
+
         axios({
             "method": "GET",
             "url": apiVariables.apiUrl + '/api/home/theaters',

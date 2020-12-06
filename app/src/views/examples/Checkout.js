@@ -337,7 +337,6 @@ function Checkout(props) {
           "ticketQuantity": ticketQuantity,
           "snacks": selectedSnack,
         }
-        // console.log(payload);
     
         axios.post(apiVariables.apiUrl +'/api/customer/customer_payment', payload, {
         headers: {
@@ -346,15 +345,12 @@ function Checkout(props) {
         }).then(function (response) {
             if (response.status === 200) {
                 setAlertOpen(true);
-                reward.rewardMe();
             }
         })
         .catch(function (error) {
             console.log(error);
         });
-
         setTimeout(()=> setAlertOpen(true), 3000);
-        reward.rewardMe();
       }
     const handleTheaterChange = (event) => {
 

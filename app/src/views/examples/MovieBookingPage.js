@@ -10,7 +10,7 @@ import {
   PaginationLink
 } from "reactstrap";
 
-import { MDBCarousel, MDBCarouselInner, MDBCarouselItem, MDBRow, MDBCol, MDBRating } from "mdbreact";
+import { MDBCarousel, MDBCarouselInner, MDBCarouselItem, MDBRow, MDBCol } from "mdbreact";
 
 import { useAuth0 } from '@auth0/auth0-react';
 import Client from "./Client.js";
@@ -150,7 +150,6 @@ function MovieBookingPage(props) {
             <Box component="fieldset" mb={3} borderColor="transparent">
               <Rating name="read-only" value={value} readOnly size="large" />
             </Box>
-            
             <h1 className="banner_description" title={movie.description}>{truncate(movie.description, 150)}</h1>
             <div className="banner_buttons">
             <Button onClick={handleClickOpen} className="banner_button" >Book Tickets</Button>

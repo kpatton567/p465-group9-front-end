@@ -103,7 +103,7 @@ function ChooseRole() {
     })
         .then((response) => {
             console.log(response.data)
-            // setOldUser(response.data)
+            setOldUser(response.data)
         })
         .catch((error) => {
             console.log(error)

@@ -7,16 +7,16 @@ import {
   FormGroup,
   InputGroup,
   Input,
-  TabContent,
-  TabPane,
   Container,
   Row,
   Col,
   Form,
   Card,
   UncontrolledAlert,
-  InputGroupAddon,
-  InputGroupText,
+  CardHeader,
+  CardBody,
+  CardFooter,
+  CardTitle,
 } from "reactstrap";
 
 // core components
@@ -32,12 +32,11 @@ const items = [
   { text: 'Horror', checked: false },
   { text: 'Comedy', checked: false },
   { text: 'Thriller', checked: false },
-  { text: 'Sci-Fi', checked: false },
+  { text: 'SciFi', checked: false },
   { text: 'Romance', checked: false }
 ]
 
 function ProfilePage() {
-  const [activeTab, setActiveTab] = React.useState("1");
   const { user, isAuthenticated, isLoading, loginWithRedirect } = useAuth0();
   const [email, setEmail] = React.useState('');
   const [mobile, setMobile] = React.useState('');
@@ -121,7 +120,9 @@ function ProfilePage() {
       <>
         <ExamplesNavbar />
         <ProfilePageHeader posterLink={require("assets/img/profilebg.jpg")} />
-        <div className="section profile-content">
+        <div className="section profile-content" >
+        <div style = {{position: 'relative',
+    backgroundColor: '#f4f3ef'}}>
           <Container>
             <div className="owner">
               <div className="avatar">
@@ -146,9 +147,7 @@ function ProfilePage() {
               </Col>
             </Row>
             <br />
-            {/* Tab panes */}
-            <TabContent className="following" activeTab={activeTab}>
-              <TabPane tabId="1" id="follows">
+            <div>
                 <Row>
                   <Col className="ml-auto mr-auto" md="6">
                     <Card style={{
@@ -157,13 +156,17 @@ function ProfilePage() {
                       minHeight: "400px",
                       padding: "30px"
                     }}>
-                      <Form inline style = {{paddingTop : '3rem'}}>
-                        <InputGroup style={{ width: '100%' }}>
-                          <Input style={{ marginRight: '10px', marginBottom:'1rem' }} placeholder="First Name" type="text" onChange= {event => 
+                      <h3 className="mx-auto" style = {{color: 'black!important',marginTop: '10px',
+    marginBottom: '9px', minHeight: '32px', fontWeight : '700'}}>Edit Profile</h3>
+                      <Form inline style = {{paddingTop : '1rem'}}>
+                        <FormGroup className="mb-2 mr-sm-2 mb-sm-0">
+                          <Input style={{ marginBottom:'1rem',width: '234px' }} placeholder="First Name" type="text" onChange= {event => 
                               setFirstName(event.target.value)} />
-                          <Input style={{marginBottom:'1rem' }} placeholder="Last Name" type="text" onChange= {event => 
+                        </FormGroup>
+                        <FormGroup className="mb-2  mb-sm-0">
+                        <Input style={{marginBottom:'1rem', width: '238px' }} placeholder="Last Name" type="text" onChange= {event => 
                               setSecondName(event.target.value)} />
-                        </InputGroup>
+                        </FormGroup>
                         <FormGroup className="mb-2 mr-sm-2 mb-sm-0" >
                           <Input
                             defaultValue={user.email}
@@ -204,7 +207,7 @@ function ProfilePage() {
                     </InputGroup>
                   </FormGroup>
                         <FormGroup>
-                          <Label style = {{marginRight:'10px', marginBottom:'1rem'}}><strong>Gender? </strong></Label>
+                          <Label style = {{marginRight:'10px', marginBottom:'1rem'}}><strong>Gender </strong></Label>
                           <Label check style = {{marginRight:'10px', marginBottom:'1rem'}}>
                             <Input
                               defaultValue="male"
@@ -230,13 +233,14 @@ function ProfilePage() {
                               onChange= {event => 
                                 setGender(event.target.value)}
                             />
-                            Don't wish to disclose <span className="form-check-sign" />
+                            Choose to disclose <span className="form-check-sign" />
                           </Label>
                         </FormGroup>
                         <FormGroup style = {{ maxWidth: 'fit-content'}}>
-                          <Label style = {{marginRight:'8px', marginBottom:'1rem'}}><strong>What's your fav genre? </strong></Label>
+                          <Label style = {{marginRight:'8px', marginBottom:'1rem', maxWidth: '6rem'}}><strong>Preferred Genre</strong></Label>
+                          <div style = {{display: 'inline-flex',width: '10rem'}}>
                           {items.map((item, i) =>
-                          <div>
+                          
                           <Label check style = {{marginRight:'8px', marginBottom:'1rem'}}>
                               <Input
                                 type="checkbox"
@@ -244,104 +248,28 @@ function ProfilePage() {
                               />
                               {item.text} <span className="form-check-sign" />
                             </Label>
-                              </div>
+                             
                             )}
-
+                          </div>
                           {isSent ? 
                           <UncontrolledAlert color="info" fade={false}>
                           <span>Your changes have been updated</span>
                         </UncontrolledAlert>
                         : null}
                         </FormGroup>
-                        <Button block className="btn-round" color="danger" style = {{marginTop:'8rem',color: 'white',
-                                                background: '#51cbce'}} onClick={() => saveChanges()}>
+                        <Button block className="btn-round" color="danger" style = {{color: 'white',background: '#51cbce', marginLeft: '10rem', width : '10rem'}} onClick={() => saveChanges()}>
                           Save Changes
                     </Button>
                       </Form>
-                      {/* <Form className="register-form">
-                  <label>First Name</label>
-                  <InputGroup className="form-group-no-border">
-                    <InputGroupAddon addonType="prepend">
-                      <InputGroupText>
-                        <i className="nc-icon nc-camera-compact" />
-                      </InputGroupText>
-                    </InputGroupAddon>
-                    <Input placeholder="First Name" type="text" onChange= {event => 
-                              setFirstName(event.target.value)}/>
-                  </InputGroup>
-                  <label>Second Name</label>
-                  <InputGroup className="form-group-no-border">
-                    <InputGroupAddon addonType="prepend">
-                      <InputGroupText>
-                        <i className="nc-icon nc-chart-bar-32" />
-                      </InputGroupText>
-                    </InputGroupAddon>
-                    <Input placeholder="Second Name" type="numeric" onChange= {event => 
-                              setSecondName(event.target.value)}  
-                    />
-                  </InputGroup>
-                  <label>Email</label>
-                  <InputGroup className="form-group-no-border">
-                    <InputGroupAddon addonType="prepend">
-                      <InputGroupText>
-                        <i className="nc-icon nc-chart-bar-32" />
-                      </InputGroupText>
-                    </InputGroupAddon>
-                    <Input placeholder="Email" type="numeric" defaultValue={user.email} onChange= {event => 
-                              setEmail(event.target.value)}
-                    />
-                  </InputGroup>
-                  <label>Mobile Number</label>
-                  <InputGroup className="form-group-no-border">
-                    <InputGroupAddon addonType="prepend">
-                      <InputGroupText>
-                        <i className="nc-icon nc-chart-bar-32" />
-                      </InputGroupText>
-                    </InputGroupAddon>
-                    <Input placeholder="Mobile Number" type="numeric"  onChange= {event => 
-                              setMobile(event.target.value)}
-                    />
-                  </InputGroup>
-                  <InputGroup className="date" id="datetimepicker">
-                    <label style = {{marginRight: '17rem'}}>Birthday</label>
-                    <input type="date" id="start" name="trip-start"
-                      min="1950-01-01" max="2002-12-31" style={{ width: '234px' , marginTop : '10px', height: '41px', backgroundColor: '#FFFFFF',
-                      border: '1px solid #DDDDDD',
-                      borderRadius: '4px',
-                      color: '#66615b',
-                      lineHeight: 'normal',
-                      fontSize: '14px',
-                      transition: 'color 0.3s ease-in-out', backgroundColor: '0.3s ease-in-out',
-                      boxShadow: 'none', marginBottom:'1rem' }}
-                      onChange= {event => 
-                        setBirthday(event.target.value)}/>
-                    </InputGroup>
-                  <Button
-                  className="btn-round mr-1"
-                  color="danger"
-                  outline
-                  type="button"
-                  style = {{marginLeft : '5rem'}}
-                  onClick={() => saveChanges()}
-                >
-                    Register
-                  </Button>
-                  {isSent ? 
-                          <UncontrolledAlert color="info" fade={false}>
-                          <span>
-                            Your email has been sent. Sit back and relax, our team will respond within a couple of hours.
-                          </span>
-                        </UncontrolledAlert>
-                        : null}
-                </Form> */}
                     </Card>
                   </Col>
                 </Row>
-              </TabPane>
-            </TabContent>
+            </div>
           </Container>
         </div>
+       
         <DemoFooter />
+        </div>
       </>
     );
 }

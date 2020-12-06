@@ -65,7 +65,8 @@ React.useEffect(() => {
       <>
         <ExamplesNavbar />
         <ProfilePageHeader posterLink={require("assets/img/historybg.jpg")} />
-        <div className="section profile-content">
+        <div className="section profile-content" style = {{position: 'relative',
+    backgroundColor: '#f4f3ef'}}>
           <Container>
             <div className="owner">
               <div className="avatar">

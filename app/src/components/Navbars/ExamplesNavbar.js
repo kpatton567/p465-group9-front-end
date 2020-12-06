@@ -23,6 +23,8 @@ export default function ExamplesNavbar(props) {
 
   const [navbarColor, setNavbarColor] = React.useState("navbar-transparent");
   const [navbarCollapse, setNavbarCollapse] = React.useState(false);
+  const [isCustomer, setIsCustomer] = React.useState(false);
+
   let CUSTOMER_MESSAGE_LISTENER_KEY = ""
   
   const {
@@ -33,6 +35,26 @@ export default function ExamplesNavbar(props) {
     loginWithRedirect,
     logout,
   } = useAuth0();
+
+  if (user) {
+
+    var token = localStorage.getItem(ACCESS_TOKEN_NAME)
+    const body = {};
+    axios.post(apiVariables.apiUrl + '/api/auth/user_role', body, {
+      headers: {
+        'Authorization': 'Bearer ' + token
+      }
+    }).then(function (response) {
+      if (response.status === 200) {
+        if (response.data === 'ROLE_CUSTOMER') {
+          setIsCustomer(true);
+        }
+      }
+    })
+      .catch(function (error) {
+        console.log(error);
+      });
+  }
 
   if(user){
     var userId = user.sub.length === 35 ? user.sub.substring(14) : user.sub.substring(6)
@@ -179,12 +201,13 @@ export default function ExamplesNavbar(props) {
                         >
                           Rewards
                         </DropdownItem>
+                        {!isCustomer ?
                         <DropdownItem
                           href="/manager"
                         >
                           Manage your account
                         </DropdownItem>
-                        
+                        :null}
                         <DropdownItem divider />
                         <DropdownItem
                           onClick={() => handlelogout()}

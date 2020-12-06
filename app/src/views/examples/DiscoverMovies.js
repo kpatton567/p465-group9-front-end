@@ -6,34 +6,79 @@ import "animate.css/animate.min.css";
 import Slide from 'react-reveal/Zoom';
 // core components
 import "../styles/DiscoverMovies.css"
-import ScrollAnimation from 'react-animate-on-scroll';
-
+import Particles from 'react-particles-js';
 
 function DiscoverMovies() {
-  const [open, set] = useState(true)
   return (
     <>
       <div className="section section-dark" style = {{height: '50rem'}}>
-        <Container>
-            <div>
-            <Slide>
-            <h1 style = {{ marginTop:'10rem', width: '100px', fontSize: '72px', color: 'white'}}>EXPERIENCE WORLD CLASS CINEMA</h1>
-            </Slide>
-            <button href = '/movies'><h6 style = {{ fontWeight: '400', color: 'white'}} >Discover Movies</h6></button>
-           </div>
-
-            <div style={{backgroundColor : '#ceeaf3', height:'100%',
-            width: '30%',
-            position: 'fixed',
-            top: '0',
-            overflowX: 'hidden',
-            paddingTop: '20px',right: '0'}}>
-            <Col className="ml-auto mr-auto" md="2" >
+      <div style = {{
+    color: 'black',
+    position: 'absolute',
+    textAlign: 'center',
+    color:'white'}}>
+         <Slide>
+        <h1 style = {{ marginTop:'10rem', width: '100px', fontSize: '72px', color: 'white', marginLeft : '40px'}}>EXPERIENCE WORLD CLASS CINEMA</h1>
+        </Slide>
+        <button href = '/movies'><h6 style = {{ fontWeight: '400', color: 'white', marginLeft : '40px'}} >Discover Movies</h6></button>
+    </div>
+    <Particles
+    params={{
+	    "particles": {
+	        "number": {
+	            "value": 160,
+	            "density": {
+	                "enable": false
+	            }
+	        },
+	        "size": {
+	            "value": 3,
+	            "random": true,
+	            "anim": {
+	                "speed": 4,
+	                "size_min": 0.3
+	            }
+	        },
+	        "line_linked": {
+	            "enable": false
+	        },
+	        "move": {
+	            "random": true,
+	            "speed": 1,
+	            "direction": "top",
+	            "out_mode": "out"
+	        }
+	    },
+	    "interactivity": {
+	        "events": {
+	            "onhover": {
+	                "enable": true,
+	                "mode": "bubble"
+	            },
+	            "onclick": {
+	                "enable": true,
+	                "mode": "repulse"
+	            }
+	        },
+	        "modes": {
+	            "bubble": {
+	                "distance": 250,
+	                "duration": 2,
+	                "size": 0,
+	                "opacity": 0
+	            },
+	            "repulse": {
+	                "distance": 400,
+	                "duration": 4
+	            }
+	        }
+	    }
+	}} /> 
             
-            </Col>
-            </div>
+
+           
          
-        </Container>
+       
       </div>
     </>
   );

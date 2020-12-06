@@ -38,7 +38,7 @@ const sendEmail = (e)  =>{
   return (
     <>
      
-    <div className="section section-dark">
+    <div className="section section-dark" style = {{paddingBottom : '0'}}>
         <Container>
           <Row>
             <Col className="ml-auto mr-auto text-center" md="8">
@@ -57,10 +57,9 @@ const sendEmail = (e)  =>{
         }}
       >
         <Container>
-          <Row>
-            <Col className="mx-auto" lg="4" md="6">
-              <Card className="card-register">
-                <h3 className="title mx-auto">Welcome</h3>
+              <Card className="card-register" style = {{maxWidth: "40rem", width: "40rem", marginLeft: '14rem', paddingTop : '0'}}>
+                <h3 className="mx-auto" style = {{color: 'black!important',marginTop: '30px',
+    marginBottom: '9px', minHeight: '32px', fontWeight : '700'}}>Contact Us</h3>
                 <form className="register-form" onSubmit={sendEmail} id="create-course-form">
                 <label>Name</label>
                   <InputGroup className="form-group-no-border">
@@ -105,7 +104,7 @@ const sendEmail = (e)  =>{
                     type="button"
                     type="submit" value="Send"
                     style = {{color: 'white',
-                    background: '#ef8157'}}
+                    background: '#ef8157', marginLeft: '14rem', width : '10rem'}}
                   >
                     Send email
                   </Button>
@@ -118,8 +117,7 @@ const sendEmail = (e)  =>{
               </UncontrolledAlert>
               : null}
               </Card>
-            </Col>
-          </Row>
+          
         </Container>
       </div>{" "}
     </>
@@ -127,37 +125,3 @@ const sendEmail = (e)  =>{
 }
 
 export default ContactUs;
-
-
-
-// import React from 'react';
-// import emailjs from 'emailjs-com';
-
-// export default function ContactUs() {
-
-//   function sendEmail(e) {
-//     e.preventDefault();    //This is important, i'm not sure why, but the email won't send without it
-
-//     emailjs.sendForm('service_f2jl94f', 'template_ozokvni', e.target, 'user_n8HPizU5dZNXCSCNlIAks')
-//       .then((result) => {
-//           window.location.reload()  //This is if you still want the page to reload (since e.preventDefault() cancelled that behavior) 
-//       }, (error) => {
-//           console.log(error.text);
-//       });
-//   }
-
-//   return (
-//     <form className="contact-form" onSubmit={sendEmail}>
-//       <input type="hidden" name="contact_number" />
-//       <label>Name</label>
-//       <input type="text" name="from_name" />
-//       <label>Email</label>
-//       <input type="email" name="from_email" />
-//       <label>Subject</label>
-//       <input type="text" name="subject" />
-//       <label>Message</label>
-//       <textarea name="html_message" />
-//       <input type="submit" value="Send" />
-//     </form>
-//   );
-// }

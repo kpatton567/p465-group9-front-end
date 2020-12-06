@@ -1,11 +1,11 @@
-import React, { Component } from "react";
+import React from "react";
 import axios from "axios";
 import { apiVariables } from '../../APIConstants';
 // reactstrap components
 import {
     Container,
     Row,
-    Col,
+    Col, Button
 } from "reactstrap";
 // core components
 import ExamplesNavbar from "components/Navbars/ExamplesNavbar.js";
@@ -18,13 +18,10 @@ import Grid from '@material-ui/core/Grid';
 import Card from '@material-ui/core/Card';
 import Typography from '../../components/Typography/Typography';
 import Link from '@material-ui/core/Link';
-import Button from '@material-ui/core/Button';
 import InputLabel from '@material-ui/core/InputLabel';
 import Select from '@material-ui/core/Select';
 import MenuItem from '@material-ui/core/MenuItem';
-import FormHelperText from '@material-ui/core/FormHelperText';
 import FormControl from '@material-ui/core/FormControl';
-import NativeSelect from '@material-ui/core/NativeSelect';
 import TextField from '@material-ui/core/TextField';
 
 import theme from '../theme';
@@ -86,6 +83,9 @@ function MoviesPage()
     const [price, setSelectedPrice] = React.useState('');
     const [date, setSelectedDate] = React.useState('');
 
+    function truncate(source, size) {
+        return source.length > size ? source.slice(0, size - 1) + "…" : source;
+    }
 
     // Initial page load
     const fetchData = React.useCallback(() => 
@@ -274,11 +274,10 @@ function MoviesPage()
                                         <Typography gutterBottom variant="h5" component="h2">
                                             {card.title}
                                         </Typography>
-                                        <Typography>
-                                            {card.description}
+                                        <Typography style = {{ height: '6rem', maxHeight: '6rem', maxWidth: '18rem'}}>
+                                            {truncate(card.description, 150)}
                                         </Typography>
                                     </CardContent>
-                                    {/* Book Tickets Button */}
                                     <CardActions>
                                         <Link>
                                             <Button size="small" color="primary" href={`/moviebooking/${card.id}`}>

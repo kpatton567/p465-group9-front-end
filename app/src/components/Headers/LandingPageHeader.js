@@ -19,7 +19,6 @@ function LandingPageHeader() {
     animation: 1s ${bounceAnimation};
     `;
   const {
-    isLoading,
     isAuthenticated,
     error,
     user,
@@ -57,7 +56,7 @@ function LandingPageHeader() {
         <Container>
           <div className="motto text-center">
           <BouncyDiv>
-            <h1 style = {{width: '45rem',marginLeft: '184px'}}>Welcome to the future of movie viewing</h1>
+            <h1 style = {{width: '45rem',marginLeft: '184px'}}>Welcome to the future of movie booking</h1>
           </BouncyDiv>
             <h3 style = {{margin: '5px 0', padding: '20px 15px',fontSize: '14px',opacity: '.9', textTransform: 'uppercase'}}>
               Where the fun begins!</h3>
@@ -66,7 +65,6 @@ function LandingPageHeader() {
               href="/movies"
               className="btn-round mr-1"
               color="neutral"
-              target="_blank"
               outline
             >
               <i className="fa fa-play" />
@@ -97,7 +95,7 @@ function LandingPageHeader() {
         <Container>
           <div className="motto text-center">
           <BouncyDiv>
-            <h1 style = {{width: '45rem',marginLeft: '184px'}}>Welcome to the future of movie viewing</h1>
+            <h1 style = {{width: '45rem',marginLeft: '184px'}}>Welcome to the future of movie booking</h1>
           </BouncyDiv>
             <h3 style = {{margin: '5px 0', padding: '20px 15px',fontSize: '14px',opacity: '.9', textTransform: 'uppercase'}}>
             Where the fun begins!</h3>
@@ -106,7 +104,6 @@ function LandingPageHeader() {
               href="/movies"
               className="btn-round mr-1"
               color="neutral"
-              target="_blank"
               outline
             >
               <i className="fa fa-play" />

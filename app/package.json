@@ -45,6 +45,7 @@
     "react-html-parser": "^2.0.2",
     "react-md-spinner": "^1.0.0",
     "react-notification-alert": "0.0.12",
+    "react-particles-js": "^3.4.1",
     "react-payment-inputs": "^1.1.7",
     "react-rating": "^2.0.5",
     "react-responsive-carousel": "^3.2.10",

@@ -100,7 +100,8 @@ function AddReview(props) {
       <>
         <ExamplesNavbar />
         <ProfilePageHeader posterLink={require("assets/img/profilebg.jpg")} />
-        <div className="section profile-content">
+        <div className="section profile-content" style = {{position: 'relative',
+    backgroundColor: '#f4f3ef'}}>
           <Container>
             <div className="owner">
               <div className="avatar">
@@ -118,9 +119,7 @@ function AddReview(props) {
             </div>
             <Row>
               <Col className="ml-auto mr-auto text-center" md="6">
-                <p>
-                    Please provide your feedback on {props.match.params.movie}
-              </p>
+                <p>Please provide your feedback on {props.match.params.movie}</p>
                 <br />
               </Col>
             </Row>
@@ -134,7 +133,8 @@ function AddReview(props) {
                       minHeight: "400px",
                       padding: "30px"
                     }}>
-                      <Form inline style = {{paddingTop : '3rem'}}>
+                      <h3 className="" style = {{color: 'black !important', marginTop: '10px', minHeight: '', fontWeight : '700', marginLeft: '10rem'}}>Add Review</h3>
+                      <Form inline style = {{paddingTop : '1rem'}}>
                       <FormGroup className="mb-2 mr-sm-2 mb-sm-0" style = {{width : '100%'}} >
                       <label style = {{marginRight: '17rem'}}>Overall Rating*</label>
                       <Rating
@@ -166,8 +166,8 @@ function AddReview(props) {
                             setReview(event.target.value)}
                         ></textarea>
                         </FormGroup>
-                        <Button block className="btn-round" color="danger" style = {{ marginTop:'8rem', color: 'white',
-                                                background: '#51cbce'}} onClick={() => savereview()}>
+                        <Button block className="btn-round" color="danger" style = {{color: 'white',
+                                                background: '#51cbce',marginLeft: '10rem', width : '10rem'}} onClick={() => savereview()}>
                           Save Response
                     </Button>
                       </Form>
