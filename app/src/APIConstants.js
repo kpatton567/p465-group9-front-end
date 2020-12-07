@@ -1,5 +1,5 @@
 const apiVariables = {
-    apiUrl: "https://prevuemovies.herokuapp.com/"
+    apiUrl: "http://localhost:8080"
 }
 export { apiVariables };
 export const ACCESS_TOKEN_NAME = 'login_access_token';

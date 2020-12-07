@@ -80,7 +80,7 @@ function ProfilePage() {
         }).then(function (response) {
             if(response.status === 200){
               setIsSent(true)
-            }
+            } 
         })
         .catch(function (error) {
             console.log(error);

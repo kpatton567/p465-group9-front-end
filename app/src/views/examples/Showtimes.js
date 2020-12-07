@@ -81,7 +81,7 @@ const formControl2 = {
 function Showtimes() 
 {   
     const [cards, setCards] = React.useState([]);
-    const [range, setSelectedRange] = React.useState('');
+    const [searchVal, setValue] = React.useState('');
 
     // Initial page load
     const fetchData = React.useCallback(() => 
@@ -103,42 +103,11 @@ function Showtimes()
     }, [fetchData])
 
 
-    const handleRangeChange = (event) => 
-    {
-        var toSend = "";
-
-        if(event.target.value == 10)
-        {
-            toSend = "A";
-        }
-        else if(event.target.value == 20)
-        {
-            toSend = "G";
-        }
-        else if(event.target.value == 30)
-        {
-            toSend = "M";
-        }
-        else if(event.target.value == 40)
-        {
-            toSend = "S";
-        }
-
-        setSelectedRange(toSend);
-    }
-
     const filterMovies = (event) =>
     {
-        var sRange = null;
-
-        if(range != '') sRange = range;
-
         axios({
-            "method": "POST",
-            "url": apiVariables.apiUrl + '/api/home/search', /* need to update the URL here */
-            "data": {
-                range: sRange,
-            }
+            "method": "GET",
+            "url": apiVariables.apiUrl + 'api/home/movie_search?text=' + {searchVal},
         })
             .then((response) => {
                 setCards(response.data);
@@ -146,6 +115,10 @@ function Showtimes()
                 .catch((error) => {
                     console.log(error)
                 })
+    }
+
+    const saveValue = (event) => {
+        setValue(event.target.value);            
     }
 
 
@@ -165,21 +138,13 @@ function Showtimes()
                     <br />
                     <div>                        
                         <FormControl variant="outlined" style={formControl}>
-                            <InputLabel id="range-dropdown-label">First Letter</InputLabel>
-                            <Select
-                                label="Range"
-                                labelId="range-dropdown-label"
-                                id="range-dropdown"
-                                onChange={handleRangeChange}
-                            >
-                                <MenuItem value="">
-                                    <em>None</em>
-                                </MenuItem>
-                                <MenuItem value={10}>A to F</MenuItem>
-                                <MenuItem value={20}>G to L</MenuItem>
-                                <MenuItem value={30}>M to R</MenuItem>
-                                <MenuItem value={40}>S to Z</MenuItem>
-                            </Select>
+                        <TextField 
+                            id="outlined-search" 
+                            label="Search for movies..." 
+                            type="search" 
+                            variant="outlined"
+                            onChange={saveValue}
+                        />
                         </FormControl>
                         <FormControl variant="outlined" style={formControl2}>
                             <section style={root}>
