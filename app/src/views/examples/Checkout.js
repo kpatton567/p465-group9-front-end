@@ -21,6 +21,7 @@ import { useAuth0 } from '@auth0/auth0-react';
 import { Link } from 'react-router-dom';
 import Geocode from "react-geocode";
 import Map from './Map';
+import './global.js'
 import {
     Button, Container, Input, FormGroup, Alert
 } from "reactstrap";
@@ -119,10 +120,6 @@ function Checkout(props) {
             inst.settings.invalid = bookings.invalid;
             inst.redraw();
         });
-    }
-
-    const refreshMap = () => {
-          console.log(theaterId)
     }
 
     const getPrices = (d, callback) => {
@@ -370,7 +367,9 @@ function Checkout(props) {
 
         setSelectedTheatre(event.target.value);
         setMapTheaterId(event.target.value)
-        console.log(event.target.value)
+        global.movietheaterId = event.target.value;
+        console.log(global.movietheaterId)
+        
         setSelectedTheatreName(event.target.name);
         axios({
             "method": "POST",

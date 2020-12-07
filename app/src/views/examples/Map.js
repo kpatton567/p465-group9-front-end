@@ -3,23 +3,25 @@ import GoogleMapReact from 'google-map-react';
 import Marker from './Marker';
 import Geocode from "react-geocode";
 import axios from 'axios';
+import './global.js';
 import { apiVariables } from '../../APIConstants';
 var latitude = 0;
 var longitude = 0;
 
 
 class Map extends Component {
-  address(props)
+  address()
   {
     let [address, setAddress] = React.useState('');
     
     const fetchData = React.useCallback(() => {
       axios({
         "method": "GET",
-        "url": apiVariables.apiUrl + '/api/home/theater_address/' + props.theaterId,
+        "url": apiVariables.apiUrl + '/api/home/theater_address/' + global.movietheaterId,
       })
         .then((response) => {
-          setAddress(response.data)
+          console.log(response.data[0])
+          setAddress(response.data[0])
         })
         .catch((error) => {
           console.log(error)
@@ -44,7 +46,6 @@ class Map extends Component {
   }
   constructor(props) {
     super(props);
-    console.log(props.theaterId)
     this.state = {
       center: {
         lat: latitude,
