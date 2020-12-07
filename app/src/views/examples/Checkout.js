@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState,Component } from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import Paper from '@material-ui/core/Paper';
 import Typography from '@material-ui/core/Typography';
@@ -20,19 +20,16 @@ import { withRouter } from 'react-router';
 import { useAuth0 } from '@auth0/auth0-react';
 import { Link } from 'react-router-dom';
 import Geocode from "react-geocode";
-// import Marker from google.maps.Marker;
+import Map from './Map';
 import {
-    Button, Container, Input, FormGroup, Alert } from "reactstrap";
-import GoogleMapReact from 'google-map-react';
+    Button, Container, Input, FormGroup, Alert
+} from "reactstrap";
+
 import { PaymentInputsWrapper, usePaymentInputs } from 'react-payment-inputs';
 import images from 'react-payment-inputs/images';
 // import mobiscroll from '@mobiscroll/react';
 // import '@mobiscroll/react/dist/css/mobiscroll.min.css';
 
-Geocode.setApiKey("AIzaSyD9aslGTBwYBGkOZ858OLJtDvmmjovPs10");
-Geocode.setLanguage("en");
-Geocode.setRegion("na");
-Geocode.enableDebug();
 const useStyles = makeStyles((theme) => ({
 
     container: {
@@ -93,35 +90,20 @@ function Checkout(props) {
     const [zip, setZip] = React.useState('');
     const [promo, setPromo] = React.useState('');
     const [ticketQuantity, setTicketQuantity] = React.useState('');
-    const [theaterAddress, setAddress] = React.useState('');
-    const [theaterLatitude, setLatitude] = React.useState('');
-    const [theaterLongitude, setLongitude] = React.useState('');
     var selectedSnacks = [];
     var reward = '';
     const movieId = props.movieId;
     const [alertOpen, setAlertOpen] = React.useState(false);
     const { loginWithRedirect, isAuthenticated, user } = useAuth0();
-    const defaultProps = {
-        center: {
-          lat: theaterLatitude,
-          lng: theaterLongitude
-        },
-        Marker:{
-            lat: theaterLatitude,
-            lng: theaterLongitude,
-            label:theaterAddress
-        },
-        zoom: 11
-      };
     const { getCardNumberProps, getExpiryDateProps, getCVCProps, wrapperProps, getCardImageProps, } = usePaymentInputs();
-   
-    
+
+
     // mobiscroll.settings = {
     //     lang: '',
     //     theme: 'ios',
     //     themeVariant: 'dark'
     // };
-    
+
     const now = new Date();
     const currYear = now.getFullYear();
     const currMonth = now.getMonth();
@@ -138,7 +120,11 @@ function Checkout(props) {
         });
     }
 
-    const  getPrices = (d, callback) => {
+    const refreshMap = () => {
+          console.log(theaterId)
+    }
+
+    const getPrices = (d, callback) => {
         var invalid = [],
             labels = [];
 
@@ -167,14 +153,14 @@ function Checkout(props) {
             "method": "POST",
             "url": apiVariables.apiUrl + '/api/home/movie_showtimes?movieId=' + movieId,
         })
-          .then((response) => {
-            setTheaters(response.data)
-          })
-          .catch((error) => {
-            console.log(error)
-          })
-      }, [])
-      React.useEffect(() => {
+            .then((response) => {
+                setTheaters(response.data)
+            })
+            .catch((error) => {
+                console.log(error)
+            })
+    }, [])
+    React.useEffect(() => {
         fetchData()
     }, [fetchData])
 
@@ -186,7 +172,6 @@ function Checkout(props) {
                         <form className={classes.container}>
                             <FormControl className={classes.formControl}>
                                 <InputLabel shrink id="demo-simple-select-placeholder-label-label">Theatre</InputLabel>
-
                                 <Select
                                     labelId="demo-simple-select-placeholder-label-label"
                                     id="demo-simple-select-placeholder-label"
@@ -202,39 +187,65 @@ function Checkout(props) {
                                     )}
 
                                 </Select>
+                                
+                                {/* <Button onclick = {refreshMap}/> */}
 
                             </FormControl></form>
+                            <Map movieId = {movieId}/>
                     </div>
                 )
             case 1:
-                return (
-                    
-                    <div>
-                        {/* <CalendarDemo/> */}
-                        {showtimes.map((showtime) => (
-                            <Tooltip
-                                title={`$${showtime.price}`}
-                                placement="top"
-                            >
-                                <Chip clickable key={showtime.showtimeId} label={showtime.date} onClick={() => handleShowTimeClick(showtime.showtimeId)} />
-                            </Tooltip>
-                        ))}
-                    </div>
-                );
-            case 2:
-                return <div>
-                    <form className={classes.container}>
-                        <FormControl className={classes.formControl}>
-                            {snacks.map(postDetail => (
-                                <Snacks
-                                    increaseTotals={increaseTotals}
-                                    decreaseTotals={decreaseTotals}
-                                    {...postDetail}
-                                />
+                if (!isAuthenticated) {
+                    return (
+                        <Button onClick={handleClickOpen} color="inherit"
+                            underline="none"
+                            className={classes.rightLink}
+                            onClick={() => loginWithRedirect()}
+                        >Log in / Sign up to continue</Button>
+                    )
+                }
+                if (isAuthenticated) {
+                    return (
+
+                        <div>
+                            {/* <CalendarDemo/> */}
+                            {showtimes.map((showtime) => (
+                                <Tooltip
+                                    title={`$${showtime.price}`}
+                                    placement="top"
+                                >
+                                    <Chip clickable key={showtime.showtimeId} label={showtime.date} onClick={() => handleShowTimeClick(showtime.showtimeId)} />
+                                </Tooltip>
                             ))}
-                        </FormControl>
-                    </form>
-                </div>;
+                        </div>
+                    );
+                }
+            case 2:
+                if (!isAuthenticated) {
+                    return (
+                        <Button onClick={handleClickOpen} color="inherit"
+                            underline="none"
+                            className={classes.rightLink}
+                            onClick={() => loginWithRedirect()}
+                        >Log in / Sign up to continue</Button>
+                    )
+                }
+                if (isAuthenticated) {
+                    return <div>
+                        <form className={classes.container}>
+                            <FormControl className={classes.formControl}>
+                                {snacks.map(postDetail => (
+                                    <Snacks
+                                        increaseTotals={increaseTotals}
+                                        decreaseTotals={decreaseTotals}
+                                        {...postDetail}
+                                    />
+                                ))}
+                            </FormControl>
+                        </form>
+                    </div>
+                }
+
             case 3:
                 if (!isAuthenticated) {
                     return (
@@ -245,43 +256,43 @@ function Checkout(props) {
                         >Log in / Sign up to continue</Button>
                     )
                 }
-                if(isAuthenticated )
-                {return (
-                    <React.Fragment>
-                        <Typography variant="h6" gutterBottom>
-                            Payment method
+                if (isAuthenticated) {
+                    return (
+                        <React.Fragment>
+                            <Typography variant="h6" gutterBottom>
+                                Payment method
                         </Typography>
-                        
-                        <FormGroup style = {{padding: '10px'}}>
-                        <FormGroup>
-                        <Input
-                            name="email"
-                            id="email"
-                            defaultValue={userName}
-                            placeholder="Name on Card"
-                            style={{ width: '290px', marginBottom : '10px', float : 'left', marginRight: '18px'}}
-                            onChange={event => setUserName(event.target.value)}
-                          />
-                           <Input
-                                    placeholder = "PROMO"
-                                    id="promo"
-                                    inputProps={{ maxLength: 5 }}
-                                    label="PROMO"
-                                    defaultValue={promo}
-                                    onChange={event => setPromo(event.target.value)}
-                                    fullWidth
-                                    autoComplete="cc-csc"
-                                    style={{ width: '85px', marginBottom : '10px', marginTop : '10px', height: '40px' }}
-                                />
-                            </FormGroup>
-                            <PaymentInputsWrapper {...wrapperProps} style = {{marginRight: '15px',float: 'left',width: '290px',fontSize: '10pt'}}>
-                            <svg {...getCardImageProps({ images })} />
-                            <input {...getCardNumberProps({ onChange: event => setccNum(event.target.value)} )}/>
-                            <input {...getExpiryDateProps()} />
-                            <input {...getCVCProps( {onChange: event => setcvv(event.target.value)} )} type = "password" />
-                            </PaymentInputsWrapper>
+
+                            <FormGroup style={{ padding: '10px' }}>
+                                <FormGroup>
+                                    <Input
+                                        name="email"
+                                        id="email"
+                                        defaultValue={userName}
+                                        placeholder="Name on Card"
+                                        style={{ width: '290px', marginBottom: '10px', float: 'left', marginRight: '18px' }}
+                                        onChange={event => setUserName(event.target.value)}
+                                    />
+                                    <Input
+                                        placeholder="PROMO"
+                                        id="promo"
+                                        inputProps={{ maxLength: 5 }}
+                                        label="PROMO"
+                                        defaultValue={promo}
+                                        onChange={event => setPromo(event.target.value)}
+                                        fullWidth
+                                        autoComplete="cc-csc"
+                                        style={{ width: '85px', marginBottom: '10px', marginTop: '10px', height: '40px' }}
+                                    />
+                                </FormGroup>
+                                <PaymentInputsWrapper {...wrapperProps} style={{ marginRight: '15px', float: 'left', width: '290px', fontSize: '10pt' }}>
+                                    <svg {...getCardImageProps({ images })} />
+                                    <input {...getCardNumberProps({ onChange: event => setccNum(event.target.value) })} />
+                                    <input {...getExpiryDateProps()} />
+                                    <input {...getCVCProps({ onChange: event => setcvv(event.target.value) })} type="password" />
+                                </PaymentInputsWrapper>
                                 <Input
-                                    placeholder = "ZIP Code"
+                                    placeholder="ZIP Code"
                                     required
                                     id="zip"
                                     inputProps={{ maxLength: 5 }}
@@ -290,29 +301,30 @@ function Checkout(props) {
                                     onChange={event => setZip(event.target.value)}
                                     fullWidth
                                     autoComplete="cc-csc"
-                                    style={{ width: '85px', marginBottom : '10px', marginTop : '10px', height: '33px' }}
+                                    style={{ width: '85px', marginBottom: '10px', marginTop: '10px', height: '33px' }}
                                 />
                                 <div>
-                          <FormHelperText>Ticket(s)</FormHelperText>
-                          <Select
-                                    defaultValue={ticketQuantity}
-                                    onChange={event => setTicketQuantity(event.target.value)}
-                                    fullWidth
-                                    autoComplete="cc-csc"
-                                    InputLabelProps={{ shrink: true }}
-                                    style={{ width : '3rem', marginBottom : '10px', marginTop : '5px' }}
-                                >
+                                    <FormHelperText>Ticket(s)</FormHelperText>
+                                    <Select
+                                        defaultValue={ticketQuantity}
+                                        onChange={event => setTicketQuantity(event.target.value)}
+                                        fullWidth
+                                        autoComplete="cc-csc"
+                                        InputLabelProps={{ shrink: true }}
+                                        style={{ width: '3rem', marginBottom: '10px', marginTop: '5px' }}
+                                    >
 
-                                    <MenuItem value="1">1</MenuItem>
-                                    <MenuItem value="2" >2</MenuItem>
-                                    <MenuItem value="3">3</MenuItem>
-                                    <MenuItem value="4" >4</MenuItem>
-                                    <MenuItem value="5">5</MenuItem>
-                                    
-                                </Select>
-                            </div>
-                                </FormGroup> 
-                    </React.Fragment>)}
+                                        <MenuItem value="1">1</MenuItem>
+                                        <MenuItem value="2" >2</MenuItem>
+                                        <MenuItem value="3">3</MenuItem>
+                                        <MenuItem value="4" >4</MenuItem>
+                                        <MenuItem value="5">5</MenuItem>
+
+                                    </Select>
+                                </div>
+                            </FormGroup>
+                        </React.Fragment>)
+                }
             default:
                 throw new Error('Unknown step');
         }
@@ -320,41 +332,42 @@ function Checkout(props) {
     const handlePayment = () => {
 
         console.log(selectedSnack)
-            
+
         // console.log(selectedSnacks)
         //setSelectedSnack(selectedSnacks)
         var token = localStorage.getItem(ACCESS_TOKEN_NAME)
 
         const payload = {
-          "theaterId": theaterId,
-          "movieId": movieId,
-          "showtimeId": selectedShowtime,
-          "creditCardNumber": ccNum,
-          "cvv": cvv,
-          "name": userName,
-          "zip": zip,
-          "promo": promo,
-          "ticketQuantity": ticketQuantity,
-          "snacks": selectedSnack,
+            "theaterId": theaterId,
+            "movieId": movieId,
+            "showtimeId": selectedShowtime,
+            "creditCardNumber": ccNum,
+            "cvv": cvv,
+            "name": userName,
+            "zip": zip,
+            "promo": promo,
+            "ticketQuantity": ticketQuantity,
+            "snacks": selectedSnack,
         }
-    
-        axios.post(apiVariables.apiUrl +'/api/customer/customer_payment', payload, {
-        headers: {
-            'Authorization': 'Bearer ' + token
-        }
+
+        axios.post(apiVariables.apiUrl + '/api/customer/customer_payment', payload, {
+            headers: {
+                'Authorization': 'Bearer ' + token
+            }
         }).then(function (response) {
             if (response.status === 200) {
                 setAlertOpen(true);
             }
         })
-        .catch(function (error) {
-            console.log(error);
-        });
-        setTimeout(()=> setAlertOpen(true), 3000);
-      }
+            .catch(function (error) {
+                console.log(error);
+            });
+        setTimeout(() => setAlertOpen(true), 3000);
+    }
     const handleTheaterChange = (event) => {
-
+        localStorage.setItem("theaterId", theaterId);
         setSelectedTheatre(event.target.value);
+        console.log(theaterId)
         setSelectedTheatreName(event.target.name);
         axios({
             "method": "POST",
@@ -368,21 +381,11 @@ function Checkout(props) {
                 console.log(error)
             })
         axios({
-                "method": "GET",
-                "url": apiVariables.apiUrl + '/api/home/snacks/' + event.target.value,
-            })
-                .then((response) => {
-                    console.log(response.data)
-                    setSnacks(response.data)
-                })
-                .catch((error) => {
-                    console.log(error)
-                })
-        axios({
             "method": "GET",
-            "url": apiVariables.apiUrl + '/api/home/theater_address/' + theaterId,
+            "url": apiVariables.apiUrl + '/api/home/snacks/' + event.target.value,
         })
             .then((response) => {
+                console.log(response.data)
                 setSnacks(response.data)
             })
             .catch((error) => {
@@ -400,11 +403,11 @@ function Checkout(props) {
     const handleBack = () => {
         setActiveStep(activeStep - 1);
     };
-    
+
     const handleShowTimeClick = (showtime) => {
         setSelectedShowtime(showtime);
     }
-   
+
     const increaseTotals = (counter, snackId) => {
         selectedSnacks[snackId] = counter
     };
@@ -412,8 +415,6 @@ function Checkout(props) {
     const decreaseTotals = (counter, snackId) => {
         selectedSnacks[snackId] = counter
     };
-
-    const MarkersC = ( {text} ) => <div >{text}</div>;
     if (!alertOpen)
         return (
             <Container justify="center">
@@ -432,25 +433,29 @@ function Checkout(props) {
                                     {getStepContent(activeStep)}
                                     <div className={classes.buttons}>
                                         {activeStep !== 0 && (
-                                            <Button onClick={handleBack} className={classes.button} style = {{    color: 'white',
-                                            background: '#51cbce'}}
-                                            color="primary">
+                                            <Button onClick={handleBack} className={classes.button} style={{
+                                                color: 'white',
+                                                background: '#51cbce'
+                                            }}
+                                                color="primary">
                                                 Back
-                </Button>
-                                        )}                                       
+                                            </Button>
+                                        )}
                                         <Reward
-                                        ref={(ref) => { reward = ref }}
-                                        type='confetti'
+                                            ref={(ref) => { reward = ref }}
+                                            type='confetti'
                                         >
-                                        <Button
-                                            style = {{    color: 'white',
-                                                background: '#51cbce'}}
-                                            color="primary"
-                                            onClick={activeStep === steps.length - 1 ? handlePayment : handleNext}
-                                            className={classes.button}
-                                        >
-                                            {activeStep === steps.length - 1 ? 'Place Order' : 'Next'}
-                                        </Button>
+                                            <Button
+                                                style={{
+                                                    color: 'white',
+                                                    background: '#51cbce'
+                                                }}
+                                                color="primary"
+                                                onClick={activeStep === steps.length - 1 ? handlePayment : handleNext}
+                                                className={classes.button}
+                                            >
+                                                {activeStep === steps.length - 1 ? 'Place Order' : 'Next'}
+                                            </Button>
                                         </Reward>
                                     </div>
                                 </React.Fragment>
@@ -465,16 +470,8 @@ function Checkout(props) {
                                             )}
 
                                             {/* <Link style={{ marginRight: 'auto'}} to={props.isCustomer ? '/client' : ''} >Questions? Contact us</Link> */}
-                                            <Link style={{ marginRight: 'auto' }} to='/client'  >Questions? Contact us</Link>
-                                            <div style={{ height: '25vh', width: '100%' }}>
-                                                <GoogleMapReact
-                                                    bootstrapURLKeys={{ key: 'AIzaSyD9aslGTBwYBGkOZ858OLJtDvmmjovPs10' }}
-                                                    defaultCenter={defaultProps.center}
-                                                    defaultZoom={defaultProps.zoom}
-                                                >
-                                                    <MarkersC lat={theaterLatitude} lng={theaterLongitude} text={theaterAddress} key={'AIzaSyD9aslGTBwYBGkOZ858OLJtDvmmjovPs10'} />
-                                                </GoogleMapReact>
-                                            </div>
+                                            <Link style={{ marginRight: 'auto' }} to='/client'>Questions? Contact us</Link>
+                                            {/* <Map theaterId = {theaterId}/> */}
                                             <Button
                                                 variant="contained"
                                                 color="primary"
@@ -491,24 +488,24 @@ function Checkout(props) {
                     </Paper>
                 </>
 
-        </Container>
-    );
-    if(alertOpen)
-      return (
-        <Container justify="center">
-        < >
-        <Paper className={classes.paper}>
-        <div style = {{margin : '10px'}}>
-        <h5>Your order has been processed.</h5>
-        <div className={classes.buttons}>
-        <Button href='/' className={classes.button} style = {{color: 'white', background: '#51cbce'}}color="primary">Go Home</Button> 
-        <Button href='/your-orders' className={classes.button} style = {{color: 'white', background: '#51cbce'}}color="primary">Your Orders</Button> 
-        </div>
-        </div>
-        </Paper>
-        </>
-        </Container>
-      )
+            </Container>
+        );
+    if (alertOpen)
+        return (
+            <Container justify="center">
+                < >
+                    <Paper className={classes.paper}>
+                        <div style={{ margin: '10px' }}>
+                            <h5>Your order has been processed.</h5>
+                            <div className={classes.buttons}>
+                                <Button href='/' className={classes.button} style={{ color: 'white', background: '#51cbce' }} color="primary">Go Home</Button>
+                                <Button href='/your-orders' className={classes.button} style={{ color: 'white', background: '#51cbce' }} color="primary">Your Orders</Button>
+                            </div>
+                        </div>
+                    </Paper>
+                </>
+            </Container>
+        )
 }
 
 export default withRouter(Checkout)

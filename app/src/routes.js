@@ -1,4 +1,3 @@
-
 import Dashboard from "views/examples/DashboardPage.js";
 import Notifications from "views/examples/Notifications.js";
 import TableList from "views/examples/Tables.js";
@@ -8,8 +7,6 @@ import UserPage from "views/examples/User.js";
 import CometChatApp from 'views/examples/CometChatApp';
 import ManagerTransactionHistory from 'views/examples/ManagerTransactionHistory';
 import Showtimes from "views/examples/Showtimes.js";
-
-
 var routes = [
   {
     path: "/dashboard",
@@ -53,20 +50,20 @@ var routes = [
     component: ManagerTransactionHistory,
     layout: "/manager",
   },
-  {
-    path: "/notifications",
-    name: "Notifications",
-    icon: "nc-icon nc-bell-55",
-    component: Notifications,
-    layout: "/manager",
-  },
-  {
-    path: "/user-page",
-    name: "User Profile",
-    icon: "nc-icon nc-single-02",
-    component: UserPage,
-    layout: "/manager",
-  },
+  // {
+  //   path: "/notifications",
+  //   name: "Notifications",
+  //   icon: "nc-icon nc-bell-55",
+  //   component: Notifications,
+  //   layout: "/manager",
+  // },
+  // {
+  //   path: "/user-page",
+  //   name: "User Profile",
+  //   icon: "nc-icon nc-single-02",
+  //   component: UserPage,
+  //   layout: "/manager",
+  // },
   // {
   //   path: "/typography",
   //   name: "Typography",

@@ -26,20 +26,16 @@ import FormHelperText from '@material-ui/core/FormHelperText';
 import FormControl from '@material-ui/core/FormControl';
 import NativeSelect from '@material-ui/core/NativeSelect';
 import TextField from '@material-ui/core/TextField';
-
 import theme from '../theme';
-
 const container = {
     display: 'flex',
     flexWrap: 'wrap',
 };
-
 const textField = {
     marginLeft: theme.spacing(1),
     marginRight: theme.spacing(1),
     width: 200,
 };
-
 const cardMedia = {
     paddingTop: '100%', // height of photo
 };
@@ -75,18 +71,10 @@ const formControl2 = {
     margin: theme.spacing(2),
     backgroundColor: theme.palette.secondary.main,
 };
-
-
-
 function Showtimes() 
 {   
     const [cards, setCards] = React.useState([]);
-    const [theaters, setTheaters] = React.useState([]);
-    const [theaterId, setSelectedTheatre] = React.useState('');
-    const [price, setSelectedPrice] = React.useState('');
-    const [date, setSelectedDate] = React.useState('');
-
-
+    const [range, setSelectedRange] = React.useState('');
     // Initial page load
     const fetchData = React.useCallback(() => 
     {
@@ -100,23 +88,50 @@ function Showtimes()
                 .catch((error) => {
                     console.log(error)
                 })
-
-        axios({
-            "method": "GET",
-            "url": apiVariables.apiUrl + '/api/home/theaters',
-        })
-            .then((response) => {
-                setTheaters(response.data)
-            })
-                .catch((error) => {
-                    console.log(error)
-                })
     }, [])
     React.useEffect(() => 
     {
         fetchData()
     }, [fetchData])
-
+    const handleRangeChange = (event) => 
+    {
+        var toSend = "";
+        if(event.target.value == 10)
+        {
+            toSend = "A";
+        }
+        else if(event.target.value == 20)
+        {
+            toSend = "G";
+        }
+        else if(event.target.value == 30)
+        {
+            toSend = "M";
+        }
+        else if(event.target.value == 40)
+        {
+            toSend = "S";
+        }
+        setSelectedRange(toSend);
+    }
+    const filterMovies = (event) =>
+    {
+        var sRange = null;
+        if(range != '') sRange = range;
+        axios({
+            "method": "POST",
+            "url": apiVariables.apiUrl + '/api/home/search', /* need to update the URL here */
+            "data": {
+                range: sRange,
+            }
+        })
+            .then((response) => {
+                setCards(response.data);
+            })
+                .catch((error) => {
+                    console.log(error)
+                })
+    }
     return (
         <>
             <div className="section profile-content">
@@ -131,12 +146,44 @@ function Showtimes()
                         </Col>
                     </Row>
                     <br />
-
+                    <div>                        
+                        <FormControl variant="outlined" style={formControl}>
+                            <InputLabel id="range-dropdown-label">First Letter</InputLabel>
+                            <Select
+                                label="Range"
+                                labelId="range-dropdown-label"
+                                id="range-dropdown"
+                                onChange={handleRangeChange}
+                            >
+                                <MenuItem value="">
+                                    <em>None</em>
+                                </MenuItem>
+                                <MenuItem value={10}>A to F</MenuItem>
+                                <MenuItem value={20}>G to L</MenuItem>
+                                <MenuItem value={30}>M to R</MenuItem>
+                                <MenuItem value={40}>S to Z</MenuItem>
+                            </Select>
+                        </FormControl>
+                        <FormControl variant="outlined" style={formControl2}>
+                            <section style={root}>
+                                <div style={container2}>
+                                    <Button
+                                        color="secondary"
+                                        variant="contained"
+                                        size="large"
+                                        onClick={filterMovies}
+                                    >
+                                        {'Filter Movies'}
+                                    </Button>
+                                </div>
+                            </section>
+                        </FormControl>
+                    </div>
                     {/* All movie cards */}
                     <div style={{ display: 'flex', flexWrap: 'wrap' }}>
                         {cards.map((card) => (
                             <Grid item key={card} xs={12} sm={6} md={2} lg={3} style={{ margin: '10px', minWidth: '30%' }}>
-                                <Card style={{ height: '40vw' }}>
+                                <Card style={{ height: '25vw' }}>
                                     <CardMedia
                                         style={cardMedia}
                                         image={card.posterLink}
@@ -145,14 +192,14 @@ function Showtimes()
                                         <Typography gutterBottom variant="h5" component="h2">
                                             {card.title}
                                         </Typography>
-                                        <Typography>
+                                        {/* <Typography>
                                             {card.description}
-                                        </Typography>
+                                        </Typography> */}
                                     </CardContent>
                                     {/* Book Tickets Button */}
                                     <CardActions>
                                         <Link>
-                                            <Button size="small" color="primary" href={`/movieshowtime/${card.id}`}>
+                                            <Button size="small" color="primary" href={`/manager/addShowtime/${card.id}`}>
                                                 {'Add Showtime'}
                                             </Button>
                                         </Link>
