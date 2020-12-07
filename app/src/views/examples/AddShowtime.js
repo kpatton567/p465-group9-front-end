@@ -39,7 +39,8 @@ function AddShowtime(props) {
     }
 
     return (
-        <div className="update ml-auto mr-auto">
+      <>
+        <div className="content" >
           <Row>
             <Col md="8">
               <Card className="card-user">
@@ -49,29 +50,27 @@ function AddShowtime(props) {
                 <CardBody>
                   <Form>
                     <Row>
-                      <Col md="8">
+                      <Col className="px-1" md="3">
                         <FormGroup>
-                          <label>Movie Showtime*(YYYY-MM-DD HH:MM:00)</label>
+                          <label>Snack Name*</label>
                           <Input
                             defaultValue={showTime} 
                             onChange={event => setshowTime(event.target.value)}
                             required
-                            placeholder="Movie Showtime"
+                            placeholder="Showtime"
                             type="text"
                           />
                         </FormGroup>
                       </Col>
-                    </Row>
-                    <Row>
-                      <Col md="8">
-                        <FormGroup>
+                      <Col className="pl-1" md="4">
+                      <FormGroup>
                           <label>Ticket Price*</label>
                           <Input
-                            placeholder="Ticket Price"
-                            type="text"
-                            required
                             defaultValue={ticketPrice} 
                             onChange={event => setticketPrice(event.target.value)}
+                            required
+                            placeholder="Ticket Price"
+                            type="text"
                           />
                         </FormGroup>
                       </Col>
@@ -92,8 +91,9 @@ function AddShowtime(props) {
                 </CardBody>
               </Card>
             </Col>
-           </Row>
-       </div>
+          </Row>
+        </div>
+      </>
     );
 }
 
