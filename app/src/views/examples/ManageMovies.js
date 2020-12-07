@@ -42,7 +42,7 @@ function ManageMovies() {
     }
 
     return (
-      <>
+      // <>
         <div className="content">
           <Row>
             <Col md="8">
@@ -111,7 +111,7 @@ function ManageMovies() {
             </Col>
           </Row>
         </div>
-      </>
+      // </>
     );
 }
 

@@ -26,7 +26,7 @@ function AddShowtime(props) {
         "showtime": showTime,
         "price":ticketPrice,
       }
-      axios.post((apiVariables.apiUrl + '/api/manage/add_Showtime'), payload,{
+      axios.post((apiVariables.apiUrl + '/api/manage/add_showtime'), payload,{
         headers: {
           "Authorization": 'Bearer ' + token
         }
@@ -39,8 +39,7 @@ function AddShowtime(props) {
     }
 
     return (
-      <>
-        <div className="content">
+        <div className="update ml-auto mr-auto">
           <Row>
             <Col md="8">
               <Card className="card-user">
@@ -93,9 +92,8 @@ function AddShowtime(props) {
                 </CardBody>
               </Card>
             </Col>
-          </Row>
-        </div>
-      </>
+           </Row>
+       </div>
     );
 }
 
