@@ -9,13 +9,14 @@ var longitude = 0;
 
 
 class Map extends Component {
-  address()
+  address(props)
   {
     let [address, setAddress] = React.useState('');
+    
     const fetchData = React.useCallback(() => {
       axios({
         "method": "GET",
-        "url": apiVariables.apiUrl + '/api/home/theater_address/' + localStorage.getItem("theaterId"),
+        "url": apiVariables.apiUrl + '/api/home/theater_address/' + props.theaterId,
       })
         .then((response) => {
           setAddress(response.data)

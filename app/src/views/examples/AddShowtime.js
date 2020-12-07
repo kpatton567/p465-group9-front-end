@@ -14,7 +14,6 @@ import {
   Row,
   Col,
 } from "reactstrap";
-import { propTypes } from "react-bootstrap/esm/Image";
 
 function AddShowtime(props) {
     var token = localStorage.getItem(ACCESS_TOKEN_NAME);
@@ -51,7 +50,7 @@ function AddShowtime(props) {
                 <CardBody>
                   <Form>
                     <Row>
-                      <Col md="12">
+                      <Col md="8">
                         <FormGroup>
                           <label>Movie Showtime*(YYYY-MM-DD HH:MM:00)</label>
                           <Input
@@ -65,7 +64,7 @@ function AddShowtime(props) {
                       </Col>
                     </Row>
                     <Row>
-                      <Col md="12">
+                      <Col md="8">
                         <FormGroup>
                           <label>Ticket Price*</label>
                           <Input
@@ -78,7 +77,6 @@ function AddShowtime(props) {
                         </FormGroup>
                       </Col>
                     </Row>
-                    
                     <Row>
                       <div className="update ml-auto mr-auto">
                         <Button

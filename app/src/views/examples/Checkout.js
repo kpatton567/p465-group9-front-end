@@ -111,7 +111,7 @@ function Checkout(props) {
     const min = new Date(currYear, currMonth, currDay);
     const max = new Date(currYear, currMonth + 6, currDay);
     let firstload = true;
-
+    const [maptheaterId, setMapTheaterId] = React.useState('');
     const onPageLoadingSingle = (event, inst) => {
         this.getPrices(event.firstDay, function callback(bookings) {
             inst.settings.labels = bookings.labels
@@ -191,7 +191,7 @@ function Checkout(props) {
                                 {/* <Button onclick = {refreshMap}/> */}
 
                             </FormControl></form>
-                            <Map movieId = {movieId}/>
+                            <Map theaterId={maptheaterId}/>
                     </div>
                 )
             case 1:
@@ -365,9 +365,10 @@ function Checkout(props) {
         setTimeout(() => setAlertOpen(true), 3000);
     }
     const handleTheaterChange = (event) => {
-        localStorage.setItem("theaterId", theaterId);
+
         setSelectedTheatre(event.target.value);
-        console.log(theaterId)
+        setMapTheaterId(event.target.value)
+        console.log(event.target.value)
         setSelectedTheatreName(event.target.name);
         axios({
             "method": "POST",
