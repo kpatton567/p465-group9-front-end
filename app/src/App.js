@@ -21,6 +21,7 @@ import ContactPage from 'views/examples/ContactPage';
 import KitchenSinkApp from './CometChat/defaultPages/KitchenSinkApp';
 import HomePage from './CometChat/defaultPages/HomePage';
 import RegisterPage from 'views/examples/RegisterPage'
+import AddShowtime from 'views/examples/AddShowtime'
 import {
   CometChatConversationList,
   CometChatUserList,
@@ -52,10 +53,11 @@ function App() {
         path="/manager"
         render={(props) => <Manager {...props} />}
       />
+      
       {/* Other Options*/}
       <Route path= '/role'><ChooseRole/></Route>
       <Route path="/movieBooking/:movie" component={MovieBookingPage} />
-
+      <Route path="/addShowtime/:movie" component={AddShowtime} />
       {/* chat */}
        <Route path="/client" component={Client} ></Route>
       <Route path="/contact" component={ContactPage } ></Route>

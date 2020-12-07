@@ -8,7 +8,6 @@ import {
   Card,
   CardHeader,
   CardBody,
-  CardFooter,
   CardTitle,
   FormGroup,
   Form,
@@ -40,7 +39,7 @@ function ManageSnacks() {
     }
     return (
       <>
-        <div className="content">
+        <div className="content" >
           <Row>
             <Col md="8">
               <Card className="card-user">

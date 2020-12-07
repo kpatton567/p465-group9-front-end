@@ -19,7 +19,7 @@ function ManageMovies() {
     var token = localStorage.getItem(ACCESS_TOKEN_NAME);
     const [movieTitle, setmovieTitle] = React.useState('');
     const [movieDesc, setmovieDesc] = React.useState('');
-    const [movieGenre, setmovieGenre] = React.useState();
+    const [movieGenre, setmovieGenre] = React.useState([]);
     const [movieURL, setmovieURL] = React.useState('');
     const handleSubmitClick = (e) => {
       e.preventDefault();
@@ -42,7 +42,7 @@ function ManageMovies() {
     }
 
     return (
-      <>
+      // <>
         <div className="content">
           <Row>
             <Col md="8">
@@ -111,7 +111,7 @@ function ManageMovies() {
             </Col>
           </Row>
         </div>
-      </>
+      // </>
     );
 }
 

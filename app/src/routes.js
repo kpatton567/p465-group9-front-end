@@ -1,4 +1,3 @@
-
 import Dashboard from "views/examples/DashboardPage.js";
 import ManageMovies from "views/examples/ManageMovies.js";
 import ManageSnacks from "views/examples/ManageSnacks.js";

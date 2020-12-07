@@ -26,20 +26,16 @@ import FormHelperText from '@material-ui/core/FormHelperText';
 import FormControl from '@material-ui/core/FormControl';
 import NativeSelect from '@material-ui/core/NativeSelect';
 import TextField from '@material-ui/core/TextField';
-
 import theme from '../theme';
-
 const container = {
     display: 'flex',
     flexWrap: 'wrap',
 };
-
 const textField = {
     marginLeft: theme.spacing(1),
     marginRight: theme.spacing(1),
     width: 200,
 };
-
 const cardMedia = {
     paddingTop: '100%', // height of photo
 };
@@ -75,9 +71,6 @@ const formControl2 = {
     margin: theme.spacing(2),
     backgroundColor: theme.palette.secondary.main,
 };
-
-
-
 function Showtimes() 
 {   
     const [cards, setCards] = React.useState([]);
@@ -165,12 +158,11 @@ function Showtimes()
                             </section>
                         </FormControl>
                     </div>
-
                     {/* All movie cards */}
                     <div style={{ display: 'flex', flexWrap: 'wrap' }}>
                         {cards.map((card) => (
                             <Grid item key={card} xs={12} sm={6} md={2} lg={3} style={{ margin: '10px', minWidth: '30%' }}>
-                                <Card style={{ height: '40vw' }}>
+                                <Card style={{ height: '25vw' }}>
                                     <CardMedia
                                         style={cardMedia}
                                         image={card.posterLink}
@@ -179,14 +171,14 @@ function Showtimes()
                                         <Typography gutterBottom variant="h5" component="h2">
                                             {card.title}
                                         </Typography>
-                                        <Typography>
+                                        {/* <Typography>
                                             {card.description}
-                                        </Typography>
+                                        </Typography> */}
                                     </CardContent>
                                     {/* Book Tickets Button */}
                                     <CardActions>
                                         <Link>
-                                            <Button size="small" color="primary" href={`/movieshowtime/${card.id}`}>
+                                            <Button size="small" color="primary" href={`/addShowtime/${card.id}`} target = '_blank' >
                                                 {'Add Showtime'}
                                             </Button>
                                         </Link>
