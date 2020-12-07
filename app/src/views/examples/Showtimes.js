@@ -105,9 +105,13 @@ function Showtimes()
 
     const filterMovies = (event) =>
     {
+        // console.log(apiVariables.apiUrl);
+        // console.log('/api/home/movie_search?text=');
+        // console.log(searchVal);
+
         axios({
             "method": "GET",
-            "url": apiVariables.apiUrl + 'api/home/movie_search?text=' + {searchVal},
+            "url": apiVariables.apiUrl + 'api/home/movie_search?text=' + searchVal,
         })
             .then((response) => {
                 setCards(response.data);
