@@ -8,9 +8,6 @@ import {
     Col,
 } from "reactstrap";
 // core components
-import ExamplesNavbar from "components/Navbars/ExamplesNavbar.js";
-import ProfilePageHeader from "components/Headers/ProfilePageHeader.js";
-import DemoFooter from "components/Footers/DemoFooter.js";
 import CardActions from '@material-ui/core/CardActions';
 import CardContent from '@material-ui/core/CardContent';
 import CardMedia from '@material-ui/core/CardMedia';
@@ -19,14 +16,10 @@ import Card from '@material-ui/core/Card';
 import Typography from '../../components/Typography/Typography';
 import Link from '@material-ui/core/Link';
 import Button from '@material-ui/core/Button';
-import InputLabel from '@material-ui/core/InputLabel';
-import Select from '@material-ui/core/Select';
-import MenuItem from '@material-ui/core/MenuItem';
-import FormHelperText from '@material-ui/core/FormHelperText';
 import FormControl from '@material-ui/core/FormControl';
-import NativeSelect from '@material-ui/core/NativeSelect';
 import TextField from '@material-ui/core/TextField';
 import theme from '../theme';
+
 const container = {
     display: 'flex',
     flexWrap: 'wrap',
@@ -98,13 +91,12 @@ function Showtimes()
 
     const filterMovies = (event) =>
     {
-        // console.log(apiVariables.apiUrl);
-        // console.log('/api/home/movie_search?text=');
-        // console.log(searchVal);
-
         axios({
-            "method": "GET",
-            "url": apiVariables.apiUrl + 'api/home/movie_search?text=' + searchVal,
+            "method": "POST",
+            "url": apiVariables.apiUrl + '/api/home/movie_search',
+            "data": {
+                term: searchVal,
+            },
         })
             .then((response) => {
                 setCards(response.data);

@@ -6,6 +6,7 @@ import "animate.css/animate.min.css";
 import Slide from 'react-reveal/Zoom';
 // core components
 import "../styles/DiscoverMovies.css"
+import Button from '@material-ui/core/Button';
 import Particles from 'react-particles-js';
 
 function DiscoverMovies() {
@@ -20,7 +21,7 @@ function DiscoverMovies() {
          <Slide>
         <h1 style = {{ marginTop:'10rem', width: '100px', fontSize: '72px', color: 'white', marginLeft : '40px'}}>EXPERIENCE WORLD CLASS CINEMA</h1>
         </Slide>
-        <button href = '/movies'><h6 style = {{ fontWeight: '400', color: 'white', marginLeft : '40px'}} >Discover Movies</h6></button>
+        <Button href='/movies'><h6 style = {{ fontWeight: '400', color: 'white', marginLeft : '40px'}} >Discover Movies</h6></Button>
     </div>
     <Particles
     params={{

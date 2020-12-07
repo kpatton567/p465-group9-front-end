@@ -15,6 +15,7 @@ import {
   Col,
 } from "reactstrap";
 
+
 function ManageMovies() {
     var token = localStorage.getItem(ACCESS_TOKEN_NAME);
     const [movieTitle, setmovieTitle] = React.useState('');

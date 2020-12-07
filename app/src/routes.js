@@ -23,7 +23,7 @@ var routes = [
   {
     path: "/addshowtimes",
     name: "Manage Showtimes",
-    icon: "nc-icon nc-bank",
+    icon: "nc-icon nc-calendar-60",
     component: Showtimes,
     layout: "/manager",
   },
@@ -37,7 +37,7 @@ var routes = [
   {
     path: "/groupchat",
     name: "Chat Support",
-    icon: "nc-icon nc-tile-56",
+    icon: "nc-icon nc-chat-33",
     component: CometChatApp,
     layout: "/manager",
   },
