@@ -27,29 +27,10 @@ function DemoFooter() {
     <footer className="footer footer-black footer-white">
       <Container>
         <Row>
-          <nav className="footer-nav">
-            <ul>
-              <li>
-                <a
-                  href="http://blog.creative-tim.com/?ref=pkr-footer"
-                  // target="_blank"
-                >
-                  Blog
-                </a>
-              </li>
-              <li>
-                <a
-                  href="/aboutus-page"
-                >
-                  About us
-                </a>
-              </li>
-            </ul>
-          </nav>
           <div className="credits ml-auto">
             <span className="copyright">
               © {new Date().getFullYear()}
-               Prevue
+              {' PreVue'}
             </span>
           </div>
         </Row>

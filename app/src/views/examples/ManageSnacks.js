@@ -16,6 +16,11 @@ import {
   Col,
 } from "reactstrap";
 
+const btn = {
+  borderRadius: '30px',
+  backgroundColor:'#f50057',
+}
+
 function ManageSnacks() {
     var token = localStorage.getItem(ACCESS_TOKEN_NAME);
     const [snackName, setsnackName] = React.useState('');
@@ -77,8 +82,7 @@ function ManageSnacks() {
                     <Row>
                       <div className="update ml-auto mr-auto">
                         <Button
-                          className="btn-round"
-                          color="primary"
+                          style={btn}
                           type="submit"
                           onClick={handleSubmitClick}
                         >

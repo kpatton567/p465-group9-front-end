@@ -209,7 +209,7 @@ export default function ExamplesNavbar(props) {
                         <DropdownItem
                           href="/manager/dashboard"
                         >
-                          Manage your theaters
+                          Manage your theater
                         </DropdownItem>
                         :null}
 

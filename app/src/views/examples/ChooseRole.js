@@ -30,11 +30,14 @@ const useStyles = makeStyles((theme) => ({
         fontSize: 16,
     },
     largeIcon: {
-        fontSize: "7em"
+        fontSize: "7em",
     },
     successIcon: {
         color: 'green',
-    }
+    },
+    btnText: {
+        backgroundColor: '#7B7B7B'
+    },
 }));
 function ChooseRole() {
     const { user, isAuthenticated } = useAuth0();
@@ -44,99 +47,99 @@ function ChooseRole() {
     const handleClose = () => {
         setOpen(false);
     };
-  
-    if(user){
+
+    if (user) {
         var userId = user.sub.length === 35 ? user.sub.substring(14) : user.sub.substring(6)
         axios({
-        "method": "POST",
-        "url": apiVariables.apiUrl +'/api/auth/check_user?userId=' + userId
+            "method": "POST",
+            "url": apiVariables.apiUrl + '/api/auth/check_user?userId=' + userId
         })
-        .then((response) => {
-            console.log(response.data)
-            setOldUser(response.data)
-        })
-        .catch((error) => {
-            console.log(error)
-        })
+            .then((response) => {
+                console.log(response.data)
+                setOldUser(response.data)
+            })
+            .catch((error) => {
+                console.log(error)
+            })
     }
-    if(user){
+    if (user) {
         var userId = user.sub.length === 35 ? user.sub.substring(14) : user.sub.substring(6)
-         axios({
-        "method": "POST",
-        "url": apiVariables.apiUrl +'/api/auth/get_token?userId=' + userId
+        axios({
+            "method": "POST",
+            "url": apiVariables.apiUrl + '/api/auth/get_token?userId=' + userId
         })
-        .then((response) => {
-            localStorage.setItem(ACCESS_TOKEN_NAME,response.data.token);
-        })
-        .catch((error) => {
-            console.log(error)
-        })  
+            .then((response) => {
+                localStorage.setItem(ACCESS_TOKEN_NAME, response.data.token);
+            })
+            .catch((error) => {
+                console.log(error)
+            })
     }
 
     //cometchat signup
-    if(user){
+    if (user) {
         var userId = user.sub.length === 35 ? user.sub.substring(14) : user.sub.substring(6)
         fetch("https://api-us.cometchat.io/v2.0/users", {
-        "method": "POST",
-        "headers": {
-            "appId": "254719f4f395024",
-            "apiKey": "d8dee6a22683724af8502b02929f601f6f30f43c",
-            "Content-Type": "application/json",
-            "Accept": "application/json"
-        },
-        "body": "{\"uid\":\"" + userId + "\",\"name\":\""+user.name+"\",\"role\":\"customer\"}"
+            "method": "POST",
+            "headers": {
+                "appId": "254719f4f395024",
+                "apiKey": "d8dee6a22683724af8502b02929f601f6f30f43c",
+                "Content-Type": "application/json",
+                "Accept": "application/json"
+            },
+            "body": "{\"uid\":\"" + userId + "\",\"name\":\"" + user.name + "\",\"role\":\"customer\"}"
         })
-        .then(response => {
-        })
-        .catch(err => {
-        });
+            .then(response => {
+            })
+            .catch(err => {
+            });
     }
     //userId=-oauth2|117950300573138642682
     const registerUser = (userRole) => {
-        
-    var role = userRole;
-    var userId = user.sub.length === 35 ? user.sub.substring(14) : user.sub.substring(6)
 
-    axios({
-        "method": "POST",
-        "url": apiVariables.apiUrl + '/api/auth/register?userId=' + userId +'&role='+ role
-    })
-        .then((response) => {
-            console.log(response.data)
-            setOldUser(response.data)
+        var role = userRole;
+        var userId = user.sub.length === 35 ? user.sub.substring(14) : user.sub.substring(6)
+
+        axios({
+            "method": "POST",
+            "url": apiVariables.apiUrl + '/api/auth/register?userId=' + userId + '&role=' + role
         })
-        .catch((error) => {
-            console.log(error)
-        })
-   };
+            .then((response) => {
+                console.log(response.data)
+                setOldUser(response.data)
+            })
+            .catch((error) => {
+                console.log(error)
+            })
+    };
     return (
         isAuthenticated && (
             oldUser ?
-            <div>{window.location.href = "/"}</div>
-            :
-            <div>
-                {/* <JSONPretty data={user} /> */}
-                <div className={classes.right}>
-                    <Dialog disableBackdropClick disableEscapeKeyDown open={open} onClose={handleClose}>
-                        <DialogTitle>Choose your profile</DialogTitle>
-                        <DialogContent>
-                            <Button style={{ marginRight: '10px' }} href="/" onClick={() => registerUser("ROLE_CUSTOMER")}>
-                                <FaceIcon fontSize="large" className={classes.largeIcon} ></FaceIcon>
-                                Customer
-                </Button>
-                            <Button style={{ marginRight: '10px'}} href='/registerTheater' onClick={() => registerUser("ROLE_MANAGER")}>
-                                <SupervisorAccountIcon fontSize="large" className={classes.largeIcon}></SupervisorAccountIcon>
-                                Manager
-                </Button>
-                        </DialogContent>
-                        <DialogActions>
-                            <Button onClick={handleClose} color="primary">
-                                Ok
-                   </Button>
-                        </DialogActions>
-                    </Dialog>
+                <div>{window.location.href = "/"}</div>
+                :
+                <div>
+                    {/* <JSONPretty data={user} /> */}
+                    <div className={classes.right}>
+                        <Dialog disableBackdropClick disableEscapeKeyDown open={open} onClose={handleClose}>
+                            <DialogTitle>Choose your profile</DialogTitle>
+                            <DialogContent>
+                                <Button className={classes.btnText} style={{ marginRight: '10px' }} href="/" onClick={() => registerUser("ROLE_CUSTOMER")}>
+                                    <FaceIcon fontSize="large" className={classes.largeIcon} ></FaceIcon>
+                                    Customer
+                                </Button>
+                                <Button className={classes.btnText} style={{ marginRight: '10px' }} href='/registerTheater' onClick={() => registerUser("ROLE_MANAGER")}>
+                                    <SupervisorAccountIcon fontSize="large" className={classes.largeIcon}></SupervisorAccountIcon>
+                                    Manager
+                                </Button>
+                            </DialogContent>
+                            <DialogActions>
+                                <Button onClick={handleClose} color="primary">
+                                    Ok
+                                </Button>
+                            </DialogActions>
+                        </Dialog>
+                    </div>
                 </div>
-            </div>
         )
     )
 }

@@ -15,6 +15,11 @@ import {
   Col,
 } from "reactstrap";
 
+const btn = {
+  borderRadius: '30px',
+  backgroundColor:'#f50057',
+}
+
 
 function ManageMovies() {
     var token = localStorage.getItem(ACCESS_TOKEN_NAME);
@@ -97,8 +102,7 @@ function ManageMovies() {
                     <Row>
                       <div className="update ml-auto mr-auto">
                         <Button
-                          className="btn-round"
-                          color="primary"
+                          style={btn}
                           type="submit"
                           onClick={handleSubmitClick}
                         >
