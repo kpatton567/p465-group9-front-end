@@ -71,8 +71,9 @@ const useStyles = makeStyles((theme) => ({
         padding: theme.spacing(2, 2),
     }
 }));
-
+export const MContext = React.createContext(); 
 function Checkout(props) {
+    
     const classes = useStyles();
     const [open, setOpen] = React.useState(false);
     const [theaters, setTheaters] = React.useState([]);
@@ -191,6 +192,7 @@ function Checkout(props) {
                                 {/* <Button onclick = {refreshMap}/> */}
 
                             </FormControl></form>
+                            
                             <Map theaterId={maptheaterId}/>
                     </div>
                 )

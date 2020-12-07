@@ -199,7 +199,7 @@ function Showtimes()
                                     {/* Book Tickets Button */}
                                     <CardActions>
                                         <Link>
-                                            <Button size="small" color="primary" href={`/manager/addShowtime/${card.id}`}>
+                                            <Button size="small" color="primary" href={`/addShowtime/${card.id}`} target = '_blank' >
                                                 {'Add Showtime'}
                                             </Button>
                                         </Link>

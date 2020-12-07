@@ -44,7 +44,7 @@ CometChat.init(appID, appSetting).then(() => {
       <Auth0Provider
       domain={domain}
       clientId={clientId}
-      redirectUri="https://localhost:3000/role">
+      redirectUri="http://localhost:3000/role">
       <Provider store={store}>
         <BrowserRouter>
           <App />

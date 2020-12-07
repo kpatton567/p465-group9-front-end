@@ -57,7 +57,7 @@ function App() {
       {/* Other Options*/}
       <Route path= '/role'><ChooseRole/></Route>
       <Route path="/movieBooking/:movie" component={MovieBookingPage} />
-      <Route path="/manager/addShowtime/:movie" component={AddShowtime} />
+      <Route path="/addShowtime/:movie" component={AddShowtime} />
       {/* chat */}
        <Route path="/client" component={Client} ></Route>
       <Route path="/contact" component={ContactPage } ></Route>

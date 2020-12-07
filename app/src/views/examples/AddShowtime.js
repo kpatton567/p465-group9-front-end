@@ -1,5 +1,8 @@
 import React from "react";
 import axios from 'axios';
+import ExamplesNavbar from "components/Navbars/ExamplesNavbar.js";
+import ProfilePageHeader from "components/Headers/ProfilePageHeader.js";
+import DemoFooter from "components/Footers/DemoFooter.js";
 import { apiVariables, ACCESS_TOKEN_NAME } from '../../APIConstants';
 // reactstrap components
 import {
@@ -9,6 +12,7 @@ import {
   CardBody,
   CardTitle,
   FormGroup,
+  Container,
   Form,
   Input,
   Row,
@@ -40,9 +44,37 @@ function AddShowtime(props) {
 
     return (
       <>
-        <div className="content" >
+      <ProfilePageHeader posterLink={require("assets/img/profilebg.jpg")} />
+      <div  >
+      <div style = {{position: 'relative',
+  backgroundColor: '#f4f3ef'}}>
+        <Container>
+          <div className="owner">
+            <div className="avatar">
+              {/* <img
+                alt="..."
+                // className="img-circle img-no-padding img-responsive"
+                // src={user.picture}
+              /> */}
+            </div>
+            <div className="name">
+              <h4 className="title">
+                Theater Manager<br />
+              </h4>
+            </div>
+          </div>
           <Row>
-            <Col md="8">
+            <Col className="ml-auto mr-auto text-center" md="6">
+              <p>
+                Edit your profile, choose your prefrences to get customized coupons, emails, movie recommendations and many more!
+            </p>
+              <br />
+            </Col>
+          </Row>
+          <br />
+          <div>
+              <Row>
+              <Col className="ml-auto mr-auto" md="6">
               <Card className="card-user">
                 <CardHeader>
                   <CardTitle tag="h5">Add Showtime</CardTitle>
@@ -90,10 +122,23 @@ function AddShowtime(props) {
                   </Form>
                 </CardBody>
               </Card>
-            </Col>
-          </Row>
-        </div>
-      </>
+              </Col>
+              </Row>
+          </div>
+        </Container>
+      </div>
+     
+      <DemoFooter />
+      {/* </div>
+    
+        <div style={{marginLeft:'17rem'}} >
+          {/* <Row> */}
+            {/* <Col md="8"> */}
+              
+            {/* </Col> */}
+          {/* </Row> */}
+        </div> 
+        </>
     );
 }
 
