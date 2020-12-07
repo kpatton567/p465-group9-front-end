@@ -29,7 +29,7 @@ class Snacks extends Component {
         const newTotal = (this.state.counter + 1) * price;
         if(this.state.counter > 0)
             this.setState({ counter: this.state.counter - 1, totalPrice: newTotal }, () => {
-                decreaseTotals(this.state.counter);
+                decreaseTotals(this.state.counter, snackId);
         });
     };
 

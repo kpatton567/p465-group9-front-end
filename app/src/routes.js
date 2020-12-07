@@ -1,14 +1,10 @@
 
 import Dashboard from "views/examples/DashboardPage.js";
-import Notifications from "views/examples/Notifications.js";
-import TableList from "views/examples/Tables.js";
 import ManageMovies from "views/examples/ManageMovies.js";
 import ManageSnacks from "views/examples/ManageSnacks.js";
-import UserPage from "views/examples/User.js";
 import CometChatApp from 'views/examples/CometChatApp';
 import ManagerTransactionHistory from 'views/examples/ManagerTransactionHistory';
 import Showtimes from "views/examples/Showtimes.js";
-
 
 var routes = [
   {

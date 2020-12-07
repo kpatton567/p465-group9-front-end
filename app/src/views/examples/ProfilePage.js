@@ -13,10 +13,6 @@ import {
   Form,
   Card,
   UncontrolledAlert,
-  CardHeader,
-  CardBody,
-  CardFooter,
-  CardTitle,
 } from "reactstrap";
 
 // core components
@@ -46,7 +42,22 @@ function ProfilePage() {
   const [secondname, setSecondName] = React.useState('');
   const [genres,setGenres] = React.useState([]);
   const [isSent, setIsSent] = React.useState(false)
-  
+
+  // var token = localStorage.getItem(ACCESS_TOKEN_NAME)
+  // axios.get(apiVariables.apiUrl +'/api/customer/profile', {
+  //   headers: {
+  //       'Authorization': 'Bearer ' + token
+  //   }
+  //   }).then(function (response) {
+  //     setFirstName(response.data.firstName)
+  //     setSecondName(response.data.lastName)
+  //     setMobile(response.data.mobileNumber)
+  //     console.log(response.data)
+  //   })
+  //   .catch(function (error) {
+  //       console.log(error);
+  //   });
+
   const onToggle = (index, e) => {
   	let newItems = items.slice();
     newItems[index].checked = !newItems[index].checked
@@ -72,7 +83,7 @@ function ProfilePage() {
       "birthday" : birthday,
       "genres" : genres
     }
-    console.log(payload);
+    console.log(payload); 
       axios.post(apiVariables.apiUrl +'/api/customer/edit_profile', payload, {
         headers: {
             'Authorization': 'Bearer ' + token
@@ -85,17 +96,6 @@ function ProfilePage() {
         .catch(function (error) {
             console.log(error);
         });
-
-        axios.post(apiVariables.apiUrl +'/api/customer/profile', {
-          headers: {
-              'Authorization': 'Bearer ' + token
-          }
-          }).then(function (response) {
-              console.log(response)
-          })
-          .catch(function (error) {
-              console.log(error);
-          });
   }
 
   document.documentElement.classList.remove("nav-open");
@@ -133,8 +133,11 @@ function ProfilePage() {
                 />
               </div>
               <div className="name">
-                <h4 className="title">
+                {/* <h4 className="title">
                   {user.nickname} <br />
+                </h4> */}
+                <h4 className="title">
+                  Pranamya Vadlamani <br />
                 </h4>
               </div>
             </div>
@@ -160,11 +163,11 @@ function ProfilePage() {
     marginBottom: '9px', minHeight: '32px', fontWeight : '700'}}>Edit Profile</h3>
                       <Form inline style = {{paddingTop : '1rem'}}>
                         <FormGroup className="mb-2 mr-sm-2 mb-sm-0">
-                          <Input style={{ marginBottom:'1rem',width: '234px' }} placeholder="First Name" type="text" onChange= {event => 
+                          <Input value = {firstname} style={{ marginBottom:'1rem',width: '234px' }} placeholder="First Name" type="text" onChange= {event => 
                               setFirstName(event.target.value)} />
                         </FormGroup>
                         <FormGroup className="mb-2  mb-sm-0">
-                        <Input style={{marginBottom:'1rem', width: '238px' }} placeholder="Last Name" type="text" onChange= {event => 
+                        <Input value = {secondname} style={{marginBottom:'1rem', width: '238px' }} placeholder="Last Name" type="text" onChange= {event => 
                               setSecondName(event.target.value)} />
                         </FormGroup>
                         <FormGroup className="mb-2 mr-sm-2 mb-sm-0" >
@@ -183,6 +186,7 @@ function ProfilePage() {
                           <Input
                             name="mobile"
                             id="mobile"
+                            value= {mobile}
                             placeholder="Mobile"
                             style={{ width: '238px', marginBottom:'1rem' }}
                             onChange= {event => 
