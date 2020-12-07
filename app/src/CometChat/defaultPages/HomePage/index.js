@@ -40,19 +40,17 @@ class HomePage extends React.Component {
 
   render() {
     return (
-        <div css={wrapperStyle()} style={{marginTop : '20rem'}}>
+        <div css={wrapperStyle()} style={{maxWidth: '24rem' , marginTop : '7rem' }}>
          
           <div css={componentStyle()}>
-
             <div css={boxStyle()}>
               <div css={titleWrapperStyle()}>
-                <div css={thumbnailWrapperStyle}>
-                  <Avatar image='https://data-us.cometchat.io/assets/images/avatars/cyclops.png' />
-                </div>
+                <i class="nc-icon nc-chat-33" style = {{fontSize: '32px'}}/>
                 <h2 css={componentTitleStyle()}>Chat now</h2>
               </div>
               <div css={descWrapperStyle()}>
-                <p>Group chat with other theater managers</p>
+                <p>Provide Customer Support to your theater customers</p>
+                <p>Enter into groups with other theater managers, discuss theaters, pricing and a lot more!</p>
               </div>
               <ul css={linkWrapperStyle()}>
                 <li><Link css={linkStyle()} to="/groupchat/embedded-app" target="_blank" >Go Online</Link></li>

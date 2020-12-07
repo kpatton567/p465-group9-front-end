@@ -186,6 +186,8 @@ export default function ExamplesNavbar(props) {
                         aria-labelledby="dropdownMenuButton"
                         className="dropdown-info"
                       >
+                        {isCustomer ? 
+                        <>
                         <DropdownItem
                           href="/profile"
                         >
@@ -200,14 +202,17 @@ export default function ExamplesNavbar(props) {
                           href="/rewards"
                         >
                           Rewards
-                        </DropdownItem>
+                        </DropdownItem></>
+                        :null}
+                        
                         {!isCustomer ?
                         <DropdownItem
-                          href="/manager"
+                          href="/manager/dashboard"
                         >
-                          Manage your account
+                          Manage your theaters
                         </DropdownItem>
                         :null}
+
                         <DropdownItem divider />
                         <DropdownItem
                           onClick={() => handlelogout()}

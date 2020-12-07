@@ -138,9 +138,8 @@ class Client extends Component {
     .catch(function (error) {
         console.log(error);
     });
-    addResponseMessage('Connecting you to ' + e);
     setQuickButtons([]);
-    addResponseMessage('You are now connected to ' + e);
+    addResponseMessage('You are now connected to the Customer Support');
 }
 
   handleNewUserMessage = newMessage => {

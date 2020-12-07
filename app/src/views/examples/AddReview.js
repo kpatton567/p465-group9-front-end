@@ -51,7 +51,7 @@ function AddReview(props) {
   const [review, setReview] = React.useState('');
   const classes = useStyles();
   const [alertOpen, setAlertOpen] = React.useState(false);
-  
+
   const savereview = () =>{
     var token = localStorage.getItem(ACCESS_TOKEN_NAME)
 
@@ -112,8 +112,11 @@ function AddReview(props) {
                 />
               </div>
               <div className="name">
-                <h4 className="title">
+                {/* <h4 className="title">
                   {user.nickname} <br />
+                </h4> */}
+                <h4 className="title">
+                  Pranamya Vadlamani<br />
                 </h4>
               </div>
             </div>

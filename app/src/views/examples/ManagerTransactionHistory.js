@@ -68,7 +68,7 @@ React.useEffect(() => {
             <Col md="12">
               <Card>
                 <CardHeader>
-                  <CardTitle tag="h4">Simple Table</CardTitle>
+                  <CardTitle tag="h4">Transaction History</CardTitle>
                 </CardHeader>
                 <CardBody>
                   <Table responsive>

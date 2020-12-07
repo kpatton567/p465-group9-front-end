@@ -58,12 +58,13 @@ function MovieBookingPage(props) {
   }
 
   const fetchData = React.useCallback(() => {
-    axios({
-      "method": "GET",
+    axios({ 
+      "method": "GET",  
       "url": apiVariables.apiUrl + '/api/home/movie/' + props.match.params.movie,
     })
       .then((response) => {
         setMovie(response.data)
+        console.log(response.data)
         setGenres(response.data.genres);
       })
       .catch((error) => {
@@ -85,7 +86,6 @@ function MovieBookingPage(props) {
       "url": apiVariables.apiUrl + '/api/home/reviews/' + props.match.params.movie,
     })
       .then((response) => {
-        console.log(response.data)
         setReviews(response.data)
         setReviewChunks(splitArrayIntoChunksOfLen(response.data, 3))
         reviewChunks = splitArrayIntoChunksOfLen(response.data, 3)
@@ -137,31 +137,55 @@ function MovieBookingPage(props) {
             <h1 className="banner_title">{movie.title}</h1>
             <Pagination style={{ marginRight: '15px', float: 'left' }}>
               <PaginationItem>
-                <PaginationLink
+            <PaginationLink
                   aria-label="Genre"
                   href="#pablo"
                   style = {{borderRadius: '30px'}}
                 >
                   <span className="sr-only">Previous</span>
-                  Genre
+                  Horro
+            </PaginationLink>
+            </PaginationItem>
+            <PaginationItem>
+            <PaginationLink
+                  aria-label="Genre"
+                  href="#pablo"
+                  style = {{borderRadius: '30px'}}
+                >
+                  <span className="sr-only">Previous</span>
+                  Thriller
             </PaginationLink>
               </PaginationItem>
+
             </Pagination>
             <Box component="fieldset" mb={3} borderColor="transparent">
               <Rating name="read-only" value={value} readOnly size="large" />
             </Box>
             <h1 className="banner_description" title={movie.description}>{truncate(movie.description, 150)}</h1>
             <div className="banner_buttons">
-            <Button onClick={handleClickOpen} className="banner_button" >Book Tickets</Button>
             <Button
-              href="/movies"
-              className="banner_button"
-            >
-              More Movies
-            </Button>
-              <Modal disableBackdropClick disableEscapeKeyDown isOpen={open} >
+                  className="btn-round mr-1"
+                  color="primary"
+                  outline
+                  type="button"
+                  onClick={handleClickOpen}
+                  style = {{ backgroundColor: '#51cbce', color:'white'}}
+                >
+                  Book Tickets
+                </Button>
+                <Button
+                  className="btn-round mr-1"
+                  color="primary"
+                  outline
+                  type="button"
+                  href='/movies'
+                  style = {{ backgroundColor: '#51cbce', color:'white'}}
+                >
+                  More Movies
+                </Button>
+              <Modal disableBackdropClick disableEscapeKeyDown isOpen={open} contentClassName="custom-modal-style">
                 <i className="nc-icon nc-simple-remove" onClick={handleClose} style={{ cursor: 'pointer', marginTop: '10px', width: '40px', marginLeft: 'auto' }} />
-                <Checkout movieId={props.match.params.movie} isCustomer={isCustomer}/>
+                <Checkout movieId={props.match.params.movie} isCustomer={isCustomer} style={{width : '50rem'}}/>
               </Modal>
 
             </div>
@@ -180,7 +204,7 @@ function MovieBookingPage(props) {
                               {/* <Rating name="read-only" value={value} readOnly size="small" /> */}
 
                                 <p className="mb-0" style = {{fontWeight: '600', lineHeight: '1',
-  paddingTop: '.8rem', paddingBottom : '1rem'}}>
+                                paddingTop: '.8rem', paddingBottom : '1rem'}}>
                                   {item.headline}
                                 </p>
                                 <p className="mb-0 review_description">
@@ -206,8 +230,8 @@ function MovieBookingPage(props) {
     )
   if (movie && !isCustomer)
     return (
-      <div className="mainBGcolor ">
-        <ExamplesNavbar />
+      <div className="mainBGcolor">
+        <ExamplesNavbar style = {{backgroundColor : 'black !important'}}/>
         <header className="banner" style={{
           backgroundSize: "cover", backgroundImage: `url(${movie.posterLink})`,
           backgroundPosition: 'center center'
@@ -218,32 +242,89 @@ function MovieBookingPage(props) {
               <PaginationItem>
                 <PaginationLink
                   aria-label="Genre"
+                  href="#pablo"
+                  style = {{borderRadius: '30px'}}
                 >
-                  <span className="sr-only">Previous</span>
-                  Genre
+                  <span className="sr-only"></span>
+                  Horror
+            </PaginationLink>
+            </PaginationItem>
+            <PaginationItem>
+            <PaginationLink
+                  aria-label="Genre"
+                  href="#pablo"
+                  style = {{borderRadius: '30px'}}
+                >
+                  <span className="sr-only"></span>
+                  Thriller
             </PaginationLink>
               </PaginationItem>
             </Pagination>
-            <Button onClick={handleClickOpen} className="banner_button" >Book Tickets</Button>
-            <Button
-              href="/movies"
-              className="banner_button"
-            >
-              More Movies
-            </Button>
+            <Box component="fieldset" mb={3} borderColor="transparent">
+              <Rating name="read-only" value={value} readOnly size="large" />
+            </Box>
             <h1 className="banner_description" title={movie.description}>{truncate(movie.description, 150)}</h1>
             <div className="banner_buttons">
-
-
-              {/* <Modal disableBackdropClick disableEscapeKeyDown isOpen={open} contentClassName="custom-modal-style"> */}
-              {/* <i class="nc-icon nc-simple-remove" onClick={handleClose} style={{ cursor: 'pointer', marginTop: '10px', width: '40px', marginLeft: 'auto' }} /> */}
-              <Checkout movieId={props.match.params.movie} isCustomer={isCustomer} />
-              {/* </Modal> */}
+            <Button
+                  className="btn-round mr-1"
+                  color="primary"
+                  outline
+                  type="button"
+                  onClick={handleClickOpen}
+                  style = {{ backgroundColor: '#51cbce', color:'white'}}
+                >
+                  Book Tickets
+                </Button>
+                <Button
+                  className="btn-round mr-1"
+                  color="primary"
+                  outline
+                  type="button"
+                  href="/movies"
+                  style = {{ backgroundColor: '#51cbce', color:'white'}}
+                >
+                  More Movies
+                </Button>
+              <Modal disableBackdropClick disableEscapeKeyDown isOpen={open} contentClassName="custom-modal-style">
+                <i className="nc-icon nc-simple-remove" onClick={handleClose} style={{ cursor: 'pointer', marginTop: '10px', width: '40px', marginLeft: 'auto' }} />
+                <Checkout movieId={props.match.params.movie} isCustomer={isCustomer} style={{width : '50rem'}}/>
+              </Modal>
 
             </div>
+            <MDBCarousel activeItem={1} length={3} slide={true} showControls={true} showIndicators={true} multiItem style={{ paddingRight: '10rem', paddingTop: '8rem' }}>
+              <MDBCarouselInner >
+                <MDBRow>
+                  {reviewChunks.map((reviewChunk, index) =>
+                    <MDBCarouselItem itemId={index+1}>
+                      <div className='row' style={{display:'flex'}}> 
+                        {reviewChunk.map((item, i) =>
+                          <MDBCol md="4" style={{ display: 'flex' }}>
+                            <div>
+                            {/* <Rating name="read-only" value={value} readOnly size="small" /> */}
+                            <div className="typography-line">
+                              <blockquote className="blockquote">
+                              {/* <Rating name="read-only" value={value} readOnly size="small" /> */}
 
+                                <p className="mb-0" style = {{fontWeight: '600', lineHeight: '1',
+                                paddingTop: '.8rem', paddingBottom : '1rem'}}>
+                                  {item.headline}
+                                </p>
+                                <p className="mb-0 review_description">
+                                {item.review}
+                                </p>
+                                <br />
+                              </blockquote>
+                            </div>
+                            </div>
+                          </MDBCol>
+                        )}
+                      </div>
+                    </MDBCarouselItem>
+                  )}
+                </MDBRow>
+              </MDBCarouselInner>
+            </MDBCarousel>
           </div>
-
           <div className="banner_fadeBottom" />
 
         </header>

@@ -77,8 +77,11 @@ React.useEffect(() => {
                 />
               </div>
               <div className="name">
-                <h4 className="title">
+                {/* <h4 className="title">
                   {user.nickname} <br />
+                </h4> */}
+                <h4 className="title">
+                  Pranamya Vadlamani<br />
                 </h4>
               </div>
             </div>

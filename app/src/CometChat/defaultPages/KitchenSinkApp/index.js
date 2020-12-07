@@ -66,19 +66,7 @@ class KitchenSinkApp extends React.PureComponent {
       <React.Fragment>
       <div css={loginBtn()}><button onClick={() => this.login()}>Go Online</button></div>
 
-      {/* <Global /> */}
-      {/* <div >
-          {authRedirect}
-          {loader}
-          {errorMessage}
-          <div >
-            {/* <div>
-              <p css={subtitleStyle()}> Go online</p>
-            </div> */}
-            
-            {/* <div css={loginBtn()}><button onClick={() => this.login()}>Go Online</button></div> */}
-          {/* </div>
-        </div> */}
+      
       </React.Fragment>
     );
   }

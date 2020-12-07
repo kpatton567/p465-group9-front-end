@@ -15,60 +15,61 @@ export default function MoviesCarousel() {
       "url": apiVariables.apiUrl + '/api/home/movies'
     })
       .then((response) => {
+        console.log(response.data)
         setImages([...images,
         {
           url: response.data[0].posterLink,
           title: response.data[0].title,
           width: '33%',
-          id: '1',
+          id: response.data[0].id,
         },
         {
           url: response.data[1].posterLink,
           title: response.data[1].title,
           width: '33%',
-          id: '2',
+          id: response.data[1].id,
         },
         {
           url: response.data[2].posterLink,
           title: response.data[2].title,
           width: '33%',
-          id: '3',
+          id: response.data[2].id,
         },
         {
           url: response.data[3].posterLink,
           title: response.data[3].title,
           width: '33%',
-          id: '4',
+          id: response.data[3].id,
         },
         {
           url: response.data[4].posterLink,
           title: response.data[4].title,
           width: '33%',
-          id: '5',
+          id: response.data[4].id,
         },
         {
           url: response.data[5].posterLink,
           title: response.data[5].title,
           width: '33%',
-          id: '6',
+          id: response.data[5].id,
         },
         {
           url: response.data[6].posterLink,
           title: response.data[6].title,
           width: '33%',
-          id: '7',
+          id: response.data[6].id,
         },
         {
           url: response.data[7].posterLink,
           title: response.data[7].title,
           width: '33%',
-          id: '8',
+          id: response.data[7].id,
         },
         {
           url: response.data[8].posterLink,
           title: response.data[8].title,
           width: '33%',
-          id: '9',
+          id: response.data[8].id,
         }
           ,]);
       })
@@ -101,11 +102,11 @@ export default function MoviesCarousel() {
                     <MDBCarouselItem itemId="1">
                       <div className='row' style={{ display: 'flex' }}>
                         <MDBCol md='4'>
-                          <MDBCard
+                        <MDBCard
                             className='card-image'
                             style={{
                               backgroundImage:
-                                "url('" + images[0].url + "')",
+                                "url('" + images[7].url + "')",
                               backgroundSize: 'cover',
                               height: '25rem'
                             }}
@@ -114,13 +115,14 @@ export default function MoviesCarousel() {
                               <div style = {{marginTop: '15rem'}}>
                                 <MDBCardBody>
                                   <MDBCardTitle tag='h3' className='pt-2'>
-                                    <strong style={{ color: 'white' }}>{images[0].title}</strong>
+                                    <strong style={{ color: 'white' }}>{images[7].title}</strong>
                                   </MDBCardTitle>
-                                  <MDBBtn color="primary" href={`/movieBooking/${images[0].id}`}>Book Tickets</MDBBtn>
+                                  <MDBBtn color="primary" href={`/movieBooking/${images[7].id}`}>Book Tickets</MDBBtn>
                                 </MDBCardBody>
                               </div>
                             </div>
                           </MDBCard>
+                          
                         </MDBCol>
                         <MDBCol md='4'>
                           <MDBCard
@@ -267,7 +269,7 @@ export default function MoviesCarousel() {
                             className='card-image'
                             style={{
                               backgroundImage:
-                                "url('" + images[7].url + "')",
+                                "url('" + images[0].url + "')",
                               backgroundSize: 'cover',
                               height: '25rem'
                             }}
@@ -276,9 +278,9 @@ export default function MoviesCarousel() {
                               <div style = {{marginTop: '15rem'}}>
                                 <MDBCardBody>
                                   <MDBCardTitle tag='h3' className='pt-2'>
-                                    <strong style={{ color: 'white' }}>{images[7].title}</strong>
+                                    <strong style={{ color: 'white' }}>{images[0].title}</strong>
                                   </MDBCardTitle>
-                                  <MDBBtn color="primary" href={`/movieBooking/${images[7].id}`}>Book Tickets</MDBBtn>
+                                  <MDBBtn color="primary" href={`/movieBooking/${images[0].id}`}>Book Tickets</MDBBtn>
                                 </MDBCardBody>
                               </div>
                             </div>

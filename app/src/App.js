@@ -66,7 +66,6 @@ function App() {
       <Route path="/contact-screen" component={CometChatUserListScreen} />
       <Route path="/conversation-screen" component={CometChatConversationListScreen} />
       <Route path="/group-screen" component={CometChatGroupListScreen} />
-      <Route exact path="/manager/groupchat" component={HomePage} />
       <Route path="/login" component={KitchenSinkApp} />
 
     </Router> 
