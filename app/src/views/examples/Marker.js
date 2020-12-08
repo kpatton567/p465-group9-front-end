@@ -1,4 +1,3 @@
-  
 import React from 'react';
 import './Marker.css';
 
@@ -10,6 +9,7 @@ const Marker = (props) => {
           style={{ backgroundColor: color, cursor: 'pointer' }}
           title={name}
         />
+        <div/>
       </div>
     );
   };

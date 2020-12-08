@@ -63,10 +63,9 @@ class Map extends Component {
           defaultZoom={this.state.zoom}
         >
           <Marker
-            lat={latitude}
-            lng={longitude}
-            subtitle={"AMC 12"}
-          />
+              lat={latitude}
+              lng={longitude}/>
+              
         </GoogleMapReact>
       </div>
     );
