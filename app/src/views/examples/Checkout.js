@@ -18,7 +18,8 @@ import { apiVariables, ACCESS_TOKEN_NAME } from '../../APIConstants';
 import { withRouter } from 'react-router';
 import { useAuth0 } from '@auth0/auth0-react';
 import Geocode from "react-geocode";
-// import Marker from google.maps.Marker;
+import Map from './Map';
+import './global.js'
 import {
     Button, Container, Input, FormGroup,Form } from "reactstrap";
 import GoogleMapReact from 'google-map-react';
@@ -400,7 +401,10 @@ function Checkout(props) {
     const handleTheaterChange = (event) => {
 
         setSelectedTheatre(event.target.value);
-        console.log(event.target.value)
+        setMapTheaterId(event.target.value)
+        global.movietheaterId = event.target.value;
+        console.log(global.movietheaterId)
+        
         setSelectedTheatreName(event.target.name);
         axios({
             "method": "POST",

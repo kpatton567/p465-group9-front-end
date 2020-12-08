@@ -1,5 +1,5 @@
 import React from "react";
-
+​
 // reactstrap components
 import {
   Button,
@@ -14,7 +14,7 @@ import {
   Card,
   UncontrolledAlert,
 } from "reactstrap";
-
+​
 // core components
 import { useAuth0 } from '@auth0/auth0-react';
 import ExamplesNavbar from "components/Navbars/ExamplesNavbar.js";
@@ -22,7 +22,15 @@ import ProfilePageHeader from "components/Headers/ProfilePageHeader.js";
 import DemoFooter from "components/Footers/DemoFooter.js";
 import { apiVariables, ACCESS_TOKEN_NAME } from '../../APIConstants';
 import axios from 'axios';
-
+import { makeStyles } from '@material-ui/core/styles';
+​
+const useStyles = makeStyles({
+  root: {
+    width: 200,
+    display: 'flex',
+    alignItems: 'center',
+  },
+});
 const items = [
   { text: 'Action', checked: false },
   { text: 'Horror', checked: false },
@@ -31,7 +39,7 @@ const items = [
   { text: 'SciFi', checked: false },
   { text: 'Romance', checked: false }
 ]
-
+​
 function ProfilePage() {
   const { user, isAuthenticated, isLoading, loginWithRedirect } = useAuth0();
   const [email, setEmail] = React.useState('');
@@ -42,7 +50,9 @@ function ProfilePage() {
   const [secondname, setSecondName] = React.useState('');
   const [genres,setGenres] = React.useState([]);
   const [isSent, setIsSent] = React.useState(false)
-
+  const [alertOpen, setAlertOpen] = React.useState(false);
+  const classes = useStyles();
+​
   // var token = localStorage.getItem(ACCESS_TOKEN_NAME)
   // axios.get(apiVariables.apiUrl +'/api/customer/profile', {
   //   headers: {
@@ -57,7 +67,7 @@ function ProfilePage() {
   //   .catch(function (error) {
   //       console.log(error);
   //   });
-
+​
   const onToggle = (index, e) => {
   	let newItems = items.slice();
     newItems[index].checked = !newItems[index].checked
@@ -70,10 +80,10 @@ function ProfilePage() {
     }
     setGenres(genres)
   }
-
+​
   const saveChanges = () =>{
     var token = localStorage.getItem(ACCESS_TOKEN_NAME)
-
+​
     const payload = {
       "userId": user.sub.length === 30 ? user.sub.substring(6) : user.sub.substring(14),
       "firstName" : firstname,
@@ -91,13 +101,14 @@ function ProfilePage() {
         }).then(function (response) {
             if(response.status === 200){
               setIsSent(true)
+              setAlertOpen(true);
             } 
         })
         .catch(function (error) {
             console.log(error);
         });
   }
-
+​
   document.documentElement.classList.remove("nav-open");
   React.useEffect(() => {
     document.body.classList.add("landing-page");
@@ -106,8 +117,7 @@ function ProfilePage() {
     };
   });
   if (!isAuthenticated && isLoading) {
-    return (<div>
-    </div>)
+    return (<div></div>)
   }
   if (!isAuthenticated && !isLoading) {
     return (<div>
@@ -115,7 +125,7 @@ function ProfilePage() {
     {loginWithRedirect()}
     </div>)
   }
-  if (isAuthenticated && !isLoading && user)
+  if (isAuthenticated && !isLoading && user && !alertOpen)
     return (
       <>
         <ExamplesNavbar />
@@ -255,11 +265,7 @@ function ProfilePage() {
                              
                             )}
                           </div>
-                          {isSent ? 
-                          <UncontrolledAlert color="info" fade={false}>
-                          <span>Your changes have been updated</span>
-                        </UncontrolledAlert>
-                        : null}
+                          
                         </FormGroup>
                         <Button block className="btn-round" color="danger" style = {{color: 'white',background: '#51cbce', marginLeft: '10rem', width : '10rem'}} onClick={() => saveChanges()}>
                           Save Changes
@@ -276,6 +282,61 @@ function ProfilePage() {
         </div>
       </>
     );
+    if(alertOpen)
+      return (
+        <>
+        <ExamplesNavbar />
+        <ProfilePageHeader posterLink={require("assets/img/profilebg.jpg")} />
+        <div className="section profile-content">
+          <Container>
+            <div className="owner">
+              <div className="avatar">
+                <img
+                  alt="..."
+                  className="img-circle img-no-padding img-responsive"
+                  src={user.picture}
+                />
+              </div>
+              <div className="name">
+                <h4 className="title">
+                  {user.nickname} <br />
+                </h4>
+              </div>
+            </div>
+            <Row>
+              <Col className="ml-auto mr-auto text-center" md="6">
+               
+                <br />
+              </Col>
+            </Row>
+            <br />
+            
+                <Row>
+                  <Col className="ml-auto mr-auto" md="6">
+                    <Card style={{
+                      borderRadius: "8px",
+                      margin: "20px 0 70px",
+                      minHeight: "400px",
+                      padding: "30px"
+                    }}>
+​
+                    <div style = {{margin : '10px'}}>
+                    <h5>Your profile has been updated. Thank you for your response.</h5>
+                    <div className={classes.buttons}>
+                    <Button href='/' className={classes.button} style = {{color: 'white', background: '#51cbce'}}color="primary">Go Home</Button> 
+                    </div>
+                    </div>
+                    </Card>
+        
+                  </Col>
+                </Row>
+          </Container>
+        </div>
+        <DemoFooter />
+​
+</>
+       
+      )
 }
-
+​
 export default ProfilePage;
