@@ -175,7 +175,7 @@ function MovieBookingPage(props) {
                 </Button>
               <Modal disableBackdropClick disableEscapeKeyDown isOpen={open} contentClassName="custom-modal-style">
                 <i className="nc-icon nc-simple-remove" onClick={handleClose} style={{ cursor: 'pointer', marginTop: '10px', width: '40px', marginLeft: 'auto' }} />
-                <Checkout movieId={props.match.params.movie} isCustomer={isCustomer} style={{width : '50rem'}}/>
+                <Checkout movieId={props.match.params.movie} isCustomer={isCustomer} style={{width : '45rem'}}/>
               </Modal>
             </div>
             <MDBCarousel activeItem={1} length={3} slide={true} showControls={true} showIndicators={true} multiItem style={{ paddingRight: '10rem', paddingTop: '8rem' }}>
@@ -274,7 +274,7 @@ function MovieBookingPage(props) {
                 </Button>
               <Modal disableBackdropClick disableEscapeKeyDown isOpen={open} contentClassName="custom-modal-style">
                 <i className="nc-icon nc-simple-remove" onClick={handleClose} style={{ cursor: 'pointer', marginTop: '10px', width: '40px', marginLeft: 'auto' }} />
-                <Checkout movieId={props.match.params.movie} isCustomer={isCustomer} style={{width : '50rem'}}/>
+                <Checkout movieId={props.match.params.movie} isCustomer={isCustomer} style={{width : '45rem'}}/>
               </Modal>
 
             </div>

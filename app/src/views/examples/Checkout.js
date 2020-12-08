@@ -18,22 +18,16 @@ import { apiVariables, ACCESS_TOKEN_NAME } from '../../APIConstants';
 import { withRouter } from 'react-router';
 import { useAuth0 } from '@auth0/auth0-react';
 import Geocode from "react-geocode";
-import Map from './Map';
-import './global.js'
+
 import {
     Button, Container, Input, FormGroup,Form } from "reactstrap";
-import GoogleMapReact from 'google-map-react';
+
 import { PaymentInputsWrapper, usePaymentInputs } from 'react-payment-inputs';
 import images from 'react-payment-inputs/images';
 // import mobiscroll from '@mobiscroll/react';
 // import '@mobiscroll/react/dist/css/mobiscroll.min.css';
 import Review from "views/examples/Review";
 import Map from './Map';
-
-Geocode.setApiKey("AIzaSyD9aslGTBwYBGkOZ858OLJtDvmmjovPs10");
-Geocode.setLanguage("en");
-Geocode.setRegion("na");
-Geocode.enableDebug();
 const useStyles = makeStyles((theme) => ({
 
     container: {
@@ -134,12 +128,7 @@ function Checkout(props) {
         zoom: 11
       };
     const { getCardNumberProps, getExpiryDateProps, getCVCProps, wrapperProps, getCardImageProps, } = usePaymentInputs();
-   
-    
-    
-    const now = new Date();
-    
-    
+
     const fetchData = React.useCallback(() => {
         axios({
             "method": "POST",
@@ -162,8 +151,8 @@ function Checkout(props) {
                 return (
                     <div>
                         <form className={classes.container}>
-                            <FormControl className={classes.formControl}>
-                                <div id="demo-simple-select-placeholder-label-label">Choose a theater</div>
+                            <FormControl className={classes.formControl}style = {{display:'inline-block'}}>
+                                <div id="demo-simple-select-placeholder-label-label" >Choose a theater</div>
                                 {theaters.map((item) =>
                                     <Button
                                     className="btn-round mr-1"
@@ -396,15 +385,11 @@ function Checkout(props) {
         //     console.log(error);
         // });
         // setTimeout(()=> setAlertOpen(true), 3000);
-        reward.rewardMe();
       }
     const handleTheaterChange = (event) => {
 
         setSelectedTheatre(event.target.value);
-        setMapTheaterId(event.target.value)
-        global.movietheaterId = event.target.value;
-        console.log(global.movietheaterId)
-        
+        console.log(event.target.value)
         setSelectedTheatreName(event.target.name);
         axios({
             "method": "POST",
@@ -461,7 +446,7 @@ function Checkout(props) {
         return (
             <Container justify="center">
                 < >
-                    <Paper className={classes.paper} style = {{ width: '37rem'}}>
+                    <Paper className={classes.paper} style = {{ width: '42rem',height:'auto'}}>
                         <Stepper activeStep={activeStep} className={classes.stepper}>
                             {steps.map((label) => (
                                 <Step key={label}>
@@ -494,10 +479,12 @@ function Checkout(props) {
                                         ref={(ref) => { reward = ref }}
                                         type='confetti'
                                         >
+                                           
                                         <Button
-                                            style = {{    color: 'white',
-                                                background: '#51cbce'}}
+                                            className="btn-round mr-1"
                                             color="primary"
+                                            outline
+                                            type="button"
                                             onClick={activeStep === steps.length - 1 ? handlePayment : handleNext}
                                             className={classes.button}
                                         >
@@ -511,24 +498,18 @@ function Checkout(props) {
                                         {getStepContent(activeStep)}
                                         <div className={classes.buttons}>
                                             {activeStep !== 0 && (
-                                                <Button onClick={handleBack} className={classes.button}>
+                                                <Button className="btn-round mr-1"
+                                                color="primary"
+                                                outline
+                                                type="default" onClick={handleBack} className={classes.button}>
                                                     Back
                                                 </Button>
                                             )}
-
-                                            <div style={{ height: '25vh', width: '100%' }}>
-                                                <GoogleMapReact
-                                                    bootstrapURLKeys={{ key: 'AIzaSyD9aslGTBwYBGkOZ858OLJtDvmmjovPs10' }}
-                                                    defaultCenter={defaultProps.center}
-                                                    defaultZoom={defaultProps.zoom}
-                                                >
-                                                    <MarkersC lat={theaterLatitude} lng={theaterLongitude} text={theaterAddress} key={'AIzaSyD9aslGTBwYBGkOZ858OLJtDvmmjovPs10'} />
-                                                </GoogleMapReact>
-                                            </div>
-                                            
                                             <Button
-                                                variant="contained"
+                                                className="btn-round mr-1"
                                                 color="primary"
+                                                outline
+                                                type="button"
                                                 onClick={activeStep === steps.length - 1 ? handlePayment : handleNext}
                                                 className={classes.button}
                                             >

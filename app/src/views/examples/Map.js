@@ -2,38 +2,13 @@ import React, { Component } from 'react';
 import GoogleMapReact from 'google-map-react';
 import Marker from './Marker';
 import Geocode from "react-geocode";
-import axios from 'axios';
 import './global.js';
-import { apiVariables } from '../../APIConstants';
 var latitude = 0;
 var longitude = 0;
-
-
-class Map extends Component {
-  address()
-  {
-    let [address, setAddress] = React.useState('');
-    
-    const fetchData = React.useCallback(() => {
-      axios({
-        "method": "GET",
-        "url": apiVariables.apiUrl + '/api/home/theater_address/' + global.movietheaterId,
-      })
-        .then((response) => {
-          console.log(response.data[0])
-          setAddress(response.data[0])
-        })
-        .catch((error) => {
-          console.log(error)
-        })
-    }, [])
-    React.useEffect(() => {
-      fetchData()
-    }, [fetchData])
-    Geocode.setApiKey("AIzaSyD9aslGTBwYBGkOZ858OLJtDvmmjovPs10");
+Geocode.setApiKey("AIzaSyD9aslGTBwYBGkOZ858OLJtDvmmjovPs10");
     Geocode.setLanguage("en");
     Geocode.enableDebug();
-    Geocode.fromAddress(address).then(
+    Geocode.fromAddress("2929 W 3rd St, Bloomington, IN 47404").then(
       response => {
         const { lat, lng } = response.results[0].geometry.location;
         latitude = lat;
@@ -43,7 +18,29 @@ class Map extends Component {
         console.error(error);
       }
     );
-  }
+
+class Map extends Component {
+  // address()
+  // {
+    // let [address, setAddress] = React.useState('');
+    
+    // const fetchData = React.useCallback(() => {
+    //   axios({
+    //     "method": "GET",
+    //     "url": apiVariables.apiUrl + '/api/home/theater_address/' + global.movietheaterId,
+    //   })
+    //     .then((response) => {
+    //       console.log(response.data[0])
+    //       setAddress(response.data[0])
+    //     })
+    //     .catch((error) => {
+    //       console.log(error)
+    //     })
+    // }, [])
+    // React.useEffect(() => {
+    //   fetchData()
+    // }, [fetchData])
+  // }
   constructor(props) {
     super(props);
     this.state = {
@@ -51,16 +48,14 @@ class Map extends Component {
         lat: latitude,
         lng: longitude
       },
-      zoom: 11,
+      zoom: 15,
       height: '25vh', 
       width: '50%',
-      movieId:0
     };
   }
 
   render() {
     return (
-      // Important! Always set the container height explicitly
       <div style={{ height: '25vh', width: '100%' }}>
         <GoogleMapReact
           bootstrapURLKeys={{ key: 'AIzaSyD9aslGTBwYBGkOZ858OLJtDvmmjovPs10' }}
@@ -70,7 +65,7 @@ class Map extends Component {
           <Marker
             lat={latitude}
             lng={longitude}
-            title="My Marker"
+            subtitle={"AMC 12"}
           />
         </GoogleMapReact>
       </div>

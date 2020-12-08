@@ -116,3 +116,4 @@ const sendEmail = (e)  =>{
     </>
   );
 }
+export default ContactUs;
