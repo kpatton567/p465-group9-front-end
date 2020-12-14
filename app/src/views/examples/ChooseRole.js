@@ -77,13 +77,31 @@ function ChooseRole() {
     }
 
     //cometchat signup
+    // if (user) {
+    //     var userId = user.sub.length === 35 ? user.sub.substring(14) : user.sub.substring(6)
+    //     fetch("https://api-us.cometchat.io/v2.0/users", {
+    //         "method": "POST",
+    //         "headers": {
+    //             "appId": "254719f4f395024",
+    //             "apiKey": "d8dee6a22683724af8502b02929f601f6f30f43c",
+    //             "Content-Type": "application/json",
+    //             "Accept": "application/json"
+    //         },
+    //         "body": "{\"uid\":\"" + userId + "\",\"name\":\"" + user.name + "\",\"role\":\"customer\"}"
+    //     })
+    //         .then(response => {
+    //         })
+    //         .catch(err => {
+    //         });
+    // }
+
     if (user) {
         var userId = user.sub.length === 35 ? user.sub.substring(14) : user.sub.substring(6)
         fetch("https://api-us.cometchat.io/v2.0/users", {
             "method": "POST",
             "headers": {
-                "appId": "254719f4f395024",
-                "apiKey": "d8dee6a22683724af8502b02929f601f6f30f43c",
+                "appId": "271914bcf8fbc65",
+                "apiKey": "226d3c3f1ef783a149877ac828b3c001f390bf5a",
                 "Content-Type": "application/json",
                 "Accept": "application/json"
             },

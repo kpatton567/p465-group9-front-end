@@ -20,6 +20,7 @@ class Client extends Component {
   componentDidMount() {
     addResponseMessage('Welcome to our customer care!');
     addResponseMessage('Choose a theater');
+    console.log(this.props.theaters)
     let theaterButtons = []
     for (var i = 0 ; i < this.props.theaters.length ; i ++){
       theaterButtons.push
@@ -36,7 +37,7 @@ class Client extends Component {
      this.fetchAuthToken(uid).then(
        result => {
          console.log('auth token fetched', result);
-         CometChat.login(this.state.userId,'d8dee6a22683724af8502b02929f601f6f30f43c')
+         CometChat.login(this.state.userId,'226d3c3f1ef783a149877ac828b3c001f390bf5a')
          .then( user => {
            console.log("Login successfully:", { user });
            this.createMessageListener();
@@ -54,8 +55,8 @@ class Client extends Component {
     fetch("https://api-us.cometchat.io/v2.0/users/"+this.state.userId+"/auth_tokens", {
         "method": "POST",
         "headers": {
-          "appId": "254719f4f395024",
-          "apiKey": "d8dee6a22683724af8502b02929f601f6f30f43c",
+          "appId": "271914bcf8fbc65",
+          "apiKey": "226d3c3f1ef783a149877ac828b3c001f390bf5a",
           "Content-Type": "application/json",
           "Accept": "application/json"
         },
@@ -75,7 +76,7 @@ class Client extends Component {
   createUser = async ()=> {
     var user = new CometChat.User(this.state.userId);
     user.name = this.state.userName
-    CometChat.createUser(user, '8af2ab1e74163bd038e0d0de4aa54f495812ef6e').then(
+    CometChat.createUser(user, '226d3c3f1ef783a149877ac828b3c001f390bf5a').then(
         user => {
             console.log("user created", user);
         },error => {
@@ -154,8 +155,8 @@ class Client extends Component {
             fetch("https://api-us.cometchat.io/v2.0/users/"+this.state.userId+"/messages", {
             "method": "POST",
             "headers": {
-                "appId": "254719f4f395024",
-                "apiKey": "d8dee6a22683724af8502b02929f601f6f30f43c",
+                "appId": "271914bcf8fbc65",
+                "apiKey": "226d3c3f1ef783a149877ac828b3c001f390bf5a",
                 "Content-Type": "application/json",
                 "Accept": "application/json"
             },
@@ -178,8 +179,8 @@ class Client extends Component {
     fetch("https://api-us.cometchat.io/v2.0/users/"+this.state.userId+"/messages", {
             "method": "POST",
             "headers": {
-                "appId": "254719f4f395024",
-                "apiKey": "d8dee6a22683724af8502b02929f601f6f30f43c",
+                "appId": "271914bcf8fbc65",
+                "apiKey": "226d3c3f1ef783a149877ac828b3c001f390bf5a",
                 "Content-Type": "application/json",
                 "Accept": "application/json"
             },

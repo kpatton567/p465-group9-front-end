@@ -17,7 +17,7 @@ function CometChatApp(){
       } = useAuth0();
     if(user){
         var userId = user.sub.length === 35 ? user.sub.substring(14) : user.sub.substring(6)
-        CometChat.login(userId,'d8dee6a22683724af8502b02929f601f6f30f43c')
+        CometChat.login(userId,'226d3c3f1ef783a149877ac828b3c001f390bf5a')
         .then( user => {
         console.log("Login successfully:", { user });
     })

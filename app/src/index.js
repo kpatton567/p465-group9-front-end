@@ -44,7 +44,7 @@ CometChat.init(appID, appSetting).then(() => {
       <Auth0Provider
       domain={domain}
       clientId={clientId}
-      redirectUri="http://localhost:3000/role">
+      redirectUri="https://prevuemovies.herokuapp.com/role">
       <Provider store={store}>
         <BrowserRouter>
           <App />
