@@ -22,6 +22,14 @@ import ProfilePageHeader from "components/Headers/ProfilePageHeader.js";
 import DemoFooter from "components/Footers/DemoFooter.js";
 import { apiVariables, ACCESS_TOKEN_NAME } from '../../APIConstants';
 import axios from 'axios';
+<<<<<<< HEAD
+=======
+<<<<<<< HEAD
+import { makeStyles } from '@material-ui/core/styles';
+
+=======
+>>>>>>> 1ffc571204dcb2ef0d3b7f4e91ee7f06828e6ec4
+>>>>>>> new_branch
 const useStyles = makeStyles({
   root: {
     width: 200,
@@ -50,6 +58,26 @@ function ProfilePage() {
   const [isSent, setIsSent] = React.useState(false)
   const [alertOpen, setAlertOpen] = React.useState(false);
   const classes = useStyles();
+<<<<<<< HEAD
+=======
+<<<<<<< HEAD
+
+  // var token = localStorage.getItem(ACCESS_TOKEN_NAME)
+  // axios.get(apiVariables.apiUrl +'/api/customer/profile', {
+  //   headers: {
+  //       'Authorization': 'Bearer ' + token
+  //   }
+  //   }).then(function (response) {
+  //     setFirstName(response.data.firstName)
+  //     setSecondName(response.data.lastName)
+  //     setMobile(response.data.mobileNumber)
+  //     console.log(response.data)
+  //   })
+  //   .catch(function (error) {
+  //       console.log(error);
+  //   });
+=======
+>>>>>>> new_branch
   var token = localStorage.getItem(ACCESS_TOKEN_NAME)
   axios.get(apiVariables.apiUrl +'/api/customer/profile', {
     headers: {
@@ -64,6 +92,10 @@ function ProfilePage() {
     .catch(function (error) {
         console.log(error);
     });
+<<<<<<< HEAD
+=======
+>>>>>>> 1ffc571204dcb2ef0d3b7f4e91ee7f06828e6ec4
+>>>>>>> new_branch
 
   const onToggle = (index, e) => {
   	let newItems = items.slice();
@@ -114,8 +146,7 @@ function ProfilePage() {
     };
   });
   if (!isAuthenticated && isLoading) {
-    return (<div>
-    </div>)
+    return (<div></div>)
   }
   if (!isAuthenticated && !isLoading) {
     return (<div>
@@ -263,11 +294,7 @@ function ProfilePage() {
                              
                             )}
                           </div>
-                          {isSent ? 
-                          <UncontrolledAlert color="info" fade={false}>
-                          <span>Your changes have been updated</span>
-                        </UncontrolledAlert>
-                        : null}
+                          
                         </FormGroup>
                         <Button block className="btn-round" color="danger" style = {{color: 'white',background: '#51cbce', marginLeft: '10rem', width : '10rem'}} onClick={() => saveChanges()}>
                           Save Changes
@@ -307,10 +334,24 @@ function ProfilePage() {
             </div>
             <Row>
               <Col className="ml-auto mr-auto text-center" md="6">
+<<<<<<< HEAD
+=======
+<<<<<<< HEAD
+               
+=======
+>>>>>>> 1ffc571204dcb2ef0d3b7f4e91ee7f06828e6ec4
+>>>>>>> new_branch
                 <br />
               </Col>
             </Row>
             <br />
+<<<<<<< HEAD
+=======
+<<<<<<< HEAD
+            
+=======
+>>>>>>> 1ffc571204dcb2ef0d3b7f4e91ee7f06828e6ec4
+>>>>>>> new_branch
                 <Row>
                   <Col className="ml-auto mr-auto" md="6">
                     <Card style={{
@@ -319,6 +360,20 @@ function ProfilePage() {
                       minHeight: "400px",
                       padding: "30px"
                     }}>
+<<<<<<< HEAD
+=======
+<<<<<<< HEAD
+
+                    <div style = {{margin : '10px'}}>
+                    <h5>Your profile has been updated. Thank you for your response.</h5>
+                    <div className={classes.buttons}>
+                    <Button href='/' className={classes.button} style = {{color: 'white', background: '#51cbce'}}color="primary">Go Home</Button> 
+                    </div>
+                    </div>
+                    </Card>
+        
+=======
+>>>>>>> new_branch
                     <div style = {{margin : '10px'}}>
                     <h5>Your profile has been updated. Thank you for your response.</h5>
                     <div className={classes.buttons}>
@@ -326,12 +381,26 @@ function ProfilePage() {
                     </div>
                     </div>
                     </Card>
+<<<<<<< HEAD
+=======
+>>>>>>> 1ffc571204dcb2ef0d3b7f4e91ee7f06828e6ec4
+>>>>>>> new_branch
                   </Col>
                 </Row>
           </Container>
         </div>
         <DemoFooter />
+<<<<<<< HEAD
 </>
+=======
+<<<<<<< HEAD
+
+</>
+       
+=======
+</>
+>>>>>>> 1ffc571204dcb2ef0d3b7f4e91ee7f06828e6ec4
+>>>>>>> new_branch
       )
 }
 

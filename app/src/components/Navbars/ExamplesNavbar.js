@@ -133,7 +133,7 @@ export default function ExamplesNavbar(props) {
       className={classnames("fixed-top", navbarColor)}
       color-on-scroll="300"
       expand="lg"
-      style = {{borderBlock: 'unset'}}
+      style = {{borderBlock: 'unset', borderBottom: 'none'}}
     >
       <Container>
         <div className="navbar-translate">

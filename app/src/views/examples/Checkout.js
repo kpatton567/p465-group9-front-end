@@ -511,6 +511,16 @@ function Checkout(props) {
                             ) : (
                                     <React.Fragment>
                                         {getStepContent(activeStep)}
+
+                                        {/* <div style={{ height: '25vh', width: '100%' }}>
+                                                <GoogleMapReact
+                                                    bootstrapURLKeys={{ key: 'AIzaSyD9aslGTBwYBGkOZ858OLJtDvmmjovPs10' }}
+                                                    defaultCenter={defaultProps.center}
+                                                    defaultZoom={defaultProps.zoom}
+                                                >
+                                                    <MarkersC lat={theaterLatitude} lng={theaterLongitude} text={theaterAddress} key={'AIzaSyD9aslGTBwYBGkOZ858OLJtDvmmjovPs10'} />
+                                                </GoogleMapReact>
+                                            </div> */}
                                         <div className={classes.buttons}>
                                             {activeStep !== 0 && (
                                                 <Button className="btn-round mr-1"

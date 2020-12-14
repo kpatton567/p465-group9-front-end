@@ -133,7 +133,7 @@ function MovieBookingPage(props) {
                   style = {{borderRadius: '30px'}}
                 >
                   <span className="sr-only">Previous</span>
-                  Horro
+                  Horror
             </PaginationLink>
             </PaginationItem>
             <PaginationItem>
