@@ -32,7 +32,6 @@ import {
   CometChatGroupListScreen
 } from './CometChat';
 function App() {
-  
   return (
     <Router>
       {/* Public View Options */}

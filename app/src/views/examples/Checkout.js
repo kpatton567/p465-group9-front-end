@@ -18,16 +18,22 @@ import { apiVariables, ACCESS_TOKEN_NAME } from '../../APIConstants';
 import { withRouter } from 'react-router';
 import { useAuth0 } from '@auth0/auth0-react';
 import Geocode from "react-geocode";
-
+import global from  "./global";
+// import Marker from google.maps.Marker;
 import {
     Button, Container, Input, FormGroup,Form } from "reactstrap";
-
+import GoogleMapReact from 'google-map-react';
 import { PaymentInputsWrapper, usePaymentInputs } from 'react-payment-inputs';
 import images from 'react-payment-inputs/images';
 // import mobiscroll from '@mobiscroll/react';
 // import '@mobiscroll/react/dist/css/mobiscroll.min.css';
 import Review from "views/examples/Review";
 import Map from './Map';
+
+Geocode.setApiKey("AIzaSyD9aslGTBwYBGkOZ858OLJtDvmmjovPs10");
+Geocode.setLanguage("en");
+Geocode.setRegion("na");
+Geocode.enableDebug();
 const useStyles = makeStyles((theme) => ({
 
     container: {
@@ -151,8 +157,8 @@ function Checkout(props) {
                 return (
                     <div>
                         <form className={classes.container}>
-                            <FormControl className={classes.formControl}style = {{display:'inline-block'}}>
-                                <div id="demo-simple-select-placeholder-label-label" >Choose a theater</div>
+                            <FormControl className={classes.formControl}>
+                                <div id="demo-simple-select-placeholder-label-label">Choose a theater</div>
                                 {theaters.map((item) =>
                                     <Button
                                     className="btn-round mr-1"
@@ -172,11 +178,13 @@ function Checkout(props) {
             case 1:
                 if (!isAuthenticated) {
                     return (
-                        <Button onClick={handleClickOpen} color="inherit"
-                            underline="none"
-                            className={classes.rightLink}
-                            onClick={() => loginWithRedirect()}
-                        >Log in / Sign up to continue</Button>
+                        <Button
+                        className="btn-round mr-1"
+                        color="default"
+                        outline
+                        type="button"
+                        onClick={() => loginWithRedirect()}>Log in / Sign up to continue
+                        </Button>
                     )
                 }
                 if (isAuthenticated) {
@@ -215,11 +223,13 @@ function Checkout(props) {
             case 2:
                 if (!isAuthenticated) {
                     return (
-                        <Button onClick={handleClickOpen} color="inherit"
-                            underline="none"
-                            className={classes.rightLink}
-                            onClick={() => loginWithRedirect()}
-                        >Log in / Sign up to continue</Button>
+                        <Button
+                        className="btn-round mr-1"
+                        color="default"
+                        outline
+                        type="button"
+                        onClick={() => loginWithRedirect()}>Log in / Sign up to continue
+                        </Button>
                     )
                 }
                 if (isAuthenticated) {
@@ -241,11 +251,13 @@ function Checkout(props) {
             case 3:
                 if (!isAuthenticated) {
                     return (
-                        <Button onClick={handleClickOpen} color="inherit"
-                            underline="none"
-                            className={classes.rightLink}
-                            onClick={() => loginWithRedirect()}
-                        >Log in / Sign up to continue</Button>
+                        <Button
+                        className="btn-round mr-1"
+                        color="default"
+                        outline
+                        type="button"
+                        onClick={() => loginWithRedirect()}>Log in / Sign up to continue
+                        </Button>
                     )
                 }
                 if(isAuthenticated )
@@ -337,11 +349,13 @@ function Checkout(props) {
                     case 4:
                         if (!isAuthenticated) {
                             return (
-                                <Button onClick={handleClickOpen} color="inherit"
-                                    underline="none"
-                                    className={classes.rightLink}
-                                    onClick={() => loginWithRedirect()}
-                                >Log in / Sign up to continue</Button>
+                                <Button
+                                className="btn-round mr-1"
+                                color="default"
+                                outline
+                                type="button"
+                                onClick={() => loginWithRedirect()}>Log in / Sign up to continue
+                                </Button>
                             )
                         }
                         if (isAuthenticated) {
@@ -372,24 +386,25 @@ function Checkout(props) {
         }
         console.log(payload)
 
-        // axios.post(apiVariables.apiUrl +'/api/customer/customer_payment', payload, {
-        // headers: {
-        //     'Authorization': 'Bearer ' + token
-        // }
-        // }).then(function (response) {
-        //     if (response.status === 200) {
-        //         setAlertOpen(true);
-        //     }
-        // })
-        // .catch(function (error) {
-        //     console.log(error);
-        // });
-        // setTimeout(()=> setAlertOpen(true), 3000);
+        axios.post(apiVariables.apiUrl +'/api/customer/customer_payment', payload, {
+        headers: {
+            'Authorization': 'Bearer ' + token
+        }
+        }).then(function (response) {
+            if (response.status === 200) {
+                setAlertOpen(true);
+            }
+        })
+        .catch(function (error) {
+            console.log(error);
+        });
+        setTimeout(()=> setAlertOpen(true), 3000);
       }
     const handleTheaterChange = (event) => {
-
+        global.movietheaterId = event.target.value;
+        console.log(global.movietheaterId);
         setSelectedTheatre(event.target.value);
-        console.log(event.target.value)
+        // console.log(event.target.value)
         setSelectedTheatreName(event.target.name);
         axios({
             "method": "POST",
@@ -446,7 +461,7 @@ function Checkout(props) {
         return (
             <Container justify="center">
                 < >
-                    <Paper className={classes.paper} style = {{ width: '42rem',height:'auto'}}>
+                    <Paper className={classes.paper} style = {{ width: '42rem', height: 'auto'}}>
                         <Stepper activeStep={activeStep} className={classes.stepper}>
                             {steps.map((label) => (
                                 <Step key={label}>
