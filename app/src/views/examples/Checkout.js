@@ -18,6 +18,7 @@ import { apiVariables, ACCESS_TOKEN_NAME } from '../../APIConstants';
 import { withRouter } from 'react-router';
 import { useAuth0 } from '@auth0/auth0-react';
 import Geocode from "react-geocode";
+import global from  "./global";
 // import Marker from google.maps.Marker;
 import {
     Button, Container, Input, FormGroup,Form } from "reactstrap";
@@ -400,9 +401,10 @@ function Checkout(props) {
         setTimeout(()=> setAlertOpen(true), 3000);
       }
     const handleTheaterChange = (event) => {
-
+        global.movietheaterId = event.target.value;
+        console.log(global.movietheaterId);
         setSelectedTheatre(event.target.value);
-        console.log(event.target.value)
+        // console.log(event.target.value)
         setSelectedTheatreName(event.target.name);
         axios({
             "method": "POST",
@@ -509,6 +511,7 @@ function Checkout(props) {
                             ) : (
                                     <React.Fragment>
                                         {getStepContent(activeStep)}
+<<<<<<< HEAD
                                         {/* <div style={{ height: '25vh', width: '100%' }}>
                                                 <GoogleMapReact
                                                     bootstrapURLKeys={{ key: 'AIzaSyD9aslGTBwYBGkOZ858OLJtDvmmjovPs10' }}
@@ -518,6 +521,8 @@ function Checkout(props) {
                                                     <MarkersC lat={theaterLatitude} lng={theaterLongitude} text={theaterAddress} key={'AIzaSyD9aslGTBwYBGkOZ858OLJtDvmmjovPs10'} />
                                                 </GoogleMapReact>
                                             </div> */}
+=======
+>>>>>>> 1ffc571204dcb2ef0d3b7f4e91ee7f06828e6ec4
                                         <div className={classes.buttons}>
                                             {activeStep !== 0 && (
                                                 <Button className="btn-round mr-1"

@@ -84,7 +84,7 @@ function AddShowtime(props) {
                     <Row>
                       <Col className="px-1" md="3">
                         <FormGroup>
-                          <label>Snack Name*</label>
+                          <label>*</label>
                           <Input
                             defaultValue={showTime} 
                             onChange={event => setshowTime(event.target.value)}

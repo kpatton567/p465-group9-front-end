@@ -14,7 +14,7 @@ import {
   Card,
   UncontrolledAlert,
 } from "reactstrap";
-
+import { makeStyles } from '@material-ui/core/styles';
 // core components
 import { useAuth0 } from '@auth0/auth0-react';
 import ExamplesNavbar from "components/Navbars/ExamplesNavbar.js";
@@ -22,8 +22,11 @@ import ProfilePageHeader from "components/Headers/ProfilePageHeader.js";
 import DemoFooter from "components/Footers/DemoFooter.js";
 import { apiVariables, ACCESS_TOKEN_NAME } from '../../APIConstants';
 import axios from 'axios';
+<<<<<<< HEAD
 import { makeStyles } from '@material-ui/core/styles';
 
+=======
+>>>>>>> 1ffc571204dcb2ef0d3b7f4e91ee7f06828e6ec4
 const useStyles = makeStyles({
   root: {
     width: 200,
@@ -52,6 +55,7 @@ function ProfilePage() {
   const [isSent, setIsSent] = React.useState(false)
   const [alertOpen, setAlertOpen] = React.useState(false);
   const classes = useStyles();
+<<<<<<< HEAD
 
   // var token = localStorage.getItem(ACCESS_TOKEN_NAME)
   // axios.get(apiVariables.apiUrl +'/api/customer/profile', {
@@ -67,6 +71,22 @@ function ProfilePage() {
   //   .catch(function (error) {
   //       console.log(error);
   //   });
+=======
+  var token = localStorage.getItem(ACCESS_TOKEN_NAME)
+  axios.get(apiVariables.apiUrl +'/api/customer/profile', {
+    headers: {
+        'Authorization': 'Bearer ' + token
+    }
+    }).then(function (response) {
+      setFirstName(response.data.firstName)
+      setSecondName(response.data.lastName)
+      setMobile(response.data.mobileNumber)
+      console.log(response.data)
+    })
+    .catch(function (error) {
+        console.log(error);
+    });
+>>>>>>> 1ffc571204dcb2ef0d3b7f4e91ee7f06828e6ec4
 
   const onToggle = (index, e) => {
   	let newItems = items.slice();
@@ -305,12 +325,18 @@ function ProfilePage() {
             </div>
             <Row>
               <Col className="ml-auto mr-auto text-center" md="6">
+<<<<<<< HEAD
                
+=======
+>>>>>>> 1ffc571204dcb2ef0d3b7f4e91ee7f06828e6ec4
                 <br />
               </Col>
             </Row>
             <br />
+<<<<<<< HEAD
             
+=======
+>>>>>>> 1ffc571204dcb2ef0d3b7f4e91ee7f06828e6ec4
                 <Row>
                   <Col className="ml-auto mr-auto" md="6">
                     <Card style={{
@@ -319,6 +345,7 @@ function ProfilePage() {
                       minHeight: "400px",
                       padding: "30px"
                     }}>
+<<<<<<< HEAD
 
                     <div style = {{margin : '10px'}}>
                     <h5>Your profile has been updated. Thank you for your response.</h5>
@@ -328,14 +355,27 @@ function ProfilePage() {
                     </div>
                     </Card>
         
+=======
+                    <div style = {{margin : '10px'}}>
+                    <h5>Your profile has been updated. Thank you for your response.</h5>
+                    <div className={classes.buttons}>
+                    <Button href='/' className={classes.button} style = {{color: 'white', background: '#51CBCE'}}color="primary">Go Home</Button>
+                    </div>
+                    </div>
+                    </Card>
+>>>>>>> 1ffc571204dcb2ef0d3b7f4e91ee7f06828e6ec4
                   </Col>
                 </Row>
           </Container>
         </div>
         <DemoFooter />
+<<<<<<< HEAD
 
 </>
        
+=======
+</>
+>>>>>>> 1ffc571204dcb2ef0d3b7f4e91ee7f06828e6ec4
       )
 }
 

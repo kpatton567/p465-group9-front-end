@@ -1,5 +1,4 @@
 import React from "react";
-
 // reactstrap components
 import {
   Button,
@@ -16,28 +15,23 @@ import {
   Col,
   UncontrolledAlert
 } from "reactstrap";
-
 // core components
 import emailjs from 'emailjs-com';
-
 function ContactUs() {
 const [isSent, setIsSent] = React.useState(false)
 const sendEmail = (e)  =>{
     e.preventDefault();    //This is important, i'm not sure why, but the email won't send without it
-
     emailjs.sendForm('service_f2jl94f', 'template_ozokvni', e.target, 'user_n8HPizU5dZNXCSCNlIAks')
         .then((result) => {
             setIsSent(true)
             document.getElementById("create-course-form").reset();
-            // window.location.reload()  //This is if you still want the page to reload (since e.preventDefault() cancelled that behavior) 
+            // window.location.reload()  //This is if you still want the page to reload (since e.preventDefault() cancelled that behavior)
         }, (error) => {
             console.log(error.text);
         });
-      
     }
   return (
     <>
-     
     <div className="section section-dark" style = {{paddingBottom : '0'}}>
         <Container>
           <Row>
@@ -104,12 +98,12 @@ const sendEmail = (e)  =>{
                     type="button"
                     type="submit" value="Send"
                     style = {{color: 'white',
-                    background: '#ef8157', marginLeft: '14rem', width : '10rem'}}
+                    background: '#EF8157', marginLeft: '14rem', width : '10rem'}}
                   >
                     Send email
                   </Button>
                 </form>
-                {isSent ? 
+                {isSent ?
                 <UncontrolledAlert color="info" fade={false}>
                 <span>
                   Your email has been sent. Sit back and relax, our team will respond within a couple of hours.
@@ -117,11 +111,9 @@ const sendEmail = (e)  =>{
               </UncontrolledAlert>
               : null}
               </Card>
-          
         </Container>
       </div>{" "}
     </>
   );
 }
-
 export default ContactUs;
