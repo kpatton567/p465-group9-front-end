@@ -60,15 +60,15 @@ const sendEmail = (e)  =>{
               <Card className="card-register" style = {{maxWidth: "40rem", width: "40rem", marginLeft: '14rem', paddingTop : '0'}}>
                 <h3 className="mx-auto" style = {{color: 'black!important',marginTop: '30px',
     marginBottom: '9px', minHeight: '32px', fontWeight : '700'}}>Contact Us</h3>
-                <form className="register-form" onSubmit={sendEmail} id="create-course-form">
+                <form className="" onSubmit={sendEmail} id="create-course-form">
                 <label>Name</label>
-                  <InputGroup className="form-group-no-border">
+                  <InputGroup className="form-group-no-border" >
                     <InputGroupAddon addonType="prepend">
                       <InputGroupText>
                         <i className="nc-icon nc-circle-10" />
                       </InputGroupText>
                     </InputGroupAddon>
-                    <Input placeholder="Name" name="from_name"/>
+                    <Input placeholder="Name" name="from_name" style = {{ border: '1px solid #DDDDDD !important;'}}/>
                   </InputGroup>
                   <label>Email</label>
                   <InputGroup className="form-group-no-border">
@@ -83,7 +83,7 @@ const sendEmail = (e)  =>{
                   <InputGroup className="form-group-no-border">
                     <InputGroupAddon addonType="prepend">
                       <InputGroupText>
-                        <i className="nc-icon nc-single-copy-04" />
+                        <i className="nc-icon nc-single-copy-04"/>
                       </InputGroupText>
                     </InputGroupAddon>
                     <Input placeholder="Subject" name="subject"/>
@@ -92,7 +92,7 @@ const sendEmail = (e)  =>{
                   <InputGroup>
                     <InputGroupAddon addonType="prepend">
                       <InputGroupText>
-                        <i className="nc-icon nc-paper" />
+                        <i className="nc-icon nc-paper" style = {{ marginBottom: '1.75rem'}}/>
                       </InputGroupText>
                     </InputGroupAddon>
                     <Input type="textarea" placeholder="Message" name="html_message" style = {{border: '1px solid gray !important'}}/>

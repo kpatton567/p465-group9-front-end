@@ -133,12 +133,7 @@ function Checkout(props) {
         zoom: 11
       };
     const { getCardNumberProps, getExpiryDateProps, getCVCProps, wrapperProps, getCardImageProps, } = usePaymentInputs();
-   
-    
-    
-    const now = new Date();
-    
-    
+
     const fetchData = React.useCallback(() => {
         axios({
             "method": "POST",
@@ -182,11 +177,13 @@ function Checkout(props) {
             case 1:
                 if (!isAuthenticated) {
                     return (
-                        <Button onClick={handleClickOpen} color="inherit"
-                            underline="none"
-                            className={classes.rightLink}
-                            onClick={() => loginWithRedirect()}
-                        >Log in / Sign up to continue</Button>
+                        <Button
+                        className="btn-round mr-1"
+                        color="default"
+                        outline
+                        type="button"
+                        onClick={() => loginWithRedirect()}>Log in / Sign up to continue
+                        </Button>
                     )
                 }
                 if (isAuthenticated) {
@@ -225,11 +222,13 @@ function Checkout(props) {
             case 2:
                 if (!isAuthenticated) {
                     return (
-                        <Button onClick={handleClickOpen} color="inherit"
-                            underline="none"
-                            className={classes.rightLink}
-                            onClick={() => loginWithRedirect()}
-                        >Log in / Sign up to continue</Button>
+                        <Button
+                        className="btn-round mr-1"
+                        color="default"
+                        outline
+                        type="button"
+                        onClick={() => loginWithRedirect()}>Log in / Sign up to continue
+                        </Button>
                     )
                 }
                 if (isAuthenticated) {
@@ -251,11 +250,13 @@ function Checkout(props) {
             case 3:
                 if (!isAuthenticated) {
                     return (
-                        <Button onClick={handleClickOpen} color="inherit"
-                            underline="none"
-                            className={classes.rightLink}
-                            onClick={() => loginWithRedirect()}
-                        >Log in / Sign up to continue</Button>
+                        <Button
+                        className="btn-round mr-1"
+                        color="default"
+                        outline
+                        type="button"
+                        onClick={() => loginWithRedirect()}>Log in / Sign up to continue
+                        </Button>
                     )
                 }
                 if(isAuthenticated )
@@ -347,11 +348,13 @@ function Checkout(props) {
                     case 4:
                         if (!isAuthenticated) {
                             return (
-                                <Button onClick={handleClickOpen} color="inherit"
-                                    underline="none"
-                                    className={classes.rightLink}
-                                    onClick={() => loginWithRedirect()}
-                                >Log in / Sign up to continue</Button>
+                                <Button
+                                className="btn-round mr-1"
+                                color="default"
+                                outline
+                                type="button"
+                                onClick={() => loginWithRedirect()}>Log in / Sign up to continue
+                                </Button>
                             )
                         }
                         if (isAuthenticated) {
@@ -382,20 +385,19 @@ function Checkout(props) {
         }
         console.log(payload)
 
-        // axios.post(apiVariables.apiUrl +'/api/customer/customer_payment', payload, {
-        // headers: {
-        //     'Authorization': 'Bearer ' + token
-        // }
-        // }).then(function (response) {
-        //     if (response.status === 200) {
-        //         setAlertOpen(true);
-        //     }
-        // })
-        // .catch(function (error) {
-        //     console.log(error);
-        // });
-        // setTimeout(()=> setAlertOpen(true), 3000);
-        reward.rewardMe();
+        axios.post(apiVariables.apiUrl +'/api/customer/customer_payment', payload, {
+        headers: {
+            'Authorization': 'Bearer ' + token
+        }
+        }).then(function (response) {
+            if (response.status === 200) {
+                setAlertOpen(true);
+            }
+        })
+        .catch(function (error) {
+            console.log(error);
+        });
+        setTimeout(()=> setAlertOpen(true), 3000);
       }
     const handleTheaterChange = (event) => {
 
@@ -457,7 +459,7 @@ function Checkout(props) {
         return (
             <Container justify="center">
                 < >
-                    <Paper className={classes.paper} style = {{ width: '37rem'}}>
+                    <Paper className={classes.paper} style = {{ width: '42rem', height: 'auto'}}>
                         <Stepper activeStep={activeStep} className={classes.stepper}>
                             {steps.map((label) => (
                                 <Step key={label}>
@@ -490,10 +492,12 @@ function Checkout(props) {
                                         ref={(ref) => { reward = ref }}
                                         type='confetti'
                                         >
+                                           
                                         <Button
-                                            style = {{    color: 'white',
-                                                background: '#51cbce'}}
+                                            className="btn-round mr-1"
                                             color="primary"
+                                            outline
+                                            type="button"
                                             onClick={activeStep === steps.length - 1 ? handlePayment : handleNext}
                                             className={classes.button}
                                         >
@@ -505,14 +509,7 @@ function Checkout(props) {
                             ) : (
                                     <React.Fragment>
                                         {getStepContent(activeStep)}
-                                        <div className={classes.buttons}>
-                                            {activeStep !== 0 && (
-                                                <Button onClick={handleBack} className={classes.button}>
-                                                    Back
-                                                </Button>
-                                            )}
-
-                                            <div style={{ height: '25vh', width: '100%' }}>
+                                        {/* <div style={{ height: '25vh', width: '100%' }}>
                                                 <GoogleMapReact
                                                     bootstrapURLKeys={{ key: 'AIzaSyD9aslGTBwYBGkOZ858OLJtDvmmjovPs10' }}
                                                     defaultCenter={defaultProps.center}
@@ -520,11 +517,21 @@ function Checkout(props) {
                                                 >
                                                     <MarkersC lat={theaterLatitude} lng={theaterLongitude} text={theaterAddress} key={'AIzaSyD9aslGTBwYBGkOZ858OLJtDvmmjovPs10'} />
                                                 </GoogleMapReact>
-                                            </div>
-                                            
-                                            <Button
-                                                variant="contained"
+                                            </div> */}
+                                        <div className={classes.buttons}>
+                                            {activeStep !== 0 && (
+                                                <Button className="btn-round mr-1"
                                                 color="primary"
+                                                outline
+                                                type="default" onClick={handleBack} className={classes.button}>
+                                                    Back
+                                                </Button>
+                                            )}
+                                            <Button
+                                                className="btn-round mr-1"
+                                                color="primary"
+                                                outline
+                                                type="button"
                                                 onClick={activeStep === steps.length - 1 ? handlePayment : handleNext}
                                                 className={classes.button}
                                             >

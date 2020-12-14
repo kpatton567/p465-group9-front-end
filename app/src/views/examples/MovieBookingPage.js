@@ -133,7 +133,7 @@ function MovieBookingPage(props) {
                   style = {{borderRadius: '30px'}}
                 >
                   <span className="sr-only">Previous</span>
-                  Horro
+                  Horror
             </PaginationLink>
             </PaginationItem>
             <PaginationItem>
@@ -274,7 +274,7 @@ function MovieBookingPage(props) {
                 </Button>
               <Modal disableBackdropClick disableEscapeKeyDown isOpen={open} contentClassName="custom-modal-style">
                 <i className="nc-icon nc-simple-remove" onClick={handleClose} style={{ cursor: 'pointer', marginTop: '10px', width: '40px', marginLeft: 'auto' }} />
-                <Checkout movieId={props.match.params.movie} isCustomer={isCustomer} style={{width : '50rem'}}/>
+                <Checkout movieId={props.match.params.movie} isCustomer={isCustomer} style={{width : '45rem'}}/>
               </Modal>
 
             </div>
